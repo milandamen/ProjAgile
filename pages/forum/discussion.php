@@ -1,6 +1,5 @@
 <?php 
 
-$title ="Discussie";
 
  ?>
 
@@ -23,8 +22,8 @@ $title ="Discussie";
                 
                     <tr>
             
-                        <td><a href="pages/forum/topic.php"><span class="glyphicon glyphicon-align-justify"></span></a></td>
-                        <td><a href="pages/forum/topic.php"><p>Reconstructie Bundersweg.</p></a></td>
+                        <td><a href="index.php?p=topic"><span class="glyphicon glyphicon-align-justify"></span></a></td>
+                        <td><a href="index.php?p=topic"><p>Reconstructie Bundersweg.</p></a></td>
                         <td><p>22</p></td>
                         <td>Gisteren om 23:12 <a href="#"><span class="glyphicon glyphicon-new-window"></span></a><br/>Door: <a href="#">Mehmet Yildiz</a></td>
                         <td>54</td>

@@ -1,6 +1,5 @@
 <?php  
 
-$title = "Home - Wijkraad de Bunders";
 
 
 ?>
@@ -13,7 +12,7 @@ $title = "Home - Wijkraad de Bunders";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
- <!--   <base href="http://localhost/bunders/" src="http://localhost/bunders/"/> -->
+ 
     <title> <?php echo $title; ?></title>
 
     <!-- Bootstrap Core CSS -->
@@ -21,8 +20,10 @@ $title = "Home - Wijkraad de Bunders";
     <!-- Custom CSS -->
     <link href="css/modern-business.css" type="text/css" rel="stylesheet">
     <link href="css/forum.css" type="text/css" rel="stylesheet">
+    <link href="css/partners.css" type="text/css" rel="stylesheet">
+
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -32,12 +33,16 @@ $title = "Home - Wijkraad de Bunders";
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
- <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap.js"></script>  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script> 
+
+
+    <!-- Including both will destroy the dropdown-menu. 
+    <script src="assets/js/bootstrap.min.js"></script>   --> 
+  
 
 </head>
 

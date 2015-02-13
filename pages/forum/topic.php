@@ -8,7 +8,7 @@ $title ="----";
     <div class="container">
   <ol class="breadcrumb">
      <li><a href="index.php">Home</a></li>
-     <li><a href="pages/forum/discussion.php">Discussies</a></li>
+     <li><a href="index.php?p=discussie">Discussies</a></li>
      <li class="active">Reconstructie... </li>
     </ol>
 

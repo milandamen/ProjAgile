@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="index.php">Wijkraad</a>
+                        <a href="index.php?p=index">Wijkraad</a>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Deelwijken <span class="caret"></span></a>
@@ -27,19 +27,24 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Partners</a>
+                        <a href="index.php?p=partners">Partners</a>
                     </li>
 					<li>
                         <a href="#">Activiteiten</a>
                     </li>
 					<li>
-                        <a href="index.php?id=2">Projecten</a>
+                        <a href="index.php?p=forum">Forum</a>
                     </li>
 					<li>
-                        <a href="#">Contact</a>
+                        <a href="index.php?p=contact">Contact</a>
                     </li>
 					<li>
-                        <a href="">Login</a>
+                        <a  href="index.php?p=login" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Gebruikers <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="index.php?p=login">Inloggen</a></li>
+                            <li><a href="#">Admin Beheer</a></li>
+                            <li><a href="#">Content Beheer</a></li>
+                        </ul>
                     </li>
 					<!--
                     <li class="dropdown">

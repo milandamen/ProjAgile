@@ -39,9 +39,9 @@ $title ="----";
                     <tr>
             
                         <td><span class="glyphicon glyphicon-list-alt"></span></td>
-                        <td><a href="pages/forum/discussion.php"><p>Algemeen</p></a></td>
+                        <td><a href="index.php?p=discussie"><p>Algemeen</p></a></td>
                         <td>19</td>
-                        <td>Reconstructie Bundersweg<a href="pages/forum/topic.php"><span class="glyphicon glyphicon-new-window"></span></a><br/>Eergisteren om 19:12<br/>Door: Mehmet</a></td>
+                        <td>Reconstructie Bundersweg<a href="index.php?p=topic"><span class="glyphicon glyphicon-new-window"></span></a><br/>Eergisteren om 19:12<br/>Door: Mehmet</a></td>
                 
                     </tr>
                 

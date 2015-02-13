@@ -1,17 +1,12 @@
 <?php 
 
-$title ="----";
+?>
 
- ?>
 
-<?php include_once 'header.php'; ?>
+  <div class="container">
 
-<!-- Page Content -->
-    <div class="container">
-
+    	 <h2>Titel</h2>
+        
 
 
 
-
-<!-- END Page Content div in footer-->
-<?php include_once 'footer.php'; ?>
