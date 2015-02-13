@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
 				</a>
             </div>
 			
@@ -36,7 +36,7 @@
                         <a href="index.php?id=2">Projecten</a>
                     </li>
 					<li>
-                        <a href="contact.php">Contact</a>
+                        <a href="#">Contact</a>
                     </li>
 					<li>
                         <a href="">Login</a>
