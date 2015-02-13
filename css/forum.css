@@ -1,0 +1,44 @@
+.discussiontable{
+    border: 5px solid RGB(86,61,124);
+    border-radius: 10px;   
+}
+
+.discussiontable th{
+    background-color: RGB(86,61,124);
+    color: white;
+}
+
+.discussiontable a{
+    color: RGB(86,61,124);
+}
+
+.topictable TD{
+    height: auto; 
+    width:700px; 
+    padding: 10px 100px 10px 20px; 
+    border-right: 2px solid RGB(86,61,124);
+    border-bottom: 2px solid RGB(86,61,124);
+}
+
+.topictable .message {
+	width: 600px;
+	padding: 20px 100px 40px 20px;
+
+}
+
+.topictable .person-info {
+	width: 200px; 
+	height:auto;
+}
+
+
+
+.topictable .topic-info {
+	background-color: RGB(86,61,124);
+	color: #fff;
+	opacity: 0.5;
+}
+.topictable .topic-info:hover {
+	background-color: RGB(86,61,124);
+}
+
