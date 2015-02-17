@@ -45,12 +45,6 @@ switch ($page) {
     	break;
 }
 
-
-
-
 ?>
-
-
-
 
 <?php include_once 'footer.php'; ?>
