@@ -43,7 +43,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="index.php?p=login">Inloggen</a></li>
                             <li><a href="#">Admin Beheer</a></li>
-                            <li><a href="#">Content Beheer</a></li>
+                            <li><a href="index.php?p=add">Content Beheer</a></li>
                         </ul>
                     </li>
 					<!--
