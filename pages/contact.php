@@ -4,6 +4,10 @@
 ?>
 
   <div class="container">
+      <ol class="breadcrumb">
+          <li><a href="index.php">Home</a></li>
+          <li class="active">Contact</li>
+      </ol>
         
 	<div class="row">
 			<div class="col-lg-12">
@@ -108,4 +112,6 @@
                     <div id="success"></div>
                     <button type="submit" class="btn btn-default" style="background-color:#563D7C;color:#FFFFFF">Verzend</button>
                 </form>
+                <hr>
+                <a href="index.php?p=verzoeken" class="btn btn-default" style="background-color:#563D7C;color:#FFFFFF">Naar verzoeken (voor secretariaat)</a>
             </div>

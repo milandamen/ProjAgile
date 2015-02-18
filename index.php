@@ -31,6 +31,12 @@ switch ($page) {
     case "contact":
     	include_once 'pages/contact.php';
     	break;
+    case "verzoeken":
+        include_once 'pages/requests.php';
+        break;
+    case "verzoek_reactie":
+        include_once 'pages/request_response.php';
+        break;
     case "login":
     	include_once 'pages/login.php';
     	break;
