@@ -12,6 +12,8 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
+		<meta name="superfish" content="nofish"> <!-- Runtime crash protection for laptops infected with Superfish Adware/Spyware (Lenovo laptops). More info: http://glipdev.github.io/ and https://filippo.io/Badfish/ -->
+		
 		<title><?php echo $title; ?></title>
 		
 		<!-- Bootstrap Core CSS -->
