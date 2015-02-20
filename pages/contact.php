@@ -3,6 +3,11 @@
 
 ?>
 <div class="container">
+	<ol class="breadcrumb">
+		<li><a href="index.php">Home</a></li>
+		<li class="active">Contact</li>
+	</ol>
+	
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
@@ -58,51 +63,58 @@
 			</div>
 		</div>
 		
-	</div>
-	
-	<hr>
-	
-	<div class="row">
-		<div class="col-md-8">
-			<h3>Neem direct contact op</h3>
-			<form name="sentMessage" id="contactForm" novalidate>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Naam:</label>
-						<input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-						<p class="help-block"></p>
+		<hr>
+		
+		<div class="row">
+			<div class="col-md-8">
+				<h3>Neem direct contact op</h3>
+				<form name="sentMessage" id="contactForm" novalidate>
+					<div class="control-group form-group">
+						<div class="controls">
+							<label>Naam:</label>
+							<input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
+							<p class="help-block"></p>
+						</div>
 					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Telefoon:</label>
-						<input type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+					<div class="control-group form-group">
+						<div class="controls">
+							<label>Telefoon:</label>
+							<input type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+						</div>
 					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Email:</label>
-						<input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+					<div class="control-group form-group">
+						<div class="controls">
+							<label>Email:</label>
+							<input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+						</div>
 					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label>Bericht:</label>
-						<textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+					<div class="control-group form-group">
+						<div class="controls">
+							<label>Bericht:</label>
+							<textarea rows="10" cols="100" class="form-control" id="summernote" required data-validation-required-message="Please enter your message" maxlength="999" ></textarea>
+						</div>
 					</div>
-				</div>
-				<div class="control-group form-group">
-					<div class="controls">
-						<label for="recipient">Selecteer geaddresseerde</label>
-						<select class="form-control" id = "recipient" style="width:auto;">
-							<option value = "1">Webmaster</option>
-							<option value = "2">Discussie moderator</option>
-							<option value = "3">Content beheerder</option>
-							<option value = "4">Secretariaat</option>
-						</select>
+					<div class="control-group form-group">
+						<div class="controls">
+							<label for="recipient">Selecteer geaddresseerde</label>
+							<select class="form-control" id = "recipient" ">
+								<option value = "1">Webmaster</option>
+								<option value = "2">Discussie moderator</option>
+								<option value = "3">Content beheerder</option>
+								<option value = "4">Secretariaat</option>
+							</select>
+						</div>
 					</div>
-				</div>
-				<div id="success"></div>
-				<button type="submit" class="btn btn-default" style="background-color:#563D7C;color:#FFFFFF">Verzend</button>
-			</form>
-		</div>
+					<div id="success"></div>
+					<button type="submit" class="btn btn-primary">Verzend</button>
+				</form>
+				<hr>
+				<a href="index.php?p=verzoeken" class="btn btn-primary">Naar verzoeken (voor secretariaat)</a>
+			</div>
+			<script>
+				$(document).ready(function(){
+					$('#summernote').summernote({
+						height: 300
+					});
+				});
+			</script>

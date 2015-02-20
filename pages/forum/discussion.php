@@ -61,3 +61,6 @@
 		</div>
 	
 	</div>
+	
+	<hr>
+	<a href="index.php?p=contact" class="btn btn-primary">Discussie verzoeken</a>

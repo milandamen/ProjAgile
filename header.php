@@ -18,6 +18,10 @@
 		
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+		
+		<!--Summernote-->
+		<link href="css/summernote.css" type="text/css" rel="stylesheet">
+		
 		<!-- Custom CSS -->
 		<link href="css/modern-business.css" type="text/css" rel="stylesheet">
 		<link href="css/forum.css" type="text/css" rel="stylesheet">
@@ -39,6 +43,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<!-- Bootstrap Core JavaScript -->
 		<script src="assets/js/bootstrap.js"></script>
+		
+		<!--Summernote-->
+		<script src="assets/js/summernote.js"></script>
 		
 		<!-- Including both will destroy the dropdown-menu.
 		<script src="assets/js/bootstrap.min.js"></script>   -->

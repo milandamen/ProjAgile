@@ -5,7 +5,7 @@ $title ="----";
  ?>
 <!-- Page Content -->
 <div class="container">
-<h2>Categorieën</h2>
+	<h2>Categorieën</h2>
 	
 	<div class="row">
 	
@@ -44,7 +44,7 @@ $title ="----";
 			
 				</tr>
 			
-		</table>
+			</table>
 		</div>
 	
 	</div>
@@ -85,7 +85,10 @@ $title ="----";
 			
 				</tr>
 			
-		</table>
+			</table>
 		</div>
 	
 	</div>
+	
+	<hr>
+	<a href="index.php?p=contact" class="btn btn-primary">Discussie verzoeken</a>

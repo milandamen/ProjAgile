@@ -72,3 +72,23 @@ $title ="----";
 		</div>
 	
 	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="">
+				<div class="form-group">
+					<label for="">Reageer</label>
+					<textarea name="" id="summernote" cols="30" rows="10" class="form-control"></textarea>
+				</div>
+				<button type="submit" class="btn btn-submit">Plaats reactie</button>
+			</form>
+		</div>
+	</div>
+	
+	<script>
+		$(document).ready(function(){
+			$('#summernote').summernote({
+				height: 300
+			});
+		});
+	</script>
