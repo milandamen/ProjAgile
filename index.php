@@ -42,9 +42,13 @@ switch ($page) {
 	case "p-detail":
 		include_once 'pages/partner/partnerdetail.php';
 		break;
+	case "add":
+        include_once 'pages/cms/add_data.php';
+        break;
 	default:
 		include_once 'pages/home.php';
 		break;
+
 }
 
 include_once 'footer.php'; 
