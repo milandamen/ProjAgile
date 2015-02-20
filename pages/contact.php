@@ -4,6 +4,10 @@
 ?>
 
   <div class="container">
+      <ol class="breadcrumb">
+          <li><a href="index.php">Home</a></li>
+          <li class="active">Contact</li>
+      </ol>
         
 	<div class="row">
 			<div class="col-lg-12">
@@ -91,13 +95,13 @@
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Bericht:</label>
-                            <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                            <textarea rows="10" cols="100" class="form-control" id="summernote" required data-validation-required-message="Please enter your message" maxlength="999" ></textarea>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
 							<label for="recipient">Selecteer geaddresseerde</label>
-							<select class="form-control" id = "recipient" style="width:auto;">
+							<select class="form-control" id = "recipient" ">
 								<option value = "1">Webmaster</option>
 								<option value = "2">Discussie moderator</option>
 								<option value = "3">Content beheerder</option>
@@ -106,6 +110,15 @@
 						</div>
                     </div>
                     <div id="success"></div>
-                    <button type="submit" class="btn btn-default" style="background-color:#563D7C;color:#FFFFFF">Verzend</button>
+                    <button type="submit" class="btn btn-primary">Verzend</button>
                 </form>
+                <hr>
+                <a href="index.php?p=verzoeken" class="btn btn-primary">Naar verzoeken (voor secretariaat)</a>
             </div>
+<script>
+    $(document).ready(function(){
+        $('#summernote').summernote({
+            height: 300
+        });
+    });
+</script>
