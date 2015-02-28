@@ -3,6 +3,7 @@
 class Db {
 	const FETCH_ASSOC = PDO::FETCH_ASSOC;	// Return fetch result as an associaive array.
 	const FETCH_OBJ = PDO::FETCH_OBJ;		// Return fetch result as an array with objects.
+	// Default: FETCH_OBJ
 
 	private $database;						// PDO object for database connection handling.
 	
@@ -10,6 +11,7 @@ class Db {
 	private $usesmartstmt;					// Boolean for enable/disable of smart statements mode.
 	private $lastquery;						// When smart statements mode is enabled, this variable will contain the string of the last query.
 	private $laststmt;						// When smart statements mode is enabled, this variable will contain the PDOStatement object of the last query.
+	// Default: Enabled
 	
 	/**
 		Constructor for this database library. Sets use of smart statements and connects to the database.
@@ -24,7 +26,6 @@ class Db {
 	*/
 	function __destruct() {
 		$this->dbClose();
-
 	}
 	
 	/**
@@ -34,7 +35,7 @@ class Db {
 		try {
 			$this->database = new PDO('mysql:host=mysql3.mijnhostingpartner.nl;dbname=Vermeule3bunders','Vermeule3bunders','Koekje07');
 		} catch(PDOException $e){
-			echo 'Database error: '.$e->getMessage().'<br/>';
+			die('Database error: '.$e->getMessage().'<br/>');
 		}
 	}
 	
@@ -71,14 +72,48 @@ class Db {
 		}
 
 		$stmt->execute();
+		
+		if ($this->usesmartstmt) {
+			$this->lastquery = $query;
+			$this->laststmt = $stmt;
+		} else {
+			$stmt = null;
+		}
 	}
 	
 	/**
 		Execute a query. If the query returns rows, the result gets returned depending on what mode is set.
 		Mode db::FETCH_ASSOC:   return an associative array
 		Mode db::FETCH_OBJ:     return an array with objects
+		
+		Example:
+			$id = 3;
+			$hidden = false;
+			
+			$result = db->getQuery(
+					'SELECT * 
+					FROM news 
+					WHERE id = :id AND hidden = :hidden',
+					array(
+						':id' => $id,
+						':hidden' => $hidden
+					)
+			);
+			
+			if (is_array($result) && count($result) == 1) {			// If you want a result and only 1 result
+				$title = $result[0]->title;
+				$userId = $result[0]->userId;
+			} else {
+				die('ERROR: Recieved invalid result from database!');
+			}
+		
+		If there are more rows returned you can parse the list with a foreach loop:
+			foreach($result as $key => $object){
+				// Do something with each object, for example:
+				echo $object->title;
+			}
 	*/
-	public function getQuery($query, $params = array(), $mode = db::FETCH_ASSOC) {
+	public function getQuery($query, $params = array(), $mode = db::FETCH_OBJ) {
 		$stmt = null;
 		if ($this->usesmartstmt && $this->isLastQuery($query)) {
 			$stmt = $this->laststmt;
@@ -90,14 +125,15 @@ class Db {
 		foreach ($params as $key => $value) {
 			$stmt->bindValue($key, $value);
 		}
-
+		
 		$stmt->execute();
-
-		#result changed to = null else error: undefined variable
+		
 		$result = null;
-
 		if ($mode == db::FETCH_ASSOC) {
 			$result = $stmt->fetchAll();
+			if (!isset($result) || !is_array($result)) {
+				$result = array();
+			}
 		}
 		if ($mode == db::FETCH_OBJ) {
 			$result = array();
@@ -112,6 +148,7 @@ class Db {
 		} else {
 			$stmt = null;
 		}
+		
 		return $result;
 	}
 	
