@@ -33,4 +33,20 @@ class News
     public function getUserId(){
         return $this->userId;
     }
+
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function getContent(){
+        return $this->content;
+    }
+
+    public function getDate(){
+        return $this->date;
+    }
+
+    public function gethidden(){
+        return $this->hidden;
+    }
 }

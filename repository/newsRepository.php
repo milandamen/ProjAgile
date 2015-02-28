@@ -12,6 +12,9 @@ class NewsRepository
 
     public function getAllNews()
     {
+        $newsarray = $this->db->getQuery($this->getAllNewsQuery);
+
+        echo $newsarray[0]->name;
 
     }
 }
