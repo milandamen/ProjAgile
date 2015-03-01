@@ -16,7 +16,7 @@ class News
         $this->districtSectionId = $districtSectionId;
         $this->userId = $userId;
         $this->title = $title;
-        $this->$content = $content;
+        $this->content = $content;
         $this->date = $date;
         $this->hidden = $hidden;
     }

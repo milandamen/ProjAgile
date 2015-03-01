@@ -14,8 +14,6 @@ class NewsRepository extends RepositoryBase
 
     public function add($object)
     {
-        #$query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES($object->getId(), $object->getDistrictSectionId(), $object->getUserId(), $object->getTitle(), $object->getContent(), $object->getDate(), $object->getHidden())';
-
         $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW() , :hidden)';
 
         $parameters = array(
