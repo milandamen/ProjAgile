@@ -26,4 +26,3 @@ class B extends A {
 
 $a = new A();
 $a->func1();
-?>

@@ -1,7 +1,9 @@
 <?php
-require_once "projagile/repository/newsRepository.php";
+require_once 'newsRepository.php';
 
 $newsrepo = new NewsRepository();
 
-$newsrepo->getAllNews();
+$news = $newsrepo->getAll('news');
 
+echo $news[0]->title . '<br/>'  ;
+echo $news[0]->content;

@@ -2,7 +2,6 @@
 
 class News
 {
-
     private $id;
     private $districtSectionId;
     private $userId;
