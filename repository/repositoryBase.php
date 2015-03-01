@@ -31,6 +31,11 @@ class RepositoryBase
 
     }
 
+    public function update($object)
+    {
+
+    }
+
     public function delete($id)
     {
         $query = 'DELETE FROM ' . $this->tableName . ' WHERE ' . $this->tableName . 'Id = :' . $this->tableName . 'Id';
