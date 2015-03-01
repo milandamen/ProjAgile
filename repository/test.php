@@ -1,9 +1,20 @@
 <?php
+require_once 'database.php';
+
 class A {
-	protected $name = 'piet';
+	protected $db;
+	
+	public function __construct() {
+		$this->db = new Db();
+	}
 	
 	public function func1() {
-		echo 'Dit is func1!';
+		$result = $this->db->getQuery(
+				'SELECT *
+				FROM news'
+		);
+		
+		var_dump($result);
 	}
 }
 
@@ -13,6 +24,6 @@ class B extends A {
 	}
 }
 
-$a = new B();
+$a = new A();
 $a->func1();
 ?>

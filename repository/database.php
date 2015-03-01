@@ -1,6 +1,13 @@
 <?php
 
 class Db {
+	// Connection settings
+	private $HOST = 	'84.246.4.143';
+	private $PORT = 	'9130';
+	private $DBNAME = 	'Vermeule3bunders';
+	private $USERNAME =	'Vermeule3bunders';
+	private $PASSWORD =	'Koekje07';
+	
 	const FETCH_ASSOC = PDO::FETCH_ASSOC;	// Return fetch result as an associaive array.
 	const FETCH_OBJ = PDO::FETCH_OBJ;		// Return fetch result as an array with objects.
 	// Default: FETCH_OBJ
@@ -33,7 +40,13 @@ class Db {
 	*/
 	public function dbConnect() {
 		try {
-			$this->database = new PDO('mysql:host=mysql3.mijnhostingpartner.nl;dbname=Vermeule3bunders','Vermeule3bunders','Koekje07');
+			$this->database = new PDO(
+					'mysql:host='.$this->HOST.
+					';port='.$this->PORT.
+					';dbname='.$this->DBNAME
+					, $this->USERNAME
+					, $this->PASSWORD
+			);
 		} catch(PDOException $e){
 			die('Database error: '.$e->getMessage().'<br/>');
 		}
@@ -83,14 +96,14 @@ class Db {
 	
 	/**
 		Execute a query. If the query returns rows, the result gets returned depending on what mode is set.
-		Mode db::FETCH_ASSOC:   return an associative array
-		Mode db::FETCH_OBJ:     return an array with objects
+		Mode Db::FETCH_ASSOC:   return an associative array
+		Mode Db::FETCH_OBJ:     return an array with objects
 		
 		Example:
 			$id = 3;
 			$hidden = false;
 			
-			$result = db->getQuery(
+			$result = $db->getQuery(
 					'SELECT * 
 					FROM news 
 					WHERE id = :id AND hidden = :hidden',
@@ -113,7 +126,7 @@ class Db {
 				echo $object->title;
 			}
 	*/
-	public function getQuery($query, $params = array(), $mode = db::FETCH_OBJ) {
+	public function getQuery($query, $params = array(), $mode = Db::FETCH_OBJ) {
 		$stmt = null;
 		if ($this->usesmartstmt && $this->isLastQuery($query)) {
 			$stmt = $this->laststmt;
@@ -129,13 +142,13 @@ class Db {
 		$stmt->execute();
 		
 		$result = null;
-		if ($mode == db::FETCH_ASSOC) {
+		if ($mode == Db::FETCH_ASSOC) {
 			$result = $stmt->fetchAll();
 			if (!isset($result) || !is_array($result)) {
 				$result = array();
 			}
 		}
-		if ($mode == db::FETCH_OBJ) {
+		if ($mode == Db::FETCH_OBJ) {
 			$result = array();
 			while ($row = $stmt->fetchObject()) {
 				$result[] = $row;
