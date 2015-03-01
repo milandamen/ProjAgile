@@ -14,12 +14,20 @@ class NewsRepository extends RepositoryBase
 
     public function add($object)
     {
-        $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES($object->getId(), $object->getDistrictSectionId(), $object->getUserId(), $object->getTitle(), $object->getContent(), $object->getDate(), $object->getHidden())';
+        #$query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES($object->getId(), $object->getDistrictSectionId(), $object->getUserId(), $object->getTitle(), $object->getContent(), $object->getDate(), $object->getHidden())';
 
-        #$query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) '.'VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW(), :hidden)';
+        $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW() , :hidden)';
 
+        $parameters = array(
+            ':newsId' => $object->getId(),
+            ':districtSectionId' => $object->getDistrictSectionId(),
+            ':userId' => $object->getUserId(),
+            ':title' => $object->getTitle(),
+            ':content' => $object->getContent(),
+            ':hidden' => $object->getHidden()
+        );
 
-        $this->db->execQuery($query);
+        $this->db->execQuery($query, $parameters);
     }
 
 }
