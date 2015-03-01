@@ -142,6 +142,7 @@ class Db {
 		$stmt->execute();
 		
 		$result = null;
+
 		if ($mode == Db::FETCH_ASSOC) {
 			$result = $stmt->fetchAll();
 			if (!isset($result) || !is_array($result)) {

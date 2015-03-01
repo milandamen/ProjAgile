@@ -16,7 +16,7 @@ class News
         $this->districtSectionId = $districtSectionId;
         $this->userId = $userId;
         $this->title = $title;
-        $this-> $content;
+        $this->$content = $content;
         $this->date = $date;
         $this->hidden = $hidden;
     }
@@ -45,7 +45,7 @@ class News
         return $this->date;
     }
 
-    public function gethidden(){
+    public function getHidden(){
         return $this->hidden;
     }
 }
