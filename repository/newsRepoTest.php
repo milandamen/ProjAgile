@@ -17,3 +17,5 @@ echo $news[0]->content;
 $n = new News(2,null,1,'Toegevoegd', 'Content', date("D-m-y H:i:s"),0);
 
 $newsrepo->add($n);
+
+$newsrepo->delete(2);

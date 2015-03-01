@@ -20,7 +20,10 @@ class RepositoryBase
 
     public function getById($id)
     {
-        return $this->db->getQuery($this->selectAll . $this->tableName . ' where ' . $this->tableName . 'Id = ' . $id);
+        $query = $this->selectAll . $this->tableName . ' where ' . $this->tableName . 'Id = :' . $this->tableName .'Id';
+        $parameter = array(':' . $this->tableName . 'Id' => $id);
+
+        return $this->db->getQuery($query, $parameter);
     }
 
     public function add($object)
@@ -30,7 +33,10 @@ class RepositoryBase
 
     public function delete($id)
     {
-        $this->db->execQuery('DELETE FROM ' . $this->tableName . ' where ' . $this->tableName . 'Id = ' . $id);
+        $query = 'DELETE FROM ' . $this->tableName . ' where ' . $this->tableName . 'Id = :' . $this->tableName . 'Id';
+        $parameter = array(':' . $this->tableName . 'Id' => $id);
+
+        $this->db->execQuery($query, $parameter);
     }
 
 }
