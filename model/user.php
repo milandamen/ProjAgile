@@ -3,6 +3,7 @@
 class User
 {
     private $id;
+    private $username;
     private $districtSectionId;
     private $userGroupId;
     private $postal;
@@ -13,9 +14,10 @@ class User
     private $email;
     private $active;
 
-    public function __construct($id, $districtSectionId, $userGroupId, $postal, $houseNumber, $password, $name, $surname, $email, $active)
+    public function __construct($id, $username,$districtSectionId, $userGroupId, $postal, $houseNumber, $password, $name, $surname, $email, $active)
     {
         $this->id = $id;
+        $this->username = $username;
         $this->districtSectionId = $districtSectionId;
         $this->userGroupId = $userGroupId;
         $this->postal = $postal;
@@ -30,6 +32,11 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     public function getDistrictSectionId()

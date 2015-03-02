@@ -14,9 +14,11 @@ class NewsRepository extends RepositoryBase
 
     public function getAll()
     {
+        #call to base method getAll
         $objects = parent::getAll();
         $newsArray = array();
 
+        #convert result objects to news objects
         foreach($objects as $var)
         {
             $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $var->hidden);
@@ -28,7 +30,7 @@ class NewsRepository extends RepositoryBase
     {
         $result = parent::getById($id);
 
-        if($result[0] != null)
+        if (count($result) == 1)
         {
             $news = new News($result[0]->newsId, $result[0]->districtSectionId, $result[0]->userId, $result[0]->title, $result[0]->content, $result[0]->date, $result[0]->hidden);
         }
