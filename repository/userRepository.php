@@ -41,10 +41,11 @@ class UserRepository extends RepositoryBase
     #change to user
     public function add($object)
     {
-        $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW() , :hidden)';
+        $query = 'INSERT INTO ' . $this->name . '(userId, username, districtSectionId, userGroupId, postal, housenumber, password, name, surname, email, active) VALUES(:userId, :username,:districtSectionId, :userGroupId, :postal, :housenumber, :password, :name, :surname, :email, :active)';
 
         $parameters = array(
-            ':newsId' => $object->getId(),
+            ':userId' => $object->getId(),
+            ':username' => $object->getUsername(),
             ':districtSectionId' => $object->getDistrictSectionId(),
             ':userId' => $object->getUserId(),
             ':title' => $object->getTitle(),
