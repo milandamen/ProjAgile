@@ -4,6 +4,12 @@ require_once '../model/user.php';
 
 $userRepository = new UserRepository();
 
+
+/* ADD user
+$user = new User('3', 'username', '1', '1', '3333AA', '2', 'password', 'name', 'surname', 'email', '1' );
+$userRepository->add($user);
+*/
+
 $users = $userRepository->getAll();
 
 echo 'GetAll: <br/><br/>';

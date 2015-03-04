@@ -47,10 +47,14 @@ class UserRepository extends RepositoryBase
             ':userId' => $object->getId(),
             ':username' => $object->getUsername(),
             ':districtSectionId' => $object->getDistrictSectionId(),
-            ':userId' => $object->getUserId(),
-            ':title' => $object->getTitle(),
-            ':content' => $object->getContent(),
-            ':hidden' => $object->getHidden()
+            ':userGroupId' => $object->getUserGroupId(),
+            ':postal' => $object->getPostal(),
+            ':housenumber' => $object->getHouseNumber(),
+            ':password' => $object->getPassword(),
+            ':name' => $object->getName(),
+            ':surname' => $object->getSurname(),
+            ':email' => $object->getEmail(),
+            ':active' => $object->getActive()
         );
 
         $this->db->execQuery($query, $parameters);
