@@ -38,7 +38,6 @@ class UserRepository extends RepositoryBase
         return $user;
     }
 
-    #change to user
     public function add($object)
     {
         $query = 'INSERT INTO ' . $this->name . '(userId, username, districtSectionId, userGroupId, postal, housenumber, password, name, surname, email, active) VALUES(:userId, :username,:districtSectionId, :userGroupId, :postal, :housenumber, :password, :name, :surname, :email, :active)';
@@ -60,20 +59,23 @@ class UserRepository extends RepositoryBase
         $this->db->execQuery($query, $parameters);
     }
 
-    #change to user
     public function update($object)
     {
-        $query = 'UPDATE ' . $this->tableName . ' SET districtSectionId = :districtSectionId, userId = :userId, title = :title, content = :content, date = :date, hidden= :hidden
+        $query = 'UPDATE ' . $this->tableName . ' SET username = :username, districtSectionId = :districtSectionId, userGroupId = :userGroupId, postal = :postal, housenumber = :housenumber, password = :password, name = :name, surname = :surname, email = :email, active = :active
         WHERE ' . $this->tableName .'Id = :' . $this->tableName .'Id';
 
         $parameters = array(
-            ':newsId' => $object->getId(),
+            ':userId' => $object->getId(),
+            ':username' => $object->getUsername(),
             ':districtSectionId' => $object->getDistrictSectionId(),
-            ':userId' => $object->getUserId(),
-            ':title' => $object->getTitle(),
-            ':content' => $object->getContent(),
-            ':date' => $object->getDate(),
-            ':hidden' => $object->getHidden()
+            ':userGroupId' => $object->getUserGroupId(),
+            ':postal' => $object->getPostal(),
+            ':housenumber' => $object->getHouseNumber(),
+            ':password' => $object->getPassword(),
+            ':name' => $object->getName(),
+            ':surname' => $object->getSurname(),
+            ':email' => $object->getEmail(),
+            ':active' => $object->getActive()
         );
 
         $this->db->execQuery($query, $parameters);

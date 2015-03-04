@@ -24,7 +24,13 @@ foreach($users as $var)
 
 echo  'getbyid: <br/><br/>';
 
-$var = $userRepository->getById(2);
+$id = 2;
+
+$updatedUser = new User('2', 'gebruiker1Updated', '1', '1', '3333UU', '246', 'testUpdated', 'updated', 'updated', 'updated@gmail', '1' );
+
+$userRepository->update($updatedUser);
+
+$var = $userRepository->getById($id);
 
 echo 'Username: ' . $var->getUsername() . '<br/>';
 echo 'Id: ' . $var->getId() . '<br/>';
