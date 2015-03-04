@@ -36,3 +36,6 @@ echo 'Username: ' . $var->getUsername() . '<br/>';
 echo 'Id: ' . $var->getId() . '<br/>';
 echo 'DistrictSectionId: ' . $var->getDistrictSectionId() . '<br/>';
 echo 'UserGroupId: ' . $var->getUserGroupId() . '<br/><br/>';
+
+#delete id 3
+#$userRepository->delete(3);

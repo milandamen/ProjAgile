@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37d88b73-efb6-4993-8f8d-6af1af815f72" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repository/userRepoTest.php" afterPath="$PROJECT_DIR$/repository/userRepoTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repository/userRepository.php" afterPath="$PROJECT_DIR$/repository/userRepository.php" />
     </list>
     <ignored path="ProjAgile.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +42,8 @@
       <file leaf-file-name="userRepoTest.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/repository/userRepoTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6034483" vertical-offset="0" max-vertical-offset="696">
-              <caret line="28" column="67" selection-start-line="28" selection-start-column="67" selection-end-line="28" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.8405172" vertical-offset="0" max-vertical-offset="696">
+              <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -588,6 +587,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/repository/newsRepoTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625" vertical-offset="0" max-vertical-offset="465">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/user.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.0" vertical-offset="0" max-vertical-offset="1365">
@@ -606,18 +613,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repository/newsRepoTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625" vertical-offset="0" max-vertical-offset="465">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/userRepoTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6034483" vertical-offset="0" max-vertical-offset="696">
-          <caret line="28" column="67" selection-start-line="28" selection-start-column="67" selection-end-line="28" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.8405172" vertical-offset="0" max-vertical-offset="696">
+          <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
           <folding />
         </state>
       </provider>
