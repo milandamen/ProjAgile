@@ -1,5 +1,7 @@
 <?php
 require_once 'repositoryBase.php';
+require_once '../app/model/News.php';
+
 class NewsRepository extends RepositoryBase
 {
 

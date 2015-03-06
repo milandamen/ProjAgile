@@ -51,8 +51,15 @@ class News
         $this->content = $content;
     }
 
-    public function getDate(){
+    public function getDate()
+    {
         return $this->date;
+    }
+
+    public function getNormalDate()
+    {
+    	$date = date_create($this->date);
+    	return date_format($date,'d-m-Y') ;
     }
 
     public function getHidden(){
