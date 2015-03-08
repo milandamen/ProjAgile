@@ -12,14 +12,16 @@ class Page
     private $title;
     private $filename;
     private $nrInMenu;
+    private $menuParent;
     private $nrInFooter;
 
-    public function __construct($id, $title, $filename, $nrInMenu, $nrInFooter)
+    public function __construct($id, $title, $filename, $nrInMenu,$menuParent, $nrInFooter)
     {
         $this->id = $id;
         $this->$title = $title;
         $this->$filename = $filename;
         $this->$nrInMenu = $nrInMenu;
+        $this->menuParent = $menuParent;
         $this->$nrInFooter = $nrInFooter;
     }
 
@@ -43,6 +45,11 @@ class Page
         return $this->nrInMenu;
     }
 
+    public function getMenuParent()
+    {
+        return $this->menuParent;
+    }
+
     public function getNrInFooter()
     {
         return $this->nrInFooter;
@@ -61,6 +68,11 @@ class Page
     public function setNrInMenu($nrInMenu)
     {
         $this->nrInMenu = $nrInMenu;
+    }
+
+    public function setMenuParent($menuParentID)
+    {
+        $this->menuParent = $menuParentID;
     }
 
     public function setNrInFooter($nrInFooter)
