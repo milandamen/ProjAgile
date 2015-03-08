@@ -30,5 +30,19 @@ class Home extends Shared
 
         $this->footer();
     }
+	
+	public function editlayout()
+	{
+		$this->header('editlayout');
+		$this->menu();
+		
+		if ($_POST) {
+			
+		} else {
+			$this->view('home/editlayout');
+		}
+		
+		$this->footer();
+	}
 
 }
