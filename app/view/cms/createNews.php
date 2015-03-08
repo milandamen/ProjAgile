@@ -12,7 +12,7 @@
     </div>
 
         <div class="col-lg-12">
-            <form action="#noggeenaction" method="post">
+            <form action="/projagile/public/cms/createNewsSave" method="post">
 
                 <div class="row">
                     <div class="form-group">
@@ -30,11 +30,13 @@
 
                 <div class="row">
                     <label class="label-form" for="Sectie">Sectie</label>
-                    <select name="Sectie" class="form-control">
-                        <option value="home"> Home </option>
-                        <option value="Deelwijk A"> Deelwijk A </option>
-                        <option value="Deelwijk B"> Deelwijk B </option>
-                        <option value="Deelwijk c"> Deelwijk C </option>
+                    <select name="district" class="form-control">
+                        <?php
+                        foreach($data as $section)
+                        {
+                            echo '<option value="'. $section->getId() .'">' . $section->getName() . '</option>';
+                        }
+                        ?>
                     </select>
                 </div>
 
@@ -56,6 +58,10 @@
                             <input type="radio" name="hidden" value="false" checked="true">Nee
                         </label>
                     </div>
+                </div>
+                <div class="row">
+                    <br/>
+                    <input class="btn btn-submit" type="submit" value="opslaan">
                 </div>
             </form>
         </div>
