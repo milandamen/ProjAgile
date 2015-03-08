@@ -1,16 +1,26 @@
     <!-- Footer -->
         <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright ©Wijkraad De Bunders 2015</p>
-                </div>
-            </div>
+            <?php
+            foreach($data['footerColumns'] as $footercolumn)
+            {
+                echo '<ul class="col-sm-4">';
+                foreach($footercolumn as $item)
+                {
+                    $link = '#';
+                    if($item->getLink() != null){
+                        $link = $item->getLink();
+                    }
+                    echo '<li><a href="' . $link . '">' . $item->getText() . '</a></li>';
+                }
+                echo '</ul>';
+            }
+            ?>
         </footer>
+
+    <?=var_dump($data['footerColumns'])?>
 
     </div>
     <!-- /.container -->
-
-
 
 </body>
 </html>
