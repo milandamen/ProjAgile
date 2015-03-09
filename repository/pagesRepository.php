@@ -43,76 +43,45 @@ class pagesRepository extends RepositoryBase
 
         return $pages;
     }
-/*
-    public function move($title, $upOrDown = "up")
+
+    public function move($menuId, $upOrDown = "up")
     {
-        $query = ' SELECT * FROM ' . $this->name . ' WHERE title = :title LIMIT 1';
-        $parameters = array ( ':title' => $title);
-
+        $query = ' SELECT * FROM ' . $this->name . ' WHERE menuId = :menuId';
+        $parameters = array (':menuId' => $menuId);
         $result = $this->db->getQuery($query, $parameters);
+        $menuItem = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
 
-        if(count($result) == 1)
+        $menuOrder = $menuItem->getMenuOrder();
+        $parentId = $menuItem->getParentId();
+
+
+        if($upOrDown == "down")
         {
-            $page = new Page($result[0]->id, $result[0]->title, $result[0]->filename, $result[0]->nrInMenu, $result[0]->menuParent, $result[0]->nrInFooter);
+            $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId = :parentId AND menuOrder = :menuOrder ';
+            $parameters = array(':parentId' => $parentId, ':menuOrder' => $menuOrder + 1);
+            $result = $this->db->getQuery($query, $parameters);
+            $child = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
 
-            $query;
-            $parameters;
-            if($upOrDown == "up" && $menuOrFooter == "menu")
-            {
-                $query = ' SELECT * FROM ' . $this->name . ' WHERE nrInMenu = :nrInMenuPageAbove LIMIT 1';
-                $parameters = array(':nrInMenuPageAbove' => $page->getNrInMenu() - 1);
-            }
-            elseif($upOrDown == "down" && $menuOrFooter == "menu")
-            {
-                $query = ' SELECT * FROM ' . $this->name . ' WHERE nrInMenu = :nrInMenuPageBelow LIMIT 1';
-                $parameters = array(':nrInMenuPageBelow' => $page->getNrInMenu() + 1);
-            }
-            elseif($upOrDown == "up" && $menuOrFooter == "footer")
-            {
-                $query = ' SELECT * FROM ' . $this->name . ' WHERE nrInFooter = :nrInFooterPageAbove LIMIT 1';
-                $parameters = array(':nrInFooterPageAbove' => $page->getNrInFooter() - 1);
-            }
-            elseif($upOrDown == "down" && $menuOrFooter == "footer")
-            {
-                $query = ' SELECT * FROM ' . $this->name . ' WHERE nrInFooter = :nrInFooterPageBelow LIMIT 1';
-                $parameters = array(':nrInFooterPageBelow' => $page->getNrInFooter() + 1);
-            }
-
-            $result = $this->db->getQuery($query,$parameters);
-
-            if(count($result == 1))
-            {
-                $pageAbove = new Page($result[0]->id, $result[0]->title, $result[0]->filename, $result[0]->nrInMenu, $result[0]->menuParent, $result[0]->nrInFooter);
-
-                if($upOrDown == "up" && $menuOrFooter == "menu")
-                {
-                    $page->setNrInMenu($page->getNrInMenu() -1);
-                    $pageAbove->setNrInMenu($pageAbove->getNrInMenu() +1);
-                }
-                elseif($upOrDown == "down" && $menuOrFooter == "menu")
-                {
-                    $page->setNrInMenu($page->getNrInMenu() +1);
-                    $pageAbove->setNrInMenu($pageAbove->getNrInMenu() -1);
-                }
-                elseif($upOrDown == "up" && $menuOrFooter == "footer")
-                {
-                    $page->setNrInFooter($page->getNrInFooter() -1);
-                    $pageAbove->setNrInFooter($pageAbove->getNrInFooter() +1);
-                }
-                elseif($upOrDown == "down" && $menuOrFooter == "footer")
-                {
-                    $page->setNrInFooter($page->getNrInFooter() +1);
-                    $pageAbove->setNrInFooter($pageAbove->getNrInFooter() -1);
-                }
-
-                $this->update($page);
-                $this->update($pageAbove);
-                return true;
-            }
+            $child->setMenuOrder($menuOrder);
+            $menuItem->setMenuOrder($menuOrder + 1);
+            $this->update($child);
+            $this->update($menuItem);
         }
-        return false;
+        else
+        {
+            $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId = :parentId AND menuOrder = :menuOrder ';
+            $parameters = array(':parentId' => $parentId, ':menuOrder' => $menuOrder - 1);
+            $result = $this->db->getQuery($query, $parameters);
+            $child = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+
+            $child->setMenuOrder($menuOrder);
+            $menuItem->setMenuOrder($menuOrder - 1);
+            $this->update($child);
+            $this->update($menuItem);
+
+        }
     }
-*/
+
     public function update($object)
     {
         $query = 'UPDATE ' . $this->tableName . ' SET menuId = :menuId, parentId = :parentId, name = :name, relativeUrl = :relativeUrl, menuOrder = :menuOrder, publish =:publish
