@@ -8,12 +8,20 @@
 
 class Home extends Shared
 {
+	private $newsdb;
+
+	public function __construct(){
+		require_once '../app/repository/newsRepository.php';
+		$this->newsdb = new NewsRepository();
+	}
+
     public function index()
     {
         $this->header('Home');
         $this->menu();
 
-        $this->view('home/index');
+
+        $this->view('home/index', $this->newsdb->getAll());
 
         $this->footer();
     }
