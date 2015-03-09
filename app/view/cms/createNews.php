@@ -12,7 +12,7 @@
     </div>
 
         <div class="col-lg-12">
-            <form action="/projagile/public/cms/createNewsSave" method="post">
+            <form action="/projagile/public/cms/createNewsSave" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="form-group">
@@ -45,6 +45,7 @@
                     <label class="btn btn-success btn-md" for="my-file-selector">
                         <input id="my-file-selector" type="file" style="display:none;"> Selecteer bestand </label>
                     <label class="btn btn-danger btn-md"> Verwijder bestand</label>
+                    <input type='file' name='file[]' multiple>
                 </div>
 
                 <div class="row">

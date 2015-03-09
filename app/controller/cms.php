@@ -24,6 +24,19 @@ class Cms extends Shared
         $hidden = $_POST['hidden'];
         $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
 
+        session_start();
+        $target= '../public/uploads/';
+        $count = 0;
+
+        foreach($_FILES['file']['name'] as $filename)
+        {
+            $tmp = $_FILES['file']['tmp_name'][$count];
+            $count=$count + 1;
+            $target = $target.basename($filename);
+            move_uploaded_file($tmp,$target);
+            #$tmp='';
+        }
+
         if($hidden === true)
         {
             $hidden = 1;
@@ -33,7 +46,7 @@ class Cms extends Shared
             $hidden = 0;
         }
 
-        $news = new News(4, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
+        $news = new News(null, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
         $newsrepo = new NewsRepository();
         $newsrepo->add($news);
 
