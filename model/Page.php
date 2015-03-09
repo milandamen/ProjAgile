@@ -8,76 +8,76 @@
 
 class Page
 {
-    private $id;
-    private $title;
-    private $filename;
-    private $nrInMenu;
-    private $menuParent;
-    private $nrInFooter;
+    private $menuId;
+    private $parentId;
+    private $name;
+    private $relativeUrl;
+    private $menuOrder;
+    private $publish;
 
-    public function __construct($id, $title, $filename, $nrInMenu,$menuParent, $nrInFooter)
+    public function __construct($menuId, $parentId, $name, $relativeUrl, $menuOrder,$publish)
     {
-        $this->id = $id;
-        $this->$title = $title;
-        $this->$filename = $filename;
-        $this->$nrInMenu = $nrInMenu;
-        $this->menuParent = $menuParent;
-        $this->$nrInFooter = $nrInFooter;
+        $this->menuId = $menuId;
+        $this->parentId = $parentId;
+        $this->name = $name;
+        $this->relativeUrl = $relativeUrl;
+        $this->menuOrder = $menuOrder;
+        $this->publish = $publish;
     }
 
-    public function getId()
+    public function getMenuId()
     {
-        return $this->id;
+        return $this->menuId;
     }
 
-    public function getTitle()
+    public function getParentId()
     {
-        return $this->title;
+        return $this->parentId;
     }
 
-    public function getFilename()
+    public function getName()
     {
-        return $this->filename;
+        return $this->name;
     }
 
-    public function getNrInMenu()
+    public function getRelativeUrl()
     {
-        return $this->nrInMenu;
+        return $this->relativeUrl;
     }
 
-    public function getMenuParent()
+    public function getMenuOrder()
     {
-        return $this->menuParent;
+        return $this->menuOrder;
     }
 
-    public function getNrInFooter()
+    public function getPublish()
     {
-        return $this->nrInFooter;
+        return $this->publish;
     }
 
-    public function setTitle($title)
+    public function setMenuId($menuId)
     {
-        $this->title = $title;
+        $this->menuId = $menuId;
     }
 
-    public function setFileName($filename)
+    public function setParentId($parentId)
     {
-        $this->filename = $filename;
+        $this->parentId = $parentId;
     }
 
-    public function setNrInMenu($nrInMenu)
+    public function setName($name)
     {
-        $this->nrInMenu = $nrInMenu;
+        $this->name = $name;
     }
 
-    public function setMenuParent($menuParentID)
+    public function setMenuOrder($menuOrder)
     {
-        $this->menuParent = $menuParentID;
+        $this->menuOrder = $menuOrder;
     }
 
-    public function setNrInFooter($nrInFooter)
+    public function setPublish($publish)
     {
-        $this->nrInFooter = $nrInFooter;
+        $this->publish = $publish;
     }
 }
 ?>

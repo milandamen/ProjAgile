@@ -9,7 +9,7 @@ require_once 'repositoryBase.php';
 class pagesRepository extends RepositoryBase
 {
 
-    private $name = 'pages';
+    private $name = 'menu';
 
     public function __construct()
     {
@@ -27,7 +27,7 @@ class pagesRepository extends RepositoryBase
         #convert result objects to news objects
         foreach($objects as $var)
         {
-            $pagesArray[] = new Page($var->id, $var->title, $var->filename, $var->nrInMenu, $var->menuParent, $var->nrInFooter);
+            $pagesArray[] = new Page($var->menuId, $var->parentId, $var->name, $var->relativeUrl, $var->menuOrder, $var->publish);
         }
         return $pagesArray;
     }
@@ -38,13 +38,13 @@ class pagesRepository extends RepositoryBase
 
         if (count($result) == 1)
         {
-            $pages = new Page($result[0]->id, $result[0]->title, $result[0]->filename, $result[0]->nrInMenu, $result[0]->menuParent, $result[0]->nrInFooter);
+            $pages = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
         }
 
         return $pages;
     }
-
-    public function move($title, $menuOrFooter = "menu", $upOrDown = "up")
+/*
+    public function move($title, $upOrDown = "up")
     {
         $query = ' SELECT * FROM ' . $this->name . ' WHERE title = :title LIMIT 1';
         $parameters = array ( ':title' => $title);
@@ -112,35 +112,32 @@ class pagesRepository extends RepositoryBase
         }
         return false;
     }
-
+*/
     public function update($object)
     {
-        //$query = 'UPDATE ' . $this->tableName . ' SET id = :id, title = :title, filename = :filename, nrInMenu = :nrInMenu, nrInFooter = :nrInFooter
-        //WHERE ' . $this->tableName .'id = :' . $this->tableName .'id';
-
-        $query = 'UPDATE ' . $this->tableName . ' SET id = :id, title = :title, filename = :filename, nrInMenu = :nrInMenu, menuParent = :menuParent, nrInFooter = :nrInFooter
+        $query = 'UPDATE ' . $this->tableName . ' SET menuId = :menuId, parentId = :parentId, name = :name, relativeUrl = :relativeUrl, menuOrder = :menuOrder, publish =:publish
         WHERE id = :id';
 
         $parameters = array(
-            ':id' => $object->getId(),
-            ':title' => $object->getTitle(),
-            ':filename' => $object->getFilename(),
-            ':nrInMenu' => $object->getNrInMenu(),
-            ':menuParent' => $object->getMenuParent(),
-            ':nrInFooter' => $object->getNrInFooter()
+            ':menuId' => $object->getMenuId(),
+            ':parentId' => $object->getParentId(),
+            ':name' => $object->getName(),
+            ':relativeUrl' => $object->getRelativeUrl(),
+            ':menuOrder' => $object->getMenuOrder(),
+            ':publish'=> $object-> getPublish()
         );
 
         $this->db->execQuery($query, $parameters);
     }
 
-    public function setParentPage($parentID, $childID)
+    public function setParentPage($parentId, $menuId)
     {
-        $child = $this->getById($childID);
-        $parent = $this->getById($parentID);
+        $child = $this->getById($menuId);
+        $parent = $this->getById($parentId);
 
         if($child != null && $parent != null)
         {
-            $child->setMenuParent($parentID);
+            $child->setMenuParent($parentId);
             $this->update($child);
             return true;
         }
@@ -148,9 +145,9 @@ class pagesRepository extends RepositoryBase
         return false;
     }
 
-    public function removeParentPage($childID)
+    public function removeParentPage($menuId)
     {
-        $child = $this->getById($childID);
+        $child = $this->getById($menuId);
 
         if($child != null)
         {
@@ -162,50 +159,27 @@ class pagesRepository extends RepositoryBase
         return false;
     }
 
-    public function removeFromMenu($pageID)
+    public function removeFromMenu($menuId)
     {
-        $page = $this->getById($pageID);
-
-        if($page != null)
-        {
-            $page->setNrInMenu(0);
-            $this->update($page);
-        }
+        parent::delete($menuId);
     }
 
-    public function removeFromFooter($pageID)
+    public function addToMenu($menuId)
     {
-        $page = $this->getById($pageID);
+        $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId IS NULL ORDER BY menuorder DESC LIMIT 1';
+        $pageWithHighestMenuOrder = $this->db->getQuery($query);
+        $menuOrder = 0;
 
-        if($page != null)
+        if($pageWithHighestMenuOrder != null)
         {
-            $page->setNrInFooter(0);
-            $this->update($page);
-        }
-    }
-
-    public function RemoveFromMenuAndFooter($pageID)
-    {
-        $this->removeFromMenu($pageID);
-        $this->removeFromFooter($pageID);
-    }
-
-    public function addToMenu($pageID)
-    {
-        $query = ' SELECT * FROM ' . $this->name . ' ORDER BY nrInMenu DESC LIMIT 1';
-        $pageWithHighestMenuNr = $this->db->getQuery($query);
-        $menuNr = 0;
-
-        if($pageWithHighestMenuNr != null)
-        {
-            $menuNr = $pageWithHighestMenuNr->getNrInMenu() + 1;
+            $menuOrder = $pageWithHighestMenuOrder->getNrInMenu() + 1;
         }
 
-        $page = $this->getById($pageID);
-        if($page != null && $menuNr != 0)
+        $menu = $this->getById($menuId);
+        if($menu != null )
         {
-            $page->setNrInMenu($menuNr);
-            $this->update($page);
+            $menu->setMenuOrder($menuOrder);
+            $this->update($menu);
             return true;
         }
         else
@@ -214,44 +188,20 @@ class pagesRepository extends RepositoryBase
         }
     }
 
-    public function addToFooter($pageID)
+    public function changeMenuTitle($menuId, $newMenuTitle)
     {
-        $query = ' SELECT * FROM ' . $this->name . ' ORDER BY nrInFooter DESC LIMIT 1';
-        $pageWithHighestFooterNr = $this->db->getQuery($query);
-        $footerNr = 0;
-
-        if($pageWithHighestFooterNr != null)
-        {
-            $footerNr = $pageWithHighestFooterNr->getNrInFooter() + 1;
-        }
-
-        $page = $this->getById($pageID);
-        if($page != null && $footerNr != 0)
-        {
-            $page->setNrInFooter($footerNr);
-            $this->update($page);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function changePageTitle($pageID, $newPageTitle)
-    {
-        $page = $this->getById($pageID);
+        $page = $this->getById($menuId);
 
         if($page != null)
         {
-            $page->setTitle($newPageTitle);
+            $page->setTitle($newMenuTitle);
             $this->update($page);
         }
     }
 
-    public function changePageFileName($pageID, $newPageFileName)
+    public function changePageFileName($menuId, $newPageFileName)
     {
-        $page = $this->getById($pageID);
+        $page = $this->getById($menuId);
 
         if($page != null)
         {
