@@ -10,7 +10,6 @@ class FooterController extends Shared
         $footer = $footerdb->getAll();
         if($_POST)
         {
-            //var_dump($_POST['footer']);
             //create new footer array from $_POST
             $newFooter = [];
             for($colN = 0; $colN < count($_POST['footer']); $colN++)
@@ -41,19 +40,16 @@ class FooterController extends Shared
                     if($item->getCol() == $entry->getCol() && $item->getRow() == $entry->getRow())
                     {
                         $isNew = 0;
+                        break;
                     }
                 }
                 if($isNew == 1)
                 {
                     $footerdb->add($entry);
-                    echo "Added:";
-                    //var_dump($entry);
                 }
                 else
                 {
                     $footerdb->update($entry);
-                    echo "Updated:";
-                    //var_dump($entry);
                 }
             }
 
@@ -66,16 +62,14 @@ class FooterController extends Shared
                     if($item->getCol() == $entry->getCol() && $item->getRow() == $entry->getRow())
                     {
                         $canDelete = 0;
+                        break;
                     }
                 }
                 if($canDelete == 1)
                 {
                     $footerdb->remove($item);
-                    echo "Removed:";
-                    //var_dump($item);
                 }
             }
-            //var_dump($newFooter);
             header("Location: ../../public");
             return;
         }
