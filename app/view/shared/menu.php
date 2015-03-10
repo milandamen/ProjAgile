@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/ProjAgile/public/home/index">
+                <a class="navbar-brand" href="/ProjAgile/public/">
 				</a>
             </div>
 			
@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/ProjAgile/public/home/index">Wijkraad</a>
+                        <a href="/ProjAgile/public/">Wijkraad</a>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Deelwijken <span class="caret"></span></a>

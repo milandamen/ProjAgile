@@ -83,7 +83,7 @@ class NewsRepository extends RepositoryBase
     }
 
     private function getAuthor($id){
-    	$username="";
+    	$username='';
     	$query = 'SELECT username FROM user WHERE userId = :userId';
     	$parameters = array( 
     		':userId' => $id,
@@ -99,7 +99,7 @@ class NewsRepository extends RepositoryBase
     }
 
     private function getDistrict($id){
-    	$district="";
+    	$district='';
     	$query = 'SELECT name FROM districtsection WHERE districtSectionId = :districtId';
     	$parameters = array( 
     		':districtId' => $id,
