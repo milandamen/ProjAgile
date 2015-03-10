@@ -11,27 +11,30 @@
             <form name="updateFooter" id="updateFooter" method="post" enctype="multipart/form-data" action="">
                 <button type="submit" class="btn btn-primary">Sla op</button>
                 <hr>
-                <div>
+                <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
+                <hr>
+                <div id="footer-tables" class="footer-tables">
                     <?php
                     $colCount = 0;
                     foreach($data['footerColumns'] as $footercolumn)
                     {
                         $rowCount = 0;
-                        echo '<ul class="col-sm-4">';
+                        echo '<table name="'. $colCount .'" class="col-sm-4">';
                         foreach($footercolumn as $item)
                         {
                             $link = '#';
                             if($item->getLink() != null){
                                 $link = $item->getLink();
                             }
-                            echo '<li><input type="hidden" name="footer[col][]" id="footerCol" value="' . $colCount . '">
-                             <input type="hidden" name="footer[row][]" id="footerRow" value="' . $rowCount . '">
-                             Text: <input type="text" name="footer[text][]" id="footerText" value="' . $item->getText() . '">
-                             Link: <input type="text" name="footer[link][]" id="footerLink" value="' . $item->getLink() . '">
-                             <button type="button" onclick="removeRow(this)">X</button></li>';
+                            echo '<tr><td>Text: <input type="text" name="footer[' . $colCount . '][text][]" id="footerText" value="' . $item->getText() . '" required>
+                             <button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>
+                             <br/> Link: <input type="text" name="footer[' . $colCount . '][link][]" id="footerLink" value="' . $item->getLink() . '">
+                             </td></tr>';
                             $rowCount++;
                         }
-                        echo '</ul>';
+                        echo '<tr><td><button type="button" onclick="addRow(this)" class="btn btn-primary">Voeg link toe</button></td></tr>
+                            <tr><td><button type="button" onclick="removeColumn(this)" class="btn btn-primary">Verwijder kolom</button></td></tr>
+                            </table>';
                         $colCount++;
                     }
                     ?>
@@ -40,32 +43,5 @@
             </form>
         </div>
     </div>
-
-
-<script>
-    function addColumn()
-    {
-
-    }
-
-    function removeColumn(column)
-    {
-
-    }
-
-    function addRow(column)
-    {
-
-    }
-
-    function removeRow(row)
-    {
-        var p=row.parentNode;
-        p.parentNode.removeChild(p);
-    }
-
-
-    function goBack() {
-        window.history.back()
-    }
-</script>
+    <!-- JavaScript that enables adding and removing columns and rows -->
+    <script src="/ProjAgile/public/js/footerUpdate.js"></script>

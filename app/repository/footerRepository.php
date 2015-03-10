@@ -57,7 +57,7 @@ class FooterRepository extends RepositoryBase
 
     public function remove($object)
     {
-        $query = 'DELETE FROM ' . $this->tableName . 'WHERE col = :col AND row = :row';
+        $query = 'DELETE FROM ' . $this->tableName . ' WHERE col = :col AND row = :row';
 
         $parameters = array(
             ':col' => $object->getCol(),
