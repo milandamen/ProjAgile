@@ -179,5 +179,10 @@ class Db {
 	private function isLastQuery($query) {
 		return $this->lastquery === $query;
 	}
+
+    public function getLastInsertedId()
+    {
+        return $this->database->lastInsertId();
+    }
 }
 ?>

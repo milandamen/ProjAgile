@@ -17,6 +17,7 @@ class Cms extends Shared
     public function createNewsSave()
     {
         require_once '../app/repository/newsRepository.php';
+        require_once '../app/repository/fileRepository.php';
         require_once '../app/model/News.php';
 
         $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
@@ -25,16 +26,16 @@ class Cms extends Shared
         $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
 
         session_start();
-        $target= '../public/uploads/';
+        $target = '../public/uploads/';
+        $filepaths = array();
         $count = 0;
-
         foreach($_FILES['file']['name'] as $filename)
         {
             $tmp = $_FILES['file']['tmp_name'][$count];
             $count=$count + 1;
             $target = $target.basename($filename);
+            $filepaths[] = $filename;
             move_uploaded_file($tmp,$target);
-            #$tmp='';
         }
 
         if($hidden === true)
@@ -48,7 +49,10 @@ class Cms extends Shared
 
         $news = new News(null, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
         $newsrepo = new NewsRepository();
-        $newsrepo->add($news);
+        $newsId = $newsrepo->add($news);
+
+        $filerepo = new FileRepository();
+        $filerepo->add($filepaths, $newsId);
 
         $this->header('Home');
         $this->menu();

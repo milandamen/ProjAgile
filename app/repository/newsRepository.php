@@ -42,6 +42,7 @@ class NewsRepository extends RepositoryBase
     {
         $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW() , :hidden)';
 
+
         $parameters = array(
             ':newsId' => $object->getId(),
             ':districtSectionId' => $object->getDistrictSectionId(),
@@ -52,6 +53,8 @@ class NewsRepository extends RepositoryBase
         );
 
         $this->db->execQuery($query, $parameters);
+
+        return $this->db->getLastInsertedId();
     }
 
     public function update($object)
@@ -71,4 +74,5 @@ class NewsRepository extends RepositoryBase
 
         $this->db->execQuery($query, $parameters);
     }
+
 }
