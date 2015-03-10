@@ -42,10 +42,9 @@
 
                 <div class="row">
                     <br/>
-                    <label class="btn btn-success btn-md" for="my-file-selector">
-                        <input id="my-file-selector" type="file" style="display:none;"> Selecteer bestand </label>
-                    <label class="btn btn-danger btn-md"> Verwijder bestand</label>
-                    <input type='file' name='file[]' multiple>
+                    <input  id="upload" type='file' name='file[]' multiple>
+                    <br/>
+                    <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestand</label>
                 </div>
 
                 <div class="row">
@@ -66,3 +65,9 @@
                 </div>
             </form>
         </div>
+
+<script type="text/javascript" >
+    $("#cancel").click(function(){
+        document.getElementById("upload").value = "";
+    })
+</script>
