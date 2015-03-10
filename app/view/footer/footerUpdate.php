@@ -23,13 +23,25 @@
                         foreach($footercolumn as $item)
                         {
                             $link = '#';
-                            if($item->getLink() != null){
+                            if($item->getLink() != null)
+                            {
                                 $link = $item->getLink();
                             }
-                            echo '<tr><td>Text: <input type="text" name="footer[' . $colCount . '][text][]" id="footerText" value="' . $item->getText() . '" required>
+                            // first row has title, not text
+                            if($rowCount == 0)
+                            {
+                                echo '<tr><td>Titel: <input type="text" name="footer[' . $colCount . '][text][]" id="footerText" value="' . $item->getText() . '" required>
                              <button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>
                              <br/> Link: <input type="text" name="footer[' . $colCount . '][link][]" id="footerLink" value="' . $item->getLink() . '">
                              </td></tr>';
+                            }
+                            else
+                            {
+                                echo '<tr><td>Text: <input type="text" name="footer[' . $colCount . '][text][]" id="footerText" value="' . $item->getText() . '" required>
+                             <button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>
+                             <br/> Link: <input type="text" name="footer[' . $colCount . '][link][]" id="footerLink" value="' . $item->getLink() . '">
+                             </td></tr>';
+                            }
                             $rowCount++;
                         }
                         echo '<tr><td><button type="button" onclick="addRow(this)" class="btn btn-primary">Voeg link toe</button></td></tr>

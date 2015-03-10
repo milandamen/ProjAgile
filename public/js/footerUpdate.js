@@ -19,7 +19,7 @@ function addColumn()
     //create first link
     var row = table.insertRow(table.rows.length - 2);
     var cell = row.insertCell(0);
-    cell.innerHTML = 'Text: <input type="text" name="footer[' + numTables + '][text][]" id="footerText" required>'+
+    cell.innerHTML = 'Titel: <input type="text" name="footer[' + numTables + '][text][]" id="footerText" required>'+
     '<button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>'+
     '<br/> Link: <input type="text" name="footer[' + numTables + '][link][]" id="footerLink">';
 
