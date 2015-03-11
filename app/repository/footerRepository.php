@@ -1,5 +1,5 @@
 <?php
-require_once 'repositoryBase.php';
+require_once 'RepositoryBase.php';
 class FooterRepository extends RepositoryBase
 {
 

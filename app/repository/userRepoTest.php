@@ -1,5 +1,5 @@
 <?php
-require_once 'userRepository.php';
+require_once 'UserRepository.php';
 require_once '../model/user.php';
 
 $userRepository = new UserRepository();
