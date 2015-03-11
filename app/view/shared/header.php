@@ -21,6 +21,7 @@
     <link href="/ProjAgile/public/css/modern-business.css" type="text/css" rel="stylesheet">
     <link href="/ProjAgile/public/css/forum.css" type="text/css" rel="stylesheet">
     <link href="/ProjAgile/public/css/partners.css" type="text/css" rel="stylesheet">
+ 	<link href="/ProjAgile/public/css/news.css" type="text/css" rel="stylesheet">
     <link href="/ProjAgile/public/css/footer.css" type="text/css" rel="stylesheet">
 
     <!-- Custom Fonts -->
