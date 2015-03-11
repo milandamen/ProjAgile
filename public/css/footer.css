@@ -1,0 +1,8 @@
+.footerlist-container ul{
+    list-style: none;
+    margin-left: 0;
+}
+
+.footer-edit-link{
+    float: right;
+}

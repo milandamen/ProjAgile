@@ -55,4 +55,14 @@ class Home extends Shared
 		}
 	}
 
+    public function error()
+    {
+        $this->header('Home');
+        $this->menu();
+
+        $this->view('home/error');
+
+        $this->footer();
+    }
+
 }
