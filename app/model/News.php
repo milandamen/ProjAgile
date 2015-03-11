@@ -9,8 +9,6 @@ class News
     private $content;
     private $date;
     private $hidden;
-    private $author;
-    private $district;
 
     public function __construct($id, $districtSectionId, $userId, $title, $content, $date, $hidden)
     {
@@ -66,22 +64,6 @@ class News
 
     public function getHidden(){
         return $this->hidden;
-    }
-
-    public function setAuthor($author){
-    	$this->author = $author;
-    }
-
-    public function getAuthor(){
-    	return $this->author;
-    }
-
-    public function setDistrict($district){
-    	$this->district = $district;
-    }
-
-    public function getDistrict(){
-    	return $this->district;
     }
 
 }

@@ -39,14 +39,4 @@ class Home extends Shared
         $this->footer();
     }
 
-    public function error()
-    {
-        $this->header('Home');
-        $this->menu();
-
-        $this->view('home/error');
-
-        $this->footer();
-    }
-
 }
