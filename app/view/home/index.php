@@ -45,47 +45,14 @@
     <!-- Features Section -->
     <div class="row">
         <div class="col-lg-12">
-            <h2 class="page-header">Nieuws</h2>
+            <h2 class="page-header">De Bunders</h2>
         </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Nieuws Item 1</h4>
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                    <a href="#" class="btn btn-default">Lees meer</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Nieuws Item 2</h4>
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                    <a href="#" class="btn btn-default">Lees meer</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Nieuws Item 3</h4>
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                    <a href="#" class="btn btn-default">Lees meer</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+		<?php require_once 'module-news.php'; ?>
+
+	</div>
     <!-- /.row -->
-
-
-
-    <!-- Script to Activate the Carousel -->
+    	<!-- Script to Activate the Carousel -->
     <script>
         $('.carousel').carousel({
             interval: 5000 //changes the speed
