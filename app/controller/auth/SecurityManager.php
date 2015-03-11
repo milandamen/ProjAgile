@@ -1,5 +1,5 @@
 <?php
-    /* These constants cannot be changed unless the passwords for all users are reset.
+    /* These constants should not be changed unless the passwords for all users are reset.
      * The one exclusion of this is the iteration count (PBKDF2_ITERATIONS).
      * This iteration count should be upgraded to the double value of it every 2 years to keep up with Moore's Law (20000 becomes 40000).
      * It should be noted that the iteration count should be benchmarked since the hashing process should be slow, but not slow enough for the user to notice the delay.
@@ -16,14 +16,14 @@
         {
             return base64_decode
             (
-                pbkdf2
+                $this->pbkdf2
                 (
                     PBKDF2_HASH_ALGORITHM,
                     $password,
                     $salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_HASH_BYTE_SIZE,
-                    true
+                    false
                 )
             );
         }
@@ -38,20 +38,19 @@
         {
             $pbkdf2 = base64_decode($correctHash);
 
-            $passwordsEquals = slowEquals
+            return $this->slowEquals
             (
                 $pbkdf2,
-                pbkdf2
+                $this->pbkdf2
                 (
                     PBKDF2_HASH_ALGORITHM,
                     $password,
                     $salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_HASH_BYTE_SIZE,
-                    true
+                    false
                 )
             );
-            return $passwordsEquals;
         }
 
         // Compares two strings $a and $b in length-constant time.

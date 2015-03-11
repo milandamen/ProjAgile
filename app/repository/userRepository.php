@@ -7,6 +7,7 @@
 
         public function __construct()
         {
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjAgile/app/model/User.php');
             #call to base constructor
             parent::__construct();
             $this->tableName = $this->name;
@@ -21,7 +22,7 @@
             #convert result objects to user objects
             foreach($objects as $var)
             {
-                $userArray[] = new User($var->userId, $var->username, $var->districtSectionId, $var->userGroupId, $var->postal, $var->housenumber, $var->password, $var->name, $var->surname, $var->email, $var->active);
+                $userArray[] = new User($var->userId, $var->userGroupId, $var->districtSectionId, $var->username, $var->password, $var->salt, $var->firstName, $var->surname, $var->postal, $var->houseNumber, $var->email, $var->active);
             }
             return $userArray;
         }
@@ -32,37 +33,37 @@
 
             if (count($result) == 1)
             {
-                $user = new User($result[0]->userId, $result[0]->username, $result[0]->districtSectionId, $result[0]->userGroupId, $result[0]->postal, $result[0]->housenumber, $result[0]->password, $result[0]->name, $result[0]->surname, $result[0]->email, $result[0]->active);
+                $user = new User($result[0]->userId, $result[0]->userGroupId, $result[0]->districtSectionId, $result[0]->username, $result[0]->password, $result[0]->salt, $result[0]->firstName, $result[0]->surname, $result[0]->postal, $result[0]->houseNumber, $result[0]->email, $result[0]->active);
             }
             return $user;
         }
 
         public function getByUsername($username)
         {
-            $query = $this->selectAll . $this->tableName . ' WHERE ' . $this->tableName . 'username = :' . $this->tableName .'username';
-            $parameter = array(':' . $this->tableName . 'username' => $username);
+            $query = $this->selectAll . ' WHERE username = :username';
+            $parameter = array(':username' => $username);
 
             $result = $this->db->getQuery($query, $parameter);
 
             if (count($result) == 1)
             {
-                $user = new User($result[0]->userId, $result[0]->username, $result[0]->districtSectionId, $result[0]->userGroupId, $result[0]->postal, $result[0]->housenumber, $result[0]->password, $result[0]->name, $result[0]->surname, $result[0]->email, $result[0]->active);
+                return $user = new User($result[0]->userId, $result[0]->userGroupId, $result[0]->districtSectionId, $result[0]->username, $result[0]->password, $result[0]->salt, $result[0]->firstName, $result[0]->surname, $result[0]->postal, $result[0]->houseNumber, $result[0]->email, $result[0]->active);
             }
-            return $user;
+            return null;
         }
 
         public function add($object)
         {
-            $query = 'INSERT INTO ' . $this->name . '(userId, username, districtSectionId, userGroupId, postal, housenumber, password, name, surname, email, active) VALUES(:userId, :username,:districtSectionId, :userGroupId, :postal, :housenumber, :password, :name, :surname, :email, :active)';
+            $query = 'INSERT INTO ' . $this->name . '(userGroupId, districtSectionId, username, password, salt, firstName, surname, postal, houseNumber, email, active)
+                VALUES(:userGroupId, :districtSectionId, :username, :password, :salt, :firstName, :surname, :postal, :houseNumber, :email, :active)';
 
             $parameters = array(
-                ':userId' => $object->getUserId(),
                 ':userGroupId' => $object->getUserGroupId(),
                 ':districtSectionId' => $object->getDistrictSectionId(),
                 ':username' => $object->getUsername(),
                 ':password' => $object->getPassword(),
                 ':salt' => $object->getSalt(),
-                ':name' => $object->getFirstName(),
+                ':firstName' => $object->getFirstName(),
                 ':surname' => $object->getSurname(),
                 ':postal' => $object->getPostal(),
                 ':houseNumber' => $object->getHouseNumber(),

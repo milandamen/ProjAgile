@@ -52,7 +52,7 @@
 
         public function getPassword()
         {
-            return $this->name;
+            return $this->password;
         }
 
         public function getSalt()

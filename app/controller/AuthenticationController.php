@@ -1,5 +1,5 @@
 <?php
-	class AuthorizeController extends Shared
+	class AuthenticationController extends Shared
 	{
 		private $userRepo;
 
@@ -10,10 +10,12 @@
 
             // Initialize the repositories
 			$this->initRepository();
-
-            // Check if the user is already logged in
-            $this->loginCheck();
 		}
+
+        public function index()
+        {
+            $this->loginCheck();
+        }
 
         // Action: login
 		public function login()
@@ -21,16 +23,14 @@
             if (isset($_POST['username']) && !empty($_POST['username']) &&
                 isset($_POST['password']) && !empty($_POST['password']))
             {
-                $this->processLogin();
+                $this->processLogin($_POST['username'], $_POST['password']);
             }
             else
             {
                 // Include the login page
                 $this->header("Login");
                 $this->menu();
-
                 $this->view('authentication/login');
-
                 $this->footer();
             }
 		}
@@ -40,7 +40,7 @@
         {
             session_destroy();
 
-            header('');
+            $this->redirectTo();
             //Return to Home/Index
         }
 
@@ -50,12 +50,12 @@
             // TODO: Complete the registration process -- Thus far incomplete and should not be used
         }
 
-        private  function loginCheck()
+        private function loginCheck()
         {
             if (!isset($_SESSION['userId']) || empty($_SESSION['userId']) ||
                 $_SESSION['timeout'] + (20 * 60) < time())
             {
-                header('');
+                $this->redirectTo("AuthenticationController/login");
             }
             else
             {
@@ -93,11 +93,12 @@
                                 // Save the current time in the session to check timeout
                                 $_SESSION['timeout'] = time();
                                 session_write_close();
+                                $this->redirectTo();
                             }
-                            else
-                            {
-                                //Feedback: gebruiker is geblokkeerd.
-                            }
+                        }
+                        else
+                        {
+                            //Feedback: gebruiker is geblokkeerd.
                         }
 					}
 				}
@@ -151,9 +152,19 @@
 //            }
 //        }
 
+        // TODO: moet nog even bespreken waar we dit soort settings laten (config file maybe?). Is op zich ook handig voor andere redirection dingen
+        private function redirectTo($extra = "")
+        {
+            $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            header("Location: http://$host$uri/$extra");
+            exit;
+        }
+
 		private function initRepository()
 		{
-            require_once('../repository/UserRepository.php');
+            // TODO: Dit moet nog worden aangepast. Tijdelijke workaround wegns dat een relative pad niet werkt(e)
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjAgile/app/repository/UserRepository.php');
 			$this->userRepo = new UserRepository();
 		}
 	}
