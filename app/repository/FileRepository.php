@@ -11,18 +11,10 @@ class FileRepository extends RepositoryBase
         $this->tableName = $this->name;
     }
 
-    public function add($filePaths, $newsId)
+    public function add($filePath, $newsId)
     {
-        $query = 'INSERT INTO files (idfiles, path) VALUE(:idfiles, :path)';
-        $query2 = 'INSERT INTO news_files (news_newsId, files_idfiles) VALUE(:news_newsId, :files_idfiles)';
-
-        foreach($filePaths as $path)
-        {
-            $parameters = array(':idfiles' => null, ':path' => $path);
-            $this->db->execQuery($query, $parameters);
-            $lastFileId = $this->db->getLastInsertedId();
-            $parameters2 = array(':news_newsId' => $newsId, ':files_idfiles' => $lastFileId);
-            $this->db->execQuery($query2, $parameters2);
-        }
+        $query = 'INSERT INTO file (fileId, path, newsId) VALUE(:fileId, :path, :newsId)';
+        $parameters = array(':fileId' => null, ':path' => $filePath, ':newsId' => $newsId);
+        $this->db->execQuery($query, $parameters);
     }
 }

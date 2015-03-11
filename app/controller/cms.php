@@ -52,7 +52,11 @@ class Cms extends Shared
         $newsId = $newsrepo->add($news);
 
         $filerepo = new FileRepository();
-        $filerepo->add($filepaths, $newsId);
+
+        foreach($filepaths as $path)
+        {
+            $filerepo->add($path, $newsId);
+        }
 
         $this->header('Home');
         $this->menu();

@@ -44,7 +44,7 @@
                     <br/>
                     <input  id="upload" type='file' name='file[]' multiple>
                     <br/>
-                    <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestand</label>
+                    <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestanden</label>
                 </div>
 
                 <div class="row">
