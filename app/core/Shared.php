@@ -18,6 +18,23 @@ class Shared extends Controller
         $this->view('shared/menu');
     }
 
+    public function sidebar()
+    {	
+    	require_once '../app/repository/sidebarRepository.php';
+    	require_once '../app/model/Sidebar.php';
+
+    	//$sidebar = new Sidebar('home', 'Test text', 'http://test-link.nl');
+    	  for($i = 0; $i < 4; $i++)
+        {
+            $sideColumns[] = new Sidebar('home', 'Meer informatie','Test text', 'http://test-link.nl');
+        }
+
+
+    	$data = array('sidebarRows' => $sideColumns);
+
+    	$this->view('shared/sidebar', $data);
+    }
+
     public function footer()
     {
         require_once "../app/repository/footerRepository.php";

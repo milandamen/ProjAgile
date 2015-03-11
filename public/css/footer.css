@@ -1,4 +1,20 @@
 .footerlist-container ul{
     list-style: none;
-    margin-left: 0;
+    margin-left: 10;
 }
+
+
+
+.footer {
+	display: block;
+	width: 100%;
+	background-color: #1C1C1C;
+	color: black;
+	padding: 20px 20px 20px 50px;
+	border-radius: 20px;
+}
+
+.footer a {
+	color: #F2F2F2;
+}
+

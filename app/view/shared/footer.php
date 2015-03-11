@@ -1,6 +1,17 @@
+ </div>
+    <!-- /.row -->   
+    <!-- if this ends in index.php the sidebar can't be included properly in the actioncontroller. -->
+    	<!-- Script to Activate the Carousel -->
+    <script>
+        $('.carousel').carousel({
+            interval: 5000 //changes the speed
+        })
+    </script>
+
+
     <!-- Footer -->
         <hr>
-        <footer >
+        <div class="col-md-12 footer panel panel-default">
             <?php
             foreach($data['footerColumns'] as $footercolumn)
             {
@@ -27,7 +38,7 @@
                         </div>';
             }
             ?>
-        </footer>
+        </div>
     </div>
     <!-- /.container -->
 
