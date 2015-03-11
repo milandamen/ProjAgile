@@ -52,10 +52,10 @@
                 <label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default active">
-                        <input type="radio" name="hidden" value="true">Ja
+                        <input type="radio" name="keepFiles" value="true" checked="true">Ja
                     </label>
                     <label class="btn btn-default">
-                        <input type="radio" name="hidden" value="false" checked="true">Nee
+                        <input type="radio" name="keepFiles" value="false">Nee
                     </label>
                 </div>
             </div>

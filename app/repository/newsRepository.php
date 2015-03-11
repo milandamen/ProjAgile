@@ -69,7 +69,7 @@ class NewsRepository extends RepositoryBase
 
     public function update($object)
     {
-        $query = 'UPDATE ' . $this->tableName . ' SET districtSectionId = :districtSectionId, userId = :userId, title = :title, content = :content, date = :date, hidden= :hidden
+        $query = 'UPDATE ' . $this->tableName . ' SET districtSectionId = :districtSectionId, userId = :userId, title = :title, content = :content, date = NOW(), hidden= :hidden
         WHERE ' . $this->tableName .'Id = :' . $this->tableName .'Id';
 
         $parameters = array(
@@ -78,7 +78,6 @@ class NewsRepository extends RepositoryBase
             ':userId' => $object->getUserId(),
             ':title' => $object->getTitle(),
             ':content' => $object->getContent(),
-            ':date' => $object->getDate(),
             ':hidden' => $object->getHidden()
         );
 

@@ -12,7 +12,7 @@
     </div>
 
         <div class="col-lg-12">
-            <form action="/projagile/public/NewsController/createNewsSave/TRUE" method="post" enctype="multipart/form-data">
+            <form action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="form-group">
