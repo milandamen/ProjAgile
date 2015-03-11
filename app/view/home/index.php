@@ -47,9 +47,10 @@
         <div class="col-lg-12">
             <h2 class="page-header">De Bunders</h2>
         </div>
-
-		<?php require_once 'module-news.php'; ?>
-
+		
+		<div class="col-md-8">
+			<?php require_once 'module-news.php'; ?>
+		</div>
 	</div>
     <!-- /.row -->
     	<!-- Script to Activate the Carousel -->

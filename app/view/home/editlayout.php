@@ -2,17 +2,12 @@
 	<form id="dataform">
 		<div id="draggabledivs" class="row">
 			<div class="col-md-8">
-				<div class="dragdiv" draggable="true">
-					carrousel
-					<input class="hiddenInput" type="text" name="carrousel" />
-				</div>
-				<div class="dragdiv" draggable="true">
-					news
-					<input class="hiddenInput" type="text" name="news" />
-				</div>
+				<?php require 'module-news.php'; ?>
+				<?php require 'module-news.php'; ?>
 			</div>
+			
 			<div class="col-md-4">
-				<div class="dragdiv" draggable="true">
+				<div class="dragdiv">
 					sidebar
 					<input class="hiddenInput" type="text" name="sidebar" />
 				</div>

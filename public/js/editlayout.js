@@ -79,6 +79,7 @@ function handleDragEnd(e) {
 
 /**
 	Apply event listeners to the draggable divs
+	Apply 'draggable' property to the draggable divs
 */
 var dragdivs = document.querySelectorAll('#draggabledivs .dragdiv');
 [].forEach.call(dragdivs, function(dragdiv) {
@@ -88,6 +89,8 @@ var dragdivs = document.querySelectorAll('#draggabledivs .dragdiv');
 	dragdiv.addEventListener('dragleave', handleDragLeave, false);
 	dragdiv.addEventListener('drop', handleDrop, false);
 	dragdiv.addEventListener('dragend', handleDragEnd, false);
+	
+	dragdiv.draggable = 'true';
 });
 
 /************************************/

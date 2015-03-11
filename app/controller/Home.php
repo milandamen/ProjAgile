@@ -19,9 +19,10 @@ class Home extends Shared
     {
         $this->header('Home');
         $this->menu();
-
-
-        $this->view('home/index', $this->newsdb->getAll());
+		
+		$data = array('news' => $this->newsdb->getAll());
+		
+        $this->view('home/index', $data);
 
         $this->footer();
     }
@@ -41,16 +42,17 @@ class Home extends Shared
 	
 	public function editlayout()
 	{
-		$this->header('editlayout');
-		$this->menu();
-		
 		if ($_POST) {
-			
+			header('Location: $url');
 		} else {
-			$this->view('home/editlayout');
+			$this->header('editlayout');
+			$this->menu();
+			
+			$data = array('news' => $this->newsdb->getAll());
+			$this->view('home/editlayout', $data);
+			
+			$this->footer();
 		}
-		
-		$this->footer();
 	}
 
 }
