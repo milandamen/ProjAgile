@@ -70,7 +70,7 @@ class FooterController extends Shared
                     $footerdb->remove($item);
                 }
             }
-            header("Location: ../../public");
+            header("Location: /ProjAgile/public");
             return;
         }
         else
