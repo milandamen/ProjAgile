@@ -8,7 +8,7 @@
 		</div>
 		<div class="panel-body">
 			<?php foreach($data as $newsItem){
-				echo '<a href="#"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a> '. 
+				echo '<a href="NewsController/show/'. $newsItem->getId() .'""><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a> '. 
 				$newsItem->getNormalDate() .' - ' .$newsItem->getTitle() . '<br/>';  
 			} ?>
 		</div>

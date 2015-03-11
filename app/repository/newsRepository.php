@@ -23,8 +23,14 @@ class NewsRepository extends RepositoryBase
         #convert result objects to news objects
         foreach($objects as $var)
         {
-            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $var->hidden);
+            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $var->hidden);	
         }
+
+        foreach($newsArray as $news){
+        	$news->setAuthor($this->getAuthor($news->getUserId()));
+        	$news->setDistrict($this->getDistrict($news->getDistrictSectionId()));
+        }
+
         return $newsArray;
     }
 
@@ -35,6 +41,8 @@ class NewsRepository extends RepositoryBase
         if (count($result) == 1)
         {
             $news = new News($result[0]->newsId, $result[0]->districtSectionId, $result[0]->userId, $result[0]->title, $result[0]->content, $result[0]->date, $result[0]->hidden);
+        	$news->setAuthor($this->getAuthor($result[0]->userId));
+        	$news->setDistrict($this->getDistrict($result[0]->districtSectionId));
         }
 
         return $news;
@@ -73,4 +81,39 @@ class NewsRepository extends RepositoryBase
 
         $this->db->execQuery($query, $parameters);
     }
+
+    private function getAuthor($id){
+    	$username='';
+    	$query = 'SELECT username FROM user WHERE userId = :userId';
+    	$parameters = array( 
+    		':userId' => $id,
+    	);
+
+    	$result = $this->db->getQuery($query, $parameters);
+
+    	 if (count($result) == 1)
+        {
+        	$username = $result[0]->username;
+        }
+    	return $username;
+    }
+
+    private function getDistrict($id){
+    	$district='';
+    	$query = 'SELECT name FROM districtsection WHERE districtSectionId = :districtId';
+    	$parameters = array( 
+    		':districtId' => $id,
+    	);
+
+    	$result = $this->db->getQuery($query, $parameters);
+
+    	 if (count($result) == 1)
+        {
+        	$district = $result[0]->name;
+        }
+    	return $district;
+    }
+
+
+
 }
