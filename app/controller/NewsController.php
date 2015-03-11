@@ -6,6 +6,8 @@ class NewsController extends Shared
 
 	public function __construct(){
 		require_once '../app/repository/newsRepository.php';
+        require_once '../app/repository/districtsectionRepository.php';
+        require_once '../app/repository/fileRepository.php';
 		$this->newsdb = new NewsRepository();
 	}
 
@@ -23,8 +25,6 @@ class NewsController extends Shared
 
     public function createNews()
     {
-        require_once '../app/repository/districtsectionRepository.php';
-
         $districtdb = new DistrictSectionRepository();
 
         $this->header('Nieuw artikel');
@@ -33,16 +33,30 @@ class NewsController extends Shared
         $this->footer();
     }
 
-    public function createNewsSave()
+    public function edit($newsId)
     {
-        require_once '../app/repository/fileRepository.php';
+        $this->header('Wijzig artikel');
+        $this->menu();
+
+        $districtdb = new DistrictSectionRepository();
+        $filerepo = new FileRepository();
+
+        $this->view('news/editNews', array('news' => $this->newsdb->getById($newsId), 'sections' => $districtdb->getAll(), 'files' => $filerepo->getAllByNewsId($newsId)));
+        $this->footer();
+    }
+
+    public function createNewsSave($create)
+    {
         require_once '../app/model/News.php';
+
+        echo '<h1>' . $create . '</h1>';
 
         $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
         $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
         $hidden = $_POST['hidden'];
         $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
 
+        //files worden geupload
         session_start();
         $target = '../public/uploads/';
         $filepaths = array();
@@ -65,23 +79,43 @@ class NewsController extends Shared
             $hidden = 0;
         }
 
-        $news = new News(null, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
-        $newsrepo = new NewsRepository();
-
-        //voegt het artikel toe en krijgt een nieuws id terug, om deze aan eventuele bestanden toe te voegen.
-        $newsId = $newsrepo->add($news);
-
         $filerepo = new FileRepository();
 
+        $newsId = null;
+
+        //als een artikel wordt gewijzigd dan wordt de newsId en keepfiles opgehaald.
+        if($create === false)
+        {
+            $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
+            $keepFiles = $_POST['keepFiles'];
+
+            if($keepFiles === false)
+            {
+                $filerepo->deleteAllByNewsId($newsId);
+            }
+        }
+
+        $news = new News($newsId, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
+        $newsrepo = new NewsRepository();
+
+        if($create === true)
+        {
+            //voegt het artikel toe en krijgt een nieuws id terug, om deze aan eventuele bestanden toe te voegen
+            //en naar de detail pagina te redirecten.
+            $newsId = $newsrepo->add($news);
+        }
+        else
+        {
+            $newsrepo->update($news);
+        }
+
+        //files worden toegevoegd aan db en gekoppeld aan nieuws
         foreach($filepaths as $path)
         {
             $filerepo->add($path, $newsId);
         }
 
-        $this->header('Home');
-        $this->menu();
-        $this->view('home/index');
-        $this->footer();
+        $this->show($newsId);
     }
 
 }
