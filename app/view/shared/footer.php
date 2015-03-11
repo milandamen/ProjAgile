@@ -28,8 +28,10 @@
             }
             ?>
             <div class="footer-edit-link">
-                <!-- ABSOLUTE LINK!!!! Werkt mogelijk niet -->
-                <a href="/ProjAgile/public/footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>
+                <?php
+                global $Base_URI;
+                echo '<a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>'
+                ?>
             </div>
         </footer>
     </div>
