@@ -1,1 +1,3 @@
 .idea/
+*.php
+app/view/shared/menu.php
