@@ -18,6 +18,10 @@ class Home extends Shared
 		require_once '../app/repository/homeLayoutRepository.php';
 		require_once '../app/model/HomeLayoutModule.php';
 		$this->homeLayoutRepository = new HomeLayoutRepository();
+		
+		require_once '../app/repository/sidebarRepository.php';
+		require_once '../app/model/Sidebar.php';
+		$this->sidebardb = new SidebarRepository();
 	}
 
     public function index()
@@ -25,10 +29,14 @@ class Home extends Shared
         $this->header('Home');
         $this->menu();
 		
-		$data = array('news' => $this->newsdb->getAll());
+		$modules = $this->homeLayoutRepository->getAll();
+		
+		$sidebarData = $this->sidebardb->getAll();
+		
+		$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData);
 		
         $this->view('home/index', $data);
-		$this->sidebar();
+		//$this->sidebar();
         $this->footer();
     }
 
