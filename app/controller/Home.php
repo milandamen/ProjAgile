@@ -6,12 +6,17 @@
  * Time: 8:00 PM
  */
 
+
+require_once 'AuthenticationController.php';
+
 class Home extends Shared
 {
 	private $newsdb;
 	private $homeLayoutRepository;
-
+	
 	public function __construct(){
+		parent::__construct();
+
 		require_once '../app/repository/newsRepository.php';
 		$this->newsdb = new NewsRepository();
 		
@@ -26,6 +31,7 @@ class Home extends Shared
 
     public function index()
     {
+        
         $this->header('Home');
         $this->menu();
 		
@@ -33,7 +39,7 @@ class Home extends Shared
 		
 		$sidebarData = $this->sidebardb->getAll();
 		
-		$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData);
+		$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'logged' => $this->login());
 		
         $this->view('home/index', $data);
 		
@@ -89,5 +95,6 @@ class Home extends Shared
 
         $this->footer();
     }
+
 
 }

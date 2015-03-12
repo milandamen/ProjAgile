@@ -1,7 +1,11 @@
 <div class="col-md-4" id="navigationbar-right">
 	<div class="panel panel-default">
 		<div class="panel-heading sidebar">
-    		<h4> <?php echo $data['sidebarRows'][0]->getTitle(); ?> <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a></h4>
+    		<h4> <?php echo $data['sidebarRows'][0]->getTitle(); ?> 
+    			<?php if($data['logged']){
+    				echo ' <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a></h4>';
+    			} ?>
+
     	</div>
     	<div class="panel-body">
 			<ul>
