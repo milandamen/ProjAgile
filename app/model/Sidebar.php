@@ -42,7 +42,7 @@ class Sidebar{
 		$this->title = $title;
 	}
 
-	public function getPage()
+	public function getPageNr()
 	{
 		return $this->pageNr;
 	}
@@ -50,6 +50,17 @@ class Sidebar{
 	public function setPage($page)
 	{
 		$this->pageNr = $page;
+	}
+
+
+	public function getRowNr()
+	{
+		return $this->row;
+	}
+
+	public function setPRow($row)
+	{
+		$this->row = $row;
 	}
 
 

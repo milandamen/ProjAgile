@@ -6,21 +6,25 @@
  * Time: 8:00 PM
  */
 
+
+require_once 'AuthenticationController.php';
+
 class Home extends Shared
 {
 	private $newsdb;
-
 	public function __construct(){
+		parent::__construct();
+
 		require_once '../app/repository/newsRepository.php';
 		$this->newsdb = new NewsRepository();
 	}
 
     public function index()
     {
+        
         $this->header('Home');
         $this->menu();
-
-        $this->view('home/index', $this->newsdb->getAll());
+        $this->view('home/index', ['news' => $this->newsdb->getAll(), 'logged' => $this->login()]);
         $this->sidebar();
 
         $this->footer();
@@ -48,5 +52,6 @@ class Home extends Shared
 
         $this->footer();
     }
+
 
 }
