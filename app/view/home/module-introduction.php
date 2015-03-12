@@ -2,7 +2,9 @@
 	<div class="introduction">
 		<div>
 			<h4> 
-				<a href="#"><i class="fa fa-pencil-square-o"></i></a>
+				<?php if($data['logged']){
+					echo '<a href="#"><i class="fa fa-pencil-square-o"></i></a>';
+				} ?>
 				Welkom op Wijkplatform De Bunders 
 			</h4>
 		</div>

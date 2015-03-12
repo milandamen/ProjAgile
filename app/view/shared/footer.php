@@ -41,9 +41,11 @@
 
             <div class="footer-edit-link">
                 <?php
+                if($data['logged']){
+
                 global $Base_URI;
-                echo '<a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>'
-                ?>
+                echo '<a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>';
+                } ?>
             </div>
 
     </div>

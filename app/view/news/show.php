@@ -6,15 +6,18 @@
 	 <div class="row">
         <div class="col-lg-12">
             <h2 class="page-header">
-            	<a href="#"><i class="fa fa-pencil-square-o"></i></a>
+            	<?php
 
-            	 <?php echo $data['news']->getTitle() ?></h2>
+            	if($data['logged']){
+            	echo '<a href="#"><i class="fa fa-pencil-square-o"></i></a> ';
+            	}
+            	 echo $data['newsdata']['news']->getTitle() ?></h2>
         </div>
 
         <div class="col-md-8">
-        	<p class="news-info"><?php echo $data['news']->getNormalDate() . ' | Door: ' . $data['news']->getAuthor()  . ' | ' . $data['news']->getDistrict();  ?>
+        	<p class="news-info"><?php echo $data['newsdata']['news']->getNormalDate() . ' | Door: ' . $data['newsdata']['news']->getAuthor()  . ' | ' . $data['newsdata']['news']->getDistrict();  ?>
         	</p>
-        	<?php echo $data['news']->getContent() ?>
+        	<?php echo $data['newsdata']['news']->getContent() ?>
 
 
         			<br/>

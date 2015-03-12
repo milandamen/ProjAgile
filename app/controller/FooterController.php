@@ -1,6 +1,8 @@
 <?php
 class FooterController extends Shared
 {
+	
+	
     public function footerUpdate()
     {
         //require db, create it and get the footer
