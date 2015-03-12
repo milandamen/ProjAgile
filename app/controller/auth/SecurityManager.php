@@ -1,5 +1,5 @@
 <?php
-    /* These constants should not be changed unless the passwords for all users are reset.
+      /* These constants should not be changed unless the passwords for all users are reset.
      * The one exclusion of this is the iteration count (PBKDF2_ITERATIONS).
      * This iteration count should be upgraded to the double value of it every 2 years to keep up with Moore's Law (20000 becomes 40000).
      * It should be noted that the iteration count should be benchmarked since the hashing process should be slow, but not slow enough for the user to notice the delay.
@@ -14,7 +14,7 @@
         // Create a first time hash
         public function createFirstTimeHash($password, $salt)
         {
-            return base64_decode
+            return base64_encode
             (
                 $this->pbkdf2
                 (
@@ -23,7 +23,7 @@
                     $salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_HASH_BYTE_SIZE,
-                    true
+                    false
                 )
             );
         }
@@ -36,20 +36,21 @@
         // Validates a given password and salt with a correct hash (the user's password + salt combination)
         public function validatePassword($password, $salt, $correctHash)
         {
-            $pbkdf2 = base64_decode($correctHash);
+            $correctPassword = base64_decode($correctHash);
+            $trialPassword = $this->pbkdf2
+            (
+                PBKDF2_HASH_ALGORITHM,
+                $password,
+                $salt,
+                PBKDF2_ITERATIONS,
+                PBKDF2_HASH_BYTE_SIZE,
+                false
+            );
 
             return $this->slowEquals
             (
-                $pbkdf2,
-                $this->pbkdf2
-                (
-                    PBKDF2_HASH_ALGORITHM,
-                    $password,
-                    $salt,
-                    PBKDF2_ITERATIONS,
-                    PBKDF2_HASH_BYTE_SIZE,
-                    true
-                )
+                $correctPassword,
+                $trialPassword
             );
         }
 
