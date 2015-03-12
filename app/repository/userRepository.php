@@ -1,5 +1,5 @@
 <?php
-    require_once 'RepositoryBase.php';
+    require_once 'repositoryBase.php';
 
     class UserRepository extends RepositoryBase
     {
