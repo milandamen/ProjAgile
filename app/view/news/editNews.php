@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-lg-12">
-        <form action="/projagile/public/NewsController/createNewsSave/false" method="post" enctype="multipart/form-data">
+        <form name="editNews" onsubmit="return required()" action="/projagile/public/NewsController/createNewsSave/false" method="post" enctype="multipart/form-data">
             <?php echo '<input type="hidden" name="newsId" value="' . $data['news']->getId() .'" >'; ?>
             <div class="row">
                 <div class="form-group">
@@ -31,6 +31,7 @@
             <div class="row">
                 <label class="label-form" for="Sectie">Sectie</label>
                 <select name="district" class="form-control">
+                    <option value="Home">Home</option>
                     <?php
                     foreach($data['sections'] as $section)
                     {
@@ -40,16 +41,18 @@
                 </select>
             </div>
 
-            <div class="row">
+            <?php
+            #Als er bestanden geupload
+            if(count($data['files']) > 0)
+            {
+                echo '<div class="row">
                 <br/>
-                <p>Bestanden die gekoppeld zijn aan dit artikel:</p>
-                <?php
+                <p>Bestanden die gekoppeld zijn aan dit artikel:</p>';
                 foreach($data['files'] as $file)
                 {
                     echo '<p>' . $file->path .'</p>';
                 }
-                ?>
-                <label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
+                echo '<label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default active">
                         <input type="radio" name="keepFiles" value="true" checked="true">Ja
@@ -58,7 +61,9 @@
                         <input type="radio" name="keepFiles" value="false">Nee
                     </label>
                 </div>
-            </div>
+            </div>';
+            }
+            ?>
 
             <div class="row">
                 <br/>
@@ -89,5 +94,22 @@
     <script type="text/javascript" >
         $("#cancel").click(function(){
             document.getElementById("upload").value = "";
-        })
+        });
+
+        function required()
+        {
+            var title = document.forms["editNews"]["title"].value;
+            var content = document.forms["editeNews"]["content"].value;
+            if (title == "")
+            {
+                alert("Vul a.u.b. een titel in.");
+                return false;
+            }
+            if(content == "")
+            {
+                alert("Vul a.u.b. een content in.")
+                return false;
+            }
+
+        }
     </script>

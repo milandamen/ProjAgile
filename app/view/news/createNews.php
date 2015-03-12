@@ -12,7 +12,7 @@
     </div>
 
         <div class="col-lg-12">
-            <form action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
+            <form name="createNews" onsubmit="return required()" action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="form-group">
@@ -31,6 +31,7 @@
                 <div class="row">
                     <label class="label-form" for="Sectie">Sectie</label>
                     <select name="district" class="form-control">
+                        <option value="Home">Home</option>
                         <?php
                         foreach($data as $section)
                         {
@@ -69,5 +70,22 @@
 <script type="text/javascript" >
     $("#cancel").click(function(){
         document.getElementById("upload").value = "";
-    })
+    });
+
+    function required()
+    {
+        var title = document.forms["createNews"]["title"].value;
+        var content = document.forms["createNews"]["content"].value;
+        if (title == "")
+        {
+            alert("Vul a.u.b. een titel in.");
+            return false;
+        }
+        if(content == "")
+        {
+            alert("Vul a.u.b. een content in.")
+            return false;
+        }
+
+    }
 </script>

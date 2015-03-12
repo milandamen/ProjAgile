@@ -63,6 +63,7 @@ class NewsController extends Shared
 
         foreach($_FILES['file']['name'] as $filename)
         {
+            //als er geen bestand wordt gekozen dan krijg je altijd een '' string mee vandaar de !empty check
             if(!empty($filename))
             {
                 $tmp = $_FILES['file']['tmp_name'][$count];
@@ -90,12 +91,17 @@ class NewsController extends Shared
         if($create === false)
         {
             $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
-            $keepFiles = filter_var($_POST['keepFiles'], FILTER_VALIDATE_BOOLEAN);
 
-            if($keepFiles === false)
+            if(isset($_POST['keepFiles']))
             {
-                $filerepo->deleteAllByNewsId($newsId);
+                $keepFiles = filter_var($_POST['keepFiles'], FILTER_VALIDATE_BOOLEAN);
+
+                if($keepFiles === false)
+                {
+                    $filerepo->deleteAllByNewsId($newsId);
+                }
             }
+
         }
 
         $news = new News($newsId, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
