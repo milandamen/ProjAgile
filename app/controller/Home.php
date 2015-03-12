@@ -37,6 +37,7 @@ class Home extends Shared
 		
         $this->view('home/index', $data);
 		//$this->sidebar();
+		
         $this->footer();
     }
 
