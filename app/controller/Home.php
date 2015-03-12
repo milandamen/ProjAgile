@@ -36,7 +36,6 @@ class Home extends Shared
 		$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData);
 		
         $this->view('home/index', $data);
-		//$this->sidebar();
 		
         $this->footer();
     }
