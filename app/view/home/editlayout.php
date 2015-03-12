@@ -1,16 +1,17 @@
 <div class="container">
-	<form id="dataform">
+	<form id="dataform" method="post">
 		<div id="draggabledivs" class="row">
 			<div class="col-md-8">
-				<?php require 'module-news.php'; ?>
-				<?php require 'module-news.php'; ?>
+				<?php
+					for ($i = 0; $i < count($data['layoutmodules']) - 1; $i++) {
+						require_once $data['layoutmodules'][$i]->getModulename() . '.php';
+					}
+				?>
 			</div>
-			
 			<div class="col-md-4">
-				<div class="dragdiv">
-					sidebar
-					<input class="hiddenInput" type="text" name="sidebar" />
-				</div>
+				<?php
+					require_once $data['layoutmodules'][count($data['layoutmodules']) - 1]->getModulename() . '.php';
+				?>
 			</div>
 		</div>
 	</form>
@@ -20,3 +21,5 @@
 	
 	<!-- JavaScript that enables dragging and dropping and sends form -->
 	<script src="/ProjAgile/public/js/editlayout.js"></script>
+	
+	<div class="row">

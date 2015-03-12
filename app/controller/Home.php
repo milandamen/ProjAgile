@@ -69,11 +69,12 @@ class Home extends Shared
 			header('Location: /ProjAgile/public/');
 		} else {
 			$modules = $this->homeLayoutRepository->getAll();
+			$sidebarData = $this->sidebardb->getAll();
 			
 			$this->header('editlayout');
 			$this->menu();
 			
-			$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules);
+			$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData);
 			$this->view('home/editlayout', $data);
 			
 			$this->footer();
