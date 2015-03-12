@@ -14,3 +14,6 @@ try {
 } catch (Exception $e) {
 	die('An error happened: ' . $e->getMessage());
 }
+
+require_once '../app/repository/database.php';
+Db::destruct();

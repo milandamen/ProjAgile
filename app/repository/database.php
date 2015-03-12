@@ -11,7 +11,8 @@ class Db {
 	const FETCH_ASSOC = PDO::FETCH_ASSOC;	// Return fetch result as an associaive array.
 	const FETCH_OBJ = PDO::FETCH_OBJ;		// Return fetch result as an array with objects.
 	// Default: FETCH_OBJ
-
+	
+	private static $singleton;				// Make sure every repository uses the same database library.
 	private $database;						// PDO object for database connection handling.
 	
 	// Smart statements
@@ -23,7 +24,7 @@ class Db {
 	/**
 		Constructor for this database library. Sets use of smart statements and connects to the database.
 	*/
-	function __construct() {
+	private function __construct() {
 		$this->usesmartstmt = true;
 		$this->dbConnect();
 	}
@@ -31,8 +32,26 @@ class Db {
 	/**
 		Destructor for this database library. Closes the database connection and any open statements.
 	*/
-	function __destruct() {
+	public function __destruct() {
 		$this->dbClose();
+	}
+	
+	/**
+		Gets the current database library in use, or create database library. One database library is used globally.
+	*/
+	public static function getDb() {
+		if (self::$singleton == null) {
+			self::$singleton = new self();
+		}
+		
+		return Db::$singleton;
+	}
+	
+	/**
+		Destroy the database library. Disconnects from database and statements.
+	*/
+	public static function destruct() {
+		self::$singleton = null;
 	}
 	
 	/**
