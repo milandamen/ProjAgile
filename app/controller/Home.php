@@ -9,10 +9,15 @@
 class Home extends Shared
 {
 	private $newsdb;
+	private $homeLayoutRepository;
 
 	public function __construct(){
 		require_once '../app/repository/newsRepository.php';
 		$this->newsdb = new NewsRepository();
+		
+		require_once '../app/repository/homeLayoutRepository.php';
+		require_once '../app/model/HomeLayoutModule.php';
+		$this->homeLayoutRepository = new HomeLayoutRepository();
 	}
 
     public function index()
@@ -23,7 +28,7 @@ class Home extends Shared
 		$data = array('news' => $this->newsdb->getAll());
 		
         $this->view('home/index', $data);
-
+		$this->sidebar();
         $this->footer();
     }
 
@@ -34,21 +39,32 @@ class Home extends Shared
 
         $user = $this->model('UserTest');
         $user->name = $name;
-
-        $this->view('home/indextest', ['name' => $user->name]);
+		
+		$modules = $this->homeLayoutRepository->getAll();
+		$data = array('name' => $user->name, 'layoutmodules' => $modules);
+        $this->view('home/indextest', $data);
 
         $this->footer();
     }
 	
 	public function editlayout()
 	{
-		if ($_POST) {
-			header('Location: $url');
+		if ($_POST && isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
+			$module = new HomeLayoutModule('module-introduction', $_POST['module-introduction']);
+			$this->homeLayoutRepository->update($module);
+			$module = new HomeLayoutModule('module-news', $_POST['module-news']);
+			$this->homeLayoutRepository->update($module);
+			$module = new HomeLayoutModule('module-sidebar', $_POST['module-sidebar']);
+			$this->homeLayoutRepository->update($module);
+			
+			header('Location: /ProjAgile/public/');
 		} else {
+			$modules = $this->homeLayoutRepository->getAll();
+			
 			$this->header('editlayout');
 			$this->menu();
 			
-			$data = array('news' => $this->newsdb->getAll());
+			$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules);
 			$this->view('home/editlayout', $data);
 			
 			$this->footer();
