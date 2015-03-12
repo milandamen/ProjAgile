@@ -6,7 +6,8 @@
  * Time: 21:35
  */
 require_once 'repositoryBase.php';
-class pagesRepository extends RepositoryBase
+require_once '../app/model/Menu.php';
+class menuRepository extends RepositoryBase
 {
 
     private $name = 'menu';
@@ -22,15 +23,32 @@ class pagesRepository extends RepositoryBase
     {
         #call to base method getAll
         $objects = parent::getAll();
-        $pagesArray = array();
+        $MenuItemsArray = array();
 
         #convert result objects to news objects
         foreach($objects as $var)
         {
-            $pagesArray[] = new Page($var->menuId, $var->parentId, $var->name, $var->relativeUrl, $var->menuOrder, $var->publish);
+            $MenuItemsArray[] = new Menu($var->menuId, $var->parentId, $var->name, $var->relativeUrl, $var->menuOrder, $var->publish);
         }
-        return $pagesArray;
+        return $MenuItemsArray;
     }
+
+    public function getAllPublic()
+    {
+        #call to base method getAll
+        $query = ' SELECT * FROM ' . $this->name . ' WHERE publish = 1';
+        $menuItemsResult = $this->db->getQuery($query);
+
+        $MenuItemsArray = array();
+
+        #convert result objects to news objects
+        foreach($menuItemsResult as $var)
+        {
+            $MenuItemsArray[] = new Menu($var->menuId, $var->parentId, $var->name, $var->relativeUrl, $var->menuOrder, $var->publish);
+        }
+        return $MenuItemsArray;
+    }
+
 
     public function getById($id)
     {
@@ -38,10 +56,10 @@ class pagesRepository extends RepositoryBase
 
         if (count($result) == 1)
         {
-            $pages = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+            $MenuItems = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
         }
 
-        return $pages;
+        return $MenuItems;
     }
 
     public function move($menuId, $upOrDown = "up")
@@ -49,7 +67,7 @@ class pagesRepository extends RepositoryBase
         $query = ' SELECT * FROM ' . $this->name . ' WHERE menuId = :menuId';
         $parameters = array (':menuId' => $menuId);
         $result = $this->db->getQuery($query, $parameters);
-        $menuItem = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+        $menuItem = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
 
         $menuOrder = $menuItem->getMenuOrder();
         $parentId = $menuItem->getParentId();
@@ -60,7 +78,7 @@ class pagesRepository extends RepositoryBase
             $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId = :parentId AND menuOrder = :menuOrder ';
             $parameters = array(':parentId' => $parentId, ':menuOrder' => $menuOrder + 1);
             $result = $this->db->getQuery($query, $parameters);
-            $child = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+            $child = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
 
             $child->setMenuOrder($menuOrder);
             $menuItem->setMenuOrder($menuOrder + 1);
@@ -72,7 +90,7 @@ class pagesRepository extends RepositoryBase
             $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId = :parentId AND menuOrder = :menuOrder ';
             $parameters = array(':parentId' => $parentId, ':menuOrder' => $menuOrder - 1);
             $result = $this->db->getQuery($query, $parameters);
-            $child = new Page($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+            $child = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
 
             $child->setMenuOrder($menuOrder);
             $menuItem->setMenuOrder($menuOrder - 1);
@@ -99,7 +117,7 @@ class pagesRepository extends RepositoryBase
         $this->db->execQuery($query, $parameters);
     }
 
-    public function setParentPage($parentId, $menuId)
+    public function setParentMenuItem($parentId, $menuId)
     {
         $child = $this->getById($menuId);
         $parent = $this->getById($parentId);
@@ -114,7 +132,7 @@ class pagesRepository extends RepositoryBase
         return false;
     }
 
-    public function removeParentPage($menuId)
+    public function removeParentMenuItem($menuId)
     {
         $child = $this->getById($menuId);
 
@@ -136,12 +154,12 @@ class pagesRepository extends RepositoryBase
     public function addToMenu($menuId)
     {
         $query = ' SELECT * FROM ' . $this->name . ' WHERE parentId IS NULL ORDER BY menuorder DESC LIMIT 1';
-        $pageWithHighestMenuOrder = $this->db->getQuery($query);
+        $MenuItemWithHighestMenuOrder = $this->db->getQuery($query);
         $menuOrder = 0;
 
-        if($pageWithHighestMenuOrder != null)
+        if($MenuItemWithHighestMenuOrder != null)
         {
-            $menuOrder = $pageWithHighestMenuOrder->getNrInMenu() + 1;
+            $menuOrder = $MenuItemWithHighestMenuOrder->getNrInMenu() + 1;
         }
 
         $menu = $this->getById($menuId);
@@ -159,23 +177,23 @@ class pagesRepository extends RepositoryBase
 
     public function changeMenuTitle($menuId, $newMenuTitle)
     {
-        $page = $this->getById($menuId);
+        $MenuItem = $this->getById($menuId);
 
-        if($page != null)
+        if($MenuItem != null)
         {
-            $page->setTitle($newMenuTitle);
-            $this->update($page);
+            $MenuItem->setTitle($newMenuTitle);
+            $this->update($MenuItem);
         }
     }
 
-    public function changePageFileName($menuId, $newPageFileName)
+    public function changeMenuItemFileName($menuId, $newMenuItemFileName)
     {
-        $page = $this->getById($menuId);
+        $MenuItem = $this->getById($menuId);
 
-        if($page != null)
+        if($MenuItem != null)
         {
-            $page->setFileName($newPageFileName);
-            $this->update($page);
+            $MenuItem->setFileName($newMenuItemFileName);
+            $this->update($MenuItem);
         }
     }
 }

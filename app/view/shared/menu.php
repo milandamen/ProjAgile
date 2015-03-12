@@ -1,3 +1,8 @@
+<?php
+var_dump($data['menuData']);
+
+?>
+
    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container">
