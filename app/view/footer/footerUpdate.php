@@ -53,7 +53,6 @@
                 </div>
                 <div id="success"></div>
             </form>
-        </div>
-    </div>
+    
     <!-- JavaScript that enables adding and removing columns and rows -->
     <script src="/ProjAgile/public/js/footerUpdate.js"></script>
