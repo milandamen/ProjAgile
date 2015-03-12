@@ -19,10 +19,8 @@ class Home extends Shared
     {
         $this->header('Home');
         $this->menu();
-
-
         $this->view('home/index', $this->newsdb->getAll());
-
+		$this->sidebar();
         $this->footer();
     }
 

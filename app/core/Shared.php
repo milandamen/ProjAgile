@@ -18,6 +18,19 @@ class Shared extends Controller
         $this->view('shared/menu');
     }
 
+    public function sidebar()
+    {	
+    	require_once '../app/repository/sidebarRepository.php';
+    	require_once '../app/model/Sidebar.php';		
+
+    	$sidebardb = new SidebarRepository();
+    	$sidebarData = $sidebardb->getAll();
+
+    	$data = array('sidebarRows' => $sidebarData);
+
+    	$this->view('shared/sidebar', $data);
+    }
+
     public function footer()
     {
         require_once "../app/repository/footerRepository.php";
