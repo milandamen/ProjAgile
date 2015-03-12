@@ -8,49 +8,62 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="">
-				<button type="button" class="btn btn-primary" onclick="goBack()">Annuleer</button>
-				<button type="submit" class="btn btn-primary">Opslaan</button>
- 				<button type="button" onclick="addRow()" class="btn btn-primary">Voeg rij toe</button>
+			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action=""> 				
                 <hr>
-                Koptekst: <input type="text" name="sidebar['title']" id="sidebarTitle" value="<?php echo $data['sidebarRows'][0]->getTitle(); ?>" required> <br/><br/>
+                Koptekst: <input type="text" name="title" id="sidebarTitle" value="<?php echo $data['sidebarRows'][0]->getTitle(); ?>" required> <br/><br/>
                 
                 <?php 
-                   echo '<table name="X" class="col-md-8">';
+                   echo '<table name="X" id="sidebarTable" class="col-md-12">
+                   <tr><td><button type="button" onclick="addSideRow(this)" class="btn btn-warning">Voeg rij toe</button></td></tr>
+					';
+
+				$i=0;	
                 foreach($data['sidebarRows'] as $sidebarRow)
                 {
-                	$rowCount = 1;
-                	if($rowCount == 0)
-                		{
-                			echo '
-                			<tr>
-                				<td>Tekst: <input type="text" name="sidebar[' . $rowCount . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
-                				<td>Tekst: <input type="text" name="sidebar[' . $rowCount . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
-								<td><button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button><td>
-							<br/> </tr>';
 
-
-						} else {
-
+                	
 							if(null !== $sidebarRow->getInternLink()){
 								$url = $sidebarRow->getInternLink();
 							} else {
 								$url = $sidebarRow->getExternLink();
 							}
 
-							echo '
-                			<tr>
-                				<td>Tekst: <input type="text" name="sidebar[' . $sidebarRow->getRowNr() . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
-                				<td>Link: <input type="text" name="sidebar[' . $sidebarRow->getRowNr() . '][text][]" id="sidebarText" value="' . $url . '"> </td>
-								<td><button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button><td>
-							<br/> </tr>';
-						}
-				}
-				
-?>	</table>
-				<div id="success"></div>
-			</form>
-		</div>
+							echo '<tr>
+                				<td>Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
+                				<td>Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarText" value="' . $url . '"> </td>
+							'; ?>
+							
+							<td>
+								<?php if(null !== $sidebarRow->getInternLink()) {
 
+									echo '
+								<div class="radio">
+  									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio1]">Extern</label>
+									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio2]" checked="true">Intern</label>
+								</div> ';
+								 } else { 
+									echo '<div class="radio">
+  									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio1]" checked="true">Extern</label>
+									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio2]">Intern</label>
+								</div>
+								';
+								 }	?>	
+							</td>
+							<?php
+
+							echo '<td><button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button></td> </tr>';
+						$i++;		
+				} ?> 				
+					</table>
+				<div id="success"></div>
+				<button type="button" class="btn btn-danger" onclick="goBack()">Annuleer</button>
+				<button type="submit" class="btn btn-success">Opslaan</button>
+			</form>
+
+			
+
+		</div>
+ <!-- JavaScript that enables adding and removing columns and rows -->
+    <script src="/ProjAgile/public/js/sidebar.js"></script>
 
 
