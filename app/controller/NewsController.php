@@ -2,22 +2,25 @@
 
 class NewsController extends Shared
 {
-	private $newsdb;
+	private $newsRepository;
+    private $districtRepository;
+    private $fileRepository;
 
 	public function __construct(){
 		require_once '../app/repository/newsRepository.php';
         require_once '../app/repository/districtsectionRepository.php';
         require_once '../app/repository/fileRepository.php';
-		$this->newsdb = new NewsRepository();
+		$this->newsRepository = new NewsRepository();
+        $this->districtRepository = new DistrictSectionRepository();
+        $this->fileRepository = new FileRepository();
 	}
 
     public function show($id)
     {
-        $this->header('Nieuws | ' . $this->newsdb->getById($id)->getTitle());
+        $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
 
-
-        $data = array('news' => $this->newsdb->getById($id));
+        $data = array('news' => $this->newsRepository->getById($id), 'files' => $this->fileRepository->getAllByNewsId($id));
         $this->view('news/show', $data);
 
         $this->footer();
@@ -25,11 +28,9 @@ class NewsController extends Shared
 
     public function createNews()
     {
-        $districtdb = new DistrictSectionRepository();
-
         $this->header('Nieuw artikel');
         $this->menu();
-        $this->view('news/createNews', $districtdb->getAll());
+        $this->view('news/createNews', $this->districtRepository->getAll());
         $this->footer();
     }
 
@@ -37,11 +38,7 @@ class NewsController extends Shared
     {
         $this->header('Wijzig artikel');
         $this->menu();
-
-        $districtdb = new DistrictSectionRepository();
-        $filerepo = new FileRepository();
-
-        $this->view('news/editNews', array('news' => $this->newsdb->getById($newsId), 'sections' => $districtdb->getAll(), 'files' => $filerepo->getAllByNewsId($newsId)));
+        $this->view('news/editNews', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
         $this->footer();
     }
 
@@ -87,8 +84,6 @@ class NewsController extends Shared
             $hidden = 0;
         }
 
-        $filerepo = new FileRepository();
-
         $newsId = null;
 
         //als een artikel wordt gewijzigd dan wordt de newsId en keepfiles opgehaald.
@@ -102,33 +97,47 @@ class NewsController extends Shared
 
                 if($keepFiles === false)
                 {
-                    $filerepo->deleteAllByNewsId($newsId);
+                    $this->deleteFile($newsId);
+                    $this->fileRepository->deleteAllByNewsId($newsId);
                 }
             }
 
         }
 
         $news = new News($newsId, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
-        $newsrepo = new NewsRepository();
 
         if($create === true)
         {
             //voegt het artikel toe en krijgt een nieuws id terug, om deze aan eventuele bestanden toe te voegen
             //en naar de detail pagina te redirecten.
-            $newsId = $newsrepo->add($news);
+            $newsId = $this->newsRepository->add($news);
         }
         else
         {
-            $newsrepo->update($news);
+            $this->newsRepository->update($news);
         }
 
         //files worden toegevoegd aan db en gekoppeld aan nieuws
         foreach($filepaths as $path)
         {
-            $filerepo->add($path, $newsId);
+            $this->fileRepository->add($path, $newsId);
         }
 
         $this->show($newsId);
+    }
+
+    private function deleteFile($newsId)
+    {
+        $files = $this->fileRepository->getAllByNewsId($newsId);
+        $path = '../public/uploads/';
+
+        foreach($files as $file)
+        {
+            if(!$this->fileRepository->usedByOthers($file->path))
+            {
+                unlink($path . $file->path);
+            }
+        }
     }
 
 }

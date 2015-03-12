@@ -10,10 +10,20 @@
         <div class="col-md-8">
         	<p class="news-info"><?php echo $data['news']->getNormalDate() . ' | Door: ' . $data['news']->getAuthor()  . ' | ' . $data['news']->getDistrict();  ?>
         	</p>
-        	<?php echo $data['news']->getContent() ?>
+        	<?php
+            echo $data['news']->getContent() . '<br/>';
 
+            if(count($data['files']) > 0)
+            {
+                echo '<br/><p>Bijlagen:</p>';
+            }
 
-        			<br/>
+            foreach($data['files'] as $file)
+            {
+                echo '<a href="/projagile/public/uploads/'. $file->path . '">'. $file->path . '</a><br/>';
+            }
+
+            ?>
 
         	<p class="goback"><a href="../../"> Terug naar de homepage </a></p>
 
