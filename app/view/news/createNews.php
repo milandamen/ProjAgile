@@ -12,19 +12,19 @@
     </div>
 
         <div class="col-lg-12">
-            <form name="createNews" onsubmit="return required()" action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
+            <form name="createNews" onsubmit="return validate()" action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="form-group">
                         <label class="label-form" for="title">Titel</label>
-                        <input type="text" class="form-control" name="title" placeholder="Titel">
+                        <input id="title" type="text" class="form-control" name="title" placeholder="Titel">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group">
                         <label class="label-form" for="content">Content</label>
-                        <textarea class="form-control" rows="6" name="content"></textarea>
+                        <textarea id="content" class="form-control" rows="6" name="content"></textarea>
                     </div>
                 </div>
 
@@ -65,27 +65,21 @@
                     <input class="btn btn-submit" type="submit" value="opslaan">
                 </div>
             </form>
-        </div>
 
 <script type="text/javascript" >
     $("#cancel").click(function(){
         document.getElementById("upload").value = "";
     });
 
-    function required()
-    {
-        var title = document.forms["createNews"]["title"].value;
-        var content = document.forms["createNews"]["content"].value;
-        if (title == "")
-        {
+    function validate() {
+        if (document.getElementById("title").value == "") {
             alert("Vul a.u.b. een titel in.");
             return false;
         }
-        if(content == "")
+        if(document.getElementById("content").value == "")
         {
-            alert("Vul a.u.b. een content in.")
+            alert("Vul a.u.b. een content in.");
             return false;
         }
-
     }
 </script>
