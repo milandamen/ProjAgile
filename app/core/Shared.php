@@ -15,7 +15,10 @@ class Shared extends Controller
 
     public function menu()
     {
-        $this->view('shared/menu');
+        require_once "../app/repository/menuRepository";
+        require_once "../app/model/Menu.php";
+        $menudb = new menuRepository;
+        $this->view('shared/menu', ['db' => $menudb]);
     }
 
     public function footer()
