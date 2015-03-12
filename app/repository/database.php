@@ -48,7 +48,7 @@ class Db {
 					, $this->PASSWORD
 			);
 		} catch(PDOException $e){
-			die('Database error: '.$e->getMessage().'<br/>');
+			throw new Exception('Database error: '.$e->getMessage());
 		}
 	}
 	

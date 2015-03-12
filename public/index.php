@@ -9,4 +9,8 @@
 require_once '../app/init.php';
 
 //instantiate application
-$app = new App;
+try {
+	$app = new App();
+} catch (Exception $e) {
+	die('An error happened: ' . $e->getMessage());
+}
