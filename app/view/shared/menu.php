@@ -47,7 +47,7 @@
                         <li><a href="#">Content Beheer</a></li>
                     </ul>
                 </li>
-                -->
+               
             </ul>
         </div>
         <!-- /.navbar-collapse -->

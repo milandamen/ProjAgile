@@ -7,7 +7,7 @@
 		{
             // Start the session
             session_start();
-
+            ob_start();
             // Initialize the repositories
 			$this->initRepository();
 		}
@@ -102,15 +102,21 @@
                                 $_SESSION['timeout'] = time();
                                 session_write_close();
                                 $this->redirectTo();
+                            } else {
+                            	// Feedback: wachtwoord klopt niet.
                             }
                         }
                         else
                         {
                             //Feedback: gebruiker is geblokkeerd.
                         }
+					} else {
+						//Feedback:  Username not known.
+					
 					}
 				}
 			}
+			$this->redirectTo();
             //Feedback: Gebruikersnaam of wachtwoord is foutief ingevuld.
 		}
 
@@ -119,8 +125,9 @@
         {
             $host  = $_SERVER['HTTP_HOST'];
             $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-            header("location: http://$host$uri/$extra");
-            exit;
+            header("Location: http://$host$uri/$extra");
+
+          exit;
         }
 
 		private function initRepository()
