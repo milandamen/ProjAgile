@@ -48,6 +48,10 @@
             <h2 class="page-header">De Bunders</h2>
         </div>
 
+        <div class="col-md-8">
+		<?php require_once 'module-introduction.php'; ?>
 		<?php require_once 'module-news.php'; ?>
 
+		</div>
+		
 	
