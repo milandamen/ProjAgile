@@ -23,7 +23,7 @@
                     $salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_HASH_BYTE_SIZE,
-                    false
+                    true
                 )
             );
         }
@@ -48,7 +48,7 @@
                     $salt,
                     PBKDF2_ITERATIONS,
                     PBKDF2_HASH_BYTE_SIZE,
-                    false
+                    true
                 )
             );
         }
@@ -104,7 +104,7 @@
             }
             else
             {
-                return base64_encode(substr($output, 0, $keyLength));
+                return bin2hex(substr($output, 0, $keyLength));
             }
         }
     }

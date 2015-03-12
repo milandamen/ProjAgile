@@ -40,7 +40,7 @@
 
         public function getByUsername($username)
         {
-            $query = $this->selectAll . ' WHERE username = :username';
+            $query = $this->selectAll . $this->tableName . ' WHERE username LIKE :username';
             $parameter = array(':username' => $username);
 
             $result = $this->db->getQuery($query, $parameter);
@@ -95,6 +95,7 @@
                 ':districtSectionId' => $object->getDistrictSectionId(),
                 ':username' => $object->getUsername(),
                 ':password' => $object->getPassword(),
+                ':salt' => $object->getSalt(),
                 ':firstName' => $object->getFirstName(),
                 ':surname' => $object->getSurname(),
                 ':postal' => $object->getPostal(),

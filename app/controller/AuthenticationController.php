@@ -64,7 +64,7 @@
             }
         }
 
-		private function processLogin($username = "", $password = "")
+		private function processLogin($username, $password)
 		{
 			if (isset($username) && !empty($username) &&
 				isset($password) && !empty($password))
@@ -82,8 +82,28 @@
                             require_once('auth/SecurityManager.php');
                             $securityManager = new SecurityManager();
 
+                            // ######TEST##########
+//                            $userTest = new User
+//                            (
+//                                $user->getUserId(),
+//                                $user->getUserGroupId(),
+//                                $user->getDistrictSectionId(),
+//                                $user->getUsername(),
+//                                $securityManager->createFirstTimeHash($password, $salt),
+//                                $user->getSalt(),
+//                                $user->getFirstName(),
+//                                $user->getSurname(),
+//                                $user->getPostal(),
+//                                $user->getHouseNumber(),
+//                                $user->getEmail(),
+//                                $user->getActive()
+//                            );
+//                            $this->userRepo->update($userTest);
+//
+//                            return;
                             if ($securityManager->validatePassword($password, $salt, $user->getPassword()))
                             {
+                                echo "test 12123131313";
                                 // Save user specific variables in the session
                                 $_SESSION['userId'] = $user->userId;
                                 $_SESSION['username'] = $user->username;
@@ -95,12 +115,21 @@
                                 session_write_close();
                                 $this->redirectTo();
                             }
+                            else
+                            {
+                                echo "test zfggzasfgdagdasgdasgadegaseg";
+                            }
                         }
                         else
                         {
+                            echo "wow blocked";
                             //Feedback: gebruiker is geblokkeerd.
                         }
 					}
+                    else
+                    {
+                        echo "wow";
+                    }
 				}
 			}
             //Feedback: Gebruikersnaam of wachtwoord is foutief ingevuld.
