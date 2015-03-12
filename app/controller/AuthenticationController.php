@@ -126,7 +126,7 @@
 		private function initRepository()
 		{
             // TODO: Dit moet nog worden aangepast. Tijdelijke workaround wegns dat een relative pad niet werkt(e)
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjAgile/app/repository/UserRepository.php');
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjAgile/app/repository/userRepository.php');
 			$this->userRepo = new UserRepository();
 		}
 	}
