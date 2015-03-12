@@ -31,7 +31,7 @@
             <div class="row">
                 <label class="label-form" for="Sectie">Sectie</label>
                 <select name="district" class="form-control">
-                    <option value="Home">Home</option>
+                    <option value="0">Home</option>
                     <?php
                     foreach($data['sections'] as $section)
                     {

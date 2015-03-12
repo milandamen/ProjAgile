@@ -43,9 +43,9 @@ class NewsRepository extends RepositoryBase
             $news = new News($result[0]->newsId, $result[0]->districtSectionId, $result[0]->userId, $result[0]->title, $result[0]->content, $result[0]->date, $result[0]->hidden);
         	$news->setAuthor($this->getAuthor($result[0]->userId));
         	$news->setDistrict($this->getDistrict($result[0]->districtSectionId));
+            return $news;
         }
 
-        return $news;
     }
 
     public function add($object)

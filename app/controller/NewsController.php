@@ -55,12 +55,16 @@ class NewsController extends Shared
         $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
         $create = filter_var($create, FILTER_VALIDATE_BOOLEAN);
 
+        if($districtsectionId === 0)
+        {
+            $districtsectionId = null;
+        }
+
         //files worden geupload
         session_start();
         $target = '../public/uploads/';
         $filepaths = array();
         $count = 0;
-
         foreach($_FILES['file']['name'] as $filename)
         {
             //als er geen bestand wordt gekozen dan krijg je altijd een '' string mee vandaar de !empty check
