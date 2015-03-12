@@ -20,7 +20,7 @@ class SidebarRepository extends RepositoryBase
         #convert result objects to footer objects
         foreach($objects as $var)
         {
-            $sidebarArray[] = new Sidebar($var->page, $var->title, $var->text, $var->link);
+            $sidebarArray[] = new Sidebar($var->pageNr, $var->rowNr, $var->title, $var->text, $var->internlink, $var->externlink);
         }
         return $sidebarArray;
     }

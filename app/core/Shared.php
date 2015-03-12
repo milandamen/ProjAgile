@@ -21,16 +21,12 @@ class Shared extends Controller
     public function sidebar()
     {	
     	require_once '../app/repository/sidebarRepository.php';
-    	require_once '../app/model/Sidebar.php';
+    	require_once '../app/model/Sidebar.php';		
 
-    	//$sidebar = new Sidebar('home', 'Test text', 'http://test-link.nl');
-    	  for($i = 0; $i < 4; $i++)
-        {
-            $sideColumns[] = new Sidebar('home', 'Meer informatie','Test text', 'http://test-link.nl');
-        }
+    	$sidebardb = new SidebarRepository();
+    	$sidebarData = $sidebardb->getAll();
 
-
-    	$data = array('sidebarRows' => $sideColumns);
+    	$data = array('sidebarRows' => $sidebarData);
 
     	$this->view('shared/sidebar', $data);
     }

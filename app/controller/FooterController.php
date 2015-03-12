@@ -70,7 +70,8 @@ class FooterController extends Shared
                     $footerdb->remove($item);
                 }
             }
-            header("Location: ../../public");
+            global $Base_URI;
+            header('Location: ' . $Base_URI);
             return;
         }
         else

@@ -2,18 +2,36 @@
 
 
 class Sidebar{
+	private $row;
 	private $text;
-	private $link;
-	private $page;
+	private $pageNr;
 	private $title;
+	private $intern;
+	private $extern;
 
 
-	function __construct($page, $title, $text, $link)
+	function __construct($pageNr, $rowNR, $title, $text, $internlink, $externlink)
 	{
-		$this->$title = $title;
-		$this->page = $page;
+		$this->pageNr = $pageNr;
 		$this->text = $text;
-		$this->link = $link;
+		$this->row = $rowNR;
+		$this->title = $title;
+		$this->intern = $internlink;
+		$this->extern = $externlink;
+
+	}
+
+	public function getInternLink() {
+		return $this->intern;
+	}
+
+	public function getExternLink()  {
+		return $this->extern;
+	}
+
+
+	public function getRow(){
+		return $this->row;
 	}
 
 	public function getTitle(){
@@ -24,26 +42,16 @@ class Sidebar{
 		$this->title = $title;
 	}
 
-
 	public function getPage()
 	{
-		return $this->page;
+		return $this->pageNr;
 	}
 
 	public function setPage($page)
 	{
-		$this->page = $page;
+		$this->pageNr = $page;
 	}
 
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
 
     public function getText()
     {
