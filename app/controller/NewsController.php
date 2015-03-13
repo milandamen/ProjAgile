@@ -26,11 +26,11 @@ class NewsController extends Shared
         $this->footer();
     }
 
-    public function createNews()
+    public function create()
     {
         $this->header('Nieuw artikel');
         $this->menu();
-        $this->view('news/createNews', $this->districtRepository->getAll());
+        $this->view('news/create', $this->districtRepository->getAll());
         $this->footer();
     }
 
@@ -38,17 +38,17 @@ class NewsController extends Shared
     {
         $this->header('Wijzig artikel');
         $this->menu();
-        $this->view('news/editNews', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
+        $this->view('news/edit', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
         $this->footer();
     }
 
-    public function createNewsSave($create)
+    public function save($create)
     {
         require_once '../app/model/News.php';
 
         $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
         $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
-        $hidden = $_POST['hidden'];
+        $hidden = filter_var($_POST['hidden'], FILTER_VALIDATE_BOOLEAN);
         $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
         $create = filter_var($create, FILTER_VALIDATE_BOOLEAN);
 
@@ -75,7 +75,7 @@ class NewsController extends Shared
             }
         }
 
-        if($hidden === true)
+        if($hidden == true)
         {
             $hidden = 1;
         }

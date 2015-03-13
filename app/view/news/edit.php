@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-lg-12">
-        <form name="editNews" onsubmit="return validate()" action="/projagile/public/NewsController/createNewsSave/false" method="post" enctype="multipart/form-data">
+        <form name="editNews" onsubmit="return validate()" action="/projagile/public/NewsController/save/false" method="post" enctype="multipart/form-data">
             <?php echo '<input type="hidden" name="newsId" value="' . $data['news']->getId() .'" >'; ?>
             <div class="row">
                 <div class="form-group">

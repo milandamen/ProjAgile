@@ -12,7 +12,7 @@
     </div>
 
         <div class="col-lg-12">
-            <form name="createNews" onsubmit="return validate()" action="/projagile/public/NewsController/createNewsSave/true" method="post" enctype="multipart/form-data">
+            <form name="createNews" onsubmit="return validate()" action="/projagile/public/NewsController/save/true" method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="form-group">
