@@ -12,7 +12,7 @@ require_once '../app/init.php';
 try {
 	$app = new App();
 } catch (Exception $e) {
-	die('An error happened: ' . $e->getMessage());
+	echo('An error happened: ' . $e->getMessage());
 }
 
 require_once '../app/repository/database.php';

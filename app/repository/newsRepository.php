@@ -5,7 +5,7 @@ require_once '../app/model/News.php';
 class NewsRepository extends RepositoryBase
 {
 
-    private $name = 'news';
+    private $name = 'newsa';
 
     public function __construct()
     {

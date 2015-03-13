@@ -2,7 +2,6 @@
 	<input class="hiddenInput" type="text" name="module-news" />	<!-- This input gets sent in /Home/editlayout -->
 	<div class="panel-heading">
 		<h4> 
-			<a href="#"><i class="fa fa-pencil-square-o"></i></a>
 			Nieuws
 		</h4>
 	</div>

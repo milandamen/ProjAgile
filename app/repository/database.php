@@ -21,6 +21,10 @@ class Db {
 	private $laststmt;						// When smart statements mode is enabled, this variable will contain the PDOStatement object of the last query.
 	// Default: Enabled
 	
+	// Debug
+	private $debugmode = true;				// Boolean for enable/disable of debug mode. To print debug info call dumpDebug().
+	private $debugcollection = array();		// When debug mode is enabled, contains log of all statement errors.
+	
 	/**
 		Constructor for this database library. Sets use of smart statements and connects to the database.
 	*/
@@ -34,6 +38,7 @@ class Db {
 	*/
 	public function __destruct() {
 		$this->dbClose();
+		$this->dumpDebug();
 	}
 	
 	/**
@@ -105,6 +110,8 @@ class Db {
 
 		$stmt->execute();
 		
+		$this->logError($stmt);
+		
 		if ($this->usesmartstmt) {
 			$this->lastquery = $query;
 			$this->laststmt = $stmt;
@@ -160,6 +167,8 @@ class Db {
 		
 		$stmt->execute();
 		
+		$this->logError($stmt);
+		
 		$result = null;
 
 		if ($mode == Db::FETCH_ASSOC) {
@@ -193,10 +202,40 @@ class Db {
 	}
 	
 	/**
+		Enables or disables debug mode.
+	*/
+	public function setDebugMode($bool) {
+		$this->debugmode = $bool;
+	}
+	
+	/**
+		Dumps log of statement errors (if debugmode is enabled).
+	*/
+	public function dumpDebug() {
+		if ($this->debugmode && count($this->debugcollection)) {
+			var_dump($this->debugcollection);
+		}
+	}
+	
+	/**
+		If an error happened, log to debug collection.
+	*/
+	private function logError($stmt) {
+		if ($this->debugmode) {
+			$error = $stmt->errorInfo();
+			if (isset($error) && $error[1]) {
+				$this->debugcollection[] = $error;
+			}
+		}
+	}
+	
+	/**
 		Is the currently pending query the same as last one?
 	*/
 	private function isLastQuery($query) {
 		return $this->lastquery === $query;
 	}
 }
+
+Db::getDb();		// Initialize the database on startup
 ?>
