@@ -23,11 +23,14 @@ class NewsController extends Shared
     {
         $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
-<<<<<<< HEAD
 
-        $data = array('news' => $this->newsRepository->getById($id), 'files' => $this->fileRepository->getAllByNewsId($id));
-        $this->view('news/show', $data);
+//        $data = array('news' => $this->newsRepository->getById($id), 'files' => $this->fileRepository->getAllByNewsId($id));
+//        $this->view('news/show', $data);
+//
+//        $this->footer();
 
+        $data = array('news' => $this->newsdb->getById($id));
+        $this->view('news/show', ['newsdata' => $data, 'logged' => $this->login()]);
         $this->footer();
     }
 
@@ -79,15 +82,6 @@ class NewsController extends Shared
                 move_uploaded_file($tmp,$target);
             }
         }
-=======
-        $data = array('news' => $this->newsdb->getById($id));
-        $this->view('news/show', ['newsdata' => $data, 'logged' => $this->login()]);
-        $this->footer();
-    }
-
-
-}
->>>>>>> develop
 
         if($hidden == true)
         {
