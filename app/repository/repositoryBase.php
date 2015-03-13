@@ -9,7 +9,7 @@
         public function __construct()
         {
             require_once 'database.php';
-            $this->db = new Db();
+            $this->db = Db::getDb();
         }
 
         public function getAll()
