@@ -28,21 +28,22 @@
                             $parentItemCreated = false;
                             foreach($menuData as $subMenuItem)
                             {
+                                //Does this menuItem has children?
                                 if($subMenuItem->getParentId() == $menuItem->getMenuId())
                                 {
                                     $hasChildren = true;
-
+                                    //If UL created
                                     if($parentItemCreated)
                                     {
-                                        echo('<li><a href="' . $menuItem->getRelativeUrL() . '/' . $subMenuItem->getRelativeUrl() . '">'. $subMenuItem->getName() . '</a></li>');
+                                        echo('<li><a href="/ProjAgile/Public/' . $menuItem->getRelativeUrL() . '/' . $subMenuItem->getRelativeUrl() . '">'. $subMenuItem->getName() . '</a></li>');
                                     }
                                     else
                                     {
                                         $parentItemCreated = true;
                                         echo('<li>');
-                                        echo(' <a href="' . $menuItem->getRelativeUrl() . '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">'. $menuItem->getName() . '<span class="caret"></span></a>');
+                                        echo(' <a href="/ProjAgile/Public/' . $menuItem->getRelativeUrl() . '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">'. $menuItem->getName() . '<span class="caret"></span></a>');
                                         echo('<ul class="dropdown-menu" role="menu">');
-                                        echo('<li><a href="' . $menuItem->getRelativeUrl() . '/' . $subMenuItem->getRelativeUrl() . '">'. $subMenuItem->getName() . '</a></li>');
+                                        echo('<li><a href="/ProjAgile/Public/' . $menuItem->getRelativeUrl() . '/' . $subMenuItem->getRelativeUrl() . '">'. $subMenuItem->getName() . '</a></li>');
                                     }
 
                                 }
@@ -54,7 +55,7 @@
                             else
                             {
                                 echo('<li>');
-                                echo('<a href="'. $menuItem->getRelativeUrl() . '">' . $menuItem->getName() . '</a>');
+                                echo('<a href="/ProjAgile/Public/' . $menuItem->getRelativeUrl() . '">' . $menuItem->getName() . '</a>');
                                 echo('</li>');
                             }
                         }
