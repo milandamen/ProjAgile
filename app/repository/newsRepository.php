@@ -124,4 +124,10 @@ class NewsRepository extends RepositoryBase
     	return $district;
     }
 
+<<<<<<< HEAD
 }
+=======
+
+
+}
+>>>>>>> develop

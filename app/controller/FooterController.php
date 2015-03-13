@@ -1,6 +1,8 @@
 <?php
 class FooterController extends Shared
 {
+	
+	
     public function footerUpdate()
     {
         //require db, create it and get the footer
@@ -70,7 +72,8 @@ class FooterController extends Shared
                     $footerdb->remove($item);
                 }
             }
-            header("Location: ../../public");
+            global $Base_URI;
+            header('Location: ' . $Base_URI);
             return;
         }
         else

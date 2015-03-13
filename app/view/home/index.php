@@ -48,13 +48,10 @@
             <h2 class="page-header">De Bunders</h2>
         </div>
 
+        <div class="col-md-8">
+		<?php require_once 'module-introduction.php'; ?>
 		<?php require_once 'module-news.php'; ?>
 
-	</div>
-    <!-- /.row -->
-    	<!-- Script to Activate the Carousel -->
-    <script>
-        $('.carousel').carousel({
-            interval: 5000 //changes the speed
-        })
-    </script>
+		</div>
+		
+	

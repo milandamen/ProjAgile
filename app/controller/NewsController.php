@@ -1,4 +1,7 @@
 <?php 
+	
+require_once 'AuthenticationController.php';
+
 
 class NewsController extends Shared
 {
@@ -7,6 +10,7 @@ class NewsController extends Shared
     private $fileRepository;
 
 	public function __construct(){
+		parent::__construct();
 		require_once '../app/repository/newsRepository.php';
         require_once '../app/repository/districtsectionRepository.php';
         require_once '../app/repository/fileRepository.php';
@@ -19,6 +23,7 @@ class NewsController extends Shared
     {
         $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
+<<<<<<< HEAD
 
         $data = array('news' => $this->newsRepository->getById($id), 'files' => $this->fileRepository->getAllByNewsId($id));
         $this->view('news/show', $data);
@@ -74,6 +79,15 @@ class NewsController extends Shared
                 move_uploaded_file($tmp,$target);
             }
         }
+=======
+        $data = array('news' => $this->newsdb->getById($id));
+        $this->view('news/show', ['newsdata' => $data, 'logged' => $this->login()]);
+        $this->footer();
+    }
+
+
+}
+>>>>>>> develop
 
         if($hidden == true)
         {
