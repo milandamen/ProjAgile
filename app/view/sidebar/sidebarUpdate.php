@@ -29,17 +29,17 @@
 							}
 
 							echo '<tr>
-                				<td>Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
-                				<td>Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarText" value="' . $url . '"> </td>
+                				<td class="td-tekst">Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
+                				<td class="td-link" >Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarLink" value="' . $url . '"> </td>
 							'; ?>
 							
-							<td>
+							<td class="td-radio1">
 								<?php if(null !== $sidebarRow->getInternLink()) {
 
 									echo '
 								<div class="radio">
-  									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio1]">Extern</label>
-									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio2]" checked="true">Intern</label>
+  									<label class="radio-inline"><input type="radio"  name="sidebar['.$i.'][radio1]">Extern</label>
+									<label class="radio-inline"><input type="radio"  name="sidebar['.$i.'][radio2]" checked="true">Intern</label>
 								</div> ';
 								 } else { 
 									echo '<div class="radio">

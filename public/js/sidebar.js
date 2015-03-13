@@ -3,6 +3,22 @@ function removeSideRow(button)
 {
     var row=button.parentNode.parentNode;
     row.parentNode.removeChild(row);
+
+    var table = document.getElementById("sidebarTable");
+    for(var i=0, row; row=table.rows[i]; i++){
+    	for(var j=0, col; col = row.cells[j]; j++){
+
+ 			var cell = col.innerHTML;
+
+ 			console.log(cell);
+ 			console.log('end cell');
+    	}
+    	console.log('end row');
+    }
+
+
+    //TODO: updaten rijnummers.
+
 }
 
 function addSideRow(button){
