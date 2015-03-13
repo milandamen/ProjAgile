@@ -79,7 +79,7 @@ class Home extends Shared
 			$this->header('editlayout');
 			$this->menu();
 			
-			$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData);
+			$data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'logged' => $this->login());
 			$this->view('home/editlayout', $data);
 			
 			$this->footer();
