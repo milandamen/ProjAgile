@@ -23,7 +23,15 @@ class NewsRepository extends RepositoryBase
         #convert result objects to news objects
         foreach($objects as $var)
         {
-            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $var->hidden);	
+            if($var->hidden == 0)
+            {
+                $hidden = false;
+            }
+            else
+            {
+                $hidden = true;
+            }
+            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $hidden);
         }
 
         foreach($newsArray as $news){
