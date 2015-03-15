@@ -8,14 +8,20 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action=""> 				
+			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action=""> 			
+				<input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
+				
                 <hr>
                 Koptekst: <input type="text" name="title" id="sidebarTitle" value="<?php echo $data['sidebarRows'][0]->getTitle(); ?>" required> <br/><br/>
                 
                 <?php 
-                   echo '<table name="X" id="sidebarTable" class="col-md-12">
-                   <tr><td><button type="button" onclick="addSideRow(this)" class="btn btn-warning">Voeg rij toe</button></td></tr>
-					';
+					echo 
+					'<table name="X" id="sidebarTable" class="col-md-12">
+						<tr>
+							<td>
+								<button type="button" onclick="addSideRow(this)" class="btn btn-warning">Voeg rij toe</button>
+							</td>
+						</tr>';
 
 				$i=0;	
                 foreach($data['sidebarRows'] as $sidebarRow)
@@ -26,9 +32,10 @@
 								$url = $sidebarRow->getExternLink();
 							}
 
-							echo '<tr>
-                				<td class="td-tekst">Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
-                				<td class="td-link" >Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarLink" value="' . $url . '"> </td>
+							echo 
+								'<tr>
+									<td class="td-tekst">Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
+									<td class="td-link" >Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarLink" value="' . $url . '"> </td>
 							'; ?>
 							
 							<td class="td-radio1">
