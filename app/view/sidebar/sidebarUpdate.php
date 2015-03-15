@@ -45,19 +45,16 @@
 							'; ?>
 							
 							<td class="td-radio1">
-								<?php 
-								// If local link then activate intern radiobutton else extern radiobutton.
-								if(null !== $sidebarRow->getInternLink()) {
-
+								<?php if(null !== $sidebarRow->getInternLink()) {
 									echo '
-								<div class="radio btn-group" role="group" data-toggle="buttons">
-  									<label class="btn btn-default"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Extern">Extern</label>
-									<label class="btn btn-default active"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Intern">Intern</label>
+								<div class="radio">
+  									<label class="radio-inline"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Extern">Extern</label>
+									<label class="radio-inline active"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Intern" checked="">Intern</label>
 								</div> ';
 								 } else { 
-									echo '<div class="btn-group" role="group" data-toggle="buttons">
-  									<label class="btn btn-default active"><input type="radio" name="sidebar['.$i.'][radio1]" value="Extern">Extern</label>
-									<label class="btn btn-default"><input type="radio" name="sidebar['.$i.'][radio1]" value="Intern">Intern</label>
+									echo '<div class="radio">
+  									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio1]" value="Extern" checked="">Extern</label>
+									<label class="radio-inline active"><input type="radio" name="sidebar['.$i.'][radio1]" value="Intern">Intern</label>
 								</div>
 								';
 								 }	?>	
