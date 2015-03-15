@@ -30,13 +30,13 @@ class SidebarController extends Shared {
 			}
 		}
 
+		// -- Form get's posted from page when submitted. 
 		if($_POST){
-		//	var_dump($_POST);
 			$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 			$newSidebar = array();
 			
 			$maxRowIndex = $_POST['maxRowIndex'];
-			
+			// Loop over all posted elements.
 			$i =0;
 			for($rows = 0; $rows <= $maxRowIndex; $rows++)
 			{
@@ -46,12 +46,9 @@ class SidebarController extends Shared {
 					for($rowN = 0; $rowN < count($row['text']); $rowN++)
 					{
 						if($row['text'][$rowN] != null){
-							$in; $out; $radio1; $radio2;
-							
+							$in; $out; 							
 
-							var_dump($row['radio1']);
-
-							
+							// Determine wether inside or outside link is checked. And if a link has been set. 
 							if(isset($row['radio1']) && isset($row['link'][$rowN])){
 								if($row['radio1'] === 'Extern'){
 									$in = null;
@@ -68,11 +65,8 @@ class SidebarController extends Shared {
 									$in = "#";
 									$out = null;
 								}
-
 							}
 
-
-							
 							$newSidebar[] = new Sidebar($pageNr, $i, $title, filter_var($row['text'][$rowN], FILTER_SANITIZE_STRING), $in, $out);
 							$i++;
 						} else{
@@ -83,16 +77,17 @@ class SidebarController extends Shared {
 				}
 			}
 
+			// Delete all former menu-items to make sure everything will be correct.
 			$this->sidebarDb->deleteAllFromPage($pageNr);
 
+			// Insert all menu-items.
 			foreach($newSidebar as $entry)
 			{
-				//echo 'pageNr ' . $entry->getPageNr() . ' rowNr ' . $entry->getRowNr() . ' title ' . $entry->getTitle() . ' text ' . $entry->getText() . ' in ' . $entry->getInternLink() . ' out ' . $entry->getExternLink();
 				$this->sidebarDb->add($entry);
 			}
 
-		//	global $Base_URI;
-	//			header('Location: ' . $Base_URI);
+			global $Base_URI;
+			header('Location: ' . $Base_URI);
 
 			return;
 		// end if($_POST)

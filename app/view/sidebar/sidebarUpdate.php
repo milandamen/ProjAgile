@@ -43,7 +43,7 @@
 									<td class="td-tekst">Tekst: <input type="text" name="sidebar[' . $i . '][text][]" id="sidebarText" value="' . $sidebarRow->getText() . '" required> </td>
 									<td class="td-link" >Link: <input type="text" name="sidebar[' . $i . '][link][]" id="sidebarLink" value="' . $url . '"> </td>
 							'; ?>
-							
+							<!--- Make decision for intern or extern link -->
 							<td class="td-radio1">
 								<?php if(null !== $sidebarRow->getInternLink()) {
 									echo '
