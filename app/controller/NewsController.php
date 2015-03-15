@@ -1,13 +1,14 @@
 <?php 
 	
 require_once 'AuthenticationController.php';
-
-
 class NewsController extends Shared
 {
 	private $newsRepository;
     private $districtRepository;
     private $fileRepository;
+
+    private $minRand = 100;
+    private $maxRand = 500000;
 
 	public function __construct(){
 		parent::__construct();
@@ -29,25 +30,31 @@ class NewsController extends Shared
 //
 //        $this->footer();
 
-        $data = array('news' => $this->newsdb->getById($id));
-        $this->view('news/show', ['newsdata' => $data, 'logged' => $this->login()]);
+        $data = array('news' => $this->newsRepository->getById($id));
+        $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'logged' => $this->login()]);
         $this->footer();
     }
 
     public function create()
     {
-        $this->header('Nieuw artikel');
-        $this->menu();
-        $this->view('news/create', $this->districtRepository->getAll());
-        $this->footer();
+        if($this->login())
+        {
+            $this->header('Nieuw artikel');
+            $this->menu();
+            $this->view('news/create', $this->districtRepository->getAll());
+            $this->footer();
+        }
     }
 
     public function edit($newsId)
     {
-        $this->header('Wijzig artikel');
-        $this->menu();
-        $this->view('news/edit', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
-        $this->footer();
+        if($this->login())
+        {
+            $this->header('Wijzig artikel');
+            $this->menu();
+            $this->view('news/edit', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
+            $this->footer();
+        }
     }
 
     public function save($create)
@@ -66,8 +73,8 @@ class NewsController extends Shared
         }
 
         //files worden geupload
-        session_start();
         $target = '../public/uploads/';
+        $temp = '../public/uploads/tijdelijk/';
         $filepaths = array();
         $count = 0;
         foreach($_FILES['file']['name'] as $filename)
@@ -76,10 +83,21 @@ class NewsController extends Shared
             if(!empty($filename))
             {
                 $tmp = $_FILES['file']['tmp_name'][$count];
-                $count=$count + 1;
-                $target = $target.basename($filename);
-                $filepaths[] = $filename;
-                move_uploaded_file($tmp,$target);
+                $count = $count + 1;
+
+                $nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
+
+                while(file_exists($target . $nameToCheck))
+                {
+                    $nameToCheck = rand($this->minRand, $this->maxRand) . 'id' . $filename;
+                }
+
+                $temp = $temp.basename($filename);
+                $filepaths[] = $nameToCheck;
+                move_uploaded_file($tmp,$temp);
+                #wijzig de naam van het bestand in de tijdelijke map en verplaats het naar de uploads folder
+                rename($temp, $target . $nameToCheck);
+
             }
         }
 
@@ -106,7 +124,6 @@ class NewsController extends Shared
                 if($keepFiles === false)
                 {
                     $this->deleteFile($newsId);
-                    $this->fileRepository->deleteAllByNewsId($newsId);
                 }
             }
 
@@ -141,11 +158,11 @@ class NewsController extends Shared
 
         foreach($files as $file)
         {
-            if(!$this->fileRepository->usedByOthers($file->path))
-            {
-                unlink($path . $file->path);
-            }
+            unlink($path . $file->path);
         }
+
+        #verwijder ook uit de db
+        $this->fileRepository->deleteAllByNewsId($newsId);
     }
 
 }
