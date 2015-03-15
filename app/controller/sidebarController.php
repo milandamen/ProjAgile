@@ -84,12 +84,8 @@ class SidebarController extends Shared {
 				$this->sidebarDb->add($entry);
 			}
 
-
 			global $Base_URI;
 			header('Location: ' . $Base_URI);
-
-		//	var_dump($this->sidebarDb->getAll());
-
 
 			return;
 		// end if($_POST)

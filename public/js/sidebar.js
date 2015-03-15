@@ -2,23 +2,22 @@
 function removeSideRow(button)
 {
     var row=button.parentNode.parentNode;
-    row.parentNode.removeChild(row);
+//	console.log(row);
+	//var input = row.getElementsByTagName('input');
+    //console.log(input)
 
-    var table = document.getElementById("sidebarTable");
+	var table = document.getElementById("sidebarTable");
     for(var i=0, row; row=table.rows[i]; i++){
     	for(var j=0, col; col = row.cells[j]; j++){
+    		var input = col.getElementsByTagName('input');
+    		console.log(input)
 
- 			var cell = col.innerHTML;
-
- 			console.log(cell);
- 			console.log('end cell');
     	}
     	console.log('end row');
     }
 
 
-    //TODO: updaten rijnummers.
-
+	row.parentNode.removeChild(row);
 }
 
 function addSideRow(button){

@@ -20,8 +20,6 @@
 				$i=0;	
                 foreach($data['sidebarRows'] as $sidebarRow)
                 {
-
-                	
 							if(null !== $sidebarRow->getInternLink()){
 								$url = $sidebarRow->getInternLink();
 							} else {
