@@ -3,9 +3,9 @@
 		<div class="panel-heading sidebar">
     		<h4> <?php echo $data['sidebarRows'][0]->getTitle(); ?> 
     			<?php if($data['logged']){
-    				echo ' <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a></h4>';
+    				echo ' <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a>';
     			} ?>
-
+			</h4>
     	</div>
     	<div class="panel-body">
 			<ul>
