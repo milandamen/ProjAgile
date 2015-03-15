@@ -57,7 +57,7 @@ class SidebarController extends Shared {
 									$in = filter_var($row['link'][$rowN], FILTER_SANITIZE_STRING);
 									$out = null;
 								}
-							} else if(isset($row['radio1']) && isset($row['link'][$rowN])){
+							} else if(isset($row['radio1']) && !isset($row['link'][$rowN])){
 								if($row['radio1'] === 'Extern'){
 									$in = null;
 									$out = "#";
