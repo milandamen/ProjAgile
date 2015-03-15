@@ -8,6 +8,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
+			<!--- Start Form of updating the sidebar -->
 			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action=""> 			
 				<input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
 				
@@ -15,6 +16,7 @@
                 Koptekst: <input type="text" name="title" id="sidebarTitle" value="<?php echo $data['sidebarRows'][0]->getTitle(); ?>" required> <br/><br/>
                 
                 <?php 
+                // Add new row-button
 					echo 
 					'<table name="X" id="sidebarTable" class="col-md-12">
 						<tr>
@@ -23,9 +25,13 @@
 							</td>
 						</tr>';
 
+
+				// Loop through all fields and make editable. 			
 				$i=0;	
                 foreach($data['sidebarRows'] as $sidebarRow)
                 {
+
+                			// Check if link goes out or stays in. 
 							if(null !== $sidebarRow->getInternLink()){
 								$url = $sidebarRow->getInternLink();
 							} else {
@@ -39,23 +45,25 @@
 							'; ?>
 							
 							<td class="td-radio1">
-								<?php if(null !== $sidebarRow->getInternLink()) {
+								<?php 
+								// If local link then activate intern radiobutton else extern radiobutton.
+								if(null !== $sidebarRow->getInternLink()) {
 
 									echo '
-								<div class="radio">
-  									<label class="radio-inline"><input type="radio"  name="sidebar['.$i.'][radio1]">Extern</label>
-									<label class="radio-inline"><input type="radio"  name="sidebar['.$i.'][radio2]" checked="true">Intern</label>
+								<div class="radio btn-group" role="group" data-toggle="buttons">
+  									<label class="btn btn-default"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Extern">Extern</label>
+									<label class="btn btn-default active"><input type="radio"  name="sidebar['.$i.'][radio1]" value="Intern">Intern</label>
 								</div> ';
 								 } else { 
-									echo '<div class="radio">
-  									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio1]" checked="true">Extern</label>
-									<label class="radio-inline"><input type="radio" name="sidebar['.$i.'][radio2]">Intern</label>
+									echo '<div class="btn-group" role="group" data-toggle="buttons">
+  									<label class="btn btn-default active"><input type="radio" name="sidebar['.$i.'][radio1]" value="Extern">Extern</label>
+									<label class="btn btn-default"><input type="radio" name="sidebar['.$i.'][radio1]" value="Intern">Intern</label>
 								</div>
 								';
 								 }	?>	
 							</td>
 							<?php
-
+							 // Row removal button 
 							echo '<td><button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button></td> </tr>';
 						$i++;		
 				} ?> 				
@@ -68,7 +76,7 @@
 			
 
 		</div>
- <!-- JavaScript that enables adding and removing columns and rows -->
+ <!-- JavaScript that enables adding and removing rows -->
     <script src="/ProjAgile/public/js/sidebar.js"></script>
 
 

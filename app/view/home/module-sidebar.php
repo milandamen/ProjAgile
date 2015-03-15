@@ -3,7 +3,7 @@
 	<div class="panel-heading sidebar">
 		<h4> <?php echo $data['sidebarRows'][0]->getTitle(); ?> 
 			<?php if($data['logged']){
-				echo ' <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a>';
+				echo ' <a class="right" href="sidebarController/sidebarUpdate/'.$data['sidebarRows'][0]->getPageNr().'"><i class="fa fa-pencil-square-o"></i></a>';
 			} ?>
 		</h4>
 	</div>
@@ -11,12 +11,22 @@
 		<ul>
 		<?php 
 			foreach($data['sidebarRows'] as $sidebarItem){
-				echo' 
+
+				if(null !== $sidebarItem->getInternLink()) {
+					echo' 
 					<li><a href="'. $sidebarItem->getInternLink() 
 					.'" class="">&gt; '
 					. $sidebarItem->getText() 
 					.'</a></li>
 					';
+				} else {
+				echo' 
+					<li><a href="'. $sidebarItem->getExternLink() 
+					.'" target="_blank" class="">&gt; '
+					. $sidebarItem->getText() 
+					.'</a></li>
+					';
+				}
 			}
 		?>
 		</ul>

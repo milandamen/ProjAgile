@@ -22,10 +22,12 @@ function addSideRow(button){
 
 
  	var div = document.createElement("div");
- 	div.className = "radio";
+ 	div.className = "btn-group";
+ 	div.setAttribute("role", "group");
+ 	div.setAttribute("data-toggle", "buttons");
 
-	div.innerHTML = '<label class="radio-inline"><input type="radio" name="sidebar[' + tableNumber + '][radio1]">Extern</label>\
-	<label class="radio-inline"><input type="radio" name="sidebar[' + tableNumber + '][radio2]" checked="true">Intern</label>';
+	div.innerHTML = '<label class="btn btn-default"><input type="radio" name="sidebar[' + tableNumber + '][radio1]">Extern</label>\
+	<label class="btn btn-default"><input type="radio" name="sidebar[' + tableNumber + '][radio2]">Intern</label>';
 
  	cellRadio.appendChild(div);
  	cellDelete.innerHTML = '<button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button>';

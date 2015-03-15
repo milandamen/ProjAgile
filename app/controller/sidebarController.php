@@ -31,7 +31,7 @@ class SidebarController extends Shared {
 		}
 
 		if($_POST){
-			var_dump($_POST);
+		//	var_dump($_POST);
 			$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 			$newSidebar = array();
 			
@@ -48,27 +48,30 @@ class SidebarController extends Shared {
 						if($row['text'][$rowN] != null){
 							$in; $out; $radio1; $radio2;
 							
-							// Extern link selected
-							if(isset($row['radio1'][$rowN]) && isset($row['link'][$rowN])){
-								$radio1 = $row['radio1'][$rowN];
-								$in = null;
-								$out = filter_var($row['link'][$rowN], FILTER_SANITIZE_STRING);
-							} else if(isset($row['radio1'][$rowN]) && !isset($row['link'][$rowN])){
-								$radio1 = $row['radio1'][$rowN];
-								$in = null;
-								$out = "#";
-							}
+
+							var_dump($row['radio1']);
+
 							
-							// Intern link selected
-							if(isset($row['radio2'][$rowN]) && isset($row['link'][$rowN])){
-								$radio2 = $row['radio2'][$rowN];
-								$in = filter_var($row['link'][$rowN], FILTER_SANITIZE_STRING);
-								$out = null;
-							} else if(isset($row['radio2'][$rowN]) && !isset($row['link'][$rowN])){
-								$radio2 = $row['radio2'][$rowN];
-								$in = "#";
-								$out = null;
+							if(isset($row['radio1']) && isset($row['link'][$rowN])){
+								if($row['radio1'] === 'Extern'){
+									$in = null;
+									$out = filter_var($row['link'][$rowN], FILTER_SANITIZE_STRING);
+								} else if($row['radio1'] === 'Intern'){
+									$in = filter_var($row['link'][$rowN], FILTER_SANITIZE_STRING);
+									$out = null;
+								}
+							} else if(isset($row['radio1']) && isset($row['link'][$rowN])){
+								if($row['radio1'] === 'Extern'){
+									$in = null;
+									$out = "#";
+								} else if($row['radio1'] === 'Intern'){
+									$in = "#";
+									$out = null;
+								}
+
 							}
+
+
 							
 							$newSidebar[] = new Sidebar($pageNr, $i, $title, filter_var($row['text'][$rowN], FILTER_SANITIZE_STRING), $in, $out);
 							$i++;
@@ -84,12 +87,12 @@ class SidebarController extends Shared {
 
 			foreach($newSidebar as $entry)
 			{
-				echo 'pageNr ' . $entry->getPageNr() . ' rowNr ' . $entry->getRowNr() . ' title ' . $entry->getTitle() . ' text ' . $entry->getText() . ' in ' . $entry->getInternLink() . ' out ' . $entry->getExternLink();
+				//echo 'pageNr ' . $entry->getPageNr() . ' rowNr ' . $entry->getRowNr() . ' title ' . $entry->getTitle() . ' text ' . $entry->getText() . ' in ' . $entry->getInternLink() . ' out ' . $entry->getExternLink();
 				$this->sidebarDb->add($entry);
 			}
 
-			global $Base_URI;
-			header('Location: ' . $Base_URI);
+		//	global $Base_URI;
+	//			header('Location: ' . $Base_URI);
 
 			return;
 		// end if($_POST)
