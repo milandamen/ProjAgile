@@ -18,9 +18,6 @@
         	<?php
             echo $data['newsdata']['news']->getContent() . '<br/>';
 
-
-
-
             if(count($data['files']) > 0)
             {
                 echo '<br/><p>Bijlagen:</p>';

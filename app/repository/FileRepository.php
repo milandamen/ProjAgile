@@ -33,22 +33,4 @@ class FileRepository extends RepositoryBase
         $this->db->execQuery($query, $parameters);
     }
 
-    public function usedByOthers($fileName)
-    {
-        $query = 'SELECT COUNT(path) FROM file WHERE path = :path';
-        $parameter = array(':path' => $fileName);
-        $c = $this->db->getQuery($query, $parameter);
-
-        var_dump($c);
-
-        $count = (int) $c[0];
-
-        if($count > 1)
-        {
-            echo '<h1>TEST2</h1>';
-            return true;
-        }
-        echo '<h1>TEST</h1>';
-        return false;
-    }
 }

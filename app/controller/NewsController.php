@@ -24,12 +24,6 @@ class NewsController extends Shared
     {
         $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
-
-//        $data = array('news' => $this->newsRepository->getById($id), 'files' => $this->fileRepository->getAllByNewsId($id));
-//        $this->view('news/show', $data);
-//
-//        $this->footer();
-
         $data = array('news' => $this->newsRepository->getById($id));
         $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'logged' => $this->login()]);
         $this->footer();
