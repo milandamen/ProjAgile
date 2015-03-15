@@ -21,35 +21,9 @@ class Sidebar{
 
 	}
 
-	public function getInternLink() {
-		return $this->intern;
-	}
-
-	public function getExternLink()  {
-		return $this->extern;
-	}
-
-
-	public function getRow(){
-		return $this->row;
-	}
-
-	public function getTitle(){
-		return $this->title;
-	}
-
-	public function setTitle($title){
-		$this->title = $title;
-	}
-
 	public function getPageNr()
 	{
 		return $this->pageNr;
-	}
-
-	public function setPage($page)
-	{
-		$this->pageNr = $page;
 	}
 
 
@@ -58,9 +32,8 @@ class Sidebar{
 		return $this->row;
 	}
 
-	public function setPRow($row)
-	{
-		$this->row = $row;
+	public function getTitle(){
+		return $this->title;
 	}
 
 
@@ -68,6 +41,28 @@ class Sidebar{
     {
         return $this->text;
     }
+
+	public function getInternLink() {
+		return $this->intern;
+	}
+
+	public function getExternLink()  {
+		return $this->extern;
+	}
+
+	public function setTitle($title){
+		$this->title = $title;
+	}
+
+	public function setPage($page)
+	{
+		$this->pageNr = $page;
+	}
+
+	public function setRow($row)
+	{
+		$this->row = $row;
+	}
 
     public function setText($text)
     {
