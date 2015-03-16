@@ -62,7 +62,7 @@ class menuRepository extends RepositoryBase
         return $MenuItems;
     }
 
-    public function move($menuId, $upOrDown = "up")
+    public function move($menuId, $upOrDown = 'up')
     {
         $query = ' SELECT * FROM ' . $this->name . ' WHERE menuId = :menuId';
         $parameters = array (':menuId' => $menuId);
@@ -98,6 +98,33 @@ class menuRepository extends RepositoryBase
             $this->update($menuItem);
 
         }
+    }
+
+    Public function moveUpMenuItemLevel($menuId)
+    {
+        $query = ' SELECT * FROM ' . $this->name . 'WHERE menuId = :menuId';
+        $parameters = array(':menuId' => $menuId);
+        $result = $this->db->getQuery($query, $parameters);
+
+        if(count($result) != 0)
+        {
+            $menuItem = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+
+            $query = ' SELECT * FROM ' . $this->name . ' WHERE menuId = : menuId';
+            $parameters = array(':menuId' => $menuItem->getParentId());
+            $result = $this->db->getQuery($query, $parameters);
+
+            if(count($result) != 0)
+            {
+                $parent = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+
+                $menuItem->setParentId($parent->getParentId());
+                $this->update($menuItem);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function update($object)
