@@ -2,14 +2,14 @@
 <div class="container">
 
 	<div class="row">
-		<div class="col-lg-12">
-			<h1>Wijzig Sidebar </h1>
+		<div class="col-md-12">
+			<h1>Wijzig sidebar </h1>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-md-12">
 			<!--- Start Form of updating the sidebar -->
-			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action=""> 			
+			<form name="updateSidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="">
 				<input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
 				
                 <hr>

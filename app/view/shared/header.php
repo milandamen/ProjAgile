@@ -21,6 +21,7 @@
  	<link href="/ProjAgile/public/css/news.css" type="text/css" rel="stylesheet">
     <link href="/ProjAgile/public/css/footer.css" type="text/css" rel="stylesheet">
     <link href="/ProjAgile/public/css/sidebar.css" type="text/css" rel="stylesheet">
+	<link href="/ProjAgile/public/css/carousel-update.css" type="text/css" rel="stylesheet">
 
 	<!-- Custom Fonts -->
 	<link href="/ProjAgile/public/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
