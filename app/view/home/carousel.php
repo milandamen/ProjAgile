@@ -5,6 +5,7 @@
         <li data-target="#carousel" data-slide-to="0" class="active"></li>
         <li data-target="#carousel" data-slide-to="1"></li>
         <li data-target="#carousel" data-slide-to="2"></li>
+		<li data-target="#carousel" data-slide-to="3"></li>
     </ol>
 
     <!-- Wrapper for slides -->
@@ -25,6 +26,12 @@
             <img src="/ProjAgile/public/img/slide6.jpg" alt="...">
             <div class="carousel-caption">
                 <h3>Actueel Item 3</h3>
+            </div>
+        </div>
+		<div class="item">
+            <img src="/ProjAgile/public/img/slide7.jpg" alt="Geen afbeelding gevonden.">
+            <div class="carousel-caption">
+                <h3>Actueel Item 4</h3>
             </div>
         </div>
     </div>

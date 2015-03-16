@@ -2,9 +2,13 @@
 
 </header>
 <!-- Page Content -->
-<?php require_once 'carousel.php'; ?>
 
 <div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<?php require_once 'carousel.php'; ?>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
             <h2 class="page-header">De Bunders</h2>
