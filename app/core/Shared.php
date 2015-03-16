@@ -10,11 +10,7 @@ require_once '../app/controller/AuthenticationController.php';
 
 class Shared extends Controller
 {
-	protected $auth;
-
-	public function __construct(){
-		$this->auth = new AuthenticationController();
-	}
+    private $auth;
 
     public function header($title)
     {
@@ -23,7 +19,7 @@ class Shared extends Controller
 
     public function menu()
     {
-        $this->view('shared/menu');
+        $this->view('shared/menu', ['loggedIn' => $this->auth->loggedIn()]);
     }
 
     public function sidebar()
@@ -36,16 +32,18 @@ class Shared extends Controller
 
     	$data = array('sidebarRows' => $sidebarData);
 
-    	$this->view('shared/sidebar', ['sidebarRows' => $sidebarData, 'logged' => $this->login()]);
+    	$this->view('shared/sidebar', ['sidebarRows' => $sidebarData, 'logged' => $this->auth->loggedIn()]);
     }
 
     public function footer()
     {
         require_once "../app/repository/footerRepository.php";
         require_once '../app/model/Footer.php';
+
         $footerdb = new FooterRepository();
         $footer = $footerdb->getAll();
         $numColumns = 0;
+
         foreach($footer as $item)
         {
             if($item->getCol() >= $numColumns)
@@ -54,30 +52,33 @@ class Shared extends Controller
             }
         }
         $footerColumns = [];
+
         for($i = 0; $i < $numColumns; $i++)
         {
             $footerColumns[] = [];
         }
+
         foreach($footer as $item)
         {
             $footerColumns[$item->getCol()][] = $item;
         }
-        $this->view('shared/footer', ['footerColumns' => $footerColumns, 'logged' => $this->login()]);
+        $this->view('shared/footer', ['footerColumns' => $footerColumns, 'logged' => $this->auth->loggedIn()]);
     }
 
+    protected function getAuth()
+    {
+        return $this->auth;
+    }
 
-    protected function login(){
-
-		$logged = false;
-
-        if($this->auth->loggedIn()){
-        	$logged = true;
+    protected function setAuth($auth)
+    {
+        if (!isset($this->auth) || empty($this->auth))
+        {
+            $this->auth = $auth;
         }
+    }
 
-        return $logged;
-	}
-
-	public function noPermission(){
+    public function noPermission(){
 
 		$this->header('No Permission');
         $this->menu();
