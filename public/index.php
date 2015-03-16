@@ -9,4 +9,11 @@
 require_once '../app/init.php';
 
 //instantiate application
-$app = new App;
+try {
+	$app = new App();
+} catch (Exception $e) {
+	echo('An error happened: ' . $e->getMessage());
+}
+
+require_once '../app/repository/database.php';
+Db::destruct();
