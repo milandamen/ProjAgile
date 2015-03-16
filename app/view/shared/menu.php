@@ -47,14 +47,15 @@
                                     echo(' <a href="/ProjAgile/Public/' . $menuItem->getRelativeUrl() . '" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">'. $menuItem->getName() . '<span class="caret"></span></a>');
                                     echo('<ul class="dropdown-menu" role="menu">');
 
-                                    foreach($menuData as $subSubMenuItem)
+                                    //Third lvl menu
+                                    /*foreach($menuData as $subSubMenuItem)
                                     {
                                         if($subSubMenuItem->getParentId() == $subMenuItem->getMenuId())
                                         {
                                             $hasGrandChildren = true;
                                             //TODO: voeg subsubItem toe volgens Leons css
                                         }
-                                    }
+                                    }*/
                                     echo('<li><a href="/ProjAgile/Public/' . $menuItem->getRelativeUrl() . '/' . $subMenuItem->getRelativeUrl() . '">'. $subMenuItem->getName() . '</a></li>');
                                 }
 
