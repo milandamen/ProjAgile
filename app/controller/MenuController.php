@@ -13,12 +13,22 @@ class MenuController extends Shared
     public function __construct()
     {
         require_once '../app/repository/menuRepository.php';
-        $this->mendb = new MenuRepository();
+        $this->menudb = new MenuRepository();
     }
 
 
-    public function getMenu(){
-        return $this->mendb->getAllPublic();
+    public function getMenu()
+    {
+        return $this->menudb->getAllPublic();
+    }
+
+
+    public function index()
+    {
+        $this->header('Menu Beheer');
+        $this->menu();
+        $this->view('menu/index', ['allMenuData' =>$this->menudb->getAll()]);
+        $this->footer();
     }
 }
 
