@@ -1,30 +1,29 @@
 <?php
-require_once 'AuthenticationController.php';
+    require_once 'AuthenticationController.php';
 
-class MenuController extends Shared
-{
-    private $menudb;
-
-    public function __construct()
+    class MenuController extends Shared
     {
-        require_once '../app/repository/menuRepository.php';
-        $this->menudb = new MenuRepository();
+        private $menudb;
+
+        public function __construct()
+        {
+            $this->setAuth(new AuthenticationController());
+
+            require_once '../app/repository/menuRepository.php';
+            $this->menudb = new MenuRepository();
+        }
+
+        // Action
+        public function index()
+        {
+            $this->header('Menu Beheer');
+            $this->menu();
+            $this->view('menu/index', ['allMenuData' =>$this->menudb->getAll()]);
+            $this->footer();
+        }
+
+        public function getMenu()
+        {
+            return $this->menudb->getAllPublic();
+        }
     }
-
-
-    public function getMenu()
-    {
-        return $this->menudb->getAllPublic();
-    }
-
-
-    public function index()
-    {
-        $this->header('Menu Beheer');
-        $this->menu();
-        $this->view('menu/index', ['allMenuData' =>$this->menudb->getAll()]);
-        $this->footer();
-    }
-}
-
-?>
