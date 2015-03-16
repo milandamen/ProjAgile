@@ -1,2 +1,2 @@
 <?php
-echo henk;
+echo 'henk';
