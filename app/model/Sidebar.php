@@ -21,6 +21,7 @@ class Sidebar{
 
 	}
 
+	// All getters for the attributes.
 	public function getPageNr()
 	{
 		return $this->pageNr;
@@ -50,6 +51,8 @@ class Sidebar{
 		return $this->extern;
 	}
 
+	// All setters for the attributes. 
+	
 	public function setTitle($title){
 		$this->title = $title;
 	}
