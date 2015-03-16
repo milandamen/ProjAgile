@@ -78,7 +78,7 @@ class Shared extends Controller
         }
     }
 
-    public function noPermission(){
+    	public function noPermission(){
 
 		$this->header('No Permission');
         $this->menu();

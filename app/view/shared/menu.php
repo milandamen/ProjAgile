@@ -50,11 +50,11 @@
                             }
                             else
                             {
-                                echo '<li><a href="http://localhost/ProjAgile/public/AuthenticationController/logout">Uitloggen</a></li>';
+                                echo '<li><a href="/ProjAgile/public/AdminController/">Admin Beheer</a></li>
+                        				<li><a href="#">Content Beheer</a></li>
+                                		<li><a href="http://localhost/ProjAgile/public/AuthenticationController/logout">Uitloggen</a></li>';
                             }
                         ?>
-                        <li><a href="#">Admin Beheer</a></li>
-                        <li><a href="#">Content Beheer</a></li>
                     </ul>
                 </li>
                

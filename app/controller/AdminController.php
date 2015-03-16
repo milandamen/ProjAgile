@@ -3,16 +3,21 @@
 class AdminController extends Shared {
 
 	public function __construct(){
-		parent::__construct();
+		$this->setAuth(new AuthenticationController());
 
 	}
 
 	public function index(){
 		
-		$this->header('Beheer');
-	    $this->menu();
-		$this->view('admin/index',['logged' => $this->login()]);
-		$this->footer();
+		if($this->getAuth()->loggedIn()){
+			$this->header('Beheer');
+		    $this->menu();
+			$this->view('admin/index',['logged' => $this->getAuth()->loggedIn()]);
+			$this->footer();
+		} else {
+			global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
+		}
 
 	}
 

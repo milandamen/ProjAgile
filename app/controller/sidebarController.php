@@ -9,6 +9,8 @@
             require_once '../app/model/Sidebar.php';
 
             $this->sidebarDb = new SidebarRepository();
+            $this->setAuth(new AuthenticationController());
+
         }
         public function sidebarCreate()
         {
