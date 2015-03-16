@@ -1,4 +1,3 @@
-<!-- Page Content -->
 <div class="container">
 
 	 <div class="row">
@@ -33,7 +32,7 @@
 
         	<p class="goback"><a href="../../"> Terug naar de homepage </a></p>
 
-        </div>	
+        </div>
 
 
 

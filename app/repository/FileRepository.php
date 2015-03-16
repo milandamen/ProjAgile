@@ -6,7 +6,7 @@ class FileRepository extends RepositoryBase
 
     public function __construct()
     {
-        #call to base constructor
+        #call naar base constructor
         parent::__construct();
         $this->tableName = $this->name;
     }

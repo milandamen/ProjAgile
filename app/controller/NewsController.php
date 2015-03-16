@@ -31,13 +31,13 @@ class NewsController extends Shared
 
     public function create()
     {
-        if($this->login())
-        {
+        #if($this->login())
+        #{
             $this->header('Nieuw artikel');
             $this->menu();
             $this->view('news/create', $this->districtRepository->getAll());
             $this->footer();
-        }
+        #}
     }
 
     public function edit($newsId)
@@ -66,14 +66,14 @@ class NewsController extends Shared
             $districtsectionId = null;
         }
 
-        //files worden geupload
+        #files worden geupload
         $target = '../public/uploads/';
         $temp = '../public/uploads/tijdelijk/';
         $filepaths = array();
         $count = 0;
         foreach($_FILES['file']['name'] as $filename)
         {
-            //als er geen bestand wordt gekozen dan krijg je altijd een '' string mee vandaar de !empty check
+            #als er geen bestand wordt gekozen dan krijg je altijd een '' string mee vandaar de !empty check
             if(!empty($filename))
             {
                 $tmp = $_FILES['file']['tmp_name'][$count];
