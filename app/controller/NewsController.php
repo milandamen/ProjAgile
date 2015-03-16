@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 	
 require_once 'AuthenticationController.php';
@@ -15,6 +16,7 @@ class NewsController extends Shared
 		require_once '../app/repository/newsRepository.php';
         require_once '../app/repository/districtsectionRepository.php';
         require_once '../app/repository/fileRepository.php';
+        $this->setAuth(new AuthenticationController());
 		$this->newsRepository = new NewsRepository();
         $this->districtRepository = new DistrictSectionRepository();
         $this->fileRepository = new FileRepository();
@@ -25,13 +27,13 @@ class NewsController extends Shared
         $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
         $data = array('news' => $this->newsRepository->getById($id));
-        $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'logged' => $this->login()]);
+        $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'logged' => $this->getAuth()->loggedIn()]);
         $this->footer();
     }
 
     public function create()
     {
-        if($this->login())
+        if($this->getAuth()->loggedIn())
         {
             $this->header('Nieuw artikel');
             $this->menu();
@@ -42,7 +44,7 @@ class NewsController extends Shared
 
     public function edit($newsId)
     {
-        if($this->login())
+        if($this->getAuth()->loggedIn())
         {
             $this->header('Wijzig artikel');
             $this->menu();
