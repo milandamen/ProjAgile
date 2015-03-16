@@ -29,7 +29,7 @@ class CarouselController extends Shared
         $target = '../public/uploads/';
         $temp = '../public/uploads/tijdelijk/';
         $filepaths = array();
-        $allowed =  array('pdf','png' ,'jpg');
+        $allowed =  array('png' ,'jpg');
         $count = 0;
 
         foreach($_FILES['file']['name'] as $filename)
