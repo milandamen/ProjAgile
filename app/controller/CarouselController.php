@@ -1,7 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gertjan
- * Date: 16-3-2015
- * Time: 14:11
- */
+
+require_once 'AuthenticationController.php';
+
+class CarouselController extends Shared
+{
+
+    public function updateCarousel(){
+        $this->header('Carouseledit');
+        $this->menu();
+        $data = [];
+        $this->view('carousel/updateCarousel', $data);
+        $this->footer();
+    }
+
+}
