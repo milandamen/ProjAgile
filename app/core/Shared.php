@@ -20,6 +20,7 @@ class Shared extends Controller
     public function menu()
     {
         $this->view('shared/menu', ['loggedIn' => $this->auth->loggedIn()]);
+        #$this->view('shared/menu');
     }
 
     public function sidebar()
@@ -63,6 +64,7 @@ class Shared extends Controller
             $footerColumns[$item->getCol()][] = $item;
         }
         $this->view('shared/footer', ['footerColumns' => $footerColumns, 'logged' => $this->auth->loggedIn()]);
+        #$this->view('shared/footer');
     }
 
     protected function getAuth()

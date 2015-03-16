@@ -1,6 +1,6 @@
 <?php
 require_once 'repositoryBase.php';
-class CarouselRepository
+class CarouselRepository extends RepositoryBase
 {
 
     private $name = 'carousel';
