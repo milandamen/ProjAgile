@@ -76,4 +76,13 @@ class Shared extends Controller
 
         return $logged;
 	}
+
+	public function noPermission(){
+
+		$this->header('No Permission');
+        $this->menu();
+        $this->view('shared/permission');
+        $this->footer();
+
+	}
 }
