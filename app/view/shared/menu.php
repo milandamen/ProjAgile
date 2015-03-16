@@ -48,11 +48,13 @@
                             {
                                 echo '<li><a href="http://localhost/ProjAgile/public/AuthenticationController">Inloggen</a></li>';
                             }
-                            else
+                            else if($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2)
                             {
                                 echo '<li><a href="/ProjAgile/public/AdminController/">Admin Beheer</a></li>
                         				<li><a href="#">Content Beheer</a></li>
                                 		<li><a href="http://localhost/ProjAgile/public/AuthenticationController/logout">Uitloggen</a></li>';
+                            } else {
+                            	echo '<li><a href="http://localhost/ProjAgile/public/AuthenticationController/logout">Uitloggen</a></li>';
                             }
                         ?>
                     </ul>

@@ -24,7 +24,10 @@
 
         public function sidebarUpdate($pageNr)
         {
-            // -- Data collection
+
+        // Check if user is logged in and has access
+		if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2)){
+			// -- Data collection
             $sidebarAll = $this->sidebarDb->getAll();
             $sidebarRows = array();
 
@@ -36,8 +39,6 @@
                 }
             }
 
-
-		if($this->getAuth()->loggedIn()){
             // -- Form get's posted from page when submitted.
             if($_POST)
             {

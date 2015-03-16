@@ -2,7 +2,7 @@
 	<input class="hiddenInput" type="text" name="module-introduction" />	<!-- This input gets sent in /Home/editlayout -->
 	<div>
 		<h4> 
-			<?php if($data['loggedIn'])
+			<?php if($data['loggedIn'] && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
             {
 				echo '<a href="#"><i class="fa fa-pencil-square-o"></i></a>';
 			}
