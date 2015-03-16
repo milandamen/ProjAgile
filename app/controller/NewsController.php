@@ -31,13 +31,13 @@ class NewsController extends Shared
 
     public function create()
     {
-        #if($this->login())
-        #{
+        if($this->login())
+        {
             $this->header('Nieuw artikel');
             $this->menu();
             $this->view('news/create', $this->districtRepository->getAll());
             $this->footer();
-        #}
+        }
     }
 
     public function edit($newsId)
@@ -66,14 +66,14 @@ class NewsController extends Shared
             $districtsectionId = null;
         }
 
-        #files worden geupload
+        #Upload files
         $target = '../public/uploads/';
         $temp = '../public/uploads/tijdelijk/';
         $filepaths = array();
         $count = 0;
         foreach($_FILES['file']['name'] as $filename)
         {
-            #als er geen bestand wordt gekozen dan krijg je altijd een '' string mee vandaar de !empty check
+            #if there are no files selected you will get an empty '' string therefore the !empty check
             if(!empty($filename))
             {
                 $tmp = $_FILES['file']['tmp_name'][$count];
@@ -89,9 +89,8 @@ class NewsController extends Shared
                 $temp = $temp.basename($filename);
                 $filepaths[] = $nameToCheck;
                 move_uploaded_file($tmp,$temp);
-                #wijzig de naam van het bestand in de tijdelijke map en verplaats het naar de uploads folder
+                #change the name of the file in a temporary folder and move it to the uploads folder
                 rename($temp, $target . $nameToCheck);
-
             }
         }
 
@@ -106,7 +105,7 @@ class NewsController extends Shared
 
         $newsId = null;
 
-        //als een artikel wordt gewijzigd dan wordt de newsId en keepfiles opgehaald.
+        #if a news item is edited then the newsId and keepfiles will ve requested
         if($create === false)
         {
             $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
@@ -127,8 +126,8 @@ class NewsController extends Shared
 
         if($create === true)
         {
-            //voegt het artikel toe en krijgt een nieuws id terug, om deze aan eventuele bestanden toe te voegen
-            //en naar de detail pagina te redirecten.
+            #Adds the news item and gets the id of it, to connect it to uploaded files
+            #and redirects to show
             $newsId = $this->newsRepository->add($news);
         }
         else
@@ -136,7 +135,7 @@ class NewsController extends Shared
             $this->newsRepository->update($news);
         }
 
-        //files worden toegevoegd aan db en gekoppeld aan nieuws
+        #files are being added to the db and connected to the news item
         foreach($filepaths as $path)
         {
             $this->fileRepository->add($path, $newsId);
@@ -155,7 +154,7 @@ class NewsController extends Shared
             unlink($path . $file->path);
         }
 
-        #verwijder ook uit de db
+        #delete also from db
         $this->fileRepository->deleteAllByNewsId($newsId);
     }
 
