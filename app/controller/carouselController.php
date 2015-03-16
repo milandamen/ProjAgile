@@ -62,8 +62,6 @@ class CarouselController extends Shared
             $this->carouselRepository->add($path);
         }
 
-        $this->deleteFile(4);
-
     }
 
     private function deleteFile($carouselId)
