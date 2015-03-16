@@ -127,19 +127,43 @@ class menuRepository extends RepositoryBase
         return false;
     }
 
-    public function update($object)
+    public function update($menuItem)
     {
         $query = 'UPDATE ' . $this->tableName . ' SET menuId = :menuId, parentId = :parentId, name = :name, relativeUrl = :relativeUrl, menuOrder = :menuOrder, publish =:publish
         WHERE id = :id';
 
         $parameters = array(
-            ':menuId' => $object->getMenuId(),
-            ':parentId' => $object->getParentId(),
-            ':name' => $object->getName(),
-            ':relativeUrl' => $object->getRelativeUrl(),
-            ':menuOrder' => $object->getMenuOrder(),
-            ':publish'=> $object-> getPublish()
+            ':menuId' => $menuItem->getMenuId(),
+            ':parentId' => $menuItem->getParentId(),
+            ':name' => $menuItem->getName(),
+            ':relativeUrl' => $menuItem->getRelativeUrl(),
+            ':menuOrder' => $menuItem->getMenuOrder(),
+            ':publish'=> $menuItem-> getPublish()
         );
+
+        $this->db->execQuery($query, $parameters);
+    }
+
+    public function add($menuItem)
+    {
+        $query = ' INSERT INTO ' . $this->tableName . ' (menuId, parentId, name, relativeUrl, menuOrder, publish) VALUES (:menuId, :parentId, :name, :relativeUrl, ;menuOrder, ;publish)';
+
+        $parameters = array(
+            ':menuId' => $menuItem->getMenuId(),
+            ':parentId' => $menuItem->getParentId(),
+            ':name' => $menuItem->getName(),
+            ':relativeUrl' => $menuItem->getRelativeUrl(),
+            ';menuOrder' => $menuItem->getMenuOrder(),
+            ';publish' => $menuItem->getPublish()
+        );
+
+        $this->db->execQuery($query, $parameters);
+    }
+
+    public function remove($menuId)
+    {
+        $query = ' DELETE FROM ' . $this->tableName . ' WHERE menuId = :menuId';
+        $parameters = array(':menuId' => $menuId);
 
         $this->db->execQuery($query, $parameters);
     }
