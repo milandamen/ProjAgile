@@ -42,8 +42,17 @@
                 <li>
                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Gebruikers <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="AuthenticationController">Inloggen</a></li>
-                        <li><a href="AuthenticationController/logout">Uitloggen</a></li>
+
+                        <?php
+                            if (isset($data['loggedIn']) && !$data['loggedIn'])
+                            {
+                                echo '<li><a href="AuthenticationController">Inloggen</a></li>';
+                            }
+                            else
+                            {
+                                echo '<li><a href="AuthenticationController/logout">Uitloggen</a></li>';
+                            }
+                        ?>
                         <li><a href="#">Admin Beheer</a></li>
                         <li><a href="#">Content Beheer</a></li>
                     </ul>

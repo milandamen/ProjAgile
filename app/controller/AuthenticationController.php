@@ -7,7 +7,7 @@
 		{
             // Start the session
             session_start();
-            ob_start();
+
             // Initialize the repositories
 			$this->initRepository();
 		}
@@ -36,6 +36,7 @@
                 }
                 else
                 {
+                    $this->setAuth($this);
                     // Include the login page
                     $this->header("Login");
                     $this->menu();
@@ -102,21 +103,16 @@
                                 $_SESSION['timeout'] = time();
                                 session_write_close();
                                 $this->redirectTo();
-                            } else {
-                            	// Feedback: wachtwoord klopt niet.
                             }
                         }
                         else
                         {
                             //Feedback: gebruiker is geblokkeerd.
                         }
-					} else {
-						//Feedback:  Username not known.
-					
 					}
 				}
 			}
-			$this->redirectTo();
+			$this->redirectTo('AuthenticationController/login');
             //Feedback: Gebruikersnaam of wachtwoord is foutief ingevuld.
 		}
 
