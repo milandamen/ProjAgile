@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Leon Vermeulen
- * Date: 12-3-2015
- * Time: 13:15
- */
+require_once 'AuthenticationController.php';
 
 class MenuController extends Shared
 {

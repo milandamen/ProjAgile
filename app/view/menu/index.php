@@ -1,8 +1,9 @@
+<div class="container">
 <div id="row">
+
 <?php
 $allMenuData = $data['allMenuData'];
 ?>
-henk !!!!!
 
 <div class="table-responsive">
     <table class="table">
