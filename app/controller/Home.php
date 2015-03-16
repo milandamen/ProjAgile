@@ -8,6 +8,8 @@
 
         public function __construct()
         {
+            $this->setAuth(new AuthenticationController());
+
             require_once '../app/repository/newsRepository.php';
             $this->newsdb = new NewsRepository();
 
@@ -22,8 +24,6 @@
 
         public function index()
         {
-            $this->setAuth(new AuthenticationController());
-
             $this->header('Home');
             $this->menu();
 
@@ -31,7 +31,7 @@
 
             $sidebarData = $this->sidebardb->getAll();
 
-            $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'logged' => $this->getAuth()->loggedIn());
+            $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
 
             $this->view('home/index', $data);
 
@@ -40,8 +40,6 @@
 
         public function indextest($name = '')
         {
-            $this->setAuth(new AuthenticationController());
-
             $this->header('indextest');
             $this->menu();
 
@@ -73,12 +71,10 @@
                 $modules = $this->homeLayoutRepository->getAll();
                 $sidebarData = $this->sidebardb->getAll();
 
-                $this->setAuth(new AuthenticationController());
-
                 $this->header('editlayout');
                 $this->menu();
 
-                $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'logged' => $this->getAuth()->loggedIn());
+                $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
                 $this->view('home/editlayout', $data);
 
                 $this->footer();
@@ -87,8 +83,6 @@
 
         public function error()
         {
-            $this->setAuth(new AuthenticationController());
-
             $this->header('Home');
             $this->menu();
 

@@ -6,7 +6,7 @@
     {
         public function __construct()
         {
-            parent::__construct();
+            $this->setAuth(new AuthenticationController());
 
             require_once '../app/repository/sidebarRepository.php';
             require_once '../app/model/Sidebar.php';
@@ -116,8 +116,6 @@
             }
             else
             {
-                $this->setAuth(new AuthenticationController());
-
                 // --------------------- View opbouw
                 $this->header('Wijzig sidebar');
                 $this->menu();

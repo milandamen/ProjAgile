@@ -7,14 +7,14 @@
 
         public function __construct()
         {
+            $this->setAuth(new AuthenticationController());
+
             require_once '../app/repository/newsRepository.php';
             $this->newsdb = new NewsRepository();
         }
 
         public function show($id)
         {
-            $this->setAuth(new AuthenticationController());
-
             $this->header('Nieuws | ' . $this->newsdb->getById($id)->getTitle());
             $this->menu();
             $data = array('news' => $this->newsdb->getById($id));

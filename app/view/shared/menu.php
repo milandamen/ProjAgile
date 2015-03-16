@@ -46,11 +46,11 @@
                         <?php
                             if (isset($data['loggedIn']) && !$data['loggedIn'])
                             {
-                                echo '<li><a href="AuthenticationController">Inloggen</a></li>';
+                                echo '<li><a href="http://localhost/ProjAgile/public/AuthenticationController">Inloggen</a></li>';
                             }
                             else
                             {
-                                echo '<li><a href="AuthenticationController/logout">Uitloggen</a></li>';
+                                echo '<li><a href="http://localhost/ProjAgile/public/AuthenticationController/logout">Uitloggen</a></li>';
                             }
                         ?>
                         <li><a href="#">Admin Beheer</a></li>

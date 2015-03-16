@@ -1,6 +1,11 @@
 <?php
     class FooterController extends Shared
     {
+        public function __construct()
+        {
+            $this->setAuth(new AuthenticationController());
+        }
+
         public function footerUpdate()
         {
             //require db, create it and get the footer
@@ -104,8 +109,6 @@
                 {
                     $footerColumns[$item->getCol()][] = $item;
                 }
-                $this->setAuth(new AuthenticationController());
-
                 $this->header("Update Footer");
                 $this->menu();
                 $this->view('footer/footerUpdate', ['footerColumns' => $footerColumns]);
