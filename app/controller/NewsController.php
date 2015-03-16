@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-<?php 
+<?php
 	
 require_once 'AuthenticationController.php';
 class NewsController extends Shared
@@ -12,7 +11,6 @@ class NewsController extends Shared
     private $maxRand = 500000;
 
 	public function __construct(){
-		parent::__construct();
 		require_once '../app/repository/newsRepository.php';
         require_once '../app/repository/districtsectionRepository.php';
         require_once '../app/repository/fileRepository.php';
