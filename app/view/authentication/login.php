@@ -16,16 +16,10 @@
                     <input type="password" class="form-control" name="password" required>
                 </div>
             </div>
-            <div class="control-group form-group">
-                <div class="controls">
-                    <input type="checkbox" id="rememberme" style="margin-right: 10px;"><label>Onthoud mij</label>
-                </div>
-            </div>
             <div id="success"></div>
             <button type="submit" class="btn btn-default" style="background-color:#563D7C;color:#FFFFFF">Log in</button>
         </form>
     </div>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function()

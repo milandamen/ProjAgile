@@ -7,7 +7,7 @@
 		{
             // Start the session
             session_start();
-            ob_start();
+
             // Initialize the repositories
 			$this->initRepository();
 		}
@@ -36,6 +36,7 @@
                 }
                 else
                 {
+                    $this->setAuth($this);
                     // Include the login page
                     $this->header("Login");
                     $this->menu();
@@ -62,7 +63,7 @@
         public function loggedIn()
         {
             if (!isset($_SESSION['userId']) || empty($_SESSION['userId']) ||
-                $_SESSION['timeout'] + (20 * 60) < time())
+                !isset($_SESSION['timeout']) || $_SESSION['timeout'] + (20 * 60) < time())
             {
                 return false;
             }
@@ -101,40 +102,33 @@
                                 // Save the current time in the session to check timeout
                                 $_SESSION['timeout'] = time();
                                 session_write_close();
+
                                 $this->redirectTo();
-                            } else {
-                            	// Feedback: wachtwoord klopt niet.
                             }
                         }
                         else
                         {
-                            //Feedback: gebruiker is geblokkeerd.
+                            // Feedback: Gebruiker is geblokkeerd
                         }
-					} else {
-						//Feedback:  Username not known.
-					
 					}
 				}
 			}
-			$this->redirectTo();
-            //Feedback: Gebruikersnaam of wachtwoord is foutief ingevuld.
+            // Feedback: Gebruikersnaam of wachtwoord is foutief ingevuld.
+			$this->redirectTo('AuthenticationController/login');
 		}
 
-        // TODO: moet nog even bespreken waar we dit soort settings laten (config file maybe?). Is op zich ook handig voor andere redirection dingen
         private function redirectTo($extra = "")
         {
             $host  = $_SERVER['HTTP_HOST'];
             $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
             header("Location: http://$host$uri/$extra");
 
-          exit;
+            exit;
         }
 
 		private function initRepository()
 		{
-            // TODO: Dit moet nog worden aangepast. Tijdelijke workaround wegns dat een relative pad niet werkt(e)
             require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjAgile/app/repository/userRepository.php');
 			$this->userRepo = new UserRepository();
 		}
 	}
-?>

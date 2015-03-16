@@ -2,9 +2,11 @@
 	<input class="hiddenInput" type="text" name="module-introduction" />	<!-- This input gets sent in /Home/editlayout -->
 	<div>
 		<h4> 
-			<?php if($data['logged']){
+			<?php if($data['loggedIn'])
+            {
 				echo '<a href="#"><i class="fa fa-pencil-square-o"></i></a>';
-			} ?>
+			}
+            ?>
 			Welkom op Wijkplatform De Bunders 
 		</h4>
 	</div>
