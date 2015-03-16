@@ -42,7 +42,7 @@
             </div>
 
             <?php
-            #Als er bestanden geupload zijn
+            #If there are uploaded files
             if(count($data['files']) > 0)
             {
                 echo '<div class="row">

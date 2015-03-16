@@ -9,18 +9,18 @@ class NewsRepository extends RepositoryBase
 
     public function __construct()
     {
-        #call naar base constructor
+        #call to base constructor
         parent::__construct();
         $this->tableName = $this->name;
     }
 
     public function getAll()
     {
-        #call naar base methode getAll
+        #call to base methode getAll
         $objects = parent::getAll();
         $newsArray = array();
 
-        #converteer result objecten naar news objecten
+        #convert result objects to news objects
         foreach($objects as $var)
         {
             if($var->hidden == 0)
