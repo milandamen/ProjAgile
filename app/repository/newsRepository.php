@@ -16,7 +16,7 @@ class NewsRepository extends RepositoryBase
 
     public function getAll()
     {
-        #call to base methode getAll
+        #call to base method getAll
         $objects = parent::getAll();
         $newsArray = array();
 
