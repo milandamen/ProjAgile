@@ -49,10 +49,10 @@
 									</td>
 									<td>';
 
-									if(null !==$article->getImgpath()){ ?>
+									if(null ==$article->getImgpath()){ ?>
 										<input type="file" name="file[0]" /> 
 								<?php	} else {
-										echo $article->getImgpath()  . ' IMAGE aanwezig' ;
+										echo $article->getImgpath();
 									}
 						echo '			</td>
 									<td>
