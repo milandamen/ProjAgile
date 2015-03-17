@@ -1,5 +1,7 @@
 <?php
 require_once 'repositoryBase.php';
+require_once '../app/model/CarouselItem.php';
+
 class CarouselRepository extends RepositoryBase
 {
 
@@ -12,13 +14,21 @@ class CarouselRepository extends RepositoryBase
         $this->tableName = $this->name;
     }
 	
+	// Get whole carousel
 	public function getAll() {
-		$query = 	'SELECT c.carouselId AS carouselId, c.newsId AS newsId, c.imgpath AS imgpath, n.title AS title' +
-					'FROM carousel AS c' + 
-					'LEFT JOIN news AS n' +
-						'ON c.newsId = n.newsId';
+		$query = 'SELECT c.carouselId AS carouselId, c.newsId AS newsId, c.imgpath AS imgpath, n.title AS title FROM carousel AS c LEFT JOIN news AS n ON c.newsId = n.newsId';
 		$result = $this->db->getQuery($query);
-		return $result;
+		
+		$carousel = array();
+		foreach ($result as $item) {
+			$carousel[] = new CarouselItem($item->carouselId, $item->newsId, $item->imgpath, $item->title);
+		}
+		
+		return $carousel;
+	}
+	
+	public function saveCarousel() {
+		
 	}
 	
 	// File upload
