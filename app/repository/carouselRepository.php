@@ -28,22 +28,24 @@ class CarouselRepository extends RepositoryBase
 	}
 	
 	/**
-		Save whole carousel to database (does not save custon titles).
+		Save whole carousel to database (does not save custom titles).
 	*/
 	public function saveCarousel($carousel) {
 		$query = 'DELETE FROM carousel';
 		$this->db->execQuery($query);
-		
-		foreach ($carousel as $item) {
-			$query = 'INSERT INTO carousel (carouselId, newsId, imgpath) VALUES (:carouselId, :newsId, :imgpath)'
+
+		echo '<Br/>';
+		echo $carousel->getNewsId();
+
+			$query = 'INSERT INTO carousel (newsId) VALUES (:newsId)';
 			$parameters = array(
-				':carouselId' => $item->getId(),
-				':newsId' => $item->getNewsId(),
-				':imgpath' => $item->getImgpath()
+				':newsId' => $carousel->getNewsId()
 			);
 			
+			echo 'test';
+
 			$this->db->execQuery($query, $parameters);
-		}
+		
 	}
 	
 	// File upload

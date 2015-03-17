@@ -1,6 +1,6 @@
 <?php
 
-class News
+class CarouselItem
 {
     private $id;
 	private $newsId;
@@ -9,10 +9,10 @@ class News
 
     public function __construct($id, $newsId, $imgpath, $title)
     {
-        $this->id = id;
-		$this->newsId = newsId;
-		$this->imgpath = imgpath;
-		$this->title = title;
+        $this->id = $id;
+		$this->newsId = $newsId;
+		$this->imgpath = $imgpath;
+		$this->title = $title;
     }
 
     public function getId(){
@@ -25,6 +25,14 @@ class News
 	
 	public function getImgpath(){
         return $this->imgpath;
+    }
+
+    public function setNewsId($newsID){
+        $this->newsId = $newsID;
+    }
+	
+	public function setImgpath($imgpath){
+        $this->imgpath = $imgpath;
     }
 
     public function getTitle(){
