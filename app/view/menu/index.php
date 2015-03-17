@@ -6,7 +6,7 @@ $allMenuData = $data['allMenuData'];
 
 ?>
 <div class="table-responsive">
-    <table class="table">
+    <table class="table" id="menuTable">
         <thead>
         <tr>
             <th data-field="id">#</th>
@@ -18,34 +18,39 @@ $allMenuData = $data['allMenuData'];
         </thead>
         <tbody>
             <?php
-                echo("<Form>");
+            $i=0;
+            echo("
+                    <form name='updateMenu' id='updateMenu' method='post' action='' enctype='multipart/form-data'>
+                    <input type='text' name='maxRowIndex' id='maxRowIndex' class='hiddenInput' />
+                ");
+
                 foreach($allMenuData as $menuItem)
                 {
-                    echo("
+                    echo('
                         <tr>
-                            <td>" . $menuItem->getMenuId(). "</td>
-                            <td><input type='text' value='" . $menuItem->getName(). "'></td>
-                            <td><input type='text' value='" . $menuItem->getRelativeUrl(). "'></td>
-                    ");
+                            <td>' . $menuItem->getMenuId(). '</td>
+                            <td><input type="text" name="menuItem[' . $i . '][]" value="' . $menuItem->getName(). '"></td>
+                            <td><input type="text" name="menuURL[' . $i . '][]" value="' . $menuItem->getRelativeUrl(). '"></td>
+                    ');
 
                     if($menuItem->getParentId() == null)
                     {
-                        echo("
-                            <td><input type='text' value='" . $menuItem->getMenuOrder() . "'></td>
-                        ");
+                        echo('
+                            <td><input type="text" name="menuOrder[' . $i . '][]" value="' . $menuItem->getMenuOrder() . '"></td>
+                        ');
                     }
                     else
                     {
-                        echo("
-                            <td><input type='text' value='" . $menuItem->getParentId() . '.' . $menuItem->getMenuOrder() . "'></td>
-                        ");
+                        echo('
+                            <td><input type="text" name="menuLevel[' . $i . '][]" value="' . $menuItem->getParentId() . '.' . $menuItem->getMenuOrder() . '"></td>
+                        ');
                     }
                     if($menuItem->getPublish() == 1)
                     {
-                        echo("
-                                <td><input type='checkbox' checked></td>
+                        echo('
+                                <td><input type="checkbox" name="menuPublic[' . $i . '][]" checked></td>
                             </tr>
-                        ");
+                        ');
                     }
                     else
                     {
@@ -54,13 +59,16 @@ $allMenuData = $data['allMenuData'];
                             </tr>
                         ");
                     }
+                    $i++;
                 }
-                echo("</Form>");
+                echo '</tbody>';
+                echo '</table>';
+                echo('<button type="submit" class="btn btn-default" style="float:right">Opslaan</button>');
+                echo("</form>");
             ?>
-        </tbody>
-    </table>
-    <?php
-        echo('<button type="button" style="float:right" class="btn btn-default">Opslaan</button>');
-    ?>
+
 </div>
 </table>
+
+    <!-- JavaScript that enables adding and removing rows -->
+    <script src="/ProjAgile/public/js/menu.js"></script>

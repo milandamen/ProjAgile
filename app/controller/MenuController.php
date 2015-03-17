@@ -16,6 +16,11 @@
         // Action
         public function index()
         {
+            if($_POST)
+            {
+                $this->updateToDB();
+            }
+
             $this->header('Menu Beheer');
             $this->menu();
             $this->view('menu/index', ['allMenuData' =>$this->menudb->getAll()]);
@@ -25,5 +30,11 @@
         public function getMenu()
         {
             return $this->menudb->getAllPublic();
+        }
+
+
+        private function updateToDB()
+        {
+
         }
     }
