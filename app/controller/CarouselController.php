@@ -124,13 +124,12 @@ class CarouselController extends Shared
         $filepath = '';
         $allowed =  array('png' ,'jpg');
 		
-		$filename = $file['name'];
+		$filename = $_FILES['file']['name'][$count];
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
 		
 		if(!empty($filename) && in_array($ext, $allowed))
 		{
 			$tmp = $_FILES['file']['tmp_name'][$count];
-			$count = $count + 1;
 
 			$nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
 
