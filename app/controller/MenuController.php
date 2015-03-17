@@ -35,8 +35,7 @@
 
         private function updateToDB()
         {
-            var_dump($_POST['menuItem'][0]);
-            echo $_POST['menuItem'][0][1];
+            echo $_POST['menuItem'][0][0][0];
 
            /* foreach($_POST['menuItem'] as $menuItem)
             {
