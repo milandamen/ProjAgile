@@ -94,4 +94,10 @@ class CarouselController extends Shared
         #delete also from db
         $this->carouselRepository->delete($carouselId);
     }
+	
+	public function testRepo() {
+		$carousel = $this->carouselRepository->getAll();
+		var_dump($carousel);
+	}
+	
 }
