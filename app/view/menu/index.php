@@ -28,7 +28,7 @@ $allMenuData = $data['allMenuData'];
                 {
                     echo('
                         <tr>
-                            <td><input type="text" name="menuItem[' . $i . '][0]" style="display:none;" value="' . $menuItem->getMenuId(). '" disabled>'.  $menuItem->getMenuId() .' </td>
+                            <td><input type="text" name="menuItem[' . $i . '][0]" style="display:none;" value="' . $menuItem->getMenuId(). '">'.  $menuItem->getMenuId() .' </td>
                             <td><input type="text" name="menuItem[' . $i . '][1]" value="' . $menuItem->getName(). '"></td>
                             <td><input type="text" name="menuItem[' . $i . '][2]" value="' . $menuItem->getRelativeUrl(). '"></td>
                     ');
