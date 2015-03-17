@@ -16,7 +16,7 @@
 		</div>
 	</form>
 	<div>
-		<a href="#" onclick="submitLayoutForm()">Submit Form</a>
+		<a href="#" class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
 	</div>
 	
 	<!-- JavaScript that enables dragging and dropping and sends form -->
