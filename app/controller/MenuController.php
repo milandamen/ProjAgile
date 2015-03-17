@@ -51,7 +51,7 @@
                 }
                 else
                 {
-                    $orderNr = $menuItem[0];
+                    $orderNr = $menuLevels;
                 }
 
 
