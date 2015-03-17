@@ -30,7 +30,7 @@
         public function getMenu()
         {
             return $this->menudb->getAllPublic();
-        }
+    }
 
 
         private function updateToDB()

@@ -12,14 +12,17 @@ function addMenuRow(button){
 	var table = document.getElementById("menuTable");
  	var tableNumber = maxRowIndex + 1;
 	var row = table.insertRow();
- 	var cellText = row.insertCell();
- 	var cellLink = row.insertCell();
- 	var cellRadio = row.insertCell();
- 	var cellDelete = row.insertCell();
+ 	var cellID = row.insertCell();
+ 	var cellMenuItem = row.insertCell();
+ 	var cellMenuURL = row.insertCell();
+ 	var cellMenuLvl = row.insertCell();
+    var cellMenuPublic= row.insertCell();
+    var cellMenuDelete= row.insertCell();
 
- 	cellText.innerHTML = 'Tekst: <input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
- 	cellLink.innerHTML = 'Link: <input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
-
+    cellMenuItem.innerHTML = '<input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
+    cellMenuURL.innerHTML = '<input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
+    cellMenuLvl.innerHTML = '';
+    cellMenuPublic.innerHTML = '';
 
  	var div = document.createElement("div");
  	div.className = "radio";
