@@ -28,27 +28,27 @@ $allMenuData = $data['allMenuData'];
                 {
                     echo('
                         <tr>
-                            <td>' . $menuItem->getMenuId(). '</td>
-                            <td><input type="text" name="menuItem[' . $i . '][0]" value="' . $menuItem->getName(). '"></td>
-                            <td><input type="text" name="menuItem[' . $i . '][1]" value="' . $menuItem->getRelativeUrl(). '"></td>
+                            <td><input type="text" name="menuItem[' . $i . '][0]" style="display:none;" value="' . $menuItem->getMenuId(). '" disabled>'.  $menuItem->getMenuId() .' </td>
+                            <td><input type="text" name="menuItem[' . $i . '][1]" value="' . $menuItem->getName(). '"></td>
+                            <td><input type="text" name="menuItem[' . $i . '][2]" value="' . $menuItem->getRelativeUrl(). '"></td>
                     ');
 
                     if($menuItem->getParentId() == null)
                     {
                         echo('
-                            <td><input type="text" name="menuItem[' . $i . '][2]" value="' . $menuItem->getMenuOrder() . '"></td>
+                            <td><input type="text" name="menuItem[' . $i . '][3]" value="' . $menuItem->getMenuOrder() . '"></td>
                         ');
                     }
                     else
                     {
                         echo('
-                            <td><input type="text" name="menuItem[' . $i . '][2]" value="' . $menuItem->getParentId() . '.' . $menuItem->getMenuOrder() . '"></td>
+                            <td><input type="text" name="menuItem[' . $i . '][3]" value="' . $menuItem->getParentId() . '.' . $menuItem->getMenuOrder() . '"></td>
                         ');
                     }
                     if($menuItem->getPublish() == 1)
                     {
                         echo('
-                                <td><input type="checkbox" name="menuItem[' . $i . '][3]" checked></td>
+                                <td><input type="checkbox" name="menuItem[' . $i . '][4]" checked></td>
                             </tr>
                         ');
                     }
