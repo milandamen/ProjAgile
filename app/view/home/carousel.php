@@ -28,12 +28,7 @@
                 <h3>Actueel Item 3</h3>
             </div>
         </div>
-		<div class="item">
-            <img src="/ProjAgile/public/img/slide7.jpg" alt="Geen afbeelding gevonden.">
-            <div class="carousel-caption">
-                <h3>Actueel Item 4</h3>
-            </div>
-        </div>
+	
     </div>
 
     <!-- Controls -->
