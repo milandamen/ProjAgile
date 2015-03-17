@@ -21,7 +21,11 @@ class CarouselController extends Shared
 
 		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
 
+
+
 	        if($_POST){
+
+	        	$this->carouselRepository->deleteAll();
 	        	var_dump($_POST);
 				
 				for ($i = 0; $i < count($_POST['artikel']); $i++) {
@@ -29,9 +33,9 @@ class CarouselController extends Shared
 					$newsId = $item;
 					
 					
-					$path = $this->saveFile($i);
+					//$path = $this->saveFile($i);
 
-	        		$carousel = new CarouselItem(null,$newsId,$path,null);
+	        		$carousel = new CarouselItem(null,$newsId,null,null);
 
 	        		echo 'test 1  <br/>';
 
