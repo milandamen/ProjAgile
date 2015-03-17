@@ -34,6 +34,7 @@
 					<tbody id="articlelist">
 						<?php
 							// PLACEHOLDER INFORMATION: REPLACE WITH DATABASE INFORMATION!
+
 							// echo
 							// 	'<tr>
 							// 		<td>

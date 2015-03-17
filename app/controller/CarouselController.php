@@ -23,11 +23,14 @@ class CarouselController extends Shared
 
 	        if($_POST){
 	        	var_dump($_POST);
+				
+				for ($i = 0; $i < $_POST['artikel'].length; $i++) {
+					$item = $_POST['artikel'][$i];
+					$newsId = $item;
+					
+					$path = $this->saveFile($i);
 
-	        	foreach($_POST['artikel'] as $item){
-	        		$newsId = $item;
-
-	        		$carousel = new CarouselItem(null,$newsId,null,null);
+	        		$carousel = new CarouselItem(null,$newsId,$path,null);
 
 	        		echo 'test 1  <br/>';
 
@@ -36,6 +39,8 @@ class CarouselController extends Shared
 
 	        		echo 'test 2  <br/>';
 	        	}
+
+
 
 	        	var_dump($_FILES);
 
@@ -112,7 +117,7 @@ class CarouselController extends Shared
         $this->carouselRepository->delete($carouselId);
     }
 	
-	private function saveFile($file) {
+	private function saveFile($count) {
 		$target = '../public/uploads/';
         $temp = '../public/uploads/tijdelijk/';
         $filepath = '';
