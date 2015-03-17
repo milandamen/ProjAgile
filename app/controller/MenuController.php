@@ -57,7 +57,7 @@
                     $parentId = 'null';
                 }
 
-                if($menuItem[4] == 'on')
+                if(isset($menuItem[4]) && $menuItem[4] == 'on')
                 {
                     $menuPublish = '1';
                 }

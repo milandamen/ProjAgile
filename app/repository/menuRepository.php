@@ -152,10 +152,9 @@ class menuRepository extends RepositoryBase
 
     public function add($menuItem)
     {
-        $query = " INSERT INTO ". $this->tableName . " (menuId, parentId, name, relativeUrl, menuOrder, publish) VALUES ( " . $menuItem->getMenuId() . "," . $menuItem->getParentId() . ", '" . $menuItem->getName() . "',  '" . $menuItem->getRelativeUrl() . "', " . $menuItem->getMenuOrder() . ", " . $menuItem->getPublish() . ");";
+        $query = " INSERT INTO ". $this->tableName . " (parentId, name, relativeUrl, menuOrder, publish) VALUES (" . $menuItem->getParentId() . ", '" . $menuItem->getName() . "',  '" . $menuItem->getRelativeUrl() . "', " . $menuItem->getMenuOrder() . ", " . $menuItem->getPublish() . ");";
 
         $parameters = array(
-            ':menuId' => $menuItem->getMenuId(),
             ':parentId' => $menuItem->getParentId(),
             ':name' => $menuItem->getName(),
             ':relativeUrl' => $menuItem->getRelativeUrl(),
