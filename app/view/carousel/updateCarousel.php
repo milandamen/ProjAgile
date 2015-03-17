@@ -7,7 +7,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<form id="updateSidebar" method="get" action="">
+			<form id="updateSidebar" method="post" action="">
 				<table id="articlelisttable" class="table">
 					<thead>
 						<tr>
@@ -19,6 +19,9 @@
 							</th>
 							<th>							<!-- Article title -->
 								Nieuws artikel
+							</th>
+							<th>
+								Image
 							</th>
 							<th class="cu-smallcol">		<!-- Move up -->
 							</th>
@@ -43,6 +46,40 @@
 									<td>
 										Artikel hc
 									</td>
+									<td>';
+          #If there are uploaded files
+
+            if(isset($data['files']) && count($data['files']) > 0  && count($data['files']) < 2)
+            {
+                
+                foreach($data['files'] as $file)
+                {
+                    echo '<p>' . $file->path .'</p>';
+                }
+                echo '<label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="keepFiles" value="true" checked="true">Ja
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="keepFiles" value="false">Nee
+                    </label>
+                </div>
+            </div>';
+            }
+            ?>
+
+            <div class="row">
+                <br/>
+                <input  id="upload" type='file' name='file[]' multiple>
+                <br/>
+                <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestanden</label>
+            </div>
+
+
+
+?> <?php
+							echo '		</td>
 									<td>
 										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
 									</td>

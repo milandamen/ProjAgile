@@ -19,12 +19,17 @@ class CarouselController extends Shared
 
 		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
 
-	        $this->header('Carouseledit');
-	        $this->menu();
-	        $data = [];
-	        $this->view('carousel/updateCarousel', $data);
-	        $this->footer();
+	        if($_POST){
+	        	var_dump($_POST);
+	        	
 
+	         } else {
+				$this->header('Carouseledit');
+				$this->menu();
+				$data = [];
+				$this->view('carousel/updateCarousel', $data);
+				$this->footer();
+	    	}
 	    } else {
 	    	global $Base_URI;
 			header('Location: ' . $Base_URI . 'Shared/noPermission');

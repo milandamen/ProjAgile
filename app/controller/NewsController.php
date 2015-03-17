@@ -174,7 +174,7 @@ class NewsController extends Shared
 
 		
 	public function getArticlesByTitle($term) {
-		$data = $this->newsdb->getByTitle($term);
+		$data = $this->newsRepository->getByTitle($term);
 		echo json_encode($data);
 	}
 }
