@@ -35,7 +35,7 @@ class CarouselRepository extends RepositoryBase
 		$this->db->execQuery($query);
 		
 		foreach ($carousel as $item) {
-			$query = 'INSERT INTO carousel (carouselId, newsId, imgpath) VALUES (:carouselId, :newsId, :imgpath)'
+			$query = 'INSERT INTO carousel (carouselId, newsId, imgpath) VALUES (:carouselId, :newsId, :imgpath)';
 			$parameters = array(
 				':carouselId' => $item->getId(),
 				':newsId' => $item->getNewsId(),

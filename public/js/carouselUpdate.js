@@ -61,6 +61,9 @@ function addArticle(button) {
 				title +
 			'</td>' +
 			'<td>' +
+				'<input type="file" name="file[0]" />' +
+			'</td>' +
+			'<td>' +
 				'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
 					'<i class="fa fa-arrow-up"></i>' +
 				'</a>' +
@@ -144,7 +147,14 @@ function calculateIndexes() {
 	
 	[].forEach.call(articlelist.children, function (row) {
 		row.children[0].textContent = i;
-		row.getElementsByTagName('input')[0].name = 'artikel[' + i + ']';
+		var inputs = row.getElementsByTagName('input');
+		[].forEach.call(inputs, function (input) {
+			if (input.type == 'file') {
+				input.name = 'file[' + i + ']';
+			} else {
+				input.name = 'artikel[' + i + ']';
+			}
+		});
 		
 		i++;
 	});

@@ -17,7 +17,7 @@
 							<th class="cu-smallcol">		<!-- Article ID -->
 								ID
 							</th>
-							<th>							<!-- Article title -->
+							<th style="width: 100%";>		<!-- Article title -->
 								Nieuws artikel
 							</th>
 							<th>
@@ -46,39 +46,9 @@
 									<td>
 										Artikel hc
 									</td>
-									<td>';
-          #If there are uploaded files
-
-            if(isset($data['files']) && count($data['files']) > 0  && count($data['files']) < 2)
-            {
-                
-                foreach($data['files'] as $file)
-                {
-                    echo '<p>' . $file->path .'</p>';
-                }
-                echo '<label for="keepFiles" class="control-label input-group">Wilt u dit bestanden behouden?</label>
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default active">
-                        <input type="radio" name="keepFiles" value="true" checked="true">Ja
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="keepFiles" value="false">Nee
-                    </label>
-                </div>
-            </div>';
-            }
-            ?>
-
-            
-                <input  id="upload" type='file' name='file[]' multiple/> 
-                </td>        
-               <td> <a class="btn btn-danger btn-sm" id="cancel"> Verwijder bestand </a>
-            
-
-
-
- <?php
-							echo '		</td>
+									<td>
+										<input type="file" name="file[0]" /> 
+									</td>
 									<td>
 										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
 									</td>

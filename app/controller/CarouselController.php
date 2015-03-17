@@ -21,7 +21,7 @@ class CarouselController extends Shared
 
 	        if($_POST){
 	        	var_dump($_POST);
-	        	
+	        	var_dump($_FILES);
 
 	         } else {
 				$this->header('Carouseledit');

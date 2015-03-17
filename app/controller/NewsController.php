@@ -146,7 +146,7 @@ class NewsController extends Shared
 	        #files are being added to the db and connected to the news item
 	        foreach($filepaths as $path)
 	        {
-	            $this->fileRepository->add($path, $newsId);
+	            $this->fileRepository->addFile($path, $newsId);
 	        }
 
 	        $this->show($newsId);
