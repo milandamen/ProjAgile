@@ -13,7 +13,6 @@
 	<!-- Bootstrap Core CSS -->
 	<link href="/ProjAgile/public/css/bootstrap.css" type="text/css" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="/ProjAgile/public/css/modern-business.css" type="text/css" rel="stylesheet">
 	<link href="/ProjAgile/public/css/forum.css" type="text/css" rel="stylesheet">
 	<link href="/ProjAgile/public/css/partners.css" type="text/css" rel="stylesheet">
 	<link href="/ProjAgile/public/css/mainstyles.css" type="text/css" rel="stylesheet">

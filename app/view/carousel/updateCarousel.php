@@ -7,12 +7,15 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<form id="updateSidebar" method="post" action="">
+			<form id="updateSidebar" method="get" action="">
 				<table id="articlelisttable" class="table">
 					<thead>
 						<tr>
 							<th class="cu-smallcol">		<!-- Index -->
 								Index
+							</th>
+							<th class="cu-smallcol">		<!-- Article ID -->
+								ID
 							</th>
 							<th>							<!-- Article title -->
 								Nieuws artikel
@@ -27,23 +30,27 @@
 					</thead>
 					<tbody id="articlelist">
 						<?php
+							// PLACEHOLDER INFORMATION: REPLACE WITH DATABASE INFORMATION!
 							echo
 								'<tr>
 									<td>
 										1
 									</td>
 									<td>
-										<input type="text" name="artikel[0]" class="hiddenInput" />
-										Artikel 1
+										<input type="text" name="artikel[0]" value="0" class="hiddenInput" />
+										<span>0</span>
 									</td>
 									<td>
-										<a href="#" class="btn btn-primary btn-xs" onclick=""><i class="fa fa-arrow-up"></i></a>
+										Artikel hc
 									</td>
 									<td>
-										<a href="#" class="btn btn-primary btn-xs" onclick=""><i class="fa fa-arrow-down"></i></a>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
 									</td>
 									<td>
-										<a href="#" class="btn btn-danger btn-xs" onclick=""><i class="fa fa-times"></i></a>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)"><i class="fa fa-arrow-down"></i></a>
+									</td>
+									<td>
+										<a class="btn btn-danger btn-xs" onclick="removeArticle(this)"><i class="fa fa-times"></i></a>
 									</td>
 								</tr>'
 						?>
@@ -58,14 +65,20 @@
 		<div class="col-md-12">
 			<h2>Zoek artikel op titel</h2>
 			<input type="text" id="artikeltitel" />
-			<a href="#" onclick="" class="btn btn-primary">Zoek</a>
+			<a onclick="searchArticle()" class="btn btn-primary">Zoek</a>
 		</div>
 		<div class="col-md-12">
 			<table class="table">
 				<thead>
 					<tr>
+						<th class="cu-smallcol">
+							ID
+						</th>
 						<th>
-							Nieuws artikel
+							Titel
+						</th>
+						<th class="cu-smallcol">
+							
 						</th>
 					</tr>
 				</thead>

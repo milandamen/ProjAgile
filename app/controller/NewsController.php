@@ -21,7 +21,11 @@ class NewsController extends Shared
         $this->view('news/show', ['newsdata' => $data, 'logged' => $this->login()]);
         $this->footer();
     }
-
+	
+	public function getArticlesByTitle($term) {
+		$data = $this->newsdb->getByTitle($term);
+		echo json_encode($data);
+	}
 
 }
 
