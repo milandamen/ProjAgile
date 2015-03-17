@@ -24,9 +24,10 @@ class CarouselController extends Shared
 	        if($_POST){
 	        	var_dump($_POST);
 				
-				for ($i = 0; $i < $_POST['artikel'].length; $i++) {
+				for ($i = 0; $i < count($_POST['artikel']); $i++) {
 					$item = $_POST['artikel'][$i];
 					$newsId = $item;
+					
 					
 					$path = $this->saveFile($i);
 
