@@ -36,7 +36,7 @@
 	           				<h3>Content wijzigen</h3>
 	           				<div class="btn-group-vertical">
 	           					<a class="btn btn-default" href="/ProJAgile/public/NewsController/create" role="button">Nieuws toevoegen</a>
-	           					<a class="btn btn-default" href="#" role="button">Introductie wijzigen</a>
+	           					<a class="btn btn-default" href="/ProJAgile/public/Home/editIntro" role="button">Introductie wijzigen</a>
 	           				</div>
            				</div>
 
