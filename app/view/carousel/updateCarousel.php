@@ -56,7 +56,7 @@
                 {
                     echo '<p>' . $file->path .'</p>';
                 }
-                echo '<label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
+                echo '<label for="keepFiles" class="control-label input-group">Wilt u dit bestanden behouden?</label>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-default active">
                         <input type="radio" name="keepFiles" value="true" checked="true">Ja
@@ -69,16 +69,15 @@
             }
             ?>
 
-            <div class="row">
-                <br/>
-                <input  id="upload" type='file' name='file[]' multiple>
-                <br/>
-                <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestanden</label>
-            </div>
+            
+                <input  id="upload" type='file' name='file[]' multiple/> 
+                </td>        
+               <td> <a class="btn btn-danger btn-sm" id="cancel"> Verwijder bestand </a>
+            
 
 
 
-?> <?php
+ <?php
 							echo '		</td>
 									<td>
 										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
