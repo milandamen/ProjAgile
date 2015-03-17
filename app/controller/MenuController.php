@@ -35,11 +35,29 @@
 
         private function updateToDB()
         {
-            echo $_POST['menuItem'][0][0][0];
-
-           /* foreach($_POST['menuItem'] as $menuItem)
+            foreach($_POST['menuItem'] as $menuItem)
             {
-                echo($menuItem[1]);
-            }*/
+                $menuId =       $menuItem[0];
+                $menuNaam =     $menuItem[1];
+                $menuUrl =      $menuItem[2];
+                $menuLevels =   explode('.', $menuItem[3]);
+
+                $parentId = '';
+                $orderNr = '';
+                if(count($menuLevels) == 2)
+                {
+                    $parentId = $menuLevels[0];
+                    $orderNr = $menuLevels[1];
+                }
+                else
+                {
+                    $orderNr = $menuItem[0];
+                }
+
+
+                $menuPublish =  $menuItem[4];
+
+                echo("id: " . $menuId . "<br/>naam: " . $menuNaam . "<br/>url: " . $menuUrl . "<br/>Parent: " . $parentId . "<br/>Order: " . $orderNr . "<br/>publish: " . $menuPublish . "<br/>----------------");
+            }
         }
     }
