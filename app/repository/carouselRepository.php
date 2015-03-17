@@ -34,7 +34,6 @@ class CarouselRepository extends RepositoryBase
 		$query = 'DELETE FROM carousel';
 		$this->db->execQuery($query);
 
-		echo '<Br/>';
 		echo $carousel->getNewsId();
 
 			$query = 'INSERT INTO carousel (newsId) VALUES (:newsId)';
@@ -43,7 +42,7 @@ class CarouselRepository extends RepositoryBase
 				':newsId' => $carousel->getNewsId()
 			);
 			
-			echo 'test';
+			echo 'test 3 <br/>';
 
 			$this->db->execQuery($query, $parameters);
 		
