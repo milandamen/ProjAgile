@@ -35,6 +35,7 @@
 
         private function updateToDB()
         {
-
+            //var_dump($_POST);
+            echo($_POST['menuItem'][1]);
         }
     }
