@@ -29,9 +29,9 @@ class CarouselController extends Shared
 					$item = $_POST['artikel'][$i];
 					$newsId = $item;
 						
-					//$path = $this->saveFile($i);
+					$path = $this->saveFile($i);
 
-	        		$carousel = new CarouselItem(null,$newsId,null,null);
+	        		$carousel = new CarouselItem(null,$newsId,$path,null);
 	        		$this->carouselRepository->saveCarousel($carousel);
 
 	        	}
@@ -143,8 +143,9 @@ class CarouselController extends Shared
 			move_uploaded_file($tmp,$temp);
 			#change the name of the file in a temporary folder and move it to the uploads folder
 			rename($temp, $target . $nameToCheck);
+			$filepath = $target . $nameToCheck;
 		}
-		
+		echo 'filepath: '.$filepath;
 		return $filepath;
 	}
 	
