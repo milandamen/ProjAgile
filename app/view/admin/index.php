@@ -26,9 +26,9 @@
 	           			<h3>Layout modules</h3>
 	           				<div class="btn-group-vertical">
 	           					<a class="btn btn-default" href="/ProJAgile/public/Home/editlayout" role="button">Homepage layout </a>
-								<a class="btn btn-default" href="#" role="button">Carrousel wijzigen</a>
+								<a class="btn btn-default" href="/ProJAgile/public/CarouselController/updateCarousel/" role="button">Carrousel wijzigen</a>
 								<a class="btn btn-default" href="/ProJAgile/public/sidebarController/sidebarUpdate/1" role="button">Sidebar Home wijzigen</a>
-								<a class="btn btn-default" href="#" role="button">Menu wijzigen</a>
+								<a class="btn btn-default" href="/ProJAgile/public/MenuController/" role="button">Menu wijzigen</a>
 								<a class="btn btn-default" href="/ProJAgile/public/FooterController/footerUpdate" role="button">Footer wijzigen</a>
 	           				</div>
            				</div>
@@ -61,7 +61,7 @@
 	           			<h3>Content wijzigen</h3>
 	           			<div class="btn-group-vertical">
 	           				<a class="btn btn-default" href="/ProJAgile/public/NewsController/create" role="button">Nieuws toevoegen</a>
-	           				<a class="btn btn-default" href="#" role="button">Introductie wijzigen</a>
+	           				<a class="btn btn-default" href="/ProJAgile/public/Home/editIntro" role="button">Introductie wijzigen</a>
 	          				</div>
            			</div>';
            	}
