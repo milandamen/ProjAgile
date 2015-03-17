@@ -38,56 +38,39 @@
             $this->footer();
         }
 
-        public function indextest($name = '')
-        {
-            $this->header('indextest');
-            $this->menu();
-
-            $user = $this->model('UserTest');
-            $user->name = $name;
-
-            $modules = $this->homeLayoutRepository->getAll();
-            $data = array('name' => $user->name, 'layoutmodules' => $modules);
-            $this->view('home/indextest', $data);
-
-            $this->footer();
-        }
-
         public function editlayout()
         {
-            if ($_POST && isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
-            {
-                $module = new HomeLayoutModule('module-introduction', $_POST['module-introduction']);
-                $this->homeLayoutRepository->update($module);
-                $module = new HomeLayoutModule('module-news', $_POST['module-news']);
-                $this->homeLayoutRepository->update($module);
-                $module = new HomeLayoutModule('module-sidebar', $_POST['module-sidebar']);
-                $this->homeLayoutRepository->update($module);
 
-                header('Location: /ProjAgile/public/');
-            }
-            else
-            {
-                $modules = $this->homeLayoutRepository->getAll();
-                $sidebarData = $this->sidebardb->getAll();
+        	if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
+	            if ($_POST && isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
+	            {
+	                $module = new HomeLayoutModule('module-introduction', $_POST['module-introduction']);
+	                $this->homeLayoutRepository->update($module);
+	                $module = new HomeLayoutModule('module-news', $_POST['module-news']);
+	                $this->homeLayoutRepository->update($module);
+	                $module = new HomeLayoutModule('module-sidebar', $_POST['module-sidebar']);
+	                $this->homeLayoutRepository->update($module);
 
-                $this->header('editlayout');
-                $this->menu();
+	                header('Location: /ProjAgile/public/');
+	            }
+	            else
+	            {
+	                $modules = $this->homeLayoutRepository->getAll();
+	                $sidebarData = $this->sidebardb->getAll();
 
-                $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
-                $this->view('home/editlayout', $data);
+	                $this->header('editlayout');
+	                $this->menu();
 
-                $this->footer();
-            }
+	                $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
+	                $this->view('home/editlayout', $data);
+
+	                $this->footer();
+	            }
+        	} else {
+        		global $Base_URI;
+				header('Location: ' . $Base_URI . 'Shared/noPermission');
+        	}
         }
 
-        public function error()
-        {
-            $this->header('Home');
-            $this->menu();
 
-            $this->view('home/error');
-
-            $this->footer();
-        }
     }

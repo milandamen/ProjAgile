@@ -32,7 +32,7 @@ class Shared extends Controller
 
     	$data = array('sidebarRows' => $sidebarData);
 
-    	$this->view('shared/sidebar', ['sidebarRows' => $sidebarData, 'logged' => $this->auth->loggedIn()]);
+    	$this->view('shared/sidebar', ['sidebarRows' => $sidebarData, 'loggedIn' => $this->auth->loggedIn()]);
     }
 
     public function footer()
@@ -62,7 +62,7 @@ class Shared extends Controller
         {
             $footerColumns[$item->getCol()][] = $item;
         }
-        $this->view('shared/footer', ['footerColumns' => $footerColumns, 'logged' => $this->auth->loggedIn()]);
+        $this->view('shared/footer', ['footerColumns' => $footerColumns, 'loggedIn' => $this->auth->loggedIn()]);
     }
 
     protected function getAuth()
@@ -78,7 +78,7 @@ class Shared extends Controller
         }
     }
 
-    	public function noPermission(){
+    public function noPermission(){
 
 		$this->header('No Permission');
         $this->menu();
@@ -86,4 +86,6 @@ class Shared extends Controller
         $this->footer();
 
 	}
+
+
 }

@@ -21,7 +21,7 @@
            		</p>
            	<?php 
 
-           	if($_SESSION['userGroupId'] == 1){ // All full-admin functionality
+           	if($data['loggedIn'] && $_SESSION['userGroupId'] == 1){ // All full-admin functionality
            		echo '<div class="col-md-4"> 
 	           			<h3>Layout modules</h3>
 	           				<div class="btn-group-vertical">
@@ -49,7 +49,7 @@
 	           				</div>
 	           			</div>';
 
-           	} else if($_SESSION['userGroupId'] == 2) {	// All content-admin functionality
+           	} else if($data['loggedIn'] && $_SESSION['userGroupId'] == 2) {	// All content-admin functionality
            		echo '<div class="col-md-4"> 
 	           			<h3>Layout modules</h3>
 	           			<div class="btn-group-vertical">

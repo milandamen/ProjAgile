@@ -9,10 +9,10 @@ class AdminController extends Shared {
 
 	public function index(){
 		
-		if($this->getAuth()->loggedIn()){
+		if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2)){
 			$this->header('Beheer');
 		    $this->menu();
-			$this->view('admin/index',['logged' => $this->getAuth()->loggedIn()]);
+			$this->view('admin/index',['loggedIn' => $this->getAuth()->loggedIn()]);
 			$this->footer();
 		} else {
 			global $Base_URI;
