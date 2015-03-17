@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <h2 class="page-header">
             	<?php
-            	if($data['logged']){
+            	if($data['loggedIn']){
             	echo '<a href="/projagile/public/newscontroller/edit/' . $data['newsdata']['news']->getId() . '"><i class="fa fa-pencil-square-o"></i></a> ';
             	}
             	 echo $data['newsdata']['news']->getTitle() ?></h2>

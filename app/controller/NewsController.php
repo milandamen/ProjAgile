@@ -25,13 +25,13 @@ class NewsController extends Shared
         $this->header('Nieuws | ' . $this->newsRepository->getById($id)->getTitle());
         $this->menu();
         $data = array('news' => $this->newsRepository->getById($id));
-        $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'logged' => $this->getAuth()->loggedIn()]);
+        $this->view('news/show', ['newsdata' => $data, 'files' => $this->fileRepository->getAllByNewsId($id), 'loggedIn' => $this->getAuth()->loggedIn()]);
         $this->footer();
     }
 
     public function create()
     {
-        if($this->getAuth()->loggedIn())
+        if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
         {
             $this->header('Nieuw artikel');
             $this->menu();
@@ -42,7 +42,7 @@ class NewsController extends Shared
 
     public function edit($newsId)
     {
-        if($this->getAuth()->loggedIn())
+        if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
         {
             $this->header('Wijzig artikel');
             $this->menu();
@@ -53,95 +53,102 @@ class NewsController extends Shared
 
     public function save($create)
     {
-        require_once '../app/model/News.php';
-
-        $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-        $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
-        $hidden = filter_var($_POST['hidden'], FILTER_VALIDATE_BOOLEAN);
-        $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
-        $create = filter_var($create, FILTER_VALIDATE_BOOLEAN);
-
-        if($districtsectionId === 0)
+    	if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
         {
-            $districtsectionId = null;
-        }
+	        require_once '../app/model/News.php';
 
-        #Upload files
-        $target = '../public/uploads/';
-        $temp = '../public/uploads/tijdelijk/';
-        $filepaths = array();
-        $count = 0;
-        foreach($_FILES['file']['name'] as $filename)
-        {
-            #if there are no files selected you will get an empty '' string therefore the !empty check
-            if(!empty($filename))
-            {
-                $tmp = $_FILES['file']['tmp_name'][$count];
-                $count = $count + 1;
+	        $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+	        $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+	        $hidden = filter_var($_POST['hidden'], FILTER_VALIDATE_BOOLEAN);
+	        $districtsectionId = filter_var($_POST['district'], FILTER_VALIDATE_INT);
+	        $create = filter_var($create, FILTER_VALIDATE_BOOLEAN);
 
-                $nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
+	        if($districtsectionId === 0)
+	        {
+	            $districtsectionId = null;
+	        }
 
-                while(file_exists($target . $nameToCheck))
-                {
-                    $nameToCheck = rand($this->minRand, $this->maxRand) . 'id' . $filename;
-                }
+	        #Upload files
+	        $target = '../public/uploads/';
+	        $temp = '../public/uploads/tijdelijk/';
+	        $filepaths = array();
+	        $count = 0;
+	        foreach($_FILES['file']['name'] as $filename)
+	        {
+	            #if there are no files selected you will get an empty '' string therefore the !empty check
+	            if(!empty($filename))
+	            {
+	                $tmp = $_FILES['file']['tmp_name'][$count];
+	                $count = $count + 1;
 
-                $temp = $temp.basename($filename);
-                $filepaths[] = $nameToCheck;
-                move_uploaded_file($tmp,$temp);
-                #change the name of the file in a temporary folder and move it to the uploads folder
-                rename($temp, $target . $nameToCheck);
-            }
-        }
+	                $nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
 
-        if($hidden == true)
-        {
-            $hidden = 1;
-        }
-        else
-        {
-            $hidden = 0;
-        }
+	                while(file_exists($target . $nameToCheck))
+	                {
+	                    $nameToCheck = rand($this->minRand, $this->maxRand) . 'id' . $filename;
+	                }
 
-        $newsId = null;
+	                $temp = $temp.basename($filename);
+	                $filepaths[] = $nameToCheck;
+	                move_uploaded_file($tmp,$temp);
+	                #change the name of the file in a temporary folder and move it to the uploads folder
+	                rename($temp, $target . $nameToCheck);
+	            }
+	        }
 
-        #if a news item is edited then the newsId and keepfiles will ve requested
-        if($create === false)
-        {
-            $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
+	        if($hidden == true)
+	        {
+	            $hidden = 1;
+	        }
+	        else
+	        {
+	            $hidden = 0;
+	        }
 
-            if(isset($_POST['keepFiles']))
-            {
-                $keepFiles = filter_var($_POST['keepFiles'], FILTER_VALIDATE_BOOLEAN);
+	        $newsId = null;
 
-                if($keepFiles === false)
-                {
-                    $this->deleteFile($newsId);
-                }
-            }
+	        #if a news item is edited then the newsId and keepfiles will ve requested
+	        if($create === false)
+	        {
+	            $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
 
-        }
+	            if(isset($_POST['keepFiles']))
+	            {
+	                $keepFiles = filter_var($_POST['keepFiles'], FILTER_VALIDATE_BOOLEAN);
 
-        $news = new News($newsId, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
+	                if($keepFiles === false)
+	                {
+	                    $this->deleteFile($newsId);
+	                }
+	            }
 
-        if($create === true)
-        {
-            #Adds the news item and gets the id of it, to connect it to uploaded files
-            #and redirects to show
-            $newsId = $this->newsRepository->add($news);
-        }
-        else
-        {
-            $this->newsRepository->update($news);
-        }
+	        }
 
-        #files are being added to the db and connected to the news item
-        foreach($filepaths as $path)
-        {
-            $this->fileRepository->add($path, $newsId);
-        }
+	        $news = new News($newsId, $districtsectionId, 1, $title, $content, new DateTime(), $hidden);
 
-        $this->show($newsId);
+	        if($create === true)
+	        {
+	            #Adds the news item and gets the id of it, to connect it to uploaded files
+	            #and redirects to show
+	            $newsId = $this->newsRepository->add($news);
+	        }
+	        else
+	        {
+	            $this->newsRepository->update($news);
+	        }
+
+	        #files are being added to the db and connected to the news item
+	        foreach($filepaths as $path)
+	        {
+	            $this->fileRepository->add($path, $newsId);
+	        }
+
+	        $this->show($newsId);
+
+    	} else {
+    		global $Base_URI;
+				header('Location: ' . $Base_URI . 'Shared/noPermission');
+    	}
     }
 
     private function deleteFile($newsId)

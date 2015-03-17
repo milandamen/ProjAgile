@@ -114,7 +114,7 @@
                 // --------------------- View opbouw
                 $this->header('Wijzig sidebar');
                 $this->menu();
-                $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarRows, 'logged' => $this->getAuth()->loggedIn()]);
+                $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarRows, 'loggedIn' => $this->getAuth()->loggedIn()]);
                 $this->footer();
             }
 

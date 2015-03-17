@@ -3,6 +3,11 @@
 	<div class="panel-heading">
 		<h4> 
 			Nieuws
+			<?php if($data['loggedIn'] && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
+            {
+				echo '<a href="NewsController/create"><i class="fa fa-plus"></i></a>';
+			}
+            ?>
 		</h4>
 	</div>
     <div class="panel-body">
