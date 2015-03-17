@@ -9,6 +9,8 @@
             require_once '../app/model/Sidebar.php';
 
             $this->sidebarDb = new SidebarRepository();
+            $this->setAuth(new AuthenticationController());
+
         }
         public function sidebarCreate()
         {
@@ -34,6 +36,8 @@
                 }
             }
 
+
+		if($this->getAuth()->loggedIn()){
             // -- Form get's posted from page when submitted.
             if($_POST)
             {
@@ -112,5 +116,11 @@
                 $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarRows, 'logged' => $this->getAuth()->loggedIn()]);
                 $this->footer();
             }
+
+            } else {
+			global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
+		}
         }
     }
+
