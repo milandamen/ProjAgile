@@ -41,7 +41,7 @@
 
             <div class="footer-edit-link">
                 <?php
-                if($data['logged']){
+                if($data['loggedIn'] && $_SESSION['userGroupId'] == 1){
 
                 global $Base_URI;
                 echo '<a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>';

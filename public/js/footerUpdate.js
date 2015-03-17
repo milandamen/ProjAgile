@@ -14,13 +14,13 @@ function addColumn()
     var row2 = table.insertRow(1);
     var cell1 = row1.insertCell(0);
     var cell2 = row2.insertCell(0);
-    cell1.innerHTML = '<button type="button" onclick="addRow(this)" class="btn btn-primary">Voeg link toe</button>';
-    cell2.innerHTML = '<button type="button" onclick="removeColumn(this)" class="btn btn-primary">Verwijder kolom</button>';
+    cell1.innerHTML = '<button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button> <button type="button" onclick="removeColumn(this)" class="btn btn-primary btn-sm">Verwijder kolom</button>';
+    cell2.innerHTML = '&nbsp;';
     //create first link
-    var row = table.insertRow(table.rows.length - 2);
+    var row = table.insertRow(2);
     var cell = row.insertCell(0);
     cell.innerHTML = 'Titel: <input type="text" name="footer[' + numTables + '][text][]" id="footerText" required>'+
-    '<button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>'+
+    '<button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
     '<br/> Link: <input type="text" name="footer[' + numTables + '][link][]" id="footerLink">';
 
     //finally, append table to container
@@ -42,7 +42,7 @@ function addRow(button)
     var row = table.insertRow(table.rows.length - 2);
     var cell = row.insertCell(0);
     cell.innerHTML = 'Text: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
-    '<button type="button" onclick="removeRow(this)" class="btn btn-primary">X</button>'+
+    ' <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
     '<br/> Link: <input type="text" name="footer[' + tableNumber + '][link][]" id="footerLink">';
 }
 

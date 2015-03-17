@@ -23,7 +23,15 @@ class NewsRepository extends RepositoryBase
         #convert result objects to news objects
         foreach($objects as $var)
         {
-            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $var->hidden);	
+            if($var->hidden == 0)
+            {
+                $hidden = false;
+            }
+            else
+            {
+                $hidden = true;
+            }
+            $newsArray[] = new News($var->newsId, $var->districtSectionId, $var->userId, $var->title, $var->content, $var->date, $hidden);
         }
 
         foreach($newsArray as $news){
@@ -43,14 +51,15 @@ class NewsRepository extends RepositoryBase
             $news = new News($result[0]->newsId, $result[0]->districtSectionId, $result[0]->userId, $result[0]->title, $result[0]->content, $result[0]->date, $result[0]->hidden);
         	$news->setAuthor($this->getAuthor($result[0]->userId));
         	$news->setDistrict($this->getDistrict($result[0]->districtSectionId));
+            return $news;
         }
 
-        return $news;
     }
 
     public function add($object)
     {
         $query = 'INSERT INTO ' . $this->name . '(newsId, districtSectionId, userId, title, content, date, hidden) VALUES(:newsId, :districtSectionId, :userId, :title, :content, NOW() , :hidden)';
+
 
         $parameters = array(
             ':newsId' => $object->getId(),
@@ -62,11 +71,13 @@ class NewsRepository extends RepositoryBase
         );
 
         $this->db->execQuery($query, $parameters);
+
+        return $this->db->getLastInsertedId();
     }
 
     public function update($object)
     {
-        $query = 'UPDATE ' . $this->tableName . ' SET districtSectionId = :districtSectionId, userId = :userId, title = :title, content = :content, date = :date, hidden= :hidden
+        $query = 'UPDATE ' . $this->tableName . ' SET districtSectionId = :districtSectionId, userId = :userId, title = :title, content = :content, date = NOW(), hidden= :hidden
         WHERE ' . $this->tableName .'Id = :' . $this->tableName .'Id';
 
         $parameters = array(
@@ -75,7 +86,6 @@ class NewsRepository extends RepositoryBase
             ':userId' => $object->getUserId(),
             ':title' => $object->getTitle(),
             ':content' => $object->getContent(),
-            ':date' => $object->getDate(),
             ':hidden' => $object->getHidden()
         );
 
@@ -114,6 +124,5 @@ class NewsRepository extends RepositoryBase
     	return $district;
     }
 
-
-
 }
+

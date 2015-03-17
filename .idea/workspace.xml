@@ -2,9 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fc712b2-f502-4847-a12a-c714c3b1de52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/menu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/MenuController.php" afterPath="$PROJECT_DIR$/app/controller/MenuController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/menu/index.php" afterPath="$PROJECT_DIR$/app/view/menu/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controller/AdminController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/model/Districtsection.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/repository/DistrictsectionRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/repository/FileRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/news/create.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/news/edit.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/admin/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/newsValidate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/shared/permission.php" />
+      <change type="DELETED" beforePath="C:\xampp\htdocs\ProjAgile\app\view\home\indextest.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/FooterController.php" afterPath="$PROJECT_DIR$/app/controller/FooterController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/Home.php" afterPath="$PROJECT_DIR$/app/controller/Home.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/NewsController.php" afterPath="$PROJECT_DIR$/app/controller/NewsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/core/Shared.php" afterPath="$PROJECT_DIR$/app/core/Shared.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/repository/database.php" afterPath="$PROJECT_DIR$/app/repository/database.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/error.php" afterPath="$PROJECT_DIR$/app/view/home/error.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/footer.php" afterPath="$PROJECT_DIR$/app/view/shared/footer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/footerUpdate.js" afterPath="$PROJECT_DIR$/public/js/footerUpdate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/footer/footerUpdate.php" afterPath="$PROJECT_DIR$/app/view/footer/footerUpdate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/menu.php" afterPath="$PROJECT_DIR$/app/view/shared/menu.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-introduction.php" afterPath="$PROJECT_DIR$/app/view/home/module-introduction.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-news.php" afterPath="$PROJECT_DIR$/app/view/home/module-news.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-sidebar.php" afterPath="$PROJECT_DIR$/app/view/home/module-sidebar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/repository/newsRepository.php" afterPath="$PROJECT_DIR$/app/repository/newsRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/news/show.php" afterPath="$PROJECT_DIR$/app/view/news/show.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/sidebar.php" afterPath="$PROJECT_DIR$/app/view/shared/sidebar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/sidebarController.php" afterPath="$PROJECT_DIR$/app/controller/sidebarController.php" />
     </list>
     <ignored path="ProjAgile.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,14 +56,9 @@
       <file leaf-file-name="footerUpdate.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/view/footer/footerUpdate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.0833335" vertical-offset="236" max-vertical-offset="1071">
+            <state vertical-scroll-proportion="-5.0833335" vertical-offset="236" max-vertical-offset="1224">
               <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
-              <folding>
-                <marker date="1426513115133" expanded="true" signature="1439:1871" placeholder="..." />
-                <marker date="1426513115133" expanded="true" signature="1443:1866" placeholder="..." />
-                <marker date="1426513115133" expanded="true" signature="2009:2440" placeholder="..." />
-                <marker date="1426513115133" expanded="true" signature="2013:2435" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,19 +69,19 @@
             <state vertical-scroll-proportion="-40.23077" vertical-offset="195" max-vertical-offset="1343">
               <caret line="73" column="42" selection-start-line="73" selection-start-column="42" selection-end-line="73" selection-end-column="42" />
               <folding>
-                <marker date="1426589003690" expanded="true" signature="654:769" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:932" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1010" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1015" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1023" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1045" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1053" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1235" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1238" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="898:1351" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="1385:1609" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="1643:1928" placeholder="..." />
-                <marker date="1426589003690" expanded="true" signature="2532:2543" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="654:769" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:932" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1010" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1015" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1023" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1045" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1053" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1235" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1238" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="898:1351" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="1385:1609" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="1643:1928" placeholder="..." />
+                <marker date="1426589357449" expanded="true" signature="2532:2543" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -109,8 +128,8 @@
       <file leaf-file-name="sidebarController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controller/sidebarController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.423077" vertical-offset="0" max-vertical-offset="2074">
-              <caret line="45" column="62" selection-start-line="45" selection-start-column="62" selection-end-line="45" selection-end-column="62" />
+            <state vertical-scroll-proportion="-29.423077" vertical-offset="85" max-vertical-offset="2261">
+              <caret line="50" column="62" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -528,19 +547,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="391">
           <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
           <folding>
-            <marker date="1426589003690" expanded="true" signature="654:769" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:932" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1010" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1015" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1023" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1045" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1053" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1235" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1238" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1351" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="1385:1609" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="1643:1928" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="2532:2543" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="654:769" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:932" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1010" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1015" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1023" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1045" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1053" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1235" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1238" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1351" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="1385:1609" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="1643:1928" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="2532:2543" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -827,19 +846,19 @@
         <state vertical-scroll-proportion="-40.23077" vertical-offset="195" max-vertical-offset="1343">
           <caret line="73" column="42" selection-start-line="73" selection-start-column="42" selection-end-line="73" selection-end-column="42" />
           <folding>
-            <marker date="1426589003690" expanded="true" signature="654:769" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:932" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1010" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1015" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1023" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1045" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1053" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1235" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1238" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="898:1351" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="1385:1609" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="1643:1928" placeholder="..." />
-            <marker date="1426589003690" expanded="true" signature="2532:2543" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="654:769" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:932" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1010" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1015" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1023" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1045" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1053" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1235" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1238" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="898:1351" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="1385:1609" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="1643:1928" placeholder="..." />
+            <marker date="1426589357449" expanded="true" signature="2532:2543" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -856,19 +875,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.0833335" vertical-offset="236" max-vertical-offset="1071">
           <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
-          <folding>
-            <marker date="1426513115133" expanded="true" signature="1439:1871" placeholder="..." />
-            <marker date="1426513115133" expanded="true" signature="1443:1866" placeholder="..." />
-            <marker date="1426513115133" expanded="true" signature="2009:2440" placeholder="..." />
-            <marker date="1426513115133" expanded="true" signature="2013:2435" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/sidebarController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.423077" vertical-offset="0" max-vertical-offset="2074">
-          <caret line="45" column="62" selection-start-line="45" selection-start-column="62" selection-end-line="45" selection-end-column="62" />
+        <state vertical-scroll-proportion="-29.423077" vertical-offset="85" max-vertical-offset="2261">
+          <caret line="50" column="62" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
           <folding />
         </state>
       </provider>
