@@ -42,7 +42,6 @@ class Menu
 
     public function getRelativeUrl()
     {
-        // haal dit maar weg
         return $this->relativeUrl;
     }
 
