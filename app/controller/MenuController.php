@@ -35,6 +35,8 @@
 
         private function updateToDB()
         {
+            $this->menudb->truncateTable();
+
             foreach($_POST['menuItem'] as $menuItem)
             {
                 $menuId =       $menuItem[0];
@@ -42,8 +44,8 @@
                 $menuUrl =      $menuItem[2];
                 $menuLevels =   explode('.', $menuItem[3]);
 
-                $parentId = '';
-                $orderNr = '';
+                $parentId = '0';
+
                 if(count($menuLevels) == 2)
                 {
                     $parentId = $menuLevels[0];
@@ -51,13 +53,36 @@
                 }
                 else
                 {
-                    $orderNr = $menuLevels;
+                    $orderNr = $menuLevels[0];
+                    $parentId = 'null';
                 }
 
+                if($menuItem[4] == 'on')
+                {
+                    $menuPublish = '1';
+                }
+                else
+                {
+                    $menuPublish = '0';
+                }
 
-                $menuPublish =  $menuItem[4];
+                $menu = new Menu($menuId, $parentId, $menuNaam, $menuUrl, $orderNr, $menuPublish);
 
-                echo("id: " . $menuId . "<br/>naam: " . $menuNaam . "<br/>url: " . $menuUrl . "<br/>Parent: " . $parentId . "<br/>Order: " . $orderNr . "<br/>publish: " . $menuPublish . "<br/>----------------");
+                /*$parameters = array(
+                    ':menuId' => $menuItem->getMenuId(),
+                    ':parentId' => $menuItem->getParentId(),
+                    ':name' => $menuItem->getName(),
+                    ':relativeUrl' => $menuItem->getRelativeUrl(),
+                    ':menuOrder' => $menuItem->getMenuOrder(),
+                    ':publish'=> $menuItem-> getPublish()
+                );*/
+
+
+
+
+                $this->menudb->add($menu);
+
+                //echo("id: " . $menuId . "<br/>naam: " . $menuNaam . "<br/>url: " . $menuUrl . "<br/>Parent: " . $parentId . "<br/>Order: " . $orderNr . "<br/>publish: " . $menuPublish . "<br/>----------------<br/>");
             }
         }
     }

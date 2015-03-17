@@ -57,9 +57,9 @@ class menuRepository extends RepositoryBase
         if (count($result) == 1)
         {
             $MenuItems = new Menu($result[0]->menuId, $result[0]->parentId, $result[0]->name, $result[0]->relativeUrl, $result[0]->menuOrder, $result[0]->publish);
+            return $MenuItems;
         }
-
-        return $MenuItems;
+        return false;
     }
 
     public function move($menuId, $upOrDown = 'up')
@@ -144,9 +144,15 @@ class menuRepository extends RepositoryBase
         $this->db->execQuery($query, $parameters);
     }
 
+    public function truncateTable()
+    {
+        $query = 'TRUNCATE TABLE ' . $this->tableName;
+        $this->db->execQuery($query);
+    }
+
     public function add($menuItem)
     {
-        $query = ' INSERT INTO ' . $this->tableName . ' (menuId, parentId, name, relativeUrl, menuOrder, publish) VALUES (:menuId, :parentId, :name, :relativeUrl, ;menuOrder, ;publish)';
+        $query = " INSERT INTO ". $this->tableName . " (menuId, parentId, name, relativeUrl, menuOrder, publish) VALUES ( " . $menuItem->getMenuId() . "," . $menuItem->getParentId() . ", '" . $menuItem->getName() . "',  '" . $menuItem->getRelativeUrl() . "', " . $menuItem->getMenuOrder() . ", " . $menuItem->getPublish() . ");";
 
         $parameters = array(
             ':menuId' => $menuItem->getMenuId(),
