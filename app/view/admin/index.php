@@ -53,7 +53,7 @@
            		echo '<div class="col-md-4"> 
 	           			<h3>Layout modules</h3>
 	           			<div class="btn-group-vertical">
-								<a class="btn btn-default" href="#" role="button">Carrousel wijzigen</a>
+								<a class="btn btn-default" href="/ProJAgile/public/CarouselController/updateCarousel/" role="button">Carrousel wijzigen</a>
 								<a class="btn btn-default" href="/ProJAgile/public/sidebarController/sidebarUpdate/1" role="button">Sidebar Home wijzigen</a>
 	           			</div>
            			</div>
