@@ -130,7 +130,6 @@ class CarouselController extends Shared
 		if(!empty($filename) && in_array($ext, $allowed))
 		{
 			$tmp = $_FILES['file']['tmp_name'][$count];
-			$count = $count + 1;
 
 			$nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
 
