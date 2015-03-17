@@ -1,4 +1,7 @@
 
+/**
+	Grab list of articles using the input field as search term, then display articles in 2nd table.
+*/
 function searchArticle() {
 	var searchterm = document.getElementById('artikeltitel').value;
 	var searchresultsbody = document.getElementById('searchresults');
@@ -36,6 +39,9 @@ function searchArticle() {
 		});
 }
 
+/**
+	Move the article from the 2nd table to the 1st table.
+*/
 function addArticle(button) {
 	var row = button.parentNode.parentNode;
 	var id = row.children[0].textContent;
@@ -76,6 +82,9 @@ function addArticle(button) {
 	calculateIndexes();
 }
 
+/**
+	Remove the article from the 1st table
+*/
 function removeArticle(button) {
 	var row = button.parentNode.parentNode;
 	row.parentNode.removeChild(row);
@@ -83,6 +92,9 @@ function removeArticle(button) {
 	calculateIndexes();
 }
 
+/**
+	Move the article one row down in the 1st table
+*/
 function moveArticleDown(button) {
 	var articlelist = document.getElementById('articlelist');
 	
@@ -101,6 +113,9 @@ function moveArticleDown(button) {
 	}
 }
 
+/**
+	Move the article one row up in the 1st table
+*/
 function moveArticleUp(button) {
 	var articlelist = document.getElementById('articlelist');
 	
@@ -120,6 +135,9 @@ function moveArticleUp(button) {
 	}
 }
 
+/**
+	Re-calculate the indexes of the rows and inputs
+*/
 function calculateIndexes() {
 	var i = 0;
 	var articlelist = document.getElementById('articlelist');
