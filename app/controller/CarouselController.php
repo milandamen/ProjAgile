@@ -11,22 +11,36 @@ class CarouselController extends Shared
     {
         require_once 'AuthenticationController.php';
         require_once '../app/repository/carouselRepository.php';
+        require_once '../app/model/CarouselItem.php';
         $this->setAuth(new AuthenticationController());
         $this->carouselRepository = new CarouselRepository();
     }
 	
 	public function updateCarousel(){
+		// $id, $newsId, $imgpath, $title)
 
 		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
 
 	        if($_POST){
 	        	var_dump($_POST);
+
+	        	foreach($_POST['artikel'] as $item){
+	        		$newsId = $item;
+
+	        		$carousel = new CarouselItem(null,$newsId,null,null);
+
+	        		echo 'test 1';
+
+	        		$this->carouselRepository->saveCarousel($carousel);
+	        	}
+
 	        	var_dump($_FILES);
+
 
 	         } else {
 				$this->header('Carouseledit');
 				$this->menu();
-				$data = [];
+				$data = $this->carouselRepository->getAll();
 				$this->view('carousel/updateCarousel', $data);
 				$this->footer();
 	    	}
