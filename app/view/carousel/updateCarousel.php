@@ -34,32 +34,38 @@
 					<tbody id="articlelist">
 						<?php
 							// PLACEHOLDER INFORMATION: REPLACE WITH DATABASE INFORMATION!
+							foreach($data['articlelist'] as $article){
+							echo
+								'<tr>
+									<td>
+										
+									</td>
+									<td>
+										<input type="text" name="artikel[0]" value="'.  $article->getId() .'" class="hiddenInput" />
+										<span>	'.  $article->getId() .'</span>
+									</td>
+									<td>
+											'.  $article->getTitle() .'
+									</td>
+									<td>';
 
-							// echo
-							// 	'<tr>
-							// 		<td>
-							// 			1
-							// 		</td>
-							// 		<td>
-							// 			<input type="text" name="artikel[0]" value="0" class="hiddenInput" />
-							// 			<span>0</span>
-							// 		</td>
-							// 		<td>
-							// 			Artikel hc
-							// 		</td>
-							// 		<td>
-							// 			<input type="file" name="file[0]" /> 
-							// 		</td>
-							// 		<td>
-							// 			<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
-							// 		</td>
-							// 		<td>
-							// 			<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)"><i class="fa fa-arrow-down"></i></a>
-							// 		</td>
-							// 		<td>
-							// 			<a class="btn btn-danger btn-xs" onclick="removeArticle(this)"><i class="fa fa-times"></i></a>
-							// 		</td>
-							// 	</tr>';
+									if(null !==$article->getImgpath()){ ?>
+										<input type="file" name="file[0]" /> 
+								<?php	} else {
+										echo $article->getImgpath()  . ' IMAGE aanwezig' ;
+									}
+						echo '			</td>
+									<td>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
+									</td>
+									<td>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)"><i class="fa fa-arrow-down"></i></a>
+									</td>
+									<td>
+										<a class="btn btn-danger btn-xs" onclick="removeArticle(this)"><i class="fa fa-times"></i></a>
+									</td>
+								</tr>';
+							}
 						?>
 					</tbody>
 				</table>

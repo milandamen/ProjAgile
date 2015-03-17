@@ -20,10 +20,7 @@ class CarouselController extends Shared
 		// $id, $newsId, $imgpath, $title)
 
 		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
-
-
-
-	        if($_POST){
+		   if($_POST){
 
 	        	$this->carouselRepository->deleteAll();
 	        	var_dump($_POST);
@@ -54,7 +51,7 @@ class CarouselController extends Shared
 				$this->header('Carouseledit');
 				$this->menu();
 				$data = $this->carouselRepository->getAll();
-				$this->view('carousel/updateCarousel', $data);
+				$this->view('carousel/updateCarousel', ['articlelist' => $data]);
 				$this->footer();
 	    	}
 	    } else {
