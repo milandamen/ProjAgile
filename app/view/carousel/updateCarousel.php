@@ -58,7 +58,7 @@
 									<td>
 										<a class="btn btn-danger btn-xs" onclick="removeArticle(this)"><i class="fa fa-times"></i></a>
 									</td>
-								</tr>'
+								</tr>';
 						?>
 					</tbody>
 				</table>
