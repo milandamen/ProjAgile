@@ -38,6 +38,7 @@ class CarouselRepository extends RepositoryBase
 		echo $carousel->getNewsId();
 
 			$query = 'INSERT INTO carousel (newsId) VALUES (:newsId)';
+
 			$parameters = array(
 				':newsId' => $carousel->getNewsId()
 			);

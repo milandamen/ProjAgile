@@ -19,7 +19,7 @@ class FileRepository extends RepositoryBase
         return $this->db->getQuery($query, $parameter);
     }
 
-    public function add($filePath, $newsId)
+    public function addFile($filePath, $newsId)
     {
         $query = 'INSERT INTO file (fileId, path, newsId) VALUE(:fileId, :path, :newsId)';
         $parameters = array(':fileId' => null, ':path' => $filePath, ':newsId' => $newsId);
