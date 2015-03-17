@@ -7,7 +7,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<form id="updateSidebar" method="post" action="">
+			<form id="updateSidebar" method="post" action="" enctype="multipart/form-data">
 				<table id="articlelisttable" class="table">
 					<thead>
 						<tr>

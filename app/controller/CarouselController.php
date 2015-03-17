@@ -95,6 +95,37 @@ class CarouselController extends Shared
         $this->carouselRepository->delete($carouselId);
     }
 	
+	private function saveFile($file) {
+		$target = '../public/uploads/';
+        $temp = '../public/uploads/tijdelijk/';
+        $filepath = '';
+        $allowed =  array('png' ,'jpg');
+		
+		$filename = $file['name'];
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+		
+		if(!empty($filename) && in_array($ext, $allowed))
+		{
+			$tmp = $_FILES['file']['tmp_name'][$count];
+			$count = $count + 1;
+
+			$nameToCheck =  rand($this->minRand, $this->maxRand) . 'id' . $filename;
+
+			while(file_exists($target . $nameToCheck))
+			{
+				$nameToCheck = rand($this->minRand, $this->maxRand) . 'id' . $filename;
+			}
+
+			$temp = $temp.basename($filename);
+			$filepath = $nameToCheck;
+			move_uploaded_file($tmp,$temp);
+			#change the name of the file in a temporary folder and move it to the uploads folder
+			rename($temp, $target . $nameToCheck);
+		}
+		
+		return $filepath;
+	}
+	
 	public function testRepo() {
 		$carousel = $this->carouselRepository->getAll();
 		var_dump($carousel);
