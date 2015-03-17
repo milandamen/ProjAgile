@@ -66,7 +66,6 @@ $allMenuData = $data['allMenuData'];
                 echo('<button type="submit" class="btn btn-default" style="float:right">Opslaan</button>');
                 echo("</form>");
             ?>
-
 </div>
 </table>
 
