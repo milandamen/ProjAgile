@@ -16,11 +16,24 @@ class CarouselController extends Shared
     }
 	
 	public function updateCarousel(){
-        $this->header('Carouseledit');
-        $this->menu();
-        $data = [];
-        $this->view('carousel/updateCarousel', $data);
-        $this->footer();
+
+		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
+
+	        if($_POST){
+	        	var_dump($_POST);
+	        	
+
+	         } else {
+				$this->header('Carouseledit');
+				$this->menu();
+				$data = [];
+				$this->view('carousel/updateCarousel', $data);
+				$this->footer();
+	    	}
+	    } else {
+	    	global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
+	    }
     }
 
     public function DemoView()

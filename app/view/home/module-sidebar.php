@@ -3,9 +3,9 @@
 	<div class="panel-heading sidebar">
 		<h4> <?php echo $data['sidebarRows'][0]->getTitle(); ?> 
 			<?php
-                if($data['loggedIn'])
+                if($data['loggedIn'] && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
                 {
-				    echo ' <a class="right" href="#"><i class="fa fa-pencil-square-o"></i></a>';
+				    echo ' <a class="right" href="sidebarController/sidebarUpdate/1"><i class="fa fa-pencil-square-o"></i></a>';
 			    }
             ?>
 		</h4>

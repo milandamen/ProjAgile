@@ -153,3 +153,7 @@ function calculateIndexes() {
 function goBack() {
     window.history.back()
 }
+
+$("#cancel").click(function(){
+    document.getElementById("upload").value = "";
+});

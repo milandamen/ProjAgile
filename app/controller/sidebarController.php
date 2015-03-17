@@ -9,6 +9,8 @@
             require_once '../app/model/Sidebar.php';
 
             $this->sidebarDb = new SidebarRepository();
+            $this->setAuth(new AuthenticationController());
+
         }
         public function sidebarCreate()
         {
@@ -22,7 +24,10 @@
 
         public function sidebarUpdate($pageNr)
         {
-            // -- Data collection
+
+        // Check if user is logged in and has access
+		if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2)){
+			// -- Data collection
             $sidebarAll = $this->sidebarDb->getAll();
             $sidebarRows = array();
 
@@ -109,8 +114,14 @@
                 // --------------------- View opbouw
                 $this->header('Wijzig sidebar');
                 $this->menu();
-                $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarRows, 'logged' => $this->getAuth()->loggedIn()]);
+                $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarRows, 'loggedIn' => $this->getAuth()->loggedIn()]);
                 $this->footer();
             }
+
+            } else {
+			global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
+		}
         }
     }
+

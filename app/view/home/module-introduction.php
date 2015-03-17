@@ -2,16 +2,15 @@
 	<input class="hiddenInput" type="text" name="module-introduction" />	<!-- This input gets sent in /Home/editlayout -->
 	<div>
 		<h4> 
-			<?php if($data['loggedIn'])
+			<?php if($data['loggedIn'] && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2))
             {
-				echo '<a href="#"><i class="fa fa-pencil-square-o"></i></a>';
+				echo '<a href="Home/editIntro"><i class="fa fa-pencil-square-o"></i></a>';
 			}
             ?>
-			Welkom op Wijkplatform De Bunders 
+			 <?php echo $data['intro']->getTitle()  ?>
 		</h4>
 	</div>
 	<div class="panel-body">
-		De plek waar u actuele informatie of achtergronden kunt vinden over het wel en wee van de wijk De Bunders in Veghel, NB.
-		In deze site is opgenomen wijkraaddebunders en kijkinmijnwijk
+		<?php echo $data['intro']->getText(); ?>
 	</div>
 </div>
