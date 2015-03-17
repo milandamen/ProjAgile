@@ -14,7 +14,14 @@ class CarouselController extends Shared
         $this->setAuth(new AuthenticationController());
         $this->carouselRepository = new CarouselRepository();
     }
-
+	
+	public function updateCarousel(){
+        $this->header('Carouseledit');
+        $this->menu();
+        $data = [];
+        $this->view('carousel/updateCarousel', $data);
+        $this->footer();
+    }
 
     public function DemoView()
     {
