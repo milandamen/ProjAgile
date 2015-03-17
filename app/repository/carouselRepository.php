@@ -31,22 +31,23 @@ class CarouselRepository extends RepositoryBase
 		Save whole carousel to database (does not save custom titles).
 	*/
 	public function saveCarousel($carousel) {
-		$query = 'DELETE FROM carousel';
-		$this->db->execQuery($query);
 
-		echo $carousel->getNewsId();
 
 			$query = 'INSERT INTO carousel (newsId) VALUES (:newsId)';
 
 			$parameters = array(
 				':newsId' => $carousel->getNewsId()
 			);
-			
-			echo 'test 3 <br/>';
 
 			$this->db->execQuery($query, $parameters);
 		
 	}
+
+	public function deleteAll(){
+		$query = 'DELETE FROM carousel';
+		$this->db->execQuery($query);
+	}
+
 	
 	// File upload
     public function add($path)

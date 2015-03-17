@@ -20,37 +20,37 @@ class CarouselController extends Shared
 		// $id, $newsId, $imgpath, $title)
 
 		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
+		   if($_POST){
 
-	        if($_POST){
-	        	var_dump($_POST);
+	        	$this->carouselRepository->deleteAll();
+
 				
 				for ($i = 0; $i < count($_POST['artikel']); $i++) {
 					$item = $_POST['artikel'][$i];
 					$newsId = $item;
-					
-					
-					$path = $this->saveFile($i);
+						
+					//$path = $this->saveFile($i);
 
-	        		$carousel = new CarouselItem(null,$newsId,$path,null);
-
-	        		echo 'test 1  <br/>';
-
+	        		$carousel = new CarouselItem(null,$newsId,null,null);
 	        		$this->carouselRepository->saveCarousel($carousel);
 
-
-	        		echo 'test 2  <br/>';
 	        	}
 
 
+	        	$this->header('Carouseledit');
+				$this->menu();
+				$data = $this->carouselRepository->getAll();
+				$this->view('carousel/updateCarousel', ['articlelist' => $data]);
+				$this->footer();
 
-	        	var_dump($_FILES);
+
 
 
 	         } else {
 				$this->header('Carouseledit');
 				$this->menu();
 				$data = $this->carouselRepository->getAll();
-				$this->view('carousel/updateCarousel', $data);
+				$this->view('carousel/updateCarousel', ['articlelist' => $data]);
 				$this->footer();
 	    	}
 	    } else {
