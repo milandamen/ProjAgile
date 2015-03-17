@@ -145,7 +145,7 @@ class CarouselController extends Shared
 			rename($temp, $target . $nameToCheck);
 			$filepath = $target . $nameToCheck;
 		}
-		echo 'filepath: '.$filepath;
+		//echo 'filepath: '.$filepath;
 		return $filepath;
 	}
 	
