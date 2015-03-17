@@ -124,7 +124,7 @@ class CarouselController extends Shared
         $filepath = '';
         $allowed =  array('png' ,'jpg');
 		
-		$filename = $file['name'];
+		$filename = $_FILES['file']['name'][$count];
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
 		
 		if(!empty($filename) && in_array($ext, $allowed))
