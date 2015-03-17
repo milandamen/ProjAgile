@@ -29,9 +29,12 @@ class CarouselController extends Shared
 
 	        		$carousel = new CarouselItem(null,$newsId,null,null);
 
-	        		echo 'test 1';
+	        		echo 'test 1  <br/>';
 
 	        		$this->carouselRepository->saveCarousel($carousel);
+
+
+	        		echo 'test 2  <br/>';
 	        	}
 
 	        	var_dump($_FILES);
