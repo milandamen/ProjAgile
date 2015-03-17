@@ -19,19 +19,12 @@ function addMenuRow(button){
     var cellMenuPublic= row.insertCell();
     var cellMenuDelete= row.insertCell();
 
-    cellMenuItem.innerHTML = '<input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
-    cellMenuURL.innerHTML = '<input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
-    cellMenuLvl.innerHTML = '';
-    cellMenuPublic.innerHTML = '';
-
- 	var div = document.createElement("div");
- 	div.className = "radio";
-
-	div.innerHTML = '<label class="radio-inline"><input type="radio" name="sidebar[' + tableNumber + '][radio1]" value="Extern">Extern</label>\
-	<label class="radio-inline"><input type="radio" name="sidebar[' + tableNumber + '][radio1]" value="Intern">Intern</label>';
-
- 	cellRadio.appendChild(div);
- 	cellDelete.innerHTML = '<button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button>';
+    cellID.innerHTML = '<input type="text" name="menuItem['+ tableNumber+'][0]" style="display:none;" value="">';
+    cellMenuItem.innerHTML = '<input type="text" name="menuItem['+ tableNumber+'][1]" value="">';
+    cellMenuURL.innerHTML = '<input type="text" name="menuItem['+ tableNumber+'][2]" value=""> ';
+    cellMenuLvl.innerHTML = '<input type="text" name="menuItem['+ tableNumber+'][3]" value="">';
+    cellMenuPublic.innerHTML = '<input type="checkbox" name="menuItem['+ tableNumber+'][4]" value="">';
+    cellMenuDelete.innerHTML = '<a onclick="removeMenuRow(this)" class="btn btn-danger btn-xs">X</a>';
  	
 	maxRowIndex++;
 	

@@ -14,6 +14,7 @@ $allMenuData = $data['allMenuData'];
             <th data-field="url">pad naam</th>
             <th data-field="menuOrder">Menu level</th>
             <th data-field="publish">Tonen op site</th>
+            <th data-field="delete"></th>
         </tr>
         </thead>
         <tbody>
@@ -21,7 +22,7 @@ $allMenuData = $data['allMenuData'];
             $i=0;
             echo("
                     <form name='updateMenu' id='updateMenu' method='post' action='' enctype='multipart/form-data'>
-                    <input type='text' name='maxRowIndex' id='maxRowIndex' class='hiddenInput' />
+                    <input type='text' name='maxRowIndex' id='maxRowIndex' value='". (count($allMenuData)-1). "' class='hiddenInput' />
                 ");
 
                 foreach($allMenuData as $menuItem)
@@ -49,21 +50,22 @@ $allMenuData = $data['allMenuData'];
                     {
                         echo('
                                 <td><input type="checkbox" name="menuItem[' . $i . '][4]" checked></td>
-                            </tr>
+
                         ');
                     }
                     else
                     {
-                        echo("
-                                <td><input type='checkbox'></td>
-                            </tr>
-                        ");
+                        echo('
+                                <td><input type="checkbox" name="menuItem[' . $i . '][4]" ></td>
+
+                        ');
                     }
+                    echo '<td><a onclick="removeMenuRow(this)" class="btn btn-danger btn-xs">X</a></td> </tr>';
                     $i++;
                 }
                 echo '</tbody>';
                 echo '</table>';
-                echo('<button type="submit" class="btn btn-default" style="float:right">Opslaan</button>');
+                echo('<button type="submit" class="btn btn-default" style="float:right">Opslaan</button><button type="button" onclick="addMenuRow(this)" class="btn btn-warning" style="float:right">Voeg rij toe</button>');
                 echo("</form>");
             ?>
 </div>
