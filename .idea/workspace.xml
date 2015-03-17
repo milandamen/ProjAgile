@@ -2,33 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fc712b2-f502-4847-a12a-c714c3b1de52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controller/AdminController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/model/Districtsection.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/repository/DistrictsectionRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/repository/FileRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/news/create.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/news/edit.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/admin/index.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/newsValidate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/shared/permission.php" />
-      <change type="DELETED" beforePath="C:\xampp\htdocs\ProjAgile\app\view\home\indextest.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/FooterController.php" afterPath="$PROJECT_DIR$/app/controller/FooterController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/Home.php" afterPath="$PROJECT_DIR$/app/controller/Home.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/NewsController.php" afterPath="$PROJECT_DIR$/app/controller/NewsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/MenuController.php" afterPath="$PROJECT_DIR$/app/controller/MenuController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/core/Shared.php" afterPath="$PROJECT_DIR$/app/core/Shared.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/repository/database.php" afterPath="$PROJECT_DIR$/app/repository/database.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/error.php" afterPath="$PROJECT_DIR$/app/view/home/error.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/footer.php" afterPath="$PROJECT_DIR$/app/view/shared/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/footerUpdate.js" afterPath="$PROJECT_DIR$/public/js/footerUpdate.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/footer/footerUpdate.php" afterPath="$PROJECT_DIR$/app/view/footer/footerUpdate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/menu.php" afterPath="$PROJECT_DIR$/app/view/shared/menu.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-introduction.php" afterPath="$PROJECT_DIR$/app/view/home/module-introduction.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-news.php" afterPath="$PROJECT_DIR$/app/view/home/module-news.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/home/module-sidebar.php" afterPath="$PROJECT_DIR$/app/view/home/module-sidebar.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/repository/newsRepository.php" afterPath="$PROJECT_DIR$/app/repository/newsRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/news/show.php" afterPath="$PROJECT_DIR$/app/view/news/show.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/shared/sidebar.php" afterPath="$PROJECT_DIR$/app/view/shared/sidebar.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/sidebarController.php" afterPath="$PROJECT_DIR$/app/controller/sidebarController.php" />
     </list>
     <ignored path="ProjAgile.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sidebarUpdate.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sidebarUpdate.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/view/sidebar/sidebarUpdate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.93892217" vertical-offset="355" max-vertical-offset="1445">
+            <state vertical-scroll-proportion="-9.333333" vertical-offset="355" max-vertical-offset="1445">
               <caret line="67" column="29" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="29" />
               <folding>
                 <marker date="1426513115158" expanded="true" signature="748:899" placeholder="..." />
@@ -121,6 +97,16 @@
                 <marker date="1426513115158" expanded="true" signature="1800:2073" placeholder="..." />
                 <marker date="1426513115158" expanded="true" signature="2130:2401" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menu.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/view/shared/menu.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="3604">
+              <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -138,8 +124,18 @@
       <file leaf-file-name="MenuController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controller/MenuController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.192308" vertical-offset="0" max-vertical-offset="765">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="765">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Shared.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/core/Shared.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34266517" vertical-offset="0" max-vertical-offset="1326">
+              <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -168,15 +164,15 @@
         <option value="$PROJECT_DIR$/repository/repositoryBase.php" />
         <option value="$PROJECT_DIR$/repository/pagesRepository.php" />
         <option value="$PROJECT_DIR$/app/controller/Home.php" />
-        <option value="$PROJECT_DIR$/app/view/shared/menu.php" />
-        <option value="$PROJECT_DIR$/app/core/Shared.php" />
         <option value="$PROJECT_DIR$/app/controller/AuthenticationController.php" />
         <option value="$PROJECT_DIR$/app/view/sidebar/sidebarUpdate.php" />
-        <option value="$PROJECT_DIR$/app/controller/MenuController.php" />
         <option value="$PROJECT_DIR$/public/js/menu.js" />
         <option value="$PROJECT_DIR$/app/view/menu/index.php" />
         <option value="$PROJECT_DIR$/app/controller/FooterController.php" />
         <option value="$PROJECT_DIR$/app/controller/sidebarController.php" />
+        <option value="$PROJECT_DIR$/app/view/shared/menu.php" />
+        <option value="$PROJECT_DIR$/app/controller/MenuController.php" />
+        <option value="$PROJECT_DIR$/app/core/Shared.php" />
       </list>
     </option>
   </component>
@@ -297,6 +293,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sidebar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ProjAgile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ProjAgile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shared" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -589,6 +607,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2550">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -625,6 +644,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2533">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -661,6 +681,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1309">
           <caret line="6" column="66" selection-start-line="6" selection-start-column="66" selection-end-line="6" selection-end-column="66" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -794,6 +815,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1666">
           <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -811,33 +833,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/view/shared/menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="102" max-vertical-offset="3604">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controller/AuthenticationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2094065" vertical-offset="0" max-vertical-offset="2414">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/Shared.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-47.73077" vertical-offset="0" max-vertical-offset="1377">
-          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controller/MenuController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.192308" vertical-offset="0" max-vertical-offset="765">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -905,7 +904,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/view/sidebar/sidebarUpdate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.93892217" vertical-offset="355" max-vertical-offset="1445">
+        <state vertical-scroll-proportion="-9.333333" vertical-offset="355" max-vertical-offset="1445">
           <caret line="67" column="29" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="29" />
           <folding>
             <marker date="1426513115158" expanded="true" signature="748:899" placeholder="..." />
@@ -916,6 +915,30 @@
             <marker date="1426513115158" expanded="true" signature="1800:2073" placeholder="..." />
             <marker date="1426513115158" expanded="true" signature="2130:2401" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/shared/menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="3604">
+          <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/MenuController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="765">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/core/Shared.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34266517" vertical-offset="0" max-vertical-offset="1326">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
