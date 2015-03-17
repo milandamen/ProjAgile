@@ -15,9 +15,11 @@ class Shared extends Controller
     }
     public function menu()
     {
+
         require_once '../app/controller/MenuController.php';
         $MC = new MenuController();
         $this->view('shared/menu',['menuData' => $MC->getMenu(), 'loggedIn' => $this->auth->loggedIn()]);
+
     }
     public function sidebar()
     {	
@@ -51,7 +53,9 @@ class Shared extends Controller
         {
             $footerColumns[$item->getCol()][] = $item;
         }
+
         $this->view('shared/footer', ['footerColumns' => $footerColumns, 'loggedIn' => $this->auth->loggedIn()]);
+
     }
     protected function getAuth()
     {

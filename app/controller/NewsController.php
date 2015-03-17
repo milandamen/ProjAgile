@@ -146,7 +146,7 @@ class NewsController extends Shared
 	        #files are being added to the db and connected to the news item
 	        foreach($filepaths as $path)
 	        {
-	            $this->fileRepository->add($path, $newsId);
+	            $this->fileRepository->addFile($path, $newsId);
 	        }
 
 	        $this->show($newsId);
@@ -167,8 +167,16 @@ class NewsController extends Shared
             unlink($path . $file->path);
         }
 
+
         #delete also from db
         $this->fileRepository->deleteAllByNewsId($newsId);
     }
 
+		
+	public function getArticlesByTitle($term) {
+		$data = $this->newsRepository->getByTitle($term);
+		echo json_encode($data);
+	}
 }
+
+

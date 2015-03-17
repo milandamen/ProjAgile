@@ -124,5 +124,18 @@ class NewsRepository extends RepositoryBase
     	return $district;
     }
 
+
+	public function getByTitle($term) {
+		$term = '%'.$term.'%';
+		$query = "SELECT * FROM news WHERE `title` LIKE :term AND `hidden` = 0";
+		$parameters = array(
+			':term' => $term
+		);
+		
+		$result = $this->db->getQuery($query, $parameters);
+		
+		return $result;
+	}
+
 }
 

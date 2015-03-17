@@ -1115,8 +1115,8 @@ img {
 .carousel-inner > .item > a > img {
  display: table;
  max-width: 100%;
- max-height: 400px;
- min-height: 80px;
+ max-height: 300px;
+ min-height: 300px;
  margin: 0px auto;
  height: auto;
 }
@@ -6058,11 +6058,13 @@ button.close {
 }
 .carousel {
   position: relative;
+  width: 100%;
 }
 .carousel-inner {
   position: relative;
   width: 100%;
   overflow: hidden;
+  margin: auto;
 }
 .carousel-inner > .item {
   position: relative;
