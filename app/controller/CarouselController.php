@@ -19,7 +19,7 @@ class CarouselController extends Shared
 	public function updateCarousel(){
 		// $id, $newsId, $imgpath, $title)
 
-		if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
+		if($this->getAuth()->loggedIn() && ($_SESSION['userGroupId'] == 1 || $_SESSION['userGroupId'] == 2)){
 		   if($_POST){
 
 	        	$this->carouselRepository->deleteAll();
