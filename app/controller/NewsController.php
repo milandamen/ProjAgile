@@ -37,6 +37,9 @@ class NewsController extends Shared
             $this->menu();
             $this->view('news/create', $this->districtRepository->getAll());
             $this->footer();
+        } else {
+        	global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
         }
     }
 
@@ -48,6 +51,9 @@ class NewsController extends Shared
             $this->menu();
             $this->view('news/edit', array('news' => $this->newsRepository->getById($newsId), 'sections' => $this->districtRepository->getAll(), 'files' => $this->fileRepository->getAllByNewsId($newsId)));
             $this->footer();
+        } else {
+        	global $Base_URI;
+			header('Location: ' . $Base_URI . 'Shared/noPermission');
         }
     }
 
