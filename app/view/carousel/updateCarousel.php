@@ -41,8 +41,8 @@
 										
 									</td>
 									<td>
-										<input type="text" name="artikel[0]" value="'.  $article->getId() .'" class="hiddenInput" />
-										<span>	'.  $article->getId() .'</span>
+										<input type="text" name="artikel[0]" value="'.  $article->getNewsId() .'" class="hiddenInput" />
+										<span>	'.  $article->getNewsId() .'</span>
 									</td>
 									<td>
 											'.  $article->getTitle() .'

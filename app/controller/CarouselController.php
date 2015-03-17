@@ -23,28 +23,27 @@ class CarouselController extends Shared
 		   if($_POST){
 
 	        	$this->carouselRepository->deleteAll();
-	        	var_dump($_POST);
+
 				
 				for ($i = 0; $i < count($_POST['artikel']); $i++) {
 					$item = $_POST['artikel'][$i];
 					$newsId = $item;
-					
-					
+						
 					//$path = $this->saveFile($i);
 
 	        		$carousel = new CarouselItem(null,$newsId,null,null);
-
-	        		echo 'test 1  <br/>';
-
 	        		$this->carouselRepository->saveCarousel($carousel);
 
-
-	        		echo 'test 2  <br/>';
 	        	}
 
 
+	        	$this->header('Carouseledit');
+				$this->menu();
+				$data = $this->carouselRepository->getAll();
+				$this->view('carousel/updateCarousel', ['articlelist' => $data]);
+				$this->footer();
 
-	        	var_dump($_FILES);
+
 
 
 	         } else {

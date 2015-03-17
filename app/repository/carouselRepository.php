@@ -32,15 +32,12 @@ class CarouselRepository extends RepositoryBase
 	*/
 	public function saveCarousel($carousel) {
 
-		echo $carousel->getNewsId();
 
 			$query = 'INSERT INTO carousel (newsId) VALUES (:newsId)';
 
 			$parameters = array(
 				':newsId' => $carousel->getNewsId()
 			);
-			
-			echo 'test 3 <br/>';
 
 			$this->db->execQuery($query, $parameters);
 		
