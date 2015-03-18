@@ -10,19 +10,19 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
-            <img src="/ProjAgile/public/img/slide4.jpg" alt="...">
+            <img src="/ProjAgile/public/img/slide1.jpg" alt="...">
             <div class="carousel-caption">
                 <h3>Actueel Item 1</h3>
             </div>
         </div>
         <div class="item">
-            <img src="/ProjAgile/public/img/slide5.jpg" alt="...">
+            <img src="/ProjAgile/public/img/slide2.jpg" alt="...">
             <div class="carousel-caption">
                 <h3>Actueel Item 2</h3>
             </div>
         </div>
         <div class="item">
-            <img src="/ProjAgile/public/img/slide6.jpg" alt="...">
+            <img src="/ProjAgile/public/img/slide3.jpg" alt="...">
             <div class="carousel-caption">
                 <h3>Actueel Item 3</h3>
             </div>
