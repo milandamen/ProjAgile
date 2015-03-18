@@ -1,7 +1,7 @@
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="index.php">Content Panel</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Content Panel</a></li>
         <li class="active">Nieuws toevoegen</li>
     </ol>
 
