@@ -13,15 +13,24 @@
 	<div class="panel-body">
 		<ul>
 		<?php 
-			foreach($data['sidebarRows'] as $sidebarItem)
-            {
-				echo' 
-					<li><a href="'. $sidebarItem->getInternLink() 
-					.'" class="">&gt; '
-					. $sidebarItem->getText() 
-					.'</a></li>
-					';
-			}
+			foreach($data['sidebarRows'] as $sidebarItem){
+
+					if(null !== $sidebarItem->getInternLink()) {
+						echo' 
+						<li class="sidebar"><a href="'. $sidebarItem->getInternLink() 
+						.'" class="">&gt; '
+						. $sidebarItem->getText() 
+						.'</a></li>
+						';
+					} else {
+					echo' 
+						<li class="sidebar"><a href="'. $sidebarItem->getExternLink() 
+						.'" target="_blank" class="">&gt; '
+						. $sidebarItem->getText() 
+						.'</a></li>
+						';
+					}
+				}
 		?>
 		</ul>
 	</div>
