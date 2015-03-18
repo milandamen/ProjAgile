@@ -9,7 +9,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/ProjAgile/public/">
+            <a href="/ProjAgile/public/">
+				<img src="/ProjAgile/public/img/logo.png" />
             </a>
         </div>
 
