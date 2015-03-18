@@ -60,11 +60,12 @@
 	            {
 	                $modules = $this->homeLayoutRepository->getAll();
 	                $sidebarData = $this->sidebardb->getAll();
+	                $introduction = $this->introDb->getById(1); 
 
 	                $this->header('editlayout');
 	                $this->menu();
 
-	                $data = array('news' => $this->newsdb->getAll(), 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
+	                $data = array('news' => $this->newsdb->getAll(), 'intro' => $introduction, 'layoutmodules' => $modules, 'sidebarRows' => $sidebarData, 'loggedIn' => $this->getAuth()->loggedIn());
 	                $this->view('home/editlayout', $data);
 
 	                $this->footer();
