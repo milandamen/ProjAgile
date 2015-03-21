@@ -3,7 +3,7 @@ namespace App\Repository;
 use App\Repository\BaseRepository;
 use App\Models\MenuItem;
 
-abstract class MenuRepository implements BaseRepository {
+class MenuRepository implements BaseRepository {
 
     /**
      * Get all models for this table.
