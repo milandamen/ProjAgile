@@ -13,6 +13,11 @@ abstract class MenuRepository implements BaseRepository {
         return MenuItem::all();
     };
 
+    public function getAllPublic()
+    {
+        return MenuItem::where('publish', '=', '1')->get();
+    }
+
     /**
      * Find a model with the given id.
      */
@@ -47,6 +52,32 @@ abstract class MenuRepository implements BaseRepository {
     };
 
     /**
+     * Updates an existing model.
+     */
+    public function update($attributes)
+    {
+        /*
+         * Attributes:
+         * 0: menuId
+         * 1: parentId
+         * 2: name
+         * 3: relativeUrl
+         * 4: menuOrder
+         * 5: publish
+         */
+
+        $menuItem = MenuItem::find($attributes[0]);
+
+        $menuItem->parentId     = $attributes[1];
+        $menuItem->name         = $attributes[2];
+        $menuItem->relativeUrl  = $attributes[3];
+        $menuItem->menuOrder    = $attributes[4];
+        $menuItem->publish      = $attributes[5];
+
+        $this->save($menuItem);
+    };
+
+    /**
      * Save this model to the database.
      */
     public function save($model) {
@@ -58,6 +89,16 @@ abstract class MenuRepository implements BaseRepository {
      */
     public function delete($model) {
         $model->delete();
+    }
+
+    public function deleteAll()
+    {
+        $menuItems = $this->getAll();
+
+        foreach($menuItems as $menuItem)
+        {
+            $this->delete($menuItem);
+        }
     }
 }
 ?>
