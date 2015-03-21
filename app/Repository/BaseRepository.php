@@ -2,7 +2,7 @@
 namespace App\Repository;
 use App\Repository\Repository;
 
-abstract BaseRepository implements Repository {
+abstract class BaseRepository implements Repository {
 	
 	/**
 	 * Get all models for this table.
