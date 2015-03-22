@@ -20,7 +20,7 @@ class DistrictSection extends Model {
 	}
 
 	public function users(){
-		return $this->hasMany('App\Models\User', 'foreign_key', 'districtSectionId')
+		return $this->hasMany('App\Models\User', 'foreign_key', 'districtSectionId');
 	}
 
 }

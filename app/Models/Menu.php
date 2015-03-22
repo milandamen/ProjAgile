@@ -2,18 +2,23 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model {
+class Menu extends Model
+{
 
-	protected $table = 'menu';
+    protected $table = 'menu';
 
-	# Primary Key  // In current model this is auto-incremented
-	protected $guarded = ['menuId'];  
+    # Primary Key  // In current model this is auto-incremented
+    protected $guarded = ['menuId'];
 
-	# Properties that can be changed
-	protected $fillable = ['parentId', 'name', 'relativeUrl', 'menuOrder', 'publish'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+    # Properties that can be changed
+    protected $fillable = ['parentId', 'name', 'relativeUrl', 'menuOrder', 'publish'];
 
-	#Foreign Keys
-	# none.
+    # Laravel's automatic timestamps (like updated_at)
+    public $timestamps = false;
+
+    #Foreign Keys
+    # none.
+
+}
+
+?>
