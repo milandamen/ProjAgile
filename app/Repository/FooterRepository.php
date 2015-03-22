@@ -1,16 +1,16 @@
 <?php
 namespace App\Repository;
 use App\Repository\BaseRepository;
-use App\Models\Carousel;
+use App\Models\Footer;
 
-class CarouselRepository extends BaseRepository {
+class FooterRepository extends BaseRepository {
 
     /**
      * Get all models for this table.
      */
     Public function getAll()
     {
-        return Carousel::all();
+        return Footer::all();
     }
 
     /**
@@ -18,7 +18,7 @@ class CarouselRepository extends BaseRepository {
      */
     public function get($id)
     {
-        return Carousel::find($id);
+        return Footer::find($id);
     }
 
     /**
@@ -26,15 +26,7 @@ class CarouselRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return Carousel::Create();
-    }
-
-    /**
-     * Deletes all models in database.
-     */
-    public function deleteAll()
-    {
-        $this->getAll()->delete();
+        return Footer::Create();
     }
 }
 ?>

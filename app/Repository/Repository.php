@@ -21,7 +21,7 @@ interface Repository {
     /**
      * Updates an existing model. Optional: attibutes for the new model.
      */
-    public function update($attributes = array());
+    //public function update($attributes = array());
 
 	/**
 	 * Save this model to the database.

@@ -3,7 +3,7 @@ namespace App\Repository;
 use App\Repository\BaseRepository;
 use App\Models\MenuItem;
 
-class MenuRepository implements BaseRepository {
+class MenuRepository extends BaseRepository {
 
     /**
      * Get all models for this table.
@@ -11,7 +11,7 @@ class MenuRepository implements BaseRepository {
     Public function getAll()
     {
         return MenuItem::all();
-    };
+    }
 
     public function getAllPublic()
     {
@@ -21,16 +21,17 @@ class MenuRepository implements BaseRepository {
     /**
      * Find a model with the given id.
      */
-    public function get($id);
+    public function get($id)
     {
-        return MenuItem::find($id)
+        return MenuItem::find($id);
     }
 
     /**
      * Create a new model. Optional: attibutes for the new model.
      */
-    public function create($attributes)
+    public function create($attributes = array())
     {
+        return MenuItem::create();
         /*
          * Attributes:
          * 0: parentId
@@ -39,7 +40,7 @@ class MenuRepository implements BaseRepository {
          * 3: menuOrder
          * 4: publish
          */
-
+        /*
         $menuItem = new MenuItem;
         $menuItem->parentId     = $attributes[0];
         $menuItem->name         = $attributes[1];
@@ -48,47 +49,7 @@ class MenuRepository implements BaseRepository {
         $menuItem->publish      = $attributes[4];
 
         $this->save($menuItem);
-
-    };
-
-    /**
-     * Updates an existing model.
-     */
-    public function update($attributes)
-    {
-        /*
-         * Attributes:
-         * 0: menuId
-         * 1: parentId
-         * 2: name
-         * 3: relativeUrl
-         * 4: menuOrder
-         * 5: publish
-         */
-
-        $menuItem = MenuItem::find($attributes[0]);
-
-        $menuItem->parentId     = $attributes[1];
-        $menuItem->name         = $attributes[2];
-        $menuItem->relativeUrl  = $attributes[3];
-        $menuItem->menuOrder    = $attributes[4];
-        $menuItem->publish      = $attributes[5];
-
-        $this->save($menuItem);
-    };
-
-    /**
-     * Save this model to the database.
-     */
-    public function save($model) {
-        $model->save();
-    }
-
-    /**
-     * Delete this model from the database.
-     */
-    public function delete($model) {
-        $model->delete();
+        */
     }
 
     public function deleteAll()

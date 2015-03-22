@@ -1,16 +1,16 @@
 <?php
 namespace App\Repository;
 use App\Repository\BaseRepository;
-use App\Models\Carousel;
+use App\Models\Sidebar;
 
-class CarouselRepository extends BaseRepository {
+class SidebarRepository extends BaseRepository {
 
     /**
      * Get all models for this table.
      */
     Public function getAll()
     {
-        return Carousel::all();
+        return Sidebar::all();
     }
 
     /**
@@ -18,7 +18,12 @@ class CarouselRepository extends BaseRepository {
      */
     public function get($id)
     {
-        return Carousel::find($id);
+        return Sidebar::find($id);
+    }
+
+    public function getByPage($pageNr)
+    {
+        return Sidebar::where('pageNr', '=', $pageNr)->get();
     }
 
     /**
@@ -26,15 +31,12 @@ class CarouselRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return Carousel::Create();
+        return Sidebar::Create();
     }
 
-    /**
-     * Deletes all models in database.
-     */
-    public function deleteAll()
+    public function deleteAllFromPage($pageNr)
     {
-        $this->getAll()->delete();
+        $this->getByPage($pageNr)->delete();
     }
 }
 ?>

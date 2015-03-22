@@ -22,7 +22,7 @@ abstract class BaseRepository implements Repository {
     /**
      * Updates an existing model. Optional: attibutes for the new model.
      */
-    abstract public function update($attributes = array());
+    //abstract public function update($attributes = array());
 
 	/**
 	 * Save this model to the database.
