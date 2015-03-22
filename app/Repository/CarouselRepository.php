@@ -26,7 +26,7 @@ class CarouselRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return Carousel::Create();
+        return Carousel::create();
     }
 
     /**

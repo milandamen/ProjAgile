@@ -26,7 +26,7 @@ class FooterRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return Footer::Create();
+        return Footer::create();
     }
 }
 ?>
