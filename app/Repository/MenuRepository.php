@@ -31,7 +31,7 @@ class MenuRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return MenuItem::create();
+        return MenuItem::create($attributes);
         /*
          * Attributes:
          * 0: parentId

@@ -31,7 +31,7 @@ class SidebarRepository extends BaseRepository {
      */
     public function create($attributes = array())
     {
-        return Sidebar::Create();
+        return Sidebar::Create($attributes);
     }
 
     public function deleteAllFromPage($pageNr)
