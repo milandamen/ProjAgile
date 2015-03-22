@@ -17,8 +17,7 @@ class UserRepository extends BaseRepository
 		return User::create($attributes);
 	}
 
-	public function getByUsername($username)
-	{
+	public function getByUsername($username) {
 		return User::where('username', 'LIKE', $term)->get();
 	}
 
