@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 use App\Repository\BaseRepository;
-use App\Models\News
+use App\Models\News;
 
 class NewsRepository extends BaseRepository
 {
