@@ -1,19 +1,29 @@
 # ProjAgile
 
-
 [Redmine](http://darvit.nl/redmine) 
 Alleen tussen 8:00-24:00.
 Het kan zijn dat het een minuut duurt om de pagina te laden, dit is als je de eerste van de dag bent die naar redmine gaat.
 
+## Laravel PHP Framework
 
-Let op de folderstructuur! 
-Per categorie
-(een map en daarin de pagina's van die categorie).
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-Single entry point toegevoegd 
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Als je ergens naar toe wilt linken gebruik dan 
+Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
- href="index.php?p=*insert-text*"
+## Official Documentation
 
-In de index voeg je de *insert-text* toe als een case aan de switch en include je de pagina ;)
+Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+
+## Contributing
+
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+
+### License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
