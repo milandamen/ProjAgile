@@ -16,10 +16,13 @@ class FooterRepository extends BaseRepository {
     /**
      * Find a model with the given id.
      */
+
+    #LET OP Footer heeft geen specifiek ID!!! 
     public function get($id)
     {
         return Footer::find($id);
     }
+
 
     /**
      * Create a new model. Optional: attibutes for the new model.
