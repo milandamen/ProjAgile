@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 use App\Repository\BaseRepository;
-use App\Models\Districtsection
+use App\Models\Districtsection;
 
 class DistrictSectionRepository extends BaseRepository
 {
