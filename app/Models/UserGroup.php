@@ -7,6 +7,7 @@ class UserGroup extends Model {
 	protected $table = 'usergroup';
 
 	# Primary Key   (Geen standaardwaarde, noch auto-increment)
+	protected $primaryKey = 'userGroupId';
 	#protected $guarded = ['userGroupId'];
 
 	# Properties that can be changed
