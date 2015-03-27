@@ -42,20 +42,19 @@ class HomeController extends Controller {
 	public function getIndex()
 	{
 
+		// Sidebar will be loaded through viewcomposer!
 		$modules = $this->homeLayoutrepo->getAll();
-		$sidebar = $this->sidebarrepo->getAll();
 		$introduction = $this->introrepo->getAll();
-		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar);
+		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
 
-		return view('home/home', ['news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar]);
+		return view('home/home', $data);
 	}
 
 	public function getEditLayout(){
 		
 		$modules = $this->homeLayoutrepo->getAll();
-		$sidebar = $this->sidebarrepo->getAll();
 		$introduction = $this->introrepo->getAll();
-		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar);
+		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
 
 		return view('home/home/editlayout', $data);
 

@@ -20,7 +20,8 @@ class FooterComposer extends Controller{
 
     public function compose(View $view)
     {
-		// 	$view->with('variablename', $variablearray); 
+    	$footer = $this->footerrepo->getAll();
+		$view->with('footer', $footer); 
     }
 
 }

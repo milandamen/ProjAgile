@@ -20,7 +20,8 @@ class MenuComposer extends Controller{
 
     public function compose(View $view)
     {
-		// 	$view->with('variablename', $variablearray); 
+    	$menu = $this->menurepo->getAll();
+		$view->with('menu', $menu); 
     }
 
 }

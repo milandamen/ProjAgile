@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider {
     public function boot()
     {
         // Using class based composers...
-        View::composer('*', 'App\Http\ViewComposers\SidebarComposer');
+        View::composer('home/home', 'App\Http\ViewComposers\SidebarComposer');
         View::composer('*', 'App\Http\ViewComposers\MenuComposer');
         View::composer('*', 'App\Http\ViewComposers\FooterComposer');
 

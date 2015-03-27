@@ -20,7 +20,8 @@ class SidebarComposer extends Controller{
 
     public function compose(View $view)
     {
-		// 	$view->with('variablename', $variablearray); 
+    	$sidebar = $this->sidebarrepo->getByPage(1);
+		$view->with('sidebar', $sidebar); 
     }
 
 }
