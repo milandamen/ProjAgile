@@ -7,6 +7,7 @@ class HomeLayoutModule extends Model {
 	protected $table = 'homelayout';
 
 	# Primary Key
+	protected $primaryKey = 'modulename';
 	protected $guarded = ['modulename'];
 
 	# Properties that can be changed

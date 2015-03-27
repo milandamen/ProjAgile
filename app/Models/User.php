@@ -9,6 +9,7 @@ class User extends Model {
 	protected $table = 'user';
 
 	# Primary Key
+	protected $primaryKey = 'userId';
 	protected $guarded = ['userId'];
 
 	# Properties that can be changed

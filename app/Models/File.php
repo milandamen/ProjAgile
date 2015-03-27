@@ -7,6 +7,7 @@ class File extends Model {
 	protected $table = 'file';
 
 	# Primary Key
+	protected $primaryKey = 'fileId';
 	protected $guarded = ['fileId'];
 
 	# Properties that can be changed

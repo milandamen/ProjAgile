@@ -2,16 +2,16 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sidebar extends Model {
+class modelexample extends Model {
 
-	protected $table = 'sidebar';
+	protected $table = '';
 
 	# Primary Key
-	protected $primaryKey = 'id';
-	protected $guarded = ['id'];
+	protected $primaryKey = '';
+	protected $guarded = [''];
 
 	# Properties that can be changed
-	protected $fillable = ['pageNr','rowNr', 'title', 'text', 'internlink', 'externlink'];
+	protected $fillable = [''];
 	
 	# Laravel's automatic timestamps (like updated_at) 
 	public $timestamps = false;

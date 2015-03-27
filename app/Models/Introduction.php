@@ -7,6 +7,7 @@ class Introduction extends Model {
 	protected $table = 'introduction';
 
 	# Primary Key
+	protected $primaryKey = 'id';
 	protected $guarded = ['id'];
 
 	# Properties that can be changed

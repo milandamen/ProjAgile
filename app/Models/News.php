@@ -12,6 +12,7 @@ class News extends Model {
 	protected $table = 'news';
 
 	# Primary Key
+	protected $primaryKey = 'newsId';
 	protected $guarded = ['newsId'];
 
 	# Properties that can be changed

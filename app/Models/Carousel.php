@@ -11,7 +11,9 @@ class Carousel extends Model {
 	protected $table = 'carousel';
 
 	# Primary Key
+	protected $primaryKey = 'carouselId';
 	protected $guarded = ['carouselId'];
+
 
 	# Properties that can be changed
 	protected $fillable = ['newsId', 'imgpath'];

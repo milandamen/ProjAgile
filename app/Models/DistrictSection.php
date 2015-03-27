@@ -8,6 +8,7 @@ class DistrictSection extends Model {
 
 	# Primary Key
 //	protected $guarded = ['districtSectionId'];  // Geen Auto-increment?
+	protected $primaryKey = 'districtSectionId';
 
 	# Properties that can be changed
 	protected $fillable = ['districtSectionId', 'name', 'generalInfo'];

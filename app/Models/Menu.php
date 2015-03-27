@@ -8,6 +8,7 @@ class Menu extends Model
     protected $table = 'menu';
 
     # Primary Key  // In current model this is auto-incremented
+    protected $primaryKey = 'menuId';
     protected $guarded = ['menuId'];
 
     # Properties that can be changed
