@@ -1,5 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repository\SidebarRepository;
+use App\Repository\IntroductionRepository;
+use App\Repository\HomeLayoutRepository;
+use App\Repository\NewsRepository;
+
+
 class HomeController extends Controller {
 
 	/*
@@ -18,7 +24,7 @@ class HomeController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(SidebarRepository $sidebarrepo, IntroductionRepository $introrepo, HomeLayoutRepo $homeLayoutrepo, NewsRepository $newsrepo)
+	public function __construct(SidebarRepository $sidebarrepo, IntroductionRepository $introrepo, HomeLayoutRepository $homeLayoutrepo, NewsRepository $newsrepo)
 	{
 		$this->sidebarrepo = $sidebarrepo;
 		$this->introrepo = $introrepo;
@@ -35,22 +41,23 @@ class HomeController extends Controller {
 	 */
 	public function getIndex()
 	{
+
 		$modules = $this->homeLayoutrepo->getAll();
-		$sidebarData = $this->sidebarrepo->getAll();
+		$sidebar = $this->sidebarrepo->getAll();
 		$introduction = $this->introrepo->getAll();
 		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar);
 
-		return view('home', $data);
+		return view('home/home', ['news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar]);
 	}
 
 	public function getEditLayout(){
 		
 		$modules = $this->homeLayoutrepo->getAll();
-		$sidebarData = $this->sidebarrepo->getAll();
+		$sidebar = $this->sidebarrepo->getAll();
 		$introduction = $this->introrepo->getAll();
 		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules, 'sidebarRows'=>$sidebar);
 
-		return view('home/editlayout', $data);
+		return view('home/home/editlayout', $data);
 
 	}
 
@@ -73,7 +80,7 @@ class HomeController extends Controller {
 			$moduleSidebar->ordernumber = $_POST['module-sidebar'];
 			$moduleSidebar->save();
 
-			return redirect('home');
+			return redirect('home/home');
 		} else {
 			// Niet alles is goed gegaan.
 		}
@@ -94,7 +101,7 @@ class HomeController extends Controller {
         $intro->content = $content;
        	$intro->save();
 
-     	return redirect('home');
+     	return redirect('home/home');
 
 	}
 }

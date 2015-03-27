@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 use App\Repository\BaseRepository;
-use App\Models\HomeLayoutModule
+use App\Models\HomeLayoutModule;
 
 class HomeLayoutRepository extends BaseRepository
 {
