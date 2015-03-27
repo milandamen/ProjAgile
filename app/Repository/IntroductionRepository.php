@@ -12,7 +12,11 @@ class IntroductionRepository extends BaseRepository
 	public function get($id) {
 		return Introduction::find($id);
 	}
-	
+
+	public function getPageBar($pageId){
+		return Introduction::where('pageId', '=', $pageId);
+	}
+
 	public function create($attributes = array()) {
 		return Introduction::create($attributes);
 	}
