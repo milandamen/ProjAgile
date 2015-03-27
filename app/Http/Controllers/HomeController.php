@@ -1,5 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repository\SidebarRepository;
+use App\Repository\IntroductionRepository;
+use App\Repository\HomeLayoutRepository;
+use App\Repository\NewsRepository;
+
+
 class HomeController extends Controller {
 
 	/*
@@ -18,9 +24,14 @@ class HomeController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(SidebarRepository $sidebarrepo, IntroductionRepository $introrepo, HomeLayoutRepository $homeLayoutrepo, NewsRepository $newsrepo)
 	{
-		$this->middleware('auth');
+		$this->sidebarrepo = $sidebarrepo;
+		$this->introrepo = $introrepo;
+		$this->homeLayoutrepo = $homeLayoutrepo;
+		$this->newsrepo = $newsrepo;
+
+		//$this->middleware('auth');
 	}
 
 	/**
@@ -28,9 +39,68 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
-		return view('home');
+
+		// Sidebar will be loaded through viewcomposer!
+		$modules = $this->homeLayoutrepo->getAll();
+		$introduction = $this->introrepo->getAll();
+		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
+
+		return view('home/home', $data);
 	}
 
+	public function getEditLayout(){
+		
+		$modules = $this->homeLayoutrepo->getAll();
+		$introduction = $this->introrepo->getAll();
+		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
+
+		return view('home/home/editlayout', $data);
+
+	}
+
+	public function postEditLayout(){
+
+		if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
+		{
+			#intro
+			$moduleIntro = $this->homeLayoutrepo->get('module-introduction');
+			$moduleIntro->ordernumber = $_POST['module-introduction'];
+			$moduleIntro->save();
+
+			#news
+			$moduleNews = $this->homeLayoutrepo->get('module-news');
+			$moduleNews->ordernumber = $_POST['module-news'];
+			$moduleNews->save();
+
+			#sidebar
+			$moduleSidebar = $this->homeLayoutrepo->get('module-sidebar');
+			$moduleSidebar->ordernumber = $_POST['module-sidebar'];
+			$moduleSidebar->save();
+
+			return redirect('home/home');
+		} else {
+			// Niet alles is goed gegaan.
+		}
+	}
+
+	public function getEditIntro(){
+		return View('intro/edit', ['intro'=>$this->introrepo->getById(1)]);
+	}
+
+	public function postEditIntro(){
+		$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+	    $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+	    $pageId = $_POST['pageId'];
+
+        $intro = $this->introrepo->getPageBar($pageId);
+        $intro->pageId = $pageId;
+        $intro->title = $title;
+        $intro->content = $content;
+       	$intro->save();
+
+     	return redirect('home/home');
+
+	}
 }
