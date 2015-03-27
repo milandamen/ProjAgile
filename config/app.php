@@ -1,7 +1,7 @@
 <?php
 
-return [
-
+return
+[
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
@@ -39,7 +39,7 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'GMT',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'nl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -108,8 +108,8 @@ return [
 	|
 	*/
 
-	'providers' => [
-
+	'providers' =>
+    [
 		/*
 		 * Laravel Framework Service Providers...
 		 */
@@ -145,6 +145,10 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
+        /*
+         * External Service Providers
+         */
+        'Illuminate\Html\HtmlServiceProvider',
 	],
 
 	/*
@@ -158,8 +162,11 @@ return [
 	|
 	*/
 
-	'aliases' => [
-
+	'aliases' =>
+    [
+        /*
+         * Laravel Framework aliases...
+         */
 		'App'       => 'Illuminate\Support\Facades\App',
 		'Artisan'   => 'Illuminate\Support\Facades\Artisan',
 		'Auth'      => 'Illuminate\Support\Facades\Auth',
@@ -193,6 +200,10 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
+        /*
+         * External aliases...
+         */
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
+        'Form'      => 'Illuminate\Html\FormFacade',
 	],
-
 ];
