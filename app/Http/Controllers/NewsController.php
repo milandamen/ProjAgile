@@ -1,7 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ron
- * Date: 4-4-2015
- * Time: 15:58
- */
+<?php namespace App\Http\Controllers;
+
+class NewsController extends Controller
+{
+    public function show($newsId)
+    {
+        echo '<h1>' . $newsId . '</h1>';
+        return view('news/detail');
+    }
+}

@@ -13,9 +13,13 @@
 
 Route::get('/', 'HomeController@getIndex');
 
+//Routes for news
+Route::get('news/detail/{id}', 'NewsController@show');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 	'home'=> 'HomeController',
+    'news'=> 'NewsController',
 ]);
