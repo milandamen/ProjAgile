@@ -15,7 +15,7 @@
         @include('partials.header')
 
         @yield('content')
-      	@yield('sidebar')
+     	@yield('sidebar')
 
         @include('partials.footer')
 
