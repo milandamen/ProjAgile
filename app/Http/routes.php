@@ -14,8 +14,26 @@
 Route::get('/', 'HomeController@getIndex');
 
 //Routes for news
-Route::get('news/detail/{id}', 'NewsController@show');
+Route::get('news/detail/{id}', 'NewsController@detail');
 
+//Routes for downloading a file
+Route::get('download/{filename}', function($filename)
+{
+    // Check if file exists in app/public/uploads folder
+    $file_path = public_path() .'/uploads/'. $filename;
+    if (file_exists($file_path))
+    {
+        // Send Download
+        return Response::download($file_path, $filename, [
+            'Content-Length: '. filesize($file_path)
+        ]);
+    }
+    else
+    {
+        //If file does not exist, throw error
+        exit('Bestand niet gevonden');
+    }
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

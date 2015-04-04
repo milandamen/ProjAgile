@@ -18,7 +18,7 @@ class File extends Model {
 
 	#Foreign Keys
 	public function news() {
-		return $this->belongsTo('App\Models\News', 'foreign_key', 'newsId');
+		return $this->belongsTo('App\Models\News', 'newsId');
 	}
 }
 

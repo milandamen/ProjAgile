@@ -1,10 +1,18 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repository\NewsRepository;
+
 class NewsController extends Controller
 {
-    public function show($newsId)
+
+    public function __construct(NewsRepository $newsRepository)
     {
-        echo '<h1>' . $newsId . '</h1>';
-        return view('news/detail');
+        $this->newsRepository = $newsRepository;
+    }
+
+    public function detail($newsId)
+    {
+        $news = $this->newsRepository->get($newsId);
+        return view('news/detail', $data = array('news' => $news));
     }
 }
