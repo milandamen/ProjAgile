@@ -15,7 +15,7 @@
                     </div>
 
 
-	@yield('module-sidebar')
+	@include('module-sidebar')
 
 <!-- Test if data is coming through -->
 
