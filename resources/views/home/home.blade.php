@@ -14,9 +14,7 @@
 
                     </div>
 
-
-	@include('module-sidebar')
-
+	@include('modulesidebar')
 <!-- Test if data is coming through -->
 
 				<div class="col-md-10">
@@ -37,7 +35,9 @@
 <!-- end test incoming data -->
 
                 </div>
+
+
             </div>
         </div>
     </div>
-@endsection
+@stop
