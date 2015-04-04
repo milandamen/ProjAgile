@@ -34,6 +34,18 @@ class SidebarRepository extends BaseRepository {
         return Sidebar::Create($attributes);
     }
 
+    public function add($model){
+    	
+    	Sidebar::Create([
+    		'pageNr' => $model->pageNr,
+    		'rowNr' =>$model->rowNr,
+    		'title' => $model->title,
+    		'text' => $model->text,
+    		'internlink' => $model->internlink,
+    		'externlink' => $model->externlink
+    		]);
+    }
+
     public function deleteAllFromPage($pageNr)
     {
         $this->getByPage($pageNr)->delete();
