@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 /*
  Volgens mij moet dit model nog aangepast worden naar een model met een : publicatie datum, verdwijndatum en lijst-nummer (om omhoog te shoppen in de lijst).
 
+dit doe je in de database.
+
 */
 
 class News extends Model {
