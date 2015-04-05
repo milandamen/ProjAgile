@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Repository\SidebarRepository;
-
+use App\Models\Sidebar;
 
 
 class SidebarController extends Controller {
@@ -29,46 +29,63 @@ class SidebarController extends Controller {
 
 		$sidebarAll = $this->sidebarrepo->getByPage($id);
 		
-		 $this->view('sidebar/sidebarUpdate', ['sidebarRows' => $sidebarAll);
+		 return View('sidebar/update', ['sidebar' => $sidebarAll]);
 
 	}
 
 	public function postUpdate($id){
 
 		$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-		$newsidebar = array();
+		$newSidebar = array();
 		$maxrowindex = $_POST['maxRowIndex'];
 		$i=0;
+		$pageNr = $id;
 
-		foreach($rows =0; $rows < $maxrowindex; $rows++){
+
+		for($rows =0; $rows <= $maxrowindex; $rows++){
+			echo $rows;
 			if(isset($_POST['sidebar'][$rows])){
-
 				$rowItems = $_POST['sidebar'][$rows];
-				for($row = 0; $row < count($row['text']); $row++){
+				for($row = 0; $row < count($rowItems['text']); $row++){
 					if($rowItems['text'][$row] != null){
+						$link =  $rowItems['link'][$row];
+						$extern = false;
 
-						$in; $out;
-
-						if(isset($rowItems['radio1']) && isset($rowItems['link'][$row])){
-							if($rowItems['radio1'] === 'Extern'){
-								$in = null;
-								$out = filter_var($rowItems['link'][$row], FILTER_SANITIZE_STRING);
-							}
-							else if($rowItems['radio1'] === 'Intern'){
-								$in = filter_var($rowItems['link'][$row], FILTER_SANITIZE_STRING);
-								$out = null;
-							}
-						} else if(isset($rowItems['radio1']) && !isset($rowItems['link'][$row])){
-							if($rowItems['radio1'] === 'Extern'){
-								$in = null;
-								$out = "#";
-							} else if($rowItems['radio1'] === 'Intern'){
-								$in = "#";
-								$out = null;
-							}
+						if($rowItems['radio1'] == 'Extern'){
+							$extern = true;
+							$link = $rowItems['link'][$row];
+						} else {
+							$link = $rowItems['pagename'][$row];
+							$extern = false;
 						}
 
-						$newSidebar[] = new Sidebar($pageNr, $i, $title, filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING), $in, $out);
+						$text = filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING);
+						if(isset($rowItems['rowId'])){
+							$rowId = $rowItems['rowId'];
+							$sideRow = $this->sidebarrepo->get($rowId);
+							
+							if($sideRow != null){
+								$sideRow->pageNr = $pageNr;
+								$sideRow->rowNr = $i;
+								$sideRow->title= $title;
+								$sideRow->text = $text;
+								$sideRow->link= $link;
+								$sideRow->extern= $extern;
+								$sideRow->save();
+							}
+						} else {						
+							$newSidebarRow = new Sidebar();
+							$newSidebarRow->pageNr = $pageNr;
+							$newSidebarRow->rowNr = $i;
+							$newSidebarRow->title= $title;
+							$newSidebarRow->text = $text;
+							$newSidebarRow->link= $link;
+							$newSidebarRow->extern= $extern;
+							$newSidebarRow->save();
+						}
+
+
+
 						$i++;
 					} else {
 				 		echo "Vul a.u.b. alle verplichte velden in";
@@ -78,15 +95,10 @@ class SidebarController extends Controller {
 			} 
 		}
 
-		// Delete all former menu-items to make sure everything will be correct
-		$this->sidebarrepo->deleteAllFromPage($pageNr);
-		
-		// Insert all menu-items.
-		foreach($newSidebar as $entry){
-			$this->sidebarrepo->add($entry);
-		}
 
-
+		// $sidebarAll = $this->sidebarrepo->getByPage($id);
+		// return View('sidebar/update', ['sidebar' => $sidebarAll]);
+		return redirect('/home');
 
 	}
 

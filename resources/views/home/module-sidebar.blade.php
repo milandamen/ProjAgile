@@ -7,9 +7,9 @@
 	<div class="panel-heading sidebar">
 		<h4> {{ $sidebar[0]->title }}  
 			
-				<!-- if()  logged in.
-				     <a class="right" href="sidebarController/sidebarUpdate/1"><i class="fa fa-pencil-square-o"></i></a>
-			    @ \endif -->
+				<!-- @\if()  logged in.-->
+				     <a class="right" href="sidebar/update/1"><i class="fa fa-pencil-square-o"></i></a>
+			   <!-- @ \endif -->
           
 		</h4>
 	</div>
@@ -17,11 +17,11 @@
 		<ul>
 	
 			@foreach($sidebar as $sidebarItem)
-					@if(null !== $sidebarItem->internLink)
-						<li class="sidebar"><a href="{{$sidebarItem->internlink }}" class="">
+					@if(!$sidebarItem->extern)
+						<li class="sidebar"><a href="{{$sidebarItem->link }}" class="">
 							&gt; {{$sidebarItem->text }}</a></li>
 					@else 
-						<li class="sidebar"><a href=" {{$sidebarItem->externlink }}" target="_blank" class="">&gt; '
+						<li class="sidebar"><a href=" {{$sidebarItem->link }}" target="_blank" class="">&gt;
 						{{$sidebarItem->text}} </a></li>
 						
 					@endif
