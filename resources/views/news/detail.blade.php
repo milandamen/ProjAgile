@@ -1,6 +1,21 @@
 @extends('app')
 
 @section('content')
+    @if($news == null)
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Dit artikel bestaat niet!</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="goback"><a href="{{URL::action('HomeController@getIndex')}}"> Terug naar de homepage </a></p>
+                </div>
+            </div>
+
+        </div>
+    @else
     <div class="container">
 
         <div class="row">
@@ -18,12 +33,9 @@
                     <br/><p>{{'Bijlagen:'}}</p>
                 @endif
 
-                <?php //Blade does not support string manipulation so this is why php is used here.
-                foreach($news->files as $file)
-                {
-                $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                echo '<a href="../../download/' . $file->path . '">'. $withoutId . '</a><br/>';
-                }?>
+                @foreach($fileLinks as $link)
+                    {!! $link !!}
+                @endforeach
 
                 @if($news->comments == 1)
                     {{-- get the comments and display them --}}
@@ -39,5 +51,5 @@
                 <p class="goback"><a href="{{URL::action('HomeController@getIndex')}}"> Terug naar de homepage </a></p>
 
             </div>
-
+    @endif
 @endsection

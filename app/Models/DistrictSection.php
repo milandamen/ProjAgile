@@ -26,5 +26,4 @@ class Districtsection extends Model {
 
 }
 
-
 ?>
