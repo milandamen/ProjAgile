@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-md-8">
-                <p class="news-info">{{$news->date}} Door: {{$news->user->username}} | {{$news->district->name}}</p>
+                <p class="news-info"> {{$news->date}} Door: {{$news->user->username}} | @if($news->district != null) {{$news->district->name}} @else Algemeen @endif</p>
 
                 {{$news->content}}
                 <br/>
@@ -23,8 +23,17 @@
                 {
                 $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
                 echo '<a href="../../download/' . $file->path . '">'. $withoutId . '</a><br/>';
-
                 }?>
+
+                @if($news->comments == 1)
+                    {{-- get the comments and display them --}}
+
+                    <form action="#" method="post">
+                        <h3>Plaats een reactie</h3>
+                        <textarea class="form-control"></textarea>
+                    </form>
+
+                @endif
 
                 <br/>
                 <p class="goback"><a href="../../"> Terug naar de homepage </a></p>

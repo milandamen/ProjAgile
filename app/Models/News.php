@@ -16,7 +16,7 @@ class News extends Model {
 	protected $guarded = ['newsId'];
 
 	# Properties that can be changed
-	protected $fillable = ['districtsectionId', 'userId', 'title', 'content', 'date', 'hidden'];
+	protected $fillable = ['districtsectionId', 'userId', 'title', 'content', 'date', 'hidden', 'comments'];
 
 	# Laravel's automatic timestamps (like updated_at) 
 	public $timestamps = false;
