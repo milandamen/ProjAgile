@@ -20,9 +20,10 @@ class NewsController extends Controller
             foreach($news->files as $file)
             {
                 $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
+                $fileLinks[] = '<a href="' . action('FileController@getDownload') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
             }
         }
-
-        return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
+		
+		return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
     }
 }
