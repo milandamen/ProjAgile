@@ -36,7 +36,7 @@
                 @endif
 
                 <br/>
-                <p class="goback"><a href="../../"> Terug naar de homepage </a></p>
+                <p class="goback"><a href="{{URL::action('HomeController@getIndex')}}"> Terug naar de homepage </a></p>
 
             </div>
 
