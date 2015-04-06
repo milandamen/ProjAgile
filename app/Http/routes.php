@@ -13,9 +13,6 @@
 
 Route::get('/', 'HomeController@getIndex');
 
-//Routes for news
-//Route::get('news/detail/{id}', 'NewsController@detail');
-
 //Routes for downloading a file
 Route::get('download/{filename}', function($filename)
 {
