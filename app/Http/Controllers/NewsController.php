@@ -10,7 +10,7 @@ class NewsController extends Controller
         $this->newsRepository = $newsRepository;
     }
 
-    public function detail($newsId)
+    public function getdetail($newsId)
     {
         $news = $this->newsRepository->get($newsId);
         return view('news/detail', $data = array('news' => $news));
