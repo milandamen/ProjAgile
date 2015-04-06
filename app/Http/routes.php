@@ -13,9 +13,10 @@
 
 Route::get('/', 'HomeController@getIndex');
 
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 	'home'=> 'HomeController',
+    'news'=> 'NewsController',
+	'file' => 'FileController',
 ]);
