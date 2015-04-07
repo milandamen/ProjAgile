@@ -27,10 +27,14 @@ class SidebarController extends Controller {
 
 	public function getUpdate($id){
 
-		$sidebarAll = $this->sidebarrepo->getByPage($id);
-		
-		 return View('sidebar/update', ['sidebar' => $sidebarAll]);
-
+		if($this->sidebarrepo->getByPage($id) != null){
+			$sidebarAll = $this->sidebarrepo->getByPage($id);
+			
+			 return View('sidebar/update', ['sidebar' => $sidebarAll]);
+		} else {
+			// Totdat er een error page is. 
+			return redirect('/home');
+		}
 	}
 
 	public function postUpdate($id){

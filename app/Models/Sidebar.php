@@ -11,7 +11,7 @@ class Sidebar extends Model {
 	protected $guarded = ['id'];
 
 	# Properties that can be changed
-	protected $fillable = ['pageNr','rowNr', 'title', 'text', 'internlink', 'externlink'];
+	protected $fillable = ['pageNr','rowNr', 'title', 'text', 'link', 'extern'];
 	
 	# Laravel's automatic timestamps (like updated_at) 
 	public $timestamps = false;
