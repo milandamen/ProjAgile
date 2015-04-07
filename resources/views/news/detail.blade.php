@@ -51,5 +51,18 @@
                 <p class="goback"><a href="{{URL::action('HomeController@getIndex')}}"> Terug naar de homepage </a></p>
 
             </div>
+        </div>
+        @foreach($news->newscomments as $comment)
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>{{$comment->user->username}}</h4>
+                    <p>{{$comment->message}}</p>
+                    <br/>
+                    <h6>{{$comment->created_at}}</h6>
+                    <hr>
+                </div>
+            </div>
+        @endforeach
+    </div>
     @endif
 @endsection

@@ -24,14 +24,6 @@ class NewsController extends Controller
                 $fileLinks[] = '<a href="' . action('FileController@getDownload') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
             }
         }
-
-        $newscr = new NewscommentRepository();
-        $comment = $newscr->get(1);
-
-        var_dump($comment);
-        echo $comment->message;
-
-        echo count($news->newscomments);
 		
 		return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
     }

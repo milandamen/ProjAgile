@@ -44,7 +44,7 @@ class News extends Model {
 	}
 
     public function newscomments() {
-        return $this->hasMany('App\Models\Newscomment', 'newscommentId');
+        return $this->hasMany('App\Models\Newscomment', 'newsId');
     }
 
 }

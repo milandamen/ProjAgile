@@ -14,7 +14,7 @@ class Newscomment extends Model {
     protected $fillable = ['message', 'newsId', 'userId'];
 
     # Laravel's automatic timestamps (like updated_at)
-    public $timestamps = false;
+    //public $timestamps = false;
 
     # Keys used in newscomment
     public function news() {
