@@ -13,9 +13,6 @@ class Newscomment extends Model {
     # Properties that can be changed
     protected $fillable = ['message', 'newsId', 'userId'];
 
-    # Laravel's automatic timestamps (like updated_at)
-    //public $timestamps = false;
-
     # Keys used in newscomment
     public function news() {
         return $this->belongsTo('App\Models\News', 'newsId');
