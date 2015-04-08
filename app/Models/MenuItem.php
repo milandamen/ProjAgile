@@ -1,25 +1,52 @@
-<?php namespace App\Models;
+<?php 
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
 
-class MenuItem extends Model
-{
+    class MenuItem extends Model
+    {
+        /**
+         * Table name
+         * 
+         * @var string
+         */
+        protected $table = 'menu';
 
-    protected $table = 'menu';
+        /**
+         * PrimaryKey name
+         * 
+         * @var string
+         */
+        protected $primaryKey = 'menuId'
 
-    # Primary Key  // In current model this is auto-incremented
-    protected $primaryKey = 'menuId';
-    protected $guarded = ['menuId'];
+        /**
+         * Laravel's automatic timestamps convention
+         * 
+         * @var boolean
+         */
+        public $timestamps = false;
 
-    # Properties that can be changed
-    protected $fillable = ['parentId', 'name', 'relativeUrl', 'menuOrder', 'publish'];
+        /**
+         * Attributes that can be changed and thus are mass assingable
+         * 
+         * @var array()
+         */
+        protected $fillable = 
+        [
+            'parentId', 
+            'name', 
+            'relativeUrl', 
+            'menuOrder', 
+            'publish'
+        ];
 
-    # Laravel's automatic timestamps (like updated_at)
-    public $timestamps = false;
-
-    #Foreign Keys
-    # none.
-
-}
-
-?>
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable
+         * 
+         * @var array()
+         */
+        protected $guarded = 
+        [
+            'menuId'
+        ];
+    }

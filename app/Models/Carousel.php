@@ -1,31 +1,59 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-/*
-	This class still needs changes: een aangepaste tekst voor in de carousel bij het news item bv.  
-*/
+	class Carousel extends Model 
+	{
+		/**
+	     * Table name
+	     * 
+	     * @var string
+	     */
+		protected $table = 'carousel';
 
-class Carousel extends Model {
+        /**
+         * PrimaryKey name
+         * 
+         * @var string
+         */
+		protected $primaryKey = 'carouselId';
 
-	protected $table = 'carousel';
+        /**
+         * Laravel's automatic timestamps convention
+         * 
+         * @var boolean
+         */
+		public $timestamps = false;
 
-	# Primary Key
-	protected $primaryKey = 'carouselId';
-	protected $guarded = ['carouselId'];
+        /**
+         * Attributes that can be changed and thus are mass assingable
+         * 
+         * @var array()
+         */
+		protected $fillable = 
+		[
+			'newsId', 
+			'imgpath'
+		];
 
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable
+         * 
+         * @var array()
+         */
+		protected $guarded = 
+		[
+			'carouselId'
+		];
 
-	# Properties that can be changed
-	protected $fillable = ['newsId', 'imgpath'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
-
-	#Foreign Keys
-	public function news() {
-		return $this->belongsTo('App\Models\News', 'foreign_key', 'newsId');
+		/**
+		 * Get the News model that is referenced in this File model
+		 * 
+		 * @return News
+		 */
+		public function news() 
+		{
+			return $this->belongsTo('App\Models\News', 'foreign_key', 'newsId');
+		}
 	}
-}
-
-
-?>

@@ -1,49 +1,95 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-/*
- Volgens mij moet dit model nog aangepast worden naar een model met een : publicatie datum, verdwijndatum en lijst-nummer (om omhoog te shoppen in de lijst).
+	class News extends Model 
+	{
+		/**
+		 * Table name
+		 * 
+		 * @var string
+		 */
+		protected $table = 'news';
 
-*/
+		/**
+		 * PrimaryKey name
+		 * 
+		 * @var string
+		 */
+		protected $primaryKey = 'newsId';
 
-class News extends Model {
+		/**
+		 * Laravel's automatic timestamps convention
+		 * 
+		 * @var boolean
+		 */
+		public $timestamps = false;
 
-	protected $table = 'news';
+		/**
+		 * Attributes that can be changed and thus are mass assingable
+		 * 
+		 * @var array()
+		 */
+		protected $fillable = 
+		[
+			'districtsectionId', 
+			'userId', 
+			'title', 
+			'content', 
+			'date', 
+			'hidden', 
+			'comments'
+		];
 
-	# Primary Key
-	protected $primaryKey = 'newsId';
-	protected $guarded = ['newsId'];
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable
+		 * 
+		 * @var array()
+		 */
+		protected $guarded = 
+		[
+			'newsId'
+		];
 
-	# Properties that can be changed
-	protected $fillable = ['districtsectionId', 'userId', 'title', 'content', 'date', 'hidden', 'comments'];
+		/**
+		 * Get the District model that is referenced in this News model
+		 * 
+		 * @return Districtsection
+		 */
+		public function district() 
+		{
+			return $this->belongsTo('App\Models\Districtsection', 'districtsectionId');
+		}
 
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
 
+		/**
+		 * Get the User model that is referenced in this News model
+		 * 
+		 * @return User
+		 */
+		public function user() 
+		{
+	        return $this->belongsTo('App\Models\User', 'userId');
+		}
 
-	# Foreign keys
+		/**
+		 * Get all File models that reference this News model
+		 * 
+		 * @return Collection -> File
+		 */
+		public function files() 
+		{
+			return $this->hasMany('App\Models\File', 'fileId');
+		}
 
-	# Keys used in news
-	public function district() {
-		return $this->belongsTo('App\Models\Districtsection', 'districtsectionId');
+		/**
+		 * Get all Carousel models that reference this News model
+		 * 
+		 * @return Collection -> Carousel
+		 */
+		public function carousel() 
+		{
+			return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
+		}
 	}
-
-	public function user() {
-        return $this->belongsTo('App\Models\User', 'userId');
-	}
-
-	# Key newsId used elsewhere
-	public function files() {
-		return $this->hasMany('App\Models\File', 'fileId');
-	}
-
-	public function carousel() {
-		return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
-	}
-
-
-}
-
-
-?>

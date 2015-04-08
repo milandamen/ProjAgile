@@ -1,22 +1,34 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-class Footer extends Model {
+	class Footer extends Model 
+	{
+	    /**
+	     * Table name
+	     * 
+	     * @var string
+	     */
+		protected $table = 'footer';
 
-	protected $table = 'footer';
+        /**
+         * Laravel's automatic timestamps convention
+         * 
+         * @var boolean
+         */
+		public $timestamps = false;
 
-	# Primary key
-	# protected $guard = [];
-
-	# Properties that can be changed
-	protected $fillable = ['col', 'row', 'text', 'link'];
-
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
-
-
-}
-
-
-?>
+        /**
+         * Attributes that can be changed and thus are mass assingable
+         * 
+         * @var array()
+         */
+		protected $fillable = 
+		[
+			'col', 
+			'row', 
+			'text', 
+			'link'
+		];
+	}

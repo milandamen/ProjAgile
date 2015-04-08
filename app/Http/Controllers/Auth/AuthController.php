@@ -1,38 +1,83 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php
+    namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\Registrar;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+    use App\Http\Controllers\Controller;
+    use App\Http\Requests\Auth\LoginRequest;
+    use App\Http\Requests\Auth\RegisterRequest;
+    use App\Repositories\RepositoryInterfaces\IUserRepository;
+    use Illuminate\Contracts\Auth\Guard;
+    use Illuminate\Support\Facades\Hash;
+    use Illuminate\Support\Facades\Redirect;
 
-class AuthController extends Controller {
+    class AuthController extends Controller
+    {
+        private $auth;
+        private $userRepo;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Registration & Login Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller handles the registration of new users, as well as the
-	| authentication of existing users. By default, this controller uses
-	| a simple trait to add these behaviors. Why don't you explore it?
-	|
-	*/
+        public function __construct(Guard $auth, IUserRepository $userRepo)
+        {
+            $this->auth = $auth;
+            $this->userRepo = $userRepo;
+            $this->middleware('guest', 
+            [
+                'except' => 'getLogout'
+            ]);
+        }
 
-	use AuthenticatesAndRegistersUsers;
+        public function getRegister()
+        {
+            return view('auth.register');
+        }
 
-	/**
-	 * Create a new authentication controller instance.
-	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
-	 * @return void
-	 */
-	public function __construct(Guard $auth, Registrar $registrar)
-	{
-		$this->auth = $auth;
-		$this->registrar = $registrar;
+        public function postRegister(RegisterRequest $request)
+        {
+            $data = $request->only
+            (
+                'username',
+                'firstName',
+                'surname',
+                'address',
+                'houseNumber',
+                'zipCode',
+                'location',
+                'emailAddress',
+                'phoneNumber',
+                'mobileNumber'
+            );
+            $data['password'] = Hash::make($request['password']);
+            $user = $this->userRepo->create($data);
+            $this->auth->login($user);
 
-		$this->middleware('guest', ['except' => 'getLogout']);
-	}
+            return Redirect::route('home');
+        }
 
-}
+        public function getLogin()
+        {
+            return view('auth.login');
+        }
+
+        public function postLogin(LoginRequest $request)
+        {
+            $credentials = $request->only('emailAddress', 'password');
+            $credentials['active'] = true;
+            
+            if ($this->auth->attempt($credentials, $request['remember']))
+            {
+                Flash::success('U bent succesvol ingelogd!');
+                return Redirect::route('home');
+            }
+
+            return Redirect::route('login')->withErrors
+            ([
+                'emailAddress' => 'Het ingevoerde emailadres met wachtwoord combinatie klopt helaas niet. Wilt u het opnieuw proberen?',
+            ]);
+        }
+
+        public function getLogout()
+        {
+            $this->auth->logout();
+            Flash::success('U bent succesvol uitgelogd!');
+
+            return Redirect::route('home');
+        }
+    }
