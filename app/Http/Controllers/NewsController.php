@@ -1,13 +1,18 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Newscomment;
 use App\Repository\NewscommentRepository;
 use App\Repository\NewsRepository;
+use App\Repository\UserRepository;
+use Illuminate\Support\Facades\Redirect;
 
 class NewsController extends Controller
 {
-    public function __construct(NewsRepository $newsRepository)
+    public function __construct(NewsRepository $newsRepository, NewscommentRepository  $newscommentRepository, UserRepository $userRepository)
     {
         $this->newsRepository = $newsRepository;
+        $this->userRepository = $userRepository;
+        $this->newscommentRepository = $newscommentRepository;
     }
 
     public function getDetail($newsId)
@@ -26,5 +31,21 @@ class NewsController extends Controller
         }
 		
 		return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
+    }
+
+    public function postComment()
+    {
+
+        $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+        $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
+
+        $newscomment = new Newscomment();
+        $newscomment->message = $comment;
+        $newscomment->newsId = $newsId;
+        //Needs to be changed later on
+        $newscomment->userId = 1;
+
+        $this->newscommentRepository->save($newscomment);
+        return Redirect::action('NewsController@getDetail', $newsId);
     }
 }
