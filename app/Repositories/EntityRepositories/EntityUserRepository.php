@@ -4,7 +4,7 @@
     use App\Models\User;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
 
-    class UserRepository implements IUserRepository
+    class EntityUserRepository implements IUserRepository
     {
         /**
          * Returns a User model depending on the id provided

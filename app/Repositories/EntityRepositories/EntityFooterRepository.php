@@ -4,7 +4,7 @@
     use App\Models\Footer;
     use App\Repositories\RepositoryInterfaces\IFooterRepository;
 
-    class FooterRepository implements IFooterRepository 
+    class EntityFooterRepository implements IFooterRepository 
     {
         /**
          * Returns a Footer model depending on the id provided

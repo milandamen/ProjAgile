@@ -36,13 +36,9 @@
                 'username',
                 'firstName',
                 'surname',
-                'address',
+                'postal',
                 'houseNumber',
-                'zipCode',
-                'location',
-                'emailAddress',
-                'phoneNumber',
-                'mobileNumber'
+                'email',
             );
             $data['password'] = Hash::make($request['password']);
             $user = $this->userRepo->create($data);

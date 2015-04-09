@@ -4,7 +4,7 @@
     use App\Models\Sidebar;
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 
-    class SidebarRepository implements ISidebarRepository 
+    class EntitySidebarRepository implements ISidebarRepository 
     {
         /**
          * Returns a Sidebar model depending on the id provided

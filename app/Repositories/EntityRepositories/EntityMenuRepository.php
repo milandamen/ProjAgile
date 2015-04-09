@@ -4,7 +4,7 @@
     use App\Models\MenuItem;
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
 
-    class MenuRepository implements IMenuRepository 
+    class EntityMenuRepository implements IMenuRepository 
     {
         /**
          * Returns a MenuItem model depending on the id provided

@@ -17,7 +17,7 @@
          * 
          * @var string
          */
-        protected $primaryKey = 'menuId'
+        protected $primaryKey = 'menuId';
 
         /**
          * Laravel's automatic timestamps convention

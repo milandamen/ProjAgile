@@ -1,29 +1,46 @@
-<?php namespace App\Http\Controllers;
+<?php 
+    namespace App\Http\Controllers;
 
-use App\Repository\NewsRepository;
+    use App\Repositories\RepositoryInterfaces\INewsRepository;
 
-class NewsController extends Controller
-{
-    public function __construct(NewsRepository $newsRepository)
+    class NewsController extends Controller
     {
-        $this->newsRepository = $newsRepository;
-    }
-
-    public function getDetail($newsId)
-    {
-        $news = $this->newsRepository->get($newsId);
-
-        $fileLinks = array();
-
-        if($news != null)
+        /**
+         * Create a new controller instance.
+         *
+         * @return void
+         */
+        public function __construct(INewsRepository $newsRepository)
         {
-            foreach($news->files as $file)
-            {
-                $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                $fileLinks[] = '<a href="' . action('FileController@getDownload') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
-            }
+            $this->newsRepository = $newsRepository;
         }
-		
-		return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
+
+        /**
+         * Returns the news detail page
+         * 
+         * @param  int $newsId
+         * 
+         * @return Response
+         */
+        public function getDetail($newsId)
+        {
+            $news = $this->newsRepository->get($newsId);
+            $fileLinks = [];
+
+            if($news != null)
+            {
+                foreach($news->files as $file)
+                {
+                    $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
+                    $fileLinks[] = '<a href="' . action('FileController@getDownload') . '/' . $file->path . '">' . $withoutId . '</a><br/>';
+                }
+            }
+            $data = 
+            [
+                'news' => $news, 
+                'fileLinks' => $fileLinks
+            ];
+
+    		return view('news.detail', $data);
+        }
     }
-}

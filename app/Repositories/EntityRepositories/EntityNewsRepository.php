@@ -4,7 +4,7 @@
 	use App\Models\News;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
 
-	class NewsRepository implements INewsRepository
+	class EntityNewsRepository implements INewsRepository
 	{
         /**
          * Returns a News model depending on the id provided

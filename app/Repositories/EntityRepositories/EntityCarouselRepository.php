@@ -4,7 +4,7 @@
     use App\Models\Carousel;
     use App\Repositories\RepositoryInterfaces\ICarouselRepository;
 
-    class CarouselRepository implements ICarouselRepository 
+    class EntityCarouselRepository implements ICarouselRepository 
     {
         /**
          * Returns a Carousel model depending on the id provided

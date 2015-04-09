@@ -4,7 +4,7 @@
 	use App\Models\Introduction;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 
-	class IntroductionRepository implements IIntroductionRepository
+	class EntityIntroductionRepository implements IIntroductionRepository
 	{
         /**
          * Returns a Introduction model depending on the id provided

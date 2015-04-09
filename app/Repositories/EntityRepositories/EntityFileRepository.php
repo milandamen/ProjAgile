@@ -4,7 +4,7 @@
     use App\Models\File;
     use App\Repositories\RepositoryInterfaces\IFileRepository;
 
-    class FileRepository implements IFileRepository 
+    class EntityFileRepository implements IFileRepository 
     {
         /**
          * Returns a File model depending on the id provided

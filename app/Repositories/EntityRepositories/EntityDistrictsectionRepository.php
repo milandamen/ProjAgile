@@ -4,7 +4,7 @@
 	use App\Models\Districtsection;
     use App\Repositories\RepositoryInterfaces\IDistricsectionRepository;
 
-	class DistrictsectionRepository implements IDistricsectionRepository 
+	class EntityDistrictsectionRepository implements IDistricsectionRepository 
 	{
         /**
          * Returns a Districtsection model depending on the id provided

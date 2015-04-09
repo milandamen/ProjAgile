@@ -4,7 +4,7 @@
 	use App\Models\HomeLayoutModule;
     use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 
-	class HomeLayoutRepository implements BaseRepository
+	class EntityHomeLayoutRepository implements IHomeLayoutRepository
 	{
         /**
          * Returns a HomeLayoutModule model depending on the id provided
