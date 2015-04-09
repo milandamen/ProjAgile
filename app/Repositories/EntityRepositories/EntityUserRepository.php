@@ -8,7 +8,9 @@
     {
         /**
          * Returns a User model depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return User
          */ 
         public function get($id)
@@ -18,6 +20,7 @@
 
         /**
          * Returns all the User models in the database
+         * 
          * @return Collection -> User
          */
         public function getAll()
@@ -27,7 +30,9 @@
 
         /**
          * Creates a User record in the database
+         * 
          * @param  array() $attributes
+         * 
          * @return User
          */
         public function create($attributes)
@@ -37,7 +42,9 @@
 
         /**
          * Updates a User record in the database depending on the User model provided
+         * 
          * @param  User $model
+         * 
          * @return void
          */
         public function update($model)
@@ -47,7 +54,9 @@
 
         /**
          * Updates a User record depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return void
          */
         public function destroy($id)

@@ -8,7 +8,9 @@
 	{
         /**
          * Returns a Districtsection model depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return Districtsection
          */ 
         public function get($id)
@@ -18,6 +20,7 @@
 
         /**
          * Returns all the Districtsection models in the database
+         * 
          * @return Collection -> Districtsection
          */
         public function getAll()
@@ -27,7 +30,9 @@
 
         /**
          * Creates a Districtsection record in the database
+         * 
          * @param  array() $attributes
+         * 
          * @return Districtsection
          */
         public function create($attributes)
@@ -38,7 +43,9 @@
         /**
          * Updates a Districtsection record in the database depending on 
          * the Districtsection model provided
+         * 
          * @param  Districtsection $model
+         * 
          * @return void
          */
         public function update($model)
@@ -48,7 +55,9 @@
 
         /**
          * Deletes a Districtsection record depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return void
          */
         public function destroy($id)

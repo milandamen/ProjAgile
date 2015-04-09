@@ -8,7 +8,9 @@
     {
         /**
          * Returns a MenuItem model depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return MenuItem
          */ 
         public function get($id)
@@ -18,6 +20,7 @@
 
         /**
          * Returns all the MenuItem models in the database
+         * 
          * @return Collection -> MenuItem
          */
         public function getAll()
@@ -27,7 +30,9 @@
 
         /**
          * Creates a MenuItem record in the database
+         * 
          * @param  array() $attributes
+         * 
          * @return MenuItem
          */
         public function create($attributes)
@@ -37,7 +42,9 @@
 
         /**
          * Updates a MenuItem record in the database depending on the MenuItem model provided
+         * 
          * @param  MenuItem $model
+         * 
          * @return void
          */
         public function update($model)
@@ -47,7 +54,9 @@
 
         /**
          * Deletes a MenuItem record depending on the id provided
+         * 
          * @param  int $id
+         * 
          * @return void
          */
         public function destroy($id)
@@ -58,6 +67,7 @@
 
         /**
          * Returns a MenuItem Collection where all the MenuItems have a state of Published
+         * 
          * @return Collection -> MenuItem
          */ 
         public function getAllPublic()
