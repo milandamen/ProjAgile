@@ -11,10 +11,17 @@
             {!! HTML::image('custom/img/logo.png') !!}
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
+                <li><a href="#"><i class="fa fa-paper-plane"></i> Contact</a></li>
+            </ul>
+            <div class="span10">
+                <div class="row"></div>
+            <div>
+
             <ul class="nav navbar-nav">
-
                 @foreach($menu as $subMenu)
-
 
                     @if(isset($subMenu['sub']))
 
@@ -29,11 +36,7 @@
                 @endforeach
 
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><i class="fa fa-shopping-cart fa-lg"></i></a></li>
-                <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
-                <li><a href="#"><i class="fa fa-paper-plane"></i> Contact</a></li>
-            </ul>
+
         </div>
     </div>
 </nav>
