@@ -6,21 +6,28 @@
 	class Footer extends Model 
 	{
 	    /**
-	     * Table name
+	     * Table name.
 	     * 
 	     * @var string
 	     */
 		protected $table = 'footer';
 
         /**
-         * Laravel's automatic timestamps convention
+         * PrimaryKey name.
+         * 
+         * @var string
+         */
+		protected $primaryKey = 'footerId';
+
+        /**
+         * Laravel's automatic timestamps convention.
          * 
          * @var boolean
          */
 		public $timestamps = false;
 
         /**
-         * Attributes that can be changed and thus are mass assingable
+         * Attributes that can be changed and thus are mass assingable.
          * 
          * @var array()
          */
@@ -30,5 +37,15 @@
 			'row', 
 			'text', 
 			'link'
+		];
+
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable.
+         * 
+         * @var array()
+         */
+		protected $guarded = 
+		[
+			'footerId'
 		];
 	}

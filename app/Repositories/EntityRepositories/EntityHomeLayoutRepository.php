@@ -7,7 +7,7 @@
 	class EntityHomeLayoutRepository implements IHomeLayoutRepository
 	{
         /**
-         * Returns a HomeLayoutModule model depending on the id provided
+         * Returns a HomeLayoutModule model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
 		}
 
     	/**
-         * Returns all the HomeLayoutModule models in the database
+         * Returns all the HomeLayoutModule models in the database.
          * 
          * @return Collection -> HomeLayoutModule
          */
@@ -42,7 +42,7 @@
 
         /**
          * Updates a HomeLayoutModule record in the database depending on 
-         * the HomeLayoutModule model provided
+         * the HomeLayoutModule model provided.
          * 
          * @param  HomeLayoutModule $model
          * 
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a HomeLayoutModule record depending on the id provided
+         * Deletes a HomeLayoutModule record depending on the id provided.
          * 
          * @param  int $id
          * 

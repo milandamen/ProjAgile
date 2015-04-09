@@ -7,7 +7,7 @@
     class EntityFileRepository implements IFileRepository 
     {
         /**
-         * Returns a File model depending on the id provided
+         * Returns a File model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the File models in the database
+         * Returns all the File models in the database.
          * 
          * @return Collection -> File
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a File record in the database
+         * Creates a File record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -41,7 +41,7 @@
         }
 
         /**
-         * Updates a File record in the database depending on the File model provided
+         * Updates a File record in the database depending on the File model provided.
          * 
          * @param  File $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Deletes a File record depending on the id provided
+         * Deletes a File record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -66,7 +66,7 @@
         }
 
         /**
-         * Returns all the File models in the database depending on the news id provided
+         * Returns all the File models in the database depending on the news id provided.
          * 
          * @return Collection -> File
          */
@@ -76,7 +76,7 @@
         }
 
         /**
-         * Deletes all File records depending on the news id provided
+         * Deletes all File records depending on the news id provided.
          * 
          * @param  int $newsId
          * 

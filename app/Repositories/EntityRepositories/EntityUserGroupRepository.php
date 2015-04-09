@@ -7,7 +7,7 @@
     class EntityUserGroupRepository implements IUserGroupRepository
     {
         /**
-         * Returns a UserGroup model depending on the id provided
+         * Returns a UserGroup model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the UserGroup models in the database
+         * Returns all the UserGroup models in the database.
          * 
          * @return Collection -> UserGroup
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a UserGroup record in the database
+         * Creates a UserGroup record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -41,7 +41,7 @@
         }
 
         /**
-         * Updates a UserGroup record in the database depending on the UserGroup model provided
+         * Updates a UserGroup record in the database depending on the UserGroup model provided.
          * 
          * @param  UserGroup $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Updates a UserGroup record depending on the id provided
+         * Updates a UserGroup record depending on the id provided.
          * 
          * @param  int $id
          * 

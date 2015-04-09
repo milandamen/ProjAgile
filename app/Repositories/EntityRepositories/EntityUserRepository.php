@@ -7,7 +7,7 @@
     class EntityUserRepository implements IUserRepository
     {
         /**
-         * Returns a User model depending on the id provided
+         * Returns a User model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the User models in the database
+         * Returns all the User models in the database.
          * 
          * @return Collection -> User
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a User record in the database
+         * Creates a User record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -41,7 +41,7 @@
         }
 
         /**
-         * Updates a User record in the database depending on the User model provided
+         * Updates a User record in the database depending on the User model provided.
          * 
          * @param  User $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Updates a User record depending on the id provided
+         * Updates a User record depending on the id provided.
          * 
          * @param  int $id
          * 

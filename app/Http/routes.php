@@ -1,12 +1,12 @@
 <?php
 	// Auth controller routes
-	include('Routes/AuthControllerRoutes.php');
+	include('RoutePartials/_authControllerRoutes.php');
 
 	// File controller routes
-	include('Routes/FileControllerRoutes.php');
+	include('RoutePartials/_fileControllerRoutes.php');
 
 	// Home controller routes
-	include('Routes/HomeControllerRoutes.php');
+	include('RoutePartials/_homeControllerRoutes.php');
 
 	// News controller routes
-	include('Routes/NewsControllerRoutes.php');
+	include('RoutePartials/_newsControllerRoutes.php');

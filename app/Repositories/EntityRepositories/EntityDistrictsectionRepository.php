@@ -7,7 +7,7 @@
 	class EntityDistrictsectionRepository implements IDistricsectionRepository 
 	{
         /**
-         * Returns a Districtsection model depending on the id provided
+         * Returns a Districtsection model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the Districtsection models in the database
+         * Returns all the Districtsection models in the database.
          * 
          * @return Collection -> Districtsection
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a Districtsection record in the database
+         * Creates a Districtsection record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -42,7 +42,7 @@
 
         /**
          * Updates a Districtsection record in the database depending on 
-         * the Districtsection model provided
+         * the Districtsection model provided.
          * 
          * @param  Districtsection $model
          * 
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a Districtsection record depending on the id provided
+         * Deletes a Districtsection record depending on the id provided.
          * 
          * @param  int $id
          * 

@@ -6,28 +6,28 @@
 	class News extends Model 
 	{
 		/**
-		 * Table name
+		 * Table name.
 		 * 
 		 * @var string
 		 */
 		protected $table = 'news';
 
 		/**
-		 * PrimaryKey name
+		 * PrimaryKey name.
 		 * 
 		 * @var string
 		 */
 		protected $primaryKey = 'newsId';
 
 		/**
-		 * Laravel's automatic timestamps convention
+		 * Laravel's automatic timestamps convention.
 		 * 
 		 * @var boolean
 		 */
 		public $timestamps = false;
 
 		/**
-		 * Attributes that can be changed and thus are mass assingable
+		 * Attributes that can be changed and thus are mass assingable.
 		 * 
 		 * @var array()
 		 */
@@ -39,11 +39,14 @@
 			'content', 
 			'date', 
 			'hidden', 
-			'comments'
+			'commentable',
+			'publishStartDate',
+			'publishEndDate',
+			'top'
 		];
 
 		/**
-		 * Attributes that cannot be changed and thus are not mass assingable
+		 * Attributes that cannot be changed and thus are not mass assingable.
 		 * 
 		 * @var array()
 		 */
@@ -53,7 +56,7 @@
 		];
 
 		/**
-		 * Get the District model that is referenced in this News model
+		 * Get the District model that is referenced in this News model.
 		 * 
 		 * @return Districtsection
 		 */
@@ -64,7 +67,7 @@
 
 
 		/**
-		 * Get the User model that is referenced in this News model
+		 * Get the User model that is referenced in this News model.
 		 * 
 		 * @return User
 		 */
@@ -74,7 +77,7 @@
 		}
 
 		/**
-		 * Get all File models that reference this News model
+		 * Get all File models that reference this News model.
 		 * 
 		 * @return Collection -> File
 		 */
@@ -84,7 +87,7 @@
 		}
 
 		/**
-		 * Get all Carousel models that reference this News model
+		 * Get all Carousel models that reference this News model.
 		 * 
 		 * @return Collection -> Carousel
 		 */

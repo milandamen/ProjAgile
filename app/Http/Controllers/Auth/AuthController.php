@@ -44,7 +44,7 @@
             $user = $this->userRepo->create($data);
             $this->auth->login($user);
 
-            return Redirect::route('home');
+            return Redirect::route('home.index');
         }
 
         public function getLogin()
@@ -59,7 +59,7 @@
             
             if ($this->auth->attempt($credentials, $request['remember']))
             {
-                return Redirect::route('home');
+                return Redirect::route('home.index');
             }
 
             return Redirect::route('login')->withErrors
@@ -72,6 +72,6 @@
         {
             $this->auth->logout();
 
-            return Redirect::route('home');
+            return Redirect::route('home.index');
         }
     }

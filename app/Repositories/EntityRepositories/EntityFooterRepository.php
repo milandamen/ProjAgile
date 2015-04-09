@@ -7,7 +7,7 @@
     class EntityFooterRepository implements IFooterRepository 
     {
         /**
-         * Returns a Footer model depending on the id provided
+         * Returns a Footer model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the Footer models in the database
+         * Returns all the Footer models in the database.
          * 
          * @return Collection -> Footer
          */
@@ -41,7 +41,7 @@
         }
 
         /**
-         * Updates a Footer record in the database depending on the Footer model provided
+         * Updates a Footer record in the database depending on the Footer model provided.
          * 
          * @param  Footer $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Deletes a Footer record depending on the id provided
+         * Deletes a Footer record depending on the id provided.
          * 
          * @param  int $id
          * 

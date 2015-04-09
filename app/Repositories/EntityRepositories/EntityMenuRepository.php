@@ -7,7 +7,7 @@
     class EntityMenuRepository implements IMenuRepository 
     {
         /**
-         * Returns a MenuItem model depending on the id provided
+         * Returns a MenuItem model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the MenuItem models in the database
+         * Returns all the MenuItem models in the database.
          * 
          * @return Collection -> MenuItem
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a MenuItem record in the database
+         * Creates a MenuItem record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -41,7 +41,7 @@
         }
 
         /**
-         * Updates a MenuItem record in the database depending on the MenuItem model provided
+         * Updates a MenuItem record in the database depending on the MenuItem model provided.
          * 
          * @param  MenuItem $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Deletes a MenuItem record depending on the id provided
+         * Deletes a MenuItem record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -66,7 +66,7 @@
         }
 
         /**
-         * Returns a MenuItem Collection where all the MenuItems have a state of Published
+         * Returns a MenuItem Collection where all the MenuItems have a state of Published.
          * 
          * @return Collection -> MenuItem
          */ 

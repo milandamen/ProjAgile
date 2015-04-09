@@ -6,28 +6,28 @@
 	class UserGroup extends Model 
 	{
 		/**
-		 * Table name
+		 * Table name.
 		 * 
 		 * @var string
 		 */
 		protected $table = 'usergroup';
 
 		/**
-		 * PrimaryKey name
+		 * PrimaryKey name.
 		 * 
 		 * @var string
 		 */
 		protected $primaryKey = 'userGroupId';
 
 		/**
-		 * Laravel's automatic timestamps convention
+		 * Laravel's automatic timestamps convention.
 		 * 
 		 * @var boolean
 		 */
 		public $timestamps = false;
 
 		/**
-		 * Attributes that can be changed and thus are mass assingable
+		 * Attributes that can be changed and thus are mass assingable.
 		 * 
 		 * @var array()
 		 */
@@ -37,7 +37,7 @@
 		];
 
 		/**
-		 * Attributes that cannot be changed and thus are not mass assingable
+		 * Attributes that cannot be changed and thus are not mass assingable.
 		 * 
 		 * @var array()
 		 */
@@ -47,7 +47,7 @@
 		];
 
 		/**
-		 * Get all User models that reference this UserGroup model
+		 * Get all User models that reference this UserGroup model.
 		 * 
 		 * @return Collection -> User
 		 */

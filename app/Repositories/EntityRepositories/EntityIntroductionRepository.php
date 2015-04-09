@@ -7,7 +7,7 @@
 	class EntityIntroductionRepository implements IIntroductionRepository
 	{
         /**
-         * Returns a Introduction model depending on the id provided
+         * Returns a Introduction model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
 		}
 
         /**
-         * Returns all the Introduction models in the database
+         * Returns all the Introduction models in the database.
          * 
          * @return Collection -> Introduction
          */
@@ -29,7 +29,7 @@
 		}
 
         /**
-         * Creates a Introduction record in the database
+         * Creates a Introduction record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -42,7 +42,7 @@
 
         /**
          * Updates a Introduction record in the database depending on 
-         * the Introduction model provided
+         * the Introduction model provided.
          * 
          * @param  Introduction $model
          * 
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a Introduction record depending on the id provided
+         * Deletes a Introduction record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -67,7 +67,7 @@
         }
 		
         /**
-         * Returns a Introduction Collection depending on the page id provided
+         * Returns a Introduction Collection depending on the page id provided.
          * 
          * @param  int $pageId
          * 

@@ -12,47 +12,48 @@
 		use Authenticatable, CanResetPassword;
 
 		/**
-		 * Table name
+		 * Table name.
 		 * 
 		 * @var string
 		 */
 		protected $table = 'user';
 
 		/**
-		 * PrimaryKey name
+		 * PrimaryKey name.
 		 * 
 		 * @var string
 		 */
 		protected $primaryKey = 'userId';
 
 		/**
-		 * Laravel's automatic timestamps convention
+		 * Laravel's automatic timestamps convention.
 		 * 
 		 * @var boolean
 		 */
 		public $timestamps = false;
 
 		/**
-		 * Attributes that can be changed and thus are mass assingable
+		 * Attributes that can be changed and thus are mass assingable.
 		 * 
 		 * @var array()
 		 */
 		protected $fillable = 
 		[
 			'userGroupId', 
-			'districtSectionId', 
+			'districtSectionId',
+			'postalId',
 			'username', 
 			'password',
 			'firstName', 
 			'surname', 
-			'postal', 
 			'houseNumber', 
 			'email', 
-			'active'
+			'active',
+			'remember_Token'
 		];
 
 		/**
-		 * Attributes that cannot be changed and thus are not mass assingable
+		 * Attributes that cannot be changed and thus are not mass assingable.
 		 * 
 		 * @var array()
 		 */
@@ -62,7 +63,7 @@
 		];
 
 		/**
-		 * The attributes excluded from the model's JSON form
+		 * The attributes excluded from the model's JSON form.
 		 * 
 		 * @var array()
 		 */
@@ -73,7 +74,7 @@
 	    ];
 
 		/**
-		 * Get the District model that is referenced in this User model
+		 * Get the District model that is referenced in this User model.
 		 * 
 		 * @return Districtsection
 		 */
@@ -83,7 +84,7 @@
 		}
 
 		/**
-		 * Get the UserGroup model that is referenced in this User model
+		 * Get the UserGroup model that is referenced in this User model.
 		 * 
 		 * @return UserGroup
 		 */
@@ -93,7 +94,7 @@
 		}
 
 		/**
-		 * Get all News models that reference this User model
+		 * Get all News models that reference this User model.
 		 * 
 		 * @return Collection -> News
 		 */

@@ -6,28 +6,28 @@
     class Introduction extends Model 
     {
         /**
-         * Table name
+         * Table name.
          * 
          * @var string
          */
         protected $table = 'introduction';
 
         /**
-         * PrimaryKey name
+         * PrimaryKey name.
          * 
          * @var string
          */
-        protected $primaryKey = 'id';
+        protected $primaryKey = 'introductionId';
 
         /**
-         * Laravel's automatic timestamps convention
+         * Laravel's automatic timestamps convention.
          * 
          * @var boolean
          */
         public $timestamps = false;
 
         /**
-         * Attributes that can be changed and thus are mass assingable
+         * Attributes that can be changed and thus are mass assingable.
          * 
          * @var array()
          */
@@ -39,12 +39,12 @@
         ];
 
         /**
-         * Attributes that cannot be changed and thus are not mass assingable
+         * Attributes that cannot be changed and thus are not mass assingable.
          * 
          * @var array()
          */
         protected $guarded = 
         [
-        	'id'
+        	'introductionId'
         ];
     }

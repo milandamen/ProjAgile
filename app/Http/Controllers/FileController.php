@@ -17,7 +17,7 @@
 		
 		// 
 		/**
-		 * For this function to work, enable "extension=php_fileinfo.dll" in php.ini
+		 * For this function to work, enable "extension=php_fileinfo.dll" in php.ini.
 		 * 
 		 * @param  string $filename
 		 * 

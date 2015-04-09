@@ -6,28 +6,28 @@
 	class Districtsection extends Model 
 	{
 	    /**
-	     * Table name
+	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'districtsection';
+		protected $table = 'districtSection';
 
         /**
-         * PrimaryKey name
+         * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'districtsectionId';
+		protected $primaryKey = 'districtSectionId';
 
         /**
-         * Laravel's automatic timestamps convention
+         * Laravel's automatic timestamps convention.
          * 
          * @var boolean
          */
 		public $timestamps = false;
 
         /**
-         * Attributes that can be changed and thus are mass assingable
+         * Attributes that can be changed and thus are mass assingable.
          * 
          * @var array()
          */
@@ -38,17 +38,17 @@
 		];
 		
         /**
-         * Attributes that cannot be changed and thus are not mass assingable
+         * Attributes that cannot be changed and thus are not mass assingable.
          * 
          * @var array()
          */
 		protected $guarded = 
 		[
-			'districtsectionId'
+			'districtSectionId'
 		];
 
 		/**
-		 * Get all News models that reference this Districtsection model
+		 * Get all News models that reference this Districtsection model.
 		 * 
 		 * @return Collection -> News
 		 */
@@ -58,12 +58,12 @@
 		}
 
 		/**
-		 * Get all User models that reference this Districtsection model
+		 * Get all User models that reference this Districtsection model.
 		 * 
 		 * @return Collection -> User
 		 */
 		public function users()
 		{
-			return $this->hasMany('App\Models\User', 'foreign_key', 'districtsectionId');
+			return $this->hasMany('App\Models\User', 'foreign_key', 'districtSectionId');
 		}
 	}

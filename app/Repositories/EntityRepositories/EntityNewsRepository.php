@@ -7,7 +7,7 @@
 	class EntityNewsRepository implements INewsRepository
 	{
         /**
-         * Returns a News model depending on the id provided
+         * Returns a News model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
 		}
 
         /**
-         * Returns all the News models in the database
+         * Returns all the News models in the database.
          * 
          * @return Collection -> News
          */
@@ -41,7 +41,7 @@
 		}
 
         /**
-         * Updates a News record in the database depending on the News model provided
+         * Updates a News record in the database depending on the News model provided.
          * 
          * @param  News $model
          * 
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Deletes a News record depending on the id provided
+         * Deletes a News record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -66,7 +66,7 @@
         }
 
         /**
-         * Returns a News Collection depending on the term provided
+         * Returns a News Collection depending on the term provided.
          * 
          * @param  string $term
          * 

@@ -7,7 +7,7 @@
     class EntitySidebarRepository implements ISidebarRepository 
     {
         /**
-         * Returns a Sidebar model depending on the id provided
+         * Returns a Sidebar model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the Sidebar models in the database
+         * Returns all the Sidebar models in the database.
          * 
          * @return Collection -> Sidebar
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a Sidebar record in the database
+         * Creates a Sidebar record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -42,7 +42,7 @@
 
         /**
          * Updates a Sidebar record in the database depending on 
-         * the Sidebar model provided
+         * the Sidebar model provided.
          * 
          * @param  Sidebar $model
          * 
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a Sidebar record depending on the id provided
+         * Deletes a Sidebar record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -67,7 +67,7 @@
         }
 
         /**
-         * Returns a Sidebar Collection depending on the page number provided
+         * Returns a Sidebar Collection depending on the page number provided.
          * 
          * @param  int $pageNr
          * 
@@ -79,7 +79,7 @@
         }
 
         /**
-         * Deletes all the Sidebar records depending on the page number provided
+         * Deletes all the Sidebar records depending on the page number provided.
          * 
          * @param  int $pageNr
          * 

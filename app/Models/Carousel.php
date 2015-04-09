@@ -6,39 +6,39 @@
 	class Carousel extends Model 
 	{
 		/**
-	     * Table name
+	     * Table name.
 	     * 
 	     * @var string
 	     */
 		protected $table = 'carousel';
 
         /**
-         * PrimaryKey name
+         * PrimaryKey name.
          * 
          * @var string
          */
 		protected $primaryKey = 'carouselId';
 
         /**
-         * Laravel's automatic timestamps convention
+         * Laravel's automatic timestamps convention.
          * 
          * @var boolean
          */
 		public $timestamps = false;
 
         /**
-         * Attributes that can be changed and thus are mass assingable
+         * Attributes that can be changed and thus are mass assingable.
          * 
          * @var array()
          */
 		protected $fillable = 
 		[
 			'newsId', 
-			'imgpath'
+			'imagePath'
 		];
 
         /**
-         * Attributes that cannot be changed and thus are not mass assingable
+         * Attributes that cannot be changed and thus are not mass assingable.
          * 
          * @var array()
          */
@@ -48,7 +48,7 @@
 		];
 
 		/**
-		 * Get the News model that is referenced in this File model
+		 * Get the News model that is referenced in this File model.
 		 * 
 		 * @return News
 		 */

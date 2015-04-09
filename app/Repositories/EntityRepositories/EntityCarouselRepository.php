@@ -7,7 +7,7 @@
     class EntityCarouselRepository implements ICarouselRepository 
     {
         /**
-         * Returns a Carousel model depending on the id provided
+         * Returns a Carousel model depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -19,7 +19,7 @@
         }
 
         /**
-         * Returns all the Carousel models in the database
+         * Returns all the Carousel models in the database.
          * 
          * @return Collection -> Carousel
          */
@@ -29,7 +29,7 @@
         }
 
         /**
-         * Creates a Carousel record in the database
+         * Creates a Carousel record in the database.
          * 
          * @param  array() $attributes
          * 
@@ -42,7 +42,7 @@
 
         /**
          * Updates a Carousel record in the database depending on 
-         * the Carousel model provided
+         * the Carousel model provided.
          * 
          * @param  Carousel $model
          * 
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a Carousel record depending on the id provided
+         * Deletes a Carousel record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -67,7 +67,7 @@
         }
 
         /**
-         * Deletes all the Carousel records
+         * Deletes all the Carousel records.
          * 
          * @return void
          */ 
