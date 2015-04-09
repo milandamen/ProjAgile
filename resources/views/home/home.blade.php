@@ -19,7 +19,6 @@
 			<div class="col-md-8">
 				<div class="col-md-10">
 					<h3> Menu </h3>
-					{{ $menu }}
 				</div>
 				<div class="col-md-10">
 					<h3> Carousel </h3>

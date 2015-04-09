@@ -18,38 +18,14 @@ class MenuRepository extends BaseRepository {
         return MenuItem::where('publish', '=', '1')->get();
     }
 
-    /**
-     * Find a model with the given id.
-     */
     public function get($id)
     {
         return MenuItem::find($id);
     }
 
-    /**
-     * Create a new model. Optional: attibutes for the new model.
-     */
     public function create($attributes = array())
     {
         return MenuItem::create($attributes);
-        /*
-         * Attributes:
-         * 0: parentId
-         * 1: name
-         * 2: relativeUrl
-         * 3: menuOrder
-         * 4: publish
-         */
-        /*
-        $menuItem = new MenuItem;
-        $menuItem->parentId     = $attributes[0];
-        $menuItem->name         = $attributes[1];
-        $menuItem->relativeUrl  = $attributes[2];
-        $menuItem->menuOrder    = $attributes[3];
-        $menuItem->publish      = $attributes[4];
-
-        $this->save($menuItem);
-        */
     }
 
     public function deleteAll()
@@ -60,6 +36,33 @@ class MenuRepository extends BaseRepository {
         {
             $this->delete($menuItem);
         }
+    }
+
+    public function getMenu()
+    {
+        $mainMenuItems = MenuItem::where('parentId', null)->orderBy('menuOrder')->get();
+        $allMenuItems  = $this->orderMenu($mainMenuItems);
+        return ($allMenuItems);
+    }
+
+    private function orderMenu($categories)
+    {
+            $allCategories = array();
+            foreach ($categories as $category) {
+                $subArr = array();
+                $subArr['main'] = $category;
+                $subCategories = MenuItem::where('parentId', '=', $category->menuId)->get();
+
+                if (!$subCategories->isEmpty()) {
+                    $result = $this->orderMenu($subCategories);
+
+                    $subArr['sub'] = $result;
+                }
+
+                $allCategories[] = $subArr;
+            }
+
+            return $allCategories;
     }
 }
 ?>
