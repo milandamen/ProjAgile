@@ -38,7 +38,7 @@
                 'surname',
                 'postal',
                 'houseNumber',
-                'email',
+                'email'
             );
             $data['password'] = Hash::make($request['password']);
             $user = $this->userRepo->create($data);
@@ -59,7 +59,6 @@
             
             if ($this->auth->attempt($credentials, $request['remember']))
             {
-                Flash::success('U bent succesvol ingelogd!');
                 return Redirect::route('home');
             }
 
@@ -72,7 +71,6 @@
         public function getLogout()
         {
             $this->auth->logout();
-            Flash::success('U bent succesvol uitgelogd!');
 
             return Redirect::route('home');
         }

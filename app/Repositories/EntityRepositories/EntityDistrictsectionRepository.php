@@ -65,4 +65,15 @@
             $model = Districtsection::findOrFail($id);
             $model->delete();
         }
+
+        /**
+         * Returns all the Districtsection models from the database and 
+         * converts it to a list. This is for select box use only.
+         * 
+         * @return List -> Districtsection
+         */
+        public function getAllToList()
+        {
+            return Districtsection::all()->lists('name', 'districtSectionId');
+        }
 	}

@@ -3,5 +3,5 @@
 
     interface IDistrictsectionRepository extends IBaseRepository
     {
-
+    	public function getAllToList();
     }

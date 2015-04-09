@@ -17,7 +17,7 @@
          * 
          * @var string
          */
-		protected $primaryKey = 'modulename';
+		protected $primaryKey = 'homeLayoutId';
 
         /**
          * Laravel's automatic timestamps convention
@@ -33,6 +33,7 @@
          */
 		protected $fillable = 
 		[
+			'moduleName'
 			'ordernumber'
 		];
 
@@ -43,6 +44,6 @@
          */
 		protected $guarded = 
 		[
-			'modulename'
+			'homeLayoutId'
 		];
 	}
