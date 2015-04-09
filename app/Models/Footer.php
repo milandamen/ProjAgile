@@ -7,7 +7,7 @@ class Footer extends Model {
 	protected $table = 'footer';
 
 	# Primary key
-	# protected $guard = [];
+	protected $guard = ['id'];
 
 	# Properties that can be changed
 	protected $fillable = ['col', 'row', 'text', 'link'];
@@ -15,8 +15,6 @@ class Footer extends Model {
 	# Laravel's automatic timestamps (like updated_at) 
 	public $timestamps = false;
 
-
 }
-
 
 ?>

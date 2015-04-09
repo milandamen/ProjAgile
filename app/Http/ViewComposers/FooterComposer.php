@@ -3,6 +3,7 @@
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Repository\FooterRepository;
+use League\Flysystem\Exception;
 
 class FooterComposer {
 
@@ -20,8 +21,29 @@ class FooterComposer {
 
     public function compose(View $view)
     {
-    	$footer = $this->footerrepo->getAll();
-		$view->with('footer', $footer); 
+    	$footerItems = $this->footerrepo->getAll();
+
+        $numberOfColumns = 0;
+
+        foreach($footerItems as $item)
+        {
+            if($item->col >= $numberOfColumns)
+            {
+                $numberOfColumns = $item->col + 1;
+            }
+        }
+
+        $footerColumns = [];
+        for($i = 0; $i < $numberOfColumns; $i++)
+        {
+            $footerColumns[] = [];
+        }
+        foreach($footerItems as $item)
+        {
+            $footerColumns[$item->col][$item->row] = $item;
+        }
+
+		$view->with('footer', $footerColumns);
     }
 
 }
