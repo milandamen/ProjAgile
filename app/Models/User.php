@@ -32,6 +32,10 @@ class User extends Model {
         return $this->hasMany('App\Models\News', 'newsId');
 	}
 
+    public function newscomments(){
+        return $this->hasMany('App\Models\Newscomment', 'newscommentId');
+    }
+
 }
 
 

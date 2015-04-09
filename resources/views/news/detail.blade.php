@@ -37,19 +37,42 @@
                     {!! $link !!}
                 @endforeach
 
-                @if($news->comments == 1)
-                    {{-- get the comments and display them --}}
 
-                    <form action="#" method="post">
-                        <h3>Plaats een reactie</h3>
-                        <textarea class="form-control"></textarea>
-                    </form>
-
-                @endif
 
                 <br/>
                 <p class="goback"><a href="{{URL::action('HomeController@getIndex')}}"> Terug naar de homepage </a></p>
 
             </div>
+        </div>
+        @if($news->comments == 1)
+            <h2>Reacties</h2>
+            @foreach($news->newscomments as $comment)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>{{$comment->user->username}}</h4>
+                        <p>{{$comment->message}}</p>
+                        <br/>
+                        <h6>{{$comment->created_at}}</h6>
+                        <hr>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="row">
+                <div class="col-lg-6">
+                    {{--Post a comment, not finished yet.
+                    Also there needs to be an login check later on--}}
+                    {!! Form::open(array('action' => 'NewsController@postComment')) !!}
+                    <h3>Plaats een reactie</h3>
+                    <div class="form-group">
+                        <input type="hidden" name="newsId" value="{{$news->newsId}}">
+                        <textarea name="comment" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        @endif
+    </div>
     @endif
 @endsection
