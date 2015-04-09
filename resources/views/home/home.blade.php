@@ -9,9 +9,6 @@
                     <div class="panel-body">
                         You are logged in!
 
-                 
-
-
                     </div>
 
 <!-- Test if data is coming through -->
@@ -40,12 +37,6 @@
 				<div class="col-md-10">
 					<h3> Sidebar </h3>
 					{{ $sidebar }}
-				</div>
-
-
-				<div class="col-md-10">
-					<h3> Footer </h3>
-					{{ $footer }}
 				</div>
 
 			</div>	
