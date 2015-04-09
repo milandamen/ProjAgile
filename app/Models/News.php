@@ -38,10 +38,14 @@ class News extends Model {
 		return $this->hasMany('App\Models\File', 'fileId');
 	}
 
+    //needs to be changed
 	public function carousel() {
 		return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
 	}
 
+    public function newscomments() {
+        return $this->hasMany('App\Models\Newscomment', 'newsId');
+    }
 
 }
 
