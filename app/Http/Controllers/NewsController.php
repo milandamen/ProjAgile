@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Repository\NewsRepository;
+use View;
 
 class NewsController extends Controller
 {
@@ -8,6 +9,49 @@ class NewsController extends Controller
     {
         $this->newsRepository = $newsRepository;
     }
+
+    public function getIndex()
+    {
+        $newsItems = $this->newsRepository->getAll();
+        return View::make('Resources\views\NewsView\index.php', compact('newsItems'));
+    }
+
+    /*public function show($id)
+    {
+        $newsItem = $this->newsRepository->get($id);
+        return View::make('viewnaam', compact('newsItem'));
+    }*/
+
+    public function edit($id)
+    {
+        $newsItem = $this->newsRepository->get($id);
+        return View::make('viewnaam', compact('newsItem'));
+    }
+
+    public function delete($id)
+    {
+        $newsItem = $this->newsRepository->get($id);
+        return View::make('viewnaam', compact('newsItem'));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getDetail($newsId)
     {
