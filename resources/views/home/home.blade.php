@@ -2,19 +2,36 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Home</div>
-                    <div class="panel-body">
-                        You are logged in!
-
-                 
-
-
-                    </div>
-
-<!-- Test if data is coming through -->
+		<div class="row">
+			<div class="col-md-12">
+				{{-- Require de carousel hier --}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="page-header">De Bunders</h2>
+			</div>
+		</div>
+		
+		<!-- Module placement -->
+		<div class="row">
+			{{-- Script for laying out modules on correct spots --}}
+			
+			<div class="col-md-8">
+				@for ($i = 0; $i < count($layoutmodules) - 1; $i++)					{{-- Loop all modules, except the last one --}}
+					@include('home.' . $layoutmodules[$i]->modulename)
+				@endfor
+			</div>
+			
+			<div class="col-md-4">
+				@include('home.' . $layoutmodules[ count($layoutmodules) - 1 ]->modulename)
+			</div>
+			
+			{{-- End layout script --}}
+		</div>
+		
+		<div class="row">
+			<!-- Test if data is coming through -->
 
 			<div class="col-md-8">
 				<div class="col-md-10">
@@ -25,17 +42,8 @@
 					<h3> Carousel </h3>
 				</div>
 				<div class="col-md-10">
-					<h3> Modules </h3>
-					{{ $layoutmodules }}
-				</div>
-				<div class="col-md-10">
 					<h3> introduction </h3>
 					{{ $intro }}
-				</div>
-
-				<div class="col-md-10">
-					<h3> News </h3>
-					{{ $news }}
 				</div>
 				<div class="col-md-10">
 					<h3> Sidebar </h3>
@@ -49,10 +57,8 @@
 				</div>
 
 			</div>	
-<!-- end test incoming data -->
+			<!-- end test incoming data -->
 
-                </div>
-            </div>
         </div>
     </div>
 @endsection

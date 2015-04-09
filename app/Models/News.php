@@ -40,12 +40,21 @@ class News extends Model {
 
     //needs to be changed
 	public function carousel() {
-		return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
+		return $this->hasMany('App\Models\Carousel', 'newsId');
 	}
 
     public function newscomments() {
         return $this->hasMany('App\Models\Newscomment', 'newsId');
     }
+	
+	/**
+	 * Get the date of this news item, in a d-m-Y format (so without the time).
+	 * In order to call this, call $newsItem->normalDate()  and NOT $newsItem->normalDate
+	 */
+	public function normalDate() {
+		$date = date_create($this->date);
+    	return date_format($date,'d-m-Y') ;
+	}
 
 }
 
