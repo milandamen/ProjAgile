@@ -58,20 +58,20 @@
                 </div>
             @endforeach
 
-        <div class="row">
-            <div class="col-lg-6">
-                {{--Post a comment, not finished yet.
-                Also there needs to be an login check later on--}}
-                {!! Form::open(array('action' => 'NewsController@postComment')) !!}
-                <h3>Plaats een reactie</h3>
-                <div class="form-group">
-                    <input type="hidden" name="newsId" value="{{$news->newsId}}">
-                    <textarea name="comment" class="form-control"></textarea>
+            <div class="row">
+                <div class="col-lg-6">
+                    {{--Post a comment, not finished yet.
+                    Also there needs to be an login check later on--}}
+                    {!! Form::open(array('action' => 'NewsController@postComment')) !!}
+                    <h3>Plaats een reactie</h3>
+                    <div class="form-group">
+                        <input type="hidden" name="newsId" value="{{$news->newsId}}">
+                        <textarea name="comment" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
+                    {!! Form::close() !!}
                 </div>
-                <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
-                {!! Form::close() !!}
             </div>
-        </div>
         @endif
     </div>
     @endif
