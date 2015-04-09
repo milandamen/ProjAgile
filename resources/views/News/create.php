@@ -36,7 +36,7 @@
                         <option value="0">Home</option>
 
                         @foreach($data as $section)
-                        {{ '<option value="'. $section->getId() .'">' . $section->getName() . '</option>' }}
+                        {!! '<option value="'. $section->getId() .'">' . $section->getName() . '</option>' !!}
                         @endforeach
 
                     </select>

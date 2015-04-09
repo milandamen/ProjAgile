@@ -13,18 +13,18 @@
 
     <div class="col-lg-12">
         <form name="editNews" onsubmit="return validate()" action="/projagile/public/NewsController/save/false" method="post" enctype="multipart/form-data">
-            {{ '<input type="hidden" name="newsId" value="' . $data['news']->getId() .'" >' }}
+            {!! '<input type="hidden" name="newsId" value="' . $data['news']->getId() .'" >' !!}
             <div class="row">
                 <div class="form-group">
                     <label class="label-form" for="title">Titel</label>
-                    {{ '<input id="title" type="text" class="form-control" name="title" value="'. $data['news']->getTitle() . '" placeholder="Titel">'}}
+                    {!! '<input id="title" type="text" class="form-control" name="title" value="'. $data['news']->getTitle() . '" placeholder="Titel">'!!}
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group">
                     <label class="label-form" for="content">Content</label>
-                    {{ '<textarea id="content" class="form-control" rows="6" name="content">' . $data['news']->getContent() .'</textarea>' }}
+                    {!! '<textarea id="content" class="form-control" rows="6" name="content">' . $data['news']->getContent() .'</textarea>' !!}
                 </div>
             </div>
 
@@ -33,21 +33,21 @@
                 <select name="district" class="form-control">
                     <option value="0">Home</option>
                     @foreach($data['sections'] as $section)
-                        {{'<option value="'. $section->getId() .'">' . $section->getName() . '</option>'}}
+                        {!!'<option value="'. $section->getId() .'">' . $section->getName() . '</option>'!!}
                     @endforeach
                 </select>
             </div>
 
             @if(count($data['files']) > 0)
 
-                {{ '<div class="row"><br/><p>Bestanden die gekoppeld zijn aan dit artikel:</p>'}};
+                {!! '<div class="row"><br/><p>Bestanden die gekoppeld zijn aan dit artikel:</p>'!!};
 
                 foreach($data['files'] as $file)
                 {
-                    {{'<p>' . $file->path .'</p>'}}
+                    {!!'<p>' . $file->path .'</p>'!!}
                 }
 
-                {{
+                {!!
                         <label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
@@ -58,17 +58,17 @@
                             </label>
                         </div>
                     </div>
-                }}
+                !!}
 
                 @foreach($data['files'] as $file)
-                {{
+                {!!
                     <div class="row">
                         <br/>
                         <input  id="upload" type='file' name='file[]' multiple>
                         <br/>
                         <label class="btn btn-danger btn-md" id="cancel"> Verwijder bestand</label>
                     </div>
-                }}
+                !!}
             @endif
 
             <div class="row">
