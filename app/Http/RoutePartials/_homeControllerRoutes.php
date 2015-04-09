@@ -1,4 +1,4 @@
-_<?php
+<?php
 	Route::get('/',                                         		
 	[
 		'as' => 'home.index',                        	
