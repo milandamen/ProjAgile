@@ -6,7 +6,15 @@ use App\Models\HomeLayoutModule;
 class HomeLayoutRepository extends BaseRepository
 {
 	public function getAll() {
-		return HomeLayoutModule::all();
+		$objects = HomeLayoutModule::all();
+		$modules = [];
+		
+		// Order modules
+		foreach ($objects as $module) {
+			$modules[$module->ordernumber] = $module;
+		}
+		
+		return $modules;
 	}
 	
 	public function get($id) {

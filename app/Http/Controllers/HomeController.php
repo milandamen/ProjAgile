@@ -21,45 +21,39 @@ class HomeController extends Controller {
 
 	/**
 	 * Create a new controller instance.
-	 *
-	 * @return void
 	 */
 	public function __construct(IntroductionRepository $introrepo, HomeLayoutRepository $homeLayoutrepo, NewsRepository $newsrepo)
 	{
 		$this->introrepo = $introrepo;
 		$this->homeLayoutrepo = $homeLayoutrepo;
 		$this->newsrepo = $newsrepo;
-
-		//$this->middleware('auth');
 	}
 
 	/**
 	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
 	 */
 	public function getIndex()
 	{
-
-		// Sidebar will be loaded through viewcomposer!
-		$modules = $this->homeLayoutrepo->getAll();
+		// Sidebar will be loaded through viewcomposer.
+		$news = $this->newsrepo->getAll();
 		$introduction = $this->introrepo->getAll();
-		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
+		$modules = $this->homeLayoutrepo->getAll();
+		$data = array('news' => $news, 'intro' => $introduction, 'layoutmodules' => $modules);
 
 		return view('home/home', $data);
 	}
 
-	public function getEditLayout(){
-		
-		$modules = $this->homeLayoutrepo->getAll();
+	public function getEditlayout(){
+		$news = $this->newsrepo->getAll();
 		$introduction = $this->introrepo->getAll();
-		$data = array('news' => $this->newsrepo->getAll(), 'intro'=>$introduction, 'layoutmodules'=>$modules);
+		$modules = $this->homeLayoutrepo->getAll();
+		$data = array('news' => $news, 'intro' => $introduction, 'layoutmodules' => $modules);
 
-		return view('home/home/editlayout', $data);
+		return view('home/editlayout', $data);
 
 	}
 
-	public function postEditLayout(){
+	public function postEditlayout(){
 
 		if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
 		{
@@ -80,15 +74,17 @@ class HomeController extends Controller {
 
 			return redirect('home/home');
 		} else {
-			// Niet alles is goed gegaan.
+			// Something went wrong..
+			
+			return redirect('home/editlayout');
 		}
 	}
 
-	public function getEditIntro(){
+	public function getEditintro(){
 		return View('intro/edit', ['intro'=>$this->introrepo->getById(1)]);
 	}
 
-	public function postEditIntro(){
+	public function postEditintro(){
 		$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 	    $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
 	    $pageId = $_POST['pageId'];

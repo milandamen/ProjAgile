@@ -2,25 +2,32 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Home</div>
-                    <div class="panel-body">
-                        You are logged in!
-
-                 
-
-
-                    </div>
-
-               
-                    @include('home/module-sidebar')
-             
-                </div>
-
-
-            </div>
-        </div>
+		<div class="row">
+			<div class="col-md-12">
+				{{-- Require de carousel hier --}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="page-header">De Bunders</h2>
+			</div>
+		</div>
+		
+		<!-- Module placement -->
+		<div class="row">
+			{{-- Script for laying out modules on correct spots --}}
+			
+			<div class="col-md-8">
+				@for ($i = 0; $i < count($layoutmodules) - 1; $i++)					{{-- Loop all modules, except the last one --}}
+					@include('home.' . $layoutmodules[$i]->modulename)
+				@endfor
+			</div>
+			
+			<div class="col-md-4">
+				@include('home.' . $layoutmodules[ count($layoutmodules) - 1 ]->modulename)
+			</div>
+			
+			{{-- End layout script --}}
+		</div>
     </div>
 @stop
