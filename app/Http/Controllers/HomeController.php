@@ -22,9 +22,8 @@ class HomeController extends Controller {
 	/**
 	 * Create a new controller instance.
 	 */
-	public function __construct(SidebarRepository $sidebarrepo, IntroductionRepository $introrepo, HomeLayoutRepository $homeLayoutrepo, NewsRepository $newsrepo)
+	public function __construct(IntroductionRepository $introrepo, HomeLayoutRepository $homeLayoutrepo, NewsRepository $newsrepo)
 	{
-		$this->sidebarrepo = $sidebarrepo;
 		$this->introrepo = $introrepo;
 		$this->homeLayoutrepo = $homeLayoutrepo;
 		$this->newsrepo = $newsrepo;

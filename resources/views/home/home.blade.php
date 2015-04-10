@@ -30,4 +30,4 @@
 			{{-- End layout script --}}
 		</div>
     </div>
-@endsection
+@stop
