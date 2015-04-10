@@ -15,7 +15,7 @@
 				</div>
 				
 				<div class="col-md-4">
-					@include('home.partials._' . $layoutModules[count($layoutModules) - 1 ]->moduleName)
+					@include('home.partials._' . $layoutModules[count($layoutModules) - 1]->moduleName)
 				</div>
 				
 				{{-- End layout script --}}
