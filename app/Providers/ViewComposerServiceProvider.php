@@ -15,7 +15,8 @@
         {
             // Using class based composers...
             View::composer('partials.footer', 'App\Http\ViewComposers\FooterComposer');
-            View::composer('*', 'App\Http\ViewComposers\MenuComposer');
+            View::composer('partials.header', 'App\Http\ViewComposers\MenuComposer');
+            View::composer('sidebar.edit', 'App\Http\ViewComposers\MenuComposer');
             View::composer('home.index', 'App\Http\ViewComposers\SidebarComposer');
         }
 

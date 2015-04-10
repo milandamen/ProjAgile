@@ -39,7 +39,6 @@
         public function update($id)
         {
             $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            $newSidebar = array();
             $maxrowindex = $_POST['maxRowIndex'];
             $i=0;
             $pageNr = $id;
