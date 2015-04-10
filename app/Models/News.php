@@ -1,62 +1,120 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-/*
- Volgens mij moet dit model nog aangepast worden naar een model met een : publicatie datum, verdwijndatum en lijst-nummer (om omhoog te shoppen in de lijst).
+	class News extends Model 
+	{
+		/**
+		 * Table name.
+		 * 
+		 * @var string
+		 */
+		protected $table = 'news';
 
-*/
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
+		protected $primaryKey = 'newsId';
 
-class News extends Model {
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var boolean
+		 */
+		public $timestamps = false;
 
-	protected $table = 'news';
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $fillable = 
+		[
+			'districtsectionId', 
+			'userId', 
+			'title', 
+			'content', 
+			'date', 
+			'hidden', 
+			'commentable',
+			'publishStartDate',
+			'publishEndDate',
+			'top'
+		];
 
-	# Primary Key
-	protected $primaryKey = 'newsId';
-	protected $guarded = ['newsId'];
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $guarded = 
+		[
+			'newsId'
+		];
 
-	# Properties that can be changed
-	protected $fillable = ['districtsectionId', 'userId', 'title', 'content', 'date', 'hidden', 'comments'];
+        /**
+         * Get the date of this news item, in a d-m-Y format (so without the time).
+         * In order to call this, call $newsItem->normalDate() and NOT $newsItem->normalDate.
+         *
+         * @return string
+         */
+        public function normalDate()
+        {
+            $date = date_create($this->date);
 
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+            return date_format($date,'d-m-Y') ;
+        }
 
+		/**
+		 * Get all Carousel models that reference this News model.
+		 * 
+		 * @return Collection -> Carousel
+		 */
+		public function carousels() 
+		{
+			return $this->hasMany('App\Models\Carousel', 'newsId');
+		}
 
-	# Foreign keys
+		/**
+		 * Get the DistrictSection model that is referenced in this News model.
+		 * 
+		 * @return DistrictSection
+		 */
+		public function districtSection() 
+		{
+			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+		}
 
-	# Keys used in news
-	public function district() {
-		return $this->belongsTo('App\Models\Districtsection', 'districtsectionId');
+		/**
+		 * Get all File models that reference this News model.
+		 * 
+		 * @return Collection -> File
+		 */
+		public function files() 
+		{
+			return $this->hasMany('App\Models\File', 'fileId');
+		}
+
+		/**
+		 * Get all NewsComment models that reference this News model.
+		 * 
+		 * @return Collection -> NewsComment
+		 */
+		public function newsComments() 
+		{
+			return $this->hasMany('App\Models\NewsComment', 'newsId');
+		}
+
+		/**
+		 * Get the User model that is referenced in this News model.
+		 * 
+		 * @return User
+		 */
+		public function user() 
+		{
+	        return $this->belongsTo('App\Models\User', 'userId');
+		}
 	}
-
-	public function user() {
-        return $this->belongsTo('App\Models\User', 'userId');
-	}
-
-	# Key newsId used elsewhere
-	public function files() {
-		return $this->hasMany('App\Models\File', 'fileId');
-	}
-
-    //needs to be changed
-	public function carousel() {
-		return $this->hasMany('App\Models\Carousel', 'newsId');
-	}
-
-    public function newscomments() {
-        return $this->hasMany('App\Models\Newscomment', 'newsId');
-    }
-	
-	/**
-	 * Get the date of this news item, in a d-m-Y format (so without the time).
-	 * In order to call this, call $newsItem->normalDate()  and NOT $newsItem->normalDate
-	 */
-	public function normalDate() {
-		$date = date_create($this->date);
-		return date_format($date,'d-m-Y') ;
-	}
-
-}
-
-
-?>

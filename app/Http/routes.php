@@ -1,23 +1,15 @@
 <?php
+	// Auth controller routes
+	include('RoutePartials/_authControllerRoutes.php');
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+	// File controller routes
+	include('RoutePartials/_fileControllerRoutes.php');
 
-Route::get('/', 'HomeController@getIndex');
+	// Home controller routes
+	include('RoutePartials/_homeControllerRoutes.php');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-	'home'=> 'HomeController',
-	'sidebar' => 'SidebarController',
-    'news'=> 'NewsController',
-	'file' => 'FileController',
-]);
+	// News controller routes
+	include('RoutePartials/_newsControllerRoutes.php');
+
+    // Sidebar controller routes
+    include('RoutePartials/_sidebarControllerRoutes.php');

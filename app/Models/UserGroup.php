@@ -1,27 +1,58 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-class UserGroup extends Model {
+	class UserGroup extends Model 
+	{
+		/**
+		 * Table name.
+		 * 
+		 * @var string
+		 */
+		protected $table = 'usergroup';
 
-	protected $table = 'usergroup';
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
+		protected $primaryKey = 'userGroupId';
 
-	# Primary Key   (Geen standaardwaarde, noch auto-increment)
-	protected $primaryKey = 'userGroupId';
-	#protected $guarded = ['userGroupId'];
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var boolean
+		 */
+		public $timestamps = false;
 
-	# Properties that can be changed
-	protected $fillable = ['userGroupId', 'name'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $fillable = 
+		[
+			'name'
+		];
 
-	# Foreign Keys
-	public function users(){
-		return $this->hasMany('App\Models\User', 'foreign_key', 'userGroupId');
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $guarded = 
+		[
+			'userGroupId'
+		];
+
+		/**
+		 * Get all User models that reference this UserGroup model.
+		 * 
+		 * @return Collection -> User
+		 */
+		public function users()
+		{
+			return $this->hasMany('App\Models\User', 'userGroupId');
+		}
 	}
-
-}
-
-
-?>

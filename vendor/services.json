@@ -27,7 +27,8 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ComposerServiceProvider",
+        "App\\Providers\\ViewComposerServiceProvider",
+        "App\\Providers\\RepositoryServiceProvider",
         "Illuminate\\Html\\HtmlServiceProvider"
     ],
     "eager": [
@@ -47,7 +48,8 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ComposerServiceProvider"
+        "App\\Providers\\ViewComposerServiceProvider",
+        "App\\Providers\\RepositoryServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

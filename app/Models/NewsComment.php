@@ -1,25 +1,73 @@
-<?php namespace App\Models;
+<?php 
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
 
-class Newscomment extends Model {
+    class Newscomment extends Model 
+    {
+        /**
+         * Table name.
+         * 
+         * @var string
+         */
+        protected $table = 'newsComment';
 
-    protected $table = 'newscomment';
+        /**
+         * PrimaryKey name.
+         * 
+         * @var string
+         */
+        protected $primaryKey = 'newsCommentId';
 
-    # Primary Key
-    protected $primaryKey = 'newscommentId';
-    protected $guarded = ['newscommentId'];
+        /**
+         * Laravel's automatic timestamps convention.
+         * 
+         * @var boolean
+         */
+        public $timestamps = true;
 
-    # Properties that can be changed
-    protected $fillable = ['message', 'newsId', 'userId'];
+        /**
+         * Attributes that can be changed and thus are mass assingable.
+         * 
+         * @var array()
+         */
+        protected $fillable = 
+        [
+            'newsId', 
+            'userId',
+            'message',
+            'created_at',
+            'updated_at'
+        ];
 
-    # Keys used in newscomment
-    public function news() {
-        return $this->belongsTo('App\Models\News', 'newsId');
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable.
+         * 
+         * @var array()
+         */
+        protected $guarded = 
+        [
+            'newsCommentId'
+        ];
+
+
+        /**
+         * Get the News model that is referenced in this NewsComment model.
+         * 
+         * @return News
+         */
+        public function news() 
+        {
+            return $this->belongsTo('App\Models\News', 'newsId');
+        }
+
+        /**
+         * Get the User model that is referenced in this NewsComment model.
+         * 
+         * @return News
+         */
+        public function user() 
+        {
+            return $this->belongsTo('App\Models\User', 'userId');
+        }
     }
-
-    public function user() {
-        return $this->belongsTo('App\Models\User', 'userId');
-    }
-
-}

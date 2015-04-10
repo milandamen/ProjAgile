@@ -9,13 +9,13 @@
 				{{-- Script for laying out modules on correct spots --}}
 				
 				<div class="col-md-8">
-					@for ($i = 0; $i < count($layoutmodules) - 1; $i++)					{{-- Loop all modules, except the last one --}}
-						@include('home.' . $layoutmodules[$i]->modulename)
+					@for ($i = 0; $i < count($layoutModules) - 1; $i++)					{{-- Loop all modules, except the last one --}}
+						@include('home.partials._' . $layoutModules[$i]->moduleName)
 					@endfor
 				</div>
 				
 				<div class="col-md-4">
-					@include('home.' . $layoutmodules[ count($layoutmodules) - 1 ]->modulename)
+					@include('home.partials._' . $layoutModules[count($layoutModules) - 1]->moduleName)
 				</div>
 				
 				{{-- End layout script --}}
