@@ -1,5 +1,5 @@
 <?php	
-	Route::get('bestand/{fileName}',
+	Route::get('download/{fileName}',
 	[
 		'as' => 'file.download',                 	
 		'uses' => 'FileController@getDownload'
