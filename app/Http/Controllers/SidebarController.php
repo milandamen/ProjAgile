@@ -59,7 +59,11 @@ class SidebarController extends Controller {
 							$extern = true;
 							$link = $rowItems['link'][$row];
 						} else {
-							$link = $rowItems['pagename'][$row];
+							if($rowItems['pagename'][$row] != ''){
+							    $link = $rowItems['pagename'][$row];
+							} else {
+								$link = $rowItems['link'][$row];
+							} 
 							$extern = false;
 						}
 
