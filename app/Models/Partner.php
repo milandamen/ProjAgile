@@ -3,21 +3,21 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Carousel extends Model 
+	class Partner extends Model 
 	{
 		/**
 	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'carousel';
+		protected $table = 'partner';
 
         /**
          * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'carouselId';
+		protected $primaryKey = 'partnerId';
 
         /**
          * Laravel's automatic timestamps convention.
@@ -33,8 +33,8 @@
          */
 		protected $fillable = 
 		[
-			'newsId', 
-			'imagePath'
+			'name', 
+			'url'
 		];
 
         /**
@@ -44,16 +44,6 @@
          */
 		protected $guarded = 
 		[
-			'carouselId'
+			'partnerId'
 		];
-
-		/**
-		 * Get the News model that is referenced in this Carousel model.
-		 * 
-		 * @return News
-		 */
-		public function news() 
-		{
-			return $this->belongsTo('App\Models\News');
-		}
 	}

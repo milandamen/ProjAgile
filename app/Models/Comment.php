@@ -3,21 +3,21 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Carousel extends Model 
+	class Comment extends Model 
 	{
 		/**
 	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'carousel';
+		protected $table = 'comment';
 
         /**
          * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'carouselId';
+		protected $primaryKey = 'commentId';
 
         /**
          * Laravel's automatic timestamps convention.
@@ -33,8 +33,11 @@
          */
 		protected $fillable = 
 		[
-			'newsId', 
-			'imagePath'
+			'topicId', 
+			'userId',
+			'message',
+			'date',
+			'hidden'
 		];
 
         /**
@@ -44,16 +47,26 @@
          */
 		protected $guarded = 
 		[
-			'carouselId'
+			'commentId'
 		];
 
 		/**
-		 * Get the News model that is referenced in this Carousel model.
+		 * Get the Topic model that is referenced in this Comment model.
+		 * 
+		 * @return Topic
+		 */
+		public function topic() 
+		{
+			return $this->belongsTo('App\Models\Topic');
+		}
+
+		/**
+		 * Get the User model that is referenced in this Comment model.
 		 * 
 		 * @return News
 		 */
-		public function news() 
+		public function user() 
 		{
-			return $this->belongsTo('App\Models\News');
+			return $this->belongsTo('App\Models\User');
 		}
 	}

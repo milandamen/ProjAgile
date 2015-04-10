@@ -2,7 +2,7 @@
 	Route::get('/',                                         		
 	[
 		'as' => 'home.index',                        	
-		'uses' => 'HomeController@index'
+		'uses' => 'HomeController@getIndex'
 	]);
 
 	Route::get('home/layout/aanpassen',                             

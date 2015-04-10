@@ -7,9 +7,11 @@
 
     class MenuComposer 
     {
+        private $menuRepo;
+
         public function __construct(IMenuRepository $menurepo)
         {	
-        	$this->menurepo = $menurepo;
+        	$this->menuRepo = $menuRepo;
         }
 
         /**
@@ -21,7 +23,7 @@
          */
         public function compose(View $view)
         {
-        	$menu = $this->menurepo->getAll();
+        	$menu = $this->menuRepo->getAll();
     		$view->with('menu', $menu); 
         }
     }

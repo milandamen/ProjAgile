@@ -49,4 +49,24 @@
         [
             'menuId'
         ];
+
+        /**
+         * Get all Menu models that reference this Menu model.
+         * 
+         * @return Collection -> Menu
+         */
+        public function children() 
+        {
+            return $this->hasMany('App\Models\Menu', 'foreign_key', 'menuId');
+        }
+
+        /**
+         * Get the Menu model that is referenced in this Menu model.
+         * 
+         * @return Menu
+         */
+        public function father() 
+        {
+            return $this->belongsTo('App\Models\Menu');
+        }
     }

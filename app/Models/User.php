@@ -74,23 +74,23 @@
 	    ];
 
 		/**
-		 * Get the District model that is referenced in this User model.
+		 * Get all Comment models that reference this User model.
 		 * 
-		 * @return Districtsection
+		 * @return Collection -> Comment
 		 */
-		public function district() 
+		public function comments()
 		{
-			return $this->belongsTo('App\Models\District', 'foreign_key');
+	        return $this->hasMany('App\Models\Comment', 'foreign_key', 'userId');
 		}
 
 		/**
-		 * Get the UserGroup model that is referenced in this User model.
+		 * Get the Districtsection model that is referenced in this User model.
 		 * 
-		 * @return UserGroup
+		 * @return Districtsection
 		 */
-		public function usergroup()
+		public function districtSection() 
 		{
-			return $this->belongsTo('App\Models\UserGroup', 'foreign_key');
+			return $this->belongsTo('App\Models\DistrictSection');
 		}
 
 		/**
@@ -100,6 +100,46 @@
 		 */
 		public function news()
 		{
-	        return $this->hasMany('App\Models\News', 'newsId');
+	        return $this->hasMany('App\Models\News', 'foreign_key', 'userId');
+		}
+
+		/**
+		 * Get all NewsComment models that reference this User model.
+		 * 
+		 * @return Collection -> NewsComment
+		 */
+		public function newsComments()
+		{
+	        return $this->hasMany('App\Models\NewsComment', 'foreign_key', 'userId');
+		}
+
+		/**
+		 * Get the Postal model that is referenced in this User model.
+		 * 
+		 * @return Postal
+		 */
+		public function postal() 
+		{
+			return $this->belongsTo('App\Models\Postal');
+		}
+
+		/**
+		 * Get all Topic models that reference this User model.
+		 * 
+		 * @return Collection -> Topic
+		 */
+		public function topics()
+		{
+	        return $this->hasMany('App\Models\Topic', 'foreign_key', 'userId');
+		}
+
+		/**
+		 * Get the UserGroup model that is referenced in this User model.
+		 * 
+		 * @return UserGroup
+		 */
+		public function usergroup()
+		{
+			return $this->belongsTo('App\Models\UserGroup');
 		}
 	}

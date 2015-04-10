@@ -8,18 +8,22 @@
 
 	class HomeController extends Controller 
 	{
-
 		/**
-		 * Create a new controller instance.
+		 * Creates a new controller instance.
+		 *
+		 * @param IHomeLayoutRepository 	$homeLayoutRepo
+	     * @param IIntroductionRepository   $introRepo
+	     * @param INewsRepository        	$newsRepo
+	     * @param ISidebarRepository        $sidebarRepo
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutrepo, IIntroductionRepository $introrepo, INewsRepository $newsrepo, ISidebarRepository $sidebarrepo)
+		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, INewsRepository $newsRepo, ISidebarRepository $sidebarRepo)
 		{
-			$this->homeLayoutrepo = $homeLayoutrepo;
-			$this->introrepo = $introrepo;
-			$this->newsrepo = $newsrepo;
-			$this->sidebarrepo = $sidebarrepo;
+			$this->homeLayoutRepo = $homeLayoutRepo;
+			$this->introRepo = $introRepo;
+			$this->newsRepo = $newsRepo;
+			$this->sidebarRepo = $sidebarRepo;
 		}
 
 		/**
@@ -29,17 +33,11 @@
 		 */
 		public function getIndex()
 		{
+			$news = $this->newsRepo->getAll();
+			$introduction = $this->introRepo->getAll();
+			$layoutModules = $this->homeLayoutRepo->getAll();
 
-			$modules = $this->homeLayoutrepo->getAll();
-			$introduction = $this->introrepo->getAll();
-			$data = 
-			[
-				'news' => $this->newsrepo->getAll(), 
-				'intro'=>$introduction, 
-				'layoutmodules'=>$modules
-			];
-
-			return view('home.home', $data);
+			return view('home.index', compact('news', 'introduction', 'layoutModules'));
 		}
 
 		/**
@@ -47,27 +45,22 @@
 		 *
 		 * @return Response
 		 */
-		public function getEditLayout(){
-			
-			$modules = $this->homeLayoutrepo->getAll();
+		public function getEditLayout()
+		{
+			$news = $this->newsrepo->getAll();
 			$introduction = $this->introrepo->getAll();
-			$data = 
-			[
-				'news' => $this->newsrepo->getAll(), 
-				'intro'=> $introduction, 
-				'layoutmodules'=> $modules
-			];
+			$layoutModules = $this->homeLayoutrepo->getAll();
 
-			return view('home.editlayout', $data);
+			return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
 		}
 
 		/**
-		 * Show the edit layout page.
+		 * Post the edit layout page and handle the input.
 		 *
 		 * @return Response
 		 */
-		public function postEditLayout(){
-
+		public function postEditLayout()
+		{
 			if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
 			{
 				#intro
@@ -85,12 +78,12 @@
 				$moduleSidebar->ordernumber = $_POST['module-sidebar'];
 				$moduleSidebar->save();
 
-				return redirect('home.home');
+				return redirect('home.index');
 			} 
 		}
 
 		/**
-		 * Show the edit layout page.
+		 * Show the edit intro page.
 		 *
 		 * @return Response
 		 */
@@ -98,14 +91,14 @@
 		{
 			$data = 
 			[
-				'intro'=>$this->introrepo->getById(1)
+				'intro'=>$this->introRepo->getById(1)
 			];
 
-			return View('intro/edit', data);
+			return View('intro.edit', data);
 		}
 
 		/**
-		 * Show the edit layout page.
+		 * Post the edit intro page and handle the input.
 		 *
 		 * @return Response
 		 */
@@ -121,6 +114,6 @@
 	        $intro->content = $content;
 	        $this->introrepo->update($intro);
 
-	     	return redirect('home.home');
+	     	return redirect('home.index');
 		}
 	}

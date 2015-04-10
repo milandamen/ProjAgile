@@ -7,9 +7,11 @@
 
     class FooterComposer 
     {
-        public function __construct(IFooterRepository $footerrepo)
+        private $footerRepo;
+
+        public function __construct(IFooterRepository $footerRepo)
         {	
-        	$this->footerrepo = $footerrepo;
+        	$this->footerRepo = $footerRepo;
         }
 
         /**
@@ -21,7 +23,7 @@
          */
         public function compose(View $view)
         {
-        	$footer = $this->footerrepo->getAll();
+        	$footer = $this->footerRepo->getAll();
     		$view->with('footer', $footer); 
         }
     }

@@ -1,5 +1,5 @@
 <?php 
-	amespace App\Models;
+	namespace App\Models;
 
 	use Illuminate\Database\Eloquent\Model;
 
@@ -54,6 +54,6 @@
 		 */
 		public function news() 
 		{
-			return $this->belongsTo('App\Models\News', 'newsId');
+			return $this->belongsTo('App\Models\News');
 		}
 	}

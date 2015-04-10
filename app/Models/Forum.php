@@ -3,21 +3,21 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Carousel extends Model 
+	class Forum extends Model 
 	{
 		/**
 	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'carousel';
+		protected $table = 'forum';
 
         /**
          * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'carouselId';
+		protected $primaryKey = 'forumId';
 
         /**
          * Laravel's automatic timestamps convention.
@@ -33,8 +33,8 @@
          */
 		protected $fillable = 
 		[
-			'newsId', 
-			'imagePath'
+			'name', 
+			'description'
 		];
 
         /**
@@ -44,16 +44,16 @@
          */
 		protected $guarded = 
 		[
-			'carouselId'
+			'forumId'
 		];
 
 		/**
-		 * Get the News model that is referenced in this Carousel model.
+		 * Get all Topic models that reference this Forum model.
 		 * 
-		 * @return News
+		 * @return Collection -> Topic
 		 */
-		public function news() 
+		public function topics() 
 		{
-			return $this->belongsTo('App\Models\News');
+			return $this->hasMany('App\Models\Topic', 'foreign_key', 'forumId');
 		}
 	}

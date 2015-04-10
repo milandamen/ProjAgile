@@ -7,9 +7,11 @@
 
     class SidebarComposer
     {
-        public function __construct(ISidebarRepository $sidebarrepo)
+        private $sidebarRepo;
+
+        public function __construct(ISidebarRepository $sidebarRepo)
         {	
-        	$this->sidebarrepo = $sidebarrepo;
+        	$this->sidebarRepo = $sidebarRepo;
         }
 
         /**
@@ -21,7 +23,7 @@
          */
         public function compose(View $view)
         {
-        	$sidebar = $this->sidebarrepo->getByPage(1);
+        	$sidebar = $this->sidebarRepo->getByPage(1);
     		$view->with('sidebar', $sidebar); 
         }
     }

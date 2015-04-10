@@ -3,21 +3,21 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Carousel extends Model 
+	class Activity extends Model 
 	{
 		/**
 	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'carousel';
+		protected $table = 'activity';
 
         /**
          * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'carouselId';
+		protected $primaryKey = 'activityId';
 
         /**
          * Laravel's automatic timestamps convention.
@@ -33,8 +33,10 @@
          */
 		protected $fillable = 
 		[
-			'newsId', 
-			'imagePath'
+			'districtSectionId', 
+			'title',
+			'content',
+			'hidden',
 		];
 
         /**
@@ -44,16 +46,16 @@
          */
 		protected $guarded = 
 		[
-			'carouselId'
+			'activityId'
 		];
 
 		/**
-		 * Get the News model that is referenced in this Carousel model.
+		 * Get the DistrictSection model that is referenced in this Activity model.
 		 * 
-		 * @return News
+		 * @return DistrictSection
 		 */
-		public function news() 
+		public function districtSection() 
 		{
-			return $this->belongsTo('App\Models\News');
+			return $this->belongsTo('App\Models\DistrictSection');
 		}
 	}

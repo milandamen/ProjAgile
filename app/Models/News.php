@@ -56,24 +56,23 @@
 		];
 
 		/**
-		 * Get the District model that is referenced in this News model.
+		 * Get all Carousel models that reference this News model.
+		 * 
+		 * @return Collection -> Carousel
+		 */
+		public function carousels() 
+		{
+			return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
+		}
+
+		/**
+		 * Get the DistrictSection model that is referenced in this News model.
 		 * 
 		 * @return Districtsection
 		 */
-		public function district() 
+		public function districtSection() 
 		{
-			return $this->belongsTo('App\Models\Districtsection', 'districtsectionId');
-		}
-
-
-		/**
-		 * Get the User model that is referenced in this News model.
-		 * 
-		 * @return User
-		 */
-		public function user() 
-		{
-	        return $this->belongsTo('App\Models\User', 'userId');
+			return $this->belongsTo('App\Models\Districtsection');
 		}
 
 		/**
@@ -83,16 +82,26 @@
 		 */
 		public function files() 
 		{
-			return $this->hasMany('App\Models\File', 'fileId');
+			return $this->hasMany('App\Models\File', 'foreign_key', 'fileId');
 		}
 
 		/**
-		 * Get all Carousel models that reference this News model.
+		 * Get all NewsComment models that reference this News model.
 		 * 
-		 * @return Collection -> Carousel
+		 * @return Collection -> NewsComment
 		 */
-		public function carousel() 
+		public function newsComments() 
 		{
-			return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
+			return $this->hasMany('App\Models\NewsComment', 'foreign_key', 'newsId');
+		}
+
+		/**
+		 * Get the User model that is referenced in this News model.
+		 * 
+		 * @return User
+		 */
+		public function user() 
+		{
+	        return $this->belongsTo('App\Models\User');
 		}
 	}

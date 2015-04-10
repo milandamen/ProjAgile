@@ -33,7 +33,7 @@
          */
 		protected $fillable = 
 		[
-			'moduleName'
+			'moduleName',
 			'ordernumber'
 		];
 
