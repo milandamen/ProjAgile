@@ -20,5 +20,4 @@ Route::controllers([
 	'sidebar' => 'SidebarController',
     'news'=> 'NewsController',
 	'file' => 'FileController',
->>>>>>> develop
 ]);
