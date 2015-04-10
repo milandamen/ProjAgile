@@ -9,13 +9,12 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form name="updateFooter" id="updateFooter" method="post" enctype="multipart/form-data" action="">
+            {!! Form::open(array('action' => 'FooterController@postEdit')) !!}
                 <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
                 <hr/>
                 <div id="footer-tables" class="footer-tables">
                     @for($c = 0; $c < count($footer); $c++)
                         <table name="{{$c}}" class="col-sm-4">
-
                             <tr>
                                 <td>
                                     <button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button>
@@ -63,11 +62,10 @@
                     <button type="button" class="btn btn-danger" onclick="goBack()">Annuleren</button>
                     <button type="submit" class="btn btn-success">Opslaan</button>
                 </div>
-            </form>
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('additional_scripts')

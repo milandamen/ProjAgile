@@ -2,19 +2,19 @@
 
 use App\Models\Footer;
 use App\Repository\FooterRepository;
-
+use Illuminate\Support\Facades\Redirect;
 
 class FooterController extends Controller
 {
-    public function __construct()
+
+    public function __construct(FooterRepository $footerRepository)
     {
-        //$this->setAuth(new AuthenticationController());
+        $this->footerRepository = $footerRepository;
     }
 
     public function getEdit()
     {
-        $footerdb = new FooterRepository();
-        $footer = $footerdb->getAll();
+        $footer = $this->footerRepository->getAll();
 
         $numColumns = 0;
         foreach($footer as $item)
@@ -24,7 +24,9 @@ class FooterController extends Controller
                 $numColumns = $item->col + 1;
             }
         }
+
         $footerColumns = [];
+
         for($i = 0; $i < $numColumns; $i++)
         {
             $footerColumns[] = [];
@@ -34,12 +36,82 @@ class FooterController extends Controller
             $footerColumns[$item->col][$item->row] = $item;
         }
 
-//        $this->header("Update Footer");
-//        $this->menu();
-//        $this->view('footer/footerUpdate', ['footerColumns' => $footerColumns]);
-//        $this->footer();
-
         return view('footer/edit', $footerColumns);
+    }
+
+    public function postEdit()
+    {
+        $footer = $this->footerRepository->getAll();
+
+        //create new footer array from $_POST
+        $newFooter = [];
+
+        for($colN = 0; $colN < count($_POST['footer']); $colN++)
+        {
+            $column = $_POST['footer'][$colN];
+            for($rowN = 0; $rowN < count($column['text']); $rowN++)
+            {
+                //check if text has been filled in
+                if($column['text'][$rowN] != null)
+                {
+                    $newFooterItem = new Footer();
+                    $newFooterItem->col = $colN;
+                    $newFooterItem->row = $rowN;
+                    $newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
+                    $newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
+                    $newFooter[] = $newFooterItem;
+                }
+                else
+                {
+                    echo "Vul a.u.b. alle verplichte velden in";
+                    return;
+                }
+            }
+        }
+
+        //loop through new entries, adding or updating them
+        foreach($newFooter as $entry)
+        {
+            //loop through old footer
+            $isNew = 1;
+            foreach($footer as $item)
+            {
+                if($item->col == $entry->col && $item->row == $entry->row)
+                {
+                    $isNew = 0;
+                    break;
+                }
+            }
+            if($isNew == 1)
+            {
+                //create
+                $this->footerRepository->save($entry);
+            }
+            else
+            {
+                //update (is this correct?)
+                //$this->footerRepository->save($entry);
+            }
+        }
+
+        //delete removed items
+        foreach($footer as $item)
+        {
+            $canDelete = 1;
+            foreach($newFooter as $entry)
+            {
+                if($item->col == $entry->col && $item->row == $entry->row)
+                {
+                    $canDelete = 0;
+                    break;
+                }
+            }
+            if($canDelete == 1)
+            {
+                $this->footerRepository->delete($item);
+            }
+        }
+        return Redirect::action('FooterController@getEdit');
     }
 
     public function footerUpdate()

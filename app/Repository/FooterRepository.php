@@ -31,5 +31,10 @@ class FooterRepository extends BaseRepository {
     {
         return Footer::create($attributes);
     }
+
+//    public function delete($footerId)
+//    {
+//        Footer::where('footerId', '=', 'footerId')->delete();
+//    }
 }
 ?>
