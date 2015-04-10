@@ -56,6 +56,6 @@
 		 */
 		public function districtSection() 
 		{
-			return $this->belongsTo('App\Models\DistrictSection');
+			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
 		}
 	}

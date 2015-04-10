@@ -10,14 +10,14 @@
 	     * 
 	     * @var string
 	     */
-		protected $table = 'comment';
+		protected $table = 'topicComment';
 
         /**
          * PrimaryKey name.
          * 
          * @var string
          */
-		protected $primaryKey = 'commentId';
+		protected $primaryKey = 'topicCommentId';
 
         /**
          * Laravel's automatic timestamps convention.
@@ -57,7 +57,7 @@
 		 */
 		public function topic() 
 		{
-			return $this->belongsTo('App\Models\Topic');
+			return $this->belongsTo('App\Models\Topic', 'topicId');
 		}
 
 		/**
@@ -67,6 +67,6 @@
 		 */
 		public function user() 
 		{
-			return $this->belongsTo('App\Models\User');
+			return $this->belongsTo('App\Models\User', 'userId');
 		}
 	}

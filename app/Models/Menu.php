@@ -57,7 +57,7 @@
          */
         public function children() 
         {
-            return $this->hasMany('App\Models\Menu', 'foreign_key', 'menuId');
+            return $this->hasMany('App\Models\Menu', 'menuId');
         }
 
         /**
@@ -67,6 +67,6 @@
          */
         public function father() 
         {
-            return $this->belongsTo('App\Models\Menu');
+            return $this->belongsTo('App\Models\Menu', 'menuId');
         }
     }

@@ -58,7 +58,7 @@
          */
         public function news() 
         {
-            return $this->belongsTo('App\Models\News');
+            return $this->belongsTo('App\Models\News', 'newsId');
         }
 
         /**
@@ -68,6 +68,6 @@
          */
         public function user() 
         {
-            return $this->belongsTo('App\Models\User');
+            return $this->belongsTo('App\Models\User', 'userId');
         }
     }

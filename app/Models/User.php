@@ -80,17 +80,17 @@
 		 */
 		public function comments()
 		{
-	        return $this->hasMany('App\Models\Comment', 'foreign_key', 'userId');
+	        return $this->hasMany('App\Models\Comment', 'userId');
 		}
 
 		/**
-		 * Get the Districtsection model that is referenced in this User model.
+		 * Get the DistrictSection model that is referenced in this User model.
 		 * 
-		 * @return Districtsection
+		 * @return DistrictSection
 		 */
 		public function districtSection() 
 		{
-			return $this->belongsTo('App\Models\DistrictSection');
+			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
 		}
 
 		/**
@@ -100,7 +100,7 @@
 		 */
 		public function news()
 		{
-	        return $this->hasMany('App\Models\News', 'foreign_key', 'userId');
+	        return $this->hasMany('App\Models\News', 'userId');
 		}
 
 		/**
@@ -110,7 +110,7 @@
 		 */
 		public function newsComments()
 		{
-	        return $this->hasMany('App\Models\NewsComment', 'foreign_key', 'userId');
+	        return $this->hasMany('App\Models\NewsComment', 'userId');
 		}
 
 		/**
@@ -120,7 +120,7 @@
 		 */
 		public function postal() 
 		{
-			return $this->belongsTo('App\Models\Postal');
+			return $this->belongsTo('App\Models\Postal', 'postalId');
 		}
 
 		/**
@@ -130,7 +130,7 @@
 		 */
 		public function topics()
 		{
-	        return $this->hasMany('App\Models\Topic', 'foreign_key', 'userId');
+	        return $this->hasMany('App\Models\Topic', 'userId');
 		}
 
 		/**
@@ -140,6 +140,6 @@
 		 */
 		public function usergroup()
 		{
-			return $this->belongsTo('App\Models\UserGroup');
+			return $this->belongsTo('App\Models\UserGroup', 'userGroupId');
 		}
 	}

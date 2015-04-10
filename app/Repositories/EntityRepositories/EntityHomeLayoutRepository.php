@@ -19,13 +19,21 @@
 		}
 
     	/**
-         * Returns all the HomeLayoutModule models in the database.
+         * Returns all the HomeLayoutModule models in the database and order them by orderNumber.
          * 
          * @return Collection -> HomeLayoutModule
          */
 		public function getAll() 
 		{
-			return HomeLayoutModule::all();
+            $objects = HomeLayoutModule::all();
+            $modules = [];
+
+            // Order modules
+            foreach ($objects as $module)
+            {
+                $modules[$module->orderNumber] = $module;
+            }
+            return $modules;
 		}
 		
         /**

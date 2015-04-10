@@ -13,12 +13,14 @@ function addSideRow(button){
  	var tableNumber = maxRowIndex + 1;
 	var row = table.insertRow();
  	var cellText = row.insertCell();
+ 	var cellIntern = row.insertCell();
  	var cellLink = row.insertCell();
  	var cellRadio = row.insertCell();
  	var cellDelete = row.insertCell();
 
  	cellText.innerHTML = 'Tekst: <input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
- 	cellLink.innerHTML = 'Link: <input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
+ 	cellIntern.innerHTML = 'Zoek intern <input id="page_name" name="sidebar['+ tableNumber+'][pagename][]" type="text" list="pagedata" /><datalist id="pagedata">@foreach($menu as $menuitem)<option value="{{$menuitem->relativeUrl}}" label="{{$menuitem->name}}">@endforeach</datalist>';
+ 	cellLink.innerHTML = 'Link naar: <input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
 
 
  	var div = document.createElement("div");

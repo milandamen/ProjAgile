@@ -54,7 +54,7 @@
 		 */
 		public function activities() 
 		{
-			return $this->hasMany('App\Models\Activity', 'foreign_key', 'districtSectionId');
+			return $this->hasMany('App\Models\Activity', 'districtSectionId');
 		}
 
 		/**
@@ -64,7 +64,7 @@
 		 */
 		public function contacts() 
 		{
-			return $this->hasMany('App\Models\Contact', 'foreign_key', 'districtSectionId');
+			return $this->hasMany('App\Models\Contact', 'districtSectionId');
 		}
 
 		/**
@@ -74,7 +74,7 @@
 		 */
 		public function news() 
 		{
-			return $this->hasMany('App\Models\News', 'foreign_key', 'districtSectionId');
+			return $this->hasMany('App\Models\News', 'districtSectionId');
 		}
 
 		/**
@@ -84,7 +84,7 @@
 		 */
 		public function projects() 
 		{
-			return $this->hasMany('App\Models\Project', 'foreign_key', 'districtSectionId');
+			return $this->hasMany('App\Models\Project', 'districtSectionId');
 		}
 
 		/**
@@ -94,6 +94,6 @@
 		 */
 		public function users() 
 		{
-			return $this->hasMany('App\Models\User', 'foreign_key', 'districtSectionId');
+			return $this->hasMany('App\Models\User', 'districtSectionId');
 		}
 	}

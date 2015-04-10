@@ -53,6 +53,6 @@
          */
         public function users()
         {
-            return $this->hasMany('App\Models\User', 'foreign_key', 'postalId');
+            return $this->hasMany('App\Models\User', 'postalId');
         }
     }

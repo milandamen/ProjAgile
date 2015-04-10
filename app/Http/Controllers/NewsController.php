@@ -22,42 +22,41 @@
          *
          * @return void
          */
-        public function __construct(INewsCommentRepository  $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo)
+        public function __construct(INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo)
         {
             $this->newsCommentRepo = $newsCommentRepo;
             $this->newsRepo = $newsRepo;
             $this->userRepo = $userRepo;
         }
 
-        public function getDetail($newsId)
+        public function show($newsId)
         {
-            $news = $this->newsRepository->get($newsId);
-
-            $fileLinks = array();
+            $news = $this->newsRepo->get($newsId);
+            $fileLinks = [];
 
             if($news != null)
             {
                 foreach($news->files as $file)
                 {
                     $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                    $fileLinks[] = '<a href="' . action('FileController@getDownload') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
+                    $fileLinks[] = '<a href="' . route('file.download') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
                 }
             }
-            return view('news/detail', $data = array('news' => $news, 'fileLinks' => $fileLinks));
+            return view('news.show', compact('news', 'fileLinks'));
         }
 
-        public function postComment()
+        public function comment()
         {
             $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
             $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
 
-            $newscomment = new Newscomment();
-            $newscomment->message = $comment;
-            $newscomment->newsId = $newsId;
-            //Needs to be changed later on
-            $newscomment->userId = 1;
+            $attributes['newsId'] = $newsId;
+            // Needs to be changed later on
+            $attributes['userId'] = 1;
+            $attributes['message'] = $comment;
 
-            $this->newscommentRepository->save($newscomment);
-            return Redirect::action('NewsController@getDetail', $newsId);
+            $this->newsCommentRepo->create($attributes);
+
+            return Redirect::route('news.show', [$newsId]);
         }
     }

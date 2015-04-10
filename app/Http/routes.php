@@ -10,3 +10,6 @@
 
 	// News controller routes
 	include('RoutePartials/_newsControllerRoutes.php');
+
+    // Sidebar controller routes
+    include('RoutePartials/_sidebarControllerRoutes.php');

@@ -1,30 +1,30 @@
 <?php	
 	Route::get('registreren',                                      	
 	[
-		'as' => 'register',                        
+		'as' => 'auth.register',
 		'uses' => 'Auth\AuthController@getRegister'
 	]);
 
 	Route::post('registreren',                                     	
 	[
-		'as' => 'register',                        
+		'as' => 'auth.register',
 		'uses' => 'Auth\AuthController@postRegister'
 	]);
 
 	Route::get('inloggen',											
 	[
-		'as' => 'login',							
+		'as' => 'auth.login',
 		'uses' => 'Auth\AuthController@getLogin'
 	]);
 
 	Route::post('inloggen',                                        	
 	[
-		'as' => 'login',                        	
+		'as' => 'auth.login',
 		'uses' => 'Auth\AuthController@postLogin'
 	]);
 
 	Route::get('uitloggen',                                      	
 	[
-		'as' => 'logout',                        	
+		'as' => 'auth.logout',
 		'uses' => 'Auth\AuthController@getLogout'
 	]);

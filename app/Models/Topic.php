@@ -59,7 +59,7 @@
          */
         public function children() 
         {
-            return $this->hasMany('App\Models\Comment', 'foreign_key', 'topicId');
+            return $this->hasMany('App\Models\Comment', 'topicId');
         }
 
         /**
@@ -69,7 +69,7 @@
          */
         public function forum() 
         {
-            return $this->belongsTo('App\Models\Forum');
+            return $this->belongsTo('App\Models\Forum', 'forumId');
         }
 
         /**
@@ -79,6 +79,6 @@
          */
         public function user() 
         {
-            return $this->belongsTo('App\Models\User');
+            return $this->belongsTo('App\Models\User', 'userId');
         }
 	}

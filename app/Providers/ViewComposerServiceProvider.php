@@ -14,9 +14,9 @@
         public function boot()
         {
             // Using class based composers...
-            View::composer('*', 'App\Http\ViewComposers\FooterComposer');
+            View::composer('partials.footer', 'App\Http\ViewComposers\FooterComposer');
             View::composer('*', 'App\Http\ViewComposers\MenuComposer');
-            View::composer('home.home', 'App\Http\ViewComposers\SidebarComposer');
+            View::composer('home.index', 'App\Http\ViewComposers\SidebarComposer');
         }
 
         /**

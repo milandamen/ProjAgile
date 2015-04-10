@@ -53,6 +53,6 @@
 		 */
 		public function users()
 		{
-			return $this->hasMany('App\Models\User', 'foreign_key', 'userGroupId');
+			return $this->hasMany('App\Models\User', 'userGroupId');
 		}
 	}
