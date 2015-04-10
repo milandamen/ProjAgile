@@ -34,6 +34,7 @@ class FooterComposer {
         }
 
         $footerColumns = [];
+
         for($i = 0; $i < $numberOfColumns; $i++)
         {
             $footerColumns[] = [];

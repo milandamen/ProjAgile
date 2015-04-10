@@ -48,6 +48,7 @@ function addRow(button)
 
 function removeRow(button)
 {
+    console.log("TEST");
     var row=button.parentNode;
     row.parentNode.removeChild(row);
 }

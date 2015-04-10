@@ -19,4 +19,5 @@ Route::controllers([
 	'home'=> 'HomeController',
     'news'=> 'NewsController',
 	'file' => 'FileController',
+    'footer' => 'FooterController',
 ]);
