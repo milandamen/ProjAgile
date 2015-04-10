@@ -28,12 +28,13 @@ class User extends Model {
 		return $this->belongsTo('App\Models\UserGroup', 'foreign_key');
 	}
 
-	# userid used elsewhere
 	public function news(){
-		return $this->hasMany('App\Models\News', 'foreign_key', 'userId');
+        return $this->hasMany('App\Models\News', 'newsId');
 	}
 
-
+    public function newscomments(){
+        return $this->hasMany('App\Models\Newscomment', 'newscommentId');
+    }
 
 }
 

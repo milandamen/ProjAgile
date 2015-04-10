@@ -16,7 +16,7 @@ class News extends Model {
 	protected $guarded = ['newsId'];
 
 	# Properties that can be changed
-	protected $fillable = ['districtSectionId', 'userId', 'title', 'content', 'date', 'hidden'];
+	protected $fillable = ['districtsectionId', 'userId', 'title', 'content', 'date', 'hidden', 'comments'];
 
 	# Laravel's automatic timestamps (like updated_at) 
 	public $timestamps = false;
@@ -26,22 +26,26 @@ class News extends Model {
 
 	# Keys used in news
 	public function district() {
-		return $this->belongsTo('App\Models\DistrictSection', 'foreign_key');
+		return $this->belongsTo('App\Models\Districtsection', 'districtsectionId');
 	}
 
 	public function user() {
-		return $this->belongsTo('App\Models\User', 'foreign_key');
+        return $this->belongsTo('App\Models\User', 'userId');
 	}
 
 	# Key newsId used elsewhere
 	public function files() {
-		return $this->hasMany('App\Models\File', 'foreign_key', 'newsId');
+		return $this->hasMany('App\Models\File', 'fileId');
 	}
 
+    //needs to be changed
 	public function carousel() {
 		return $this->hasMany('App\Models\Carousel', 'foreign_key', 'newsId');
 	}
 
+    public function newscomments() {
+        return $this->hasMany('App\Models\Newscomment', 'newsId');
+    }
 
 }
 

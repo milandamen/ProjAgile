@@ -3,7 +3,7 @@ namespace App\Repository;
 use App\Repository\BaseRepository;
 use App\Models\Districtsection;
 
-class DistrictSectionRepository extends BaseRepository
+class DistrictsectionRepository extends BaseRepository
 {
 	public function getAll() {
 		return Districtsection::all();
