@@ -2,29 +2,29 @@
 	Route::get('/',                                         		
 	[
 		'as' => 'home.index',                        	
-		'uses' => 'HomeController@getIndex'
+		'uses' => 'HomeController@index'
 	]);
 
-	Route::get('home/layout/aanpassen',                             
+	Route::get('layout/aanpassen',
 	[
 		'as' => 'home.editLayout',                 
-		'uses' => 'HomeController@getEditLayout'
+		'uses' => 'HomeController@editLayout'
 	]);
 
-	Route::post('home/layout/aanpassen',                            
+	Route::post('layout/aanpassen',
 	[
 		'as' => 'home.editLayout',                 
-		'uses' => 'HomeController@postEditLayout'
+		'uses' => 'HomeController@updateLayout'
 	]);
 
-	Route::get('home/introductie/aanpassen',                       	
+	Route::get('introductie/aanpassen',
 	[
-		'as' => 'home.editIntro',                 	
-		'uses' => 'HomeController@getEditIntro'
+		'as' => 'home.editIntroduction',
+		'uses' => 'HomeController@editIntroduction'
 	]);
 
-	Route::post('home/introductie/aanpassen',                       
+	Route::post('introductie/aanpassen',
 	[
-		'as' => 'home.editIntro',                 	
-		'uses' => 'HomeController@postEditIntro'
+		'as' => 'home.editIntroduction',
+		'uses' => 'HomeController@updateIntroduction'
 	]);

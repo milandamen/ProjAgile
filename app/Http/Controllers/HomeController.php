@@ -4,6 +4,7 @@
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use Illuminate\Support\Facades\Redirect;
 
 	class HomeController extends Controller 
 	{
@@ -28,7 +29,7 @@
 		 *
 		 * @return Response
 		 */
-		public function getIndex()
+		public function index()
         {
             $news = $this->newsRepo->getAll();
             $introduction = $this->introRepo->getAll();
@@ -42,7 +43,7 @@
          *
          * @return Response
          */
-        public function getEditLayout()
+        public function editLayout()
         {
             $news = $this->newsRepo->getAll();
             $introduction = $this->introRepo->getAll();
@@ -56,7 +57,7 @@
          *
          * @return Response
          */
-        public function postEditLayout()
+        public function updateLayout()
         {
             if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
             {
@@ -75,11 +76,11 @@
                 $moduleSidebar->orderNumber = $_POST['module-sidebar'];
                 $this->homeLayoutRepo->update($moduleSidebar);
 
-                return redirect('home.index');
+                return Redirect::route('home.index');
             }
             else
             {
-                return redirect('home.editLayout');
+                return Redirect::route('home.editLayout');
             }
         }
 
@@ -88,10 +89,10 @@
          *
          * @return Response
          */
-        public function getEditIntro()
+        public function editIntroduction()
         {
-            $introduction = $this->introRepo->getById(1);
-            return View('intro.edit', compact('introduction'));
+            $introduction = $this->introRepo->get(1);
+            return view('home.editIntroduction', compact('introduction'));
         }
 
         /**
@@ -99,7 +100,7 @@
          *
          * @return Response
          */
-        public function postEditIntro()
+        public function updateIntroduction()
         {
             $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
             $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
@@ -112,6 +113,6 @@
 
             $this->introRepo($intro);
 
-            return redirect('home.home');
+            return Redirect::route('home.index');
         }
     }
