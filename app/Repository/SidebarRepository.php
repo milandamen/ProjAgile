@@ -18,7 +18,7 @@ class SidebarRepository extends BaseRepository {
      */
     public function get($id)
     {
-        return Sidebar::find($id);
+        return Sidebar::find($id)->first();
     }
 
     public function getByPage($pageNr)
@@ -34,9 +34,10 @@ class SidebarRepository extends BaseRepository {
         return Sidebar::Create($attributes);
     }
 
+
     public function deleteAllFromPage($pageNr)
     {
-        $this->getByPage($pageNr)->delete();
+   		 $affectedRows = Sidebar::where('pageNr', '=', $pageNr)->delete();
     }
 }
 ?>

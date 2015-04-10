@@ -16,13 +16,13 @@
 			<ul>
 		
 				@foreach($sidebar as $sidebarItem)
-						@if(!$sidebarItem->extern)
+					@if(!$sidebarItem->extern)
 							<li class="sidebar">
-							<a href="{!! url($sidebarItem->link) !!}" class="">
-								&gt; {!! $sidebarItem->text !!}</a></li>
+								<a href="{!! url($sidebarItem->link) !!}" class="">
+								&gt; {!! $sidebarItem->text !!}</a> </li>
 						@else 		
 							<li class="sidebar">
-								<a href=" {!! url($sidebarItem->link) !!}" target="_blank" class=""> &gt;
+								<a href=" {!! url($sidebarItem->link) !!}" target="_blank" class="">&gt; 
 							{!! $sidebarItem->text!!} </a>
 							</li>
 						@endif
@@ -33,5 +33,3 @@
 	</div>
 </div>
 @stop
-
- {!!$sidebarItem->link !!}
