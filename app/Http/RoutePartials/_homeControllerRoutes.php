@@ -5,25 +5,25 @@
 		'uses' => 'HomeController@index'
 	]);
 
-	Route::get('layout/aanpassen',
+	Route::get('home/layout/wijzigen',
 	[
 		'as' => 'home.editLayout',                 
 		'uses' => 'HomeController@editLayout'
 	]);
 
-	Route::post('layout/aanpassen',
+	Route::post('home/layout/wijzigen',
 	[
 		'as' => 'home.editLayout',                 
 		'uses' => 'HomeController@updateLayout'
 	]);
 
-	Route::get('introductie/aanpassen',
+	Route::get('home/introductie/wijzigen',
 	[
 		'as' => 'home.editIntroduction',
 		'uses' => 'HomeController@editIntroduction'
 	]);
 
-	Route::post('introductie/aanpassen',
+	Route::post('home/introductie/wijzigen',
 	[
 		'as' => 'home.editIntroduction',
 		'uses' => 'HomeController@updateIntroduction'

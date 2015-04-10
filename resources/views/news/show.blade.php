@@ -66,7 +66,7 @@
                 <div class="col-lg-6">
                     {{--Post a comment, not finished yet.
                     Also there needs to be an login check later on--}}
-                    {!! Form::open(['route' => 'news.comment', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
                         <h3>Plaats een reactie</h3>
                         <div class="form-group">
                             <input type="hidden" name="newsId" value="{{$news->newsId}}">

@@ -7,6 +7,6 @@
 
     Route::post('nieuws/comment',
     [
-        'as' => 'news.comment',
-        'uses' => 'NewsController@comment'
+        'as' => 'news.postComment',
+        'uses' => 'NewsController@postComment'
     ]);

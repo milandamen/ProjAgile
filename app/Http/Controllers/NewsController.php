@@ -45,7 +45,7 @@
             return view('news.show', compact('news', 'fileLinks'));
         }
 
-        public function comment()
+        public function postComment()
         {
             $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
             $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
