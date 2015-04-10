@@ -8,7 +8,7 @@
 			<h4> {!! $sidebar[0]->title !!}  
 				
 					<!-- @\if()  logged in.-->
-					     <a class="right" href="{{URL::action('SidebarController@postUpdate', $sidebar[0]->pageNr)}}"><i class="fa fa-pencil-square-o"></i></a>
+					     <a class="right" href="{{URL::action('SidebarController@getUpdate', $sidebar[0]->pageNr)}}"><i class="fa fa-pencil-square-o"></i></a>
 				   <!-- @ \endif -->
 			</h4>
 		</div>
