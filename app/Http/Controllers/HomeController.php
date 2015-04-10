@@ -28,8 +28,6 @@ class HomeController extends Controller {
 		$this->introrepo = $introrepo;
 		$this->homeLayoutrepo = $homeLayoutrepo;
 		$this->newsrepo = $newsrepo;
-
-		//$this->middleware('auth');
 	}
 
 	/**

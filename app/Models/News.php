@@ -53,7 +53,7 @@ class News extends Model {
 	 */
 	public function normalDate() {
 		$date = date_create($this->date);
-    	return date_format($date,'d-m-Y') ;
+		return date_format($date,'d-m-Y') ;
 	}
 
 }

@@ -29,36 +29,5 @@
 			
 			{{-- End layout script --}}
 		</div>
-		
-		<div class="row">
-			<!-- Test if data is coming through -->
-
-			<div class="col-md-8">
-				<div class="col-md-10">
-					<h3> Menu </h3>
-					{{ $menu }}
-				</div>
-				<div class="col-md-10">
-					<h3> Carousel </h3>
-				</div>
-				<div class="col-md-10">
-					<h3> introduction </h3>
-					{{ $intro }}
-				</div>
-				<div class="col-md-10">
-					<h3> Sidebar </h3>
-					{{ $sidebar }}
-				</div>
-
-
-				<div class="col-md-10">
-					<h3> Footer </h3>
-					{{ $footer }}
-				</div>
-
-			</div>	
-			<!-- end test incoming data -->
-
-        </div>
     </div>
 @endsection
