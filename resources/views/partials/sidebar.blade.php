@@ -8,7 +8,7 @@
 			<h4> {!! $sidebar[0]->title !!}  
 				
 					<!-- @\if()  logged in.-->
-					     <a class="right" href="sidebar/update/1"><i class="fa fa-pencil-square-o"></i></a>
+					     <a class="right" href="{{URL::action('SidebarController@postUpdate', $sidebar[0]->pageNr)}}"><i class="fa fa-pencil-square-o"></i></a>
 				   <!-- @ \endif -->
 			</h4>
 		</div>
@@ -17,12 +17,14 @@
 		
 				@foreach($sidebar as $sidebarItem)
 						@if(!$sidebarItem->extern)
-							<li class="sidebar"><a href="{!!$sidebarItem->link !!}" class="">
+							<li class="sidebar">
+							<a href="{!! url($sidebarItem->link) !!}" class="">
 								&gt; {!! $sidebarItem->text !!}</a></li>
-						@else 
-							<li class="sidebar"><a href=" {!!$sidebarItem->link !!}" target="_blank" class="">&gt;
-							{!! $sidebarItem->text!!} </a></li>
-							
+						@else 		
+							<li class="sidebar">
+								<a href=" {!! url($sidebarItem->link) !!}" target="_blank" class=""> &gt;
+							{!! $sidebarItem->text!!} </a>
+							</li>
 						@endif
 					
 				@endforeach
@@ -31,3 +33,5 @@
 	</div>
 </div>
 @stop
+
+ {!!$sidebarItem->link !!}
