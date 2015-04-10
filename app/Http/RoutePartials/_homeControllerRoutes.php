@@ -25,6 +25,6 @@
 
 	Route::post('home/introductie/wijzigen',
 	[
-		'as' => 'home.editIntroduction',
+		'as' => 'home.updateIntroduction',
 		'uses' => 'HomeController@updateIntroduction'
 	]);
