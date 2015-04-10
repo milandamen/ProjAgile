@@ -30,16 +30,16 @@ function addColumn()
 function removeColumn(button)
 {
     //get table via button.td.tr.table
-    var table=button.parentNode.parentNode.parentNode;
+    var table = button.parentNode.parentNode.parentNode;
     //remove table via table.div.removeChild(table)
     table.parentNode.removeChild(table);
 }
 
 function addRow(button)
 {
-    var table = button.closest("table");
+    var table = button.parentNode.parentNode.parentNode;
     var tableNumber = table.getAttribute('name');
-    var row = table.insertRow(table.rows.length - 2);
+    var row = table.insertRow(table.rows.length);
     var cell = row.insertCell(0);
     cell.innerHTML = 'Text: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
     ' <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
@@ -48,7 +48,6 @@ function addRow(button)
 
 function removeRow(button)
 {
-    console.log("TEST");
     var row=button.parentNode;
     row.parentNode.removeChild(row);
 }

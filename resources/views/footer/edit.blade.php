@@ -72,5 +72,5 @@
 
 @section('additional_scripts')
     <!-- JavaScript that enables adding and removing columns and rows -->
-    {!! HTML::script('public/custom/js/footerUpdate.js') !!}
+    {!! HTML::script('custom/js/footerUpdate.js') !!}
 @endsection
