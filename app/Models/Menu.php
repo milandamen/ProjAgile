@@ -3,7 +3,7 @@
 
     use Illuminate\Database\Eloquent\Model;
 
-    class MenuItem extends Model
+    class Menu extends Model
     {
         /**
          * Table name.

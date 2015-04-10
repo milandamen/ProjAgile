@@ -9,7 +9,7 @@
     {
         private $menuRepo;
 
-        public function __construct(IMenuRepository $menurepo)
+        public function __construct(IMenuRepository $menuRepo)
         {	
         	$this->menuRepo = $menuRepo;
         }

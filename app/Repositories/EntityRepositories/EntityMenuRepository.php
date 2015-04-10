@@ -1,49 +1,49 @@
 <?php
     namespace App\Repositories\EntityRepositories;
         
-    use App\Models\MenuItem;
+    use App\Models\Menu;
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
 
     class EntityMenuRepository implements IMenuRepository 
     {
         /**
-         * Returns a MenuItem model depending on the id provided.
+         * Returns a Menu model depending on the id provided.
          * 
          * @param  int $id
          * 
-         * @return MenuItem
+         * @return Menu
          */ 
         public function get($id)
         {
-            return MenuItem::find($id);
+            return Menu::find($id);
         }
 
         /**
-         * Returns all the MenuItem models in the database.
+         * Returns all the Menu models in the database.
          * 
-         * @return Collection -> MenuItem
+         * @return Collection -> Menu
          */
         public function getAll()
         {
-            return MenuItem::all();
+            return Menu::all();
         }
 
         /**
-         * Creates a MenuItem record in the database.
+         * Creates a Menu record in the database.
          * 
          * @param  array() $attributes
          * 
-         * @return MenuItem
+         * @return Menu
          */
         public function create($attributes)
         {
-            return MenuItem::create($attributes);
+            return Menu::create($attributes);
         }
 
         /**
-         * Updates a MenuItem record in the database depending on the MenuItem model provided.
+         * Updates a Menu record in the database depending on the Menu model provided.
          * 
-         * @param  MenuItem $model
+         * @param  Menu $model
          * 
          * @return void
          */
@@ -53,7 +53,7 @@
         }
 
         /**
-         * Deletes a MenuItem record depending on the id provided.
+         * Deletes a Menu record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -61,17 +61,17 @@
          */
         public function destroy($id)
         {
-            $model = MenuItem::findOrFail($id);
+            $model = Menu::findOrFail($id);
             $model->delete();
         }
 
         /**
-         * Returns a MenuItem Collection where all the MenuItems have a state of Published.
+         * Returns a Menu Collection where all the Menus have a state of Published.
          * 
-         * @return Collection -> MenuItem
+         * @return Collection -> Menu
          */ 
         public function getAllPublic()
         {
-            return MenuItem::where('publish', '=', '1')->get();
+            return Menu::where('publish', '=', '1')->get();
         }
     }
