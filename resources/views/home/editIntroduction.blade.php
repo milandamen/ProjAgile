@@ -15,7 +15,6 @@
 	<div class="row">
 		<div class="col-md-12">
 			{!! Form:: open() !!}
-			<!--  <form name="editIntro" action="" method="post" enctype="multipart/form-data">-->
 			<input type="hidden" name="pageId" value="{!! $introduction->pageId !!}" >
 			<div class="row col-md-8">
 				<div class="form-group">
