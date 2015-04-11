@@ -38,7 +38,7 @@ function removeColumn(button)
 function addRow(button)
 {
     var table = button.parentNode.parentNode.parentNode;
-    var tableNumber = table.children.length - 2;
+    var tableNumber = $(button).closest('table').attr("name");
     var row = table.insertRow(table.rows.length);
     var cell = row.insertCell(0);
     cell.innerHTML = 'Text: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
