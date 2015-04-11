@@ -12,7 +12,7 @@
 		 */
 		public function authorize()
 		{
-			return false;
+			return true;
 		}
 
 		/**
@@ -24,7 +24,8 @@
 		{
 			return 
 			[
-				//
+                'email' => 'required|email',
+                'password' => 'required',
 			];
 		}
 	}

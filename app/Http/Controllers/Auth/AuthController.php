@@ -18,6 +18,7 @@
         {
             $this->auth = $auth;
             $this->userRepo = $userRepo;
+
             $this->middleware('guest', 
             [
                 'except' => 'getLogout'
@@ -54,7 +55,7 @@
 
         public function postLogin(LoginRequest $request)
         {
-            $credentials = $request->only('emailAddress', 'password');
+            $credentials = $request->only('email', 'password');
             $credentials['active'] = true;
             
             if ($this->auth->attempt($credentials, $request['remember']))
@@ -62,7 +63,7 @@
                 return Redirect::route('home.index');
             }
 
-            return Redirect::route('login')->withErrors
+            return Redirect::route('auth.login')->withErrors
             ([
                 'emailAddress' => 'Het ingevoerde emailadres met wachtwoord combinatie klopt helaas niet. Wilt u het opnieuw proberen?',
             ]);
