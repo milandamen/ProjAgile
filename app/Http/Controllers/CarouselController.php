@@ -38,8 +38,21 @@
 
         public function update()
         {
+			$this->carouselRepo->deleteAll();
 			
+			for ($i = 0; $i < count($_POST['artikel']); $i++) {
+				$newsId = $_POST['artikel'][$i];
+				$item = $this->carouselRepo->create(compact('newsId'));
+				$item->save();		// TODO Maybe not needed..
+				
+				$this->saveImage($item);
+			}
 			
             return Redirect::route('home.index');
         }
+		
+		private function saveImage($item) {
+			
+		}
+		
     }

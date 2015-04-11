@@ -73,6 +73,6 @@
          */ 
         public function deleteAll()
         {
-            $this->getAll()->delete();
+            $this->all()->delete();
         }
     }
