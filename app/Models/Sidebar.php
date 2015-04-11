@@ -1,23 +1,53 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-class Sidebar extends Model {
+	class Sidebar extends Model 
+	{
+		/**
+		 * Table name.
+		 * 
+		 * @var string
+		 */
+		protected $table = 'sidebar';
 
-	protected $table = 'sidebar';
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
+		protected $primaryKey = 'id';
 
-	# Primary Key
-	protected $primaryKey = 'id';
-	protected $guarded = ['id'];
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var boolean
+		 */
+		public $timestamps = false;
 
-	# Properties that can be changed
-	protected $fillable = ['pageNr','rowNr', 'title', 'text', 'internlink', 'externlink'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $fillable = 
+		[
+			'pageNr',
+			'rowNr', 
+			'title', 
+			'text', 
+			'link', 
+			'extern'
+		];
 
-
-}
-
-
-?>
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array()
+		 */
+		protected $guarded = 
+		[
+			'id'
+		];
+	}

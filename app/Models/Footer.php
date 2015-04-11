@@ -2,20 +2,49 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Footer extends Model {
+class Footer extends Model
+{
+    /**
+     * Table name.
+     *
+     * @var string
+     */
+    protected $table = 'footer';
 
-	protected $table = 'footer';
-
-	# Primary key
+    /**
+     * PrimaryKey name.
+     *
+     * @var string
+     */
     protected $primaryKey = 'footerId';
-	protected $guard = ['footerId'];
 
-	# Properties that can be changed
-	protected $fillable = ['col', 'row', 'text', 'link'];
+    /**
+     * Laravel's automatic timestamps convention.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+    /**
+     * Attributes that can be changed and thus are mass assingable.
+     *
+     * @var array()
+     */
+    protected $fillable =
+    [
+        'col',
+        'row',
+        'text',
+        'link'
+    ];
 
+    /**
+     * Attributes that cannot be changed and thus are not mass assingable.
+     *
+     * @var array()
+     */
+    protected $guarded =
+    [
+        'footerId'
+    ];
 }
-
-?>

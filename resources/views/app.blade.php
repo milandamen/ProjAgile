@@ -10,11 +10,12 @@
     </head>
     @include('partials.styles')
 
-
     <body>
         @include('partials.header')
 
         @yield('content')
+
+     	@yield('sidebar')
 
         @include('partials.footer')
 

@@ -3,16 +3,17 @@
 use App\Models\Footer;
 use App\Repository\FooterRepository;
 use Illuminate\Support\Facades\Redirect;
+use App\Repositories\RepositoryInterfaces\IFooterRepository;
 
 class FooterController extends Controller
 {
 
-    public function __construct(FooterRepository $footerRepository)
+    public function __construct(IFooterRepository $footerRepository)
     {
         $this->footerRepository = $footerRepository;
     }
 
-    public function getEdit()
+    public function edit()
     {
         $footer = $this->footerRepository->getAll();
 

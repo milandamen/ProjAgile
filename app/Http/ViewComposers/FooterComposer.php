@@ -1,27 +1,28 @@
 <?php namespace App\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use App\Http\Controllers\Controller;
-use App\Repository\FooterRepository;
-use League\Flysystem\Exception;
+use App\Repositories\RepositoryInterfaces\IFooterRepository;
 
-class FooterComposer {
+class FooterComposer
+{
 
-    public function __construct(FooterRepository $footerrepo)
-    {	
-    	$this->footerrepo = $footerrepo;
+    private $footerRepo;
+
+    public function __construct(IFooterRepository $footerRepo)
+    {
+        $this->footerRepo = $footerRepo;
     }
 
     /**
      * Bind data to the view.
      *
      * @param  View  $view
+     *
      * @return void
      */
-
     public function compose(View $view)
     {
-    	$footerItems = $this->footerrepo->getAll();
+        $footerItems = $this->footerRepo->getAll();
 
         $numberOfColumns = 0;
 
@@ -44,7 +45,7 @@ class FooterComposer {
             $footerColumns[$item->col][$item->row] = $item;
         }
 
-		$view->with('footer', $footerColumns);
-    }
+        $view->with('footer', $footerColumns);
 
+    }
 }

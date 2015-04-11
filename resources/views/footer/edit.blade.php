@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            {!! Form::open(array('action' => 'FooterController@postEdit')) !!}
+            {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
                 <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
                 <hr/>
                 <div id="footer-tables" class="footer-tables">
