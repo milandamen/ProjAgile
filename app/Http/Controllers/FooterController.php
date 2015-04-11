@@ -81,7 +81,14 @@ class FooterController extends Controller
                 {
                     if($item->col == $entry->col && $item->row == $entry->row)
                     {
-                        //check if text or link have changed, if not do nothing else update it!
+                        //check if text or link have changed, if not do nothing, else update item
+                        if($item->text != $entry->text || $item->link != $entry->link)
+                        {
+                            $item->text = $entry->text;
+                            $item->link = $entry->link;
+                            $this->footerRepository->save($item);
+                        }
+
                         $isNew = 0;
                         break;
                     }
