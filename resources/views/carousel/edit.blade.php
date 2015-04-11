@@ -11,6 +11,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					
 					<table id="articlelisttable" class="table">
 						<thead>
 							<tr>
@@ -105,7 +107,7 @@
     </div>
 	
 	<script>
-		var getArticlesByTitleURI = '/ProjAgile/public/NewsController/getArticlesByTitle/';		// TODO blade route
+		var getArticlesByTitleURL = "{!! route('news.getArticlesByTitle', '') !!}";			// Sets the URI for the Ajax request for searching an article by title for use in the carouselUpdate.js script.
 	</script>
 @endsection
 

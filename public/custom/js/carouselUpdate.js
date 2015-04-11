@@ -6,7 +6,7 @@ function searchArticle() {
 	var searchterm = document.getElementById('artikeltitel').value;
 	var searchresultsbody = document.getElementById('searchresults');
 
-	$.getJSON(getArticlesByTitleURI + searchterm)
+	$.getJSON(getArticlesByTitleURL + '/' + searchterm)
 		.done(function (dataresult) {
 			console.log(dataresult);
 			
@@ -58,7 +58,7 @@ function addArticle(button) {
 				'<span>' + id + '</span>' +
 			'</td>' +
 			'<td>' +
-				title +
+				'<span>' + title + '</span>' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
