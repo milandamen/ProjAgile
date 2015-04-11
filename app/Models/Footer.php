@@ -7,6 +7,7 @@ class Footer extends Model {
 	protected $table = 'footer';
 
 	# Primary key
+    protected $primaryKey = 'footerId';
 	protected $guard = ['footerId'];
 
 	# Properties that can be changed

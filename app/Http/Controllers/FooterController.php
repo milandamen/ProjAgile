@@ -43,74 +43,86 @@ class FooterController extends Controller
     {
         $footer = $this->footerRepository->getAll();
 
-        //create new footer array from $_POST
-        $newFooter = [];
-
-        for($colN = 0; $colN < count($_POST['footer']); $colN++)
+        if(isset($_POST['footer']))
         {
-            $column = $_POST['footer'][$colN];
-            for($rowN = 0; $rowN < count($column['text']); $rowN++)
-            {
-                //check if text has been filled in
-                if($column['text'][$rowN] != null)
-                {
-                    $newFooterItem = new Footer();
-                    $newFooterItem->col = $colN;
-                    $newFooterItem->row = $rowN;
-                    $newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
-                    $newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
-                    $newFooter[] = $newFooterItem;
-                }
-                else
-                {
-                    echo "Vul a.u.b. alle verplichte velden in";
-                    return;
-                }
-            }
-        }
+            //create new footer array from $_POST
+            $newFooter = [];
 
-        //loop through new entries, adding or updating them
-        foreach($newFooter as $entry)
-        {
-            //loop through old footer
-            $isNew = 1;
-            foreach($footer as $item)
+            for($colN = 0; $colN < count($_POST['footer']); $colN++)
             {
-                if($item->col == $entry->col && $item->row == $entry->row)
-                {
-                    $isNew = 0;
-                    break;
+                if(isset($_POST['footer'][$colN])) {
+
+                    $column = $_POST['footer'][$colN];
+
+                    for ($rowN = 0; $rowN < count($column['text']); $rowN++) {
+                        //check if text has been filled in
+                        if ($column['text'][$rowN] != null) {
+                            $newFooterItem = new Footer();
+                            $newFooterItem->col = $colN;
+                            $newFooterItem->row = $rowN;
+                            $newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
+                            $newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
+                            $newFooter[] = $newFooterItem;
+                        } else {
+                            echo "Vul a.u.b. alle verplichte velden in";
+                            return;
+                        }
+                    }
+
                 }
             }
-            if($isNew == 1)
-            {
-                //create
-                $this->footerRepository->save($entry);
-            }
-            else
-            {
-                //update (is this correct?)
-                //$this->footerRepository->save($entry);
-            }
-        }
 
-        //delete removed items
-        foreach($footer as $item)
-        {
-            $canDelete = 1;
+            //loop through new entries, adding or updating them
             foreach($newFooter as $entry)
             {
-                if($item->col == $entry->col && $item->row == $entry->row)
+                //loop through old footer
+                $isNew = 1;
+                foreach($footer as $item)
                 {
-                    $canDelete = 0;
-                    break;
+                    if($item->col == $entry->col && $item->row == $entry->row)
+                    {
+                        //check if text or link have changed, if not do nothing else update it!
+                        $isNew = 0;
+                        break;
+                    }
+                }
+
+                if($isNew == 1)
+                {
+                    //create
+                    $this->footerRepository->save($entry);
+                }
+
+            }
+
+            //delete removed items
+            foreach($footer as $item)
+            {
+                $canDelete = 1;
+                foreach($newFooter as $entry)
+                {
+                    //if the item from the db matches the item in new footer do not delete it
+                    if($item->col == $entry->col && $item->row == $entry->row)
+                    {
+                        $canDelete = 0;
+                        break;
+                    }
+                }
+                if($canDelete == 1)
+                {
+                    $this->footerRepository->delete($item);
                 }
             }
-            if($canDelete == 1)
+        }
+        else
+        {
+            //if footer is not set (everything is removed) delete all items
+            foreach($footer as $item)
             {
                 $this->footerRepository->delete($item);
             }
         }
+
         return Redirect::action('FooterController@getEdit');
     }
 
