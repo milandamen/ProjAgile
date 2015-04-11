@@ -22,10 +22,22 @@
 		 */
 		public function rules()
 		{
+			$this->sanitize();
+			
 			return 
 			[
-                'email' => 'required|email',
+                'username' => 'required',
                 'password' => 'required',
 			];
+		}
+
+		private function sanitize()
+		{
+			$input = $this->all();
+
+			$input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
+			$input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
+
+			$this->replace($input);
 		}
 	}

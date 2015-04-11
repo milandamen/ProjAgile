@@ -11,16 +11,16 @@
 
 	                    {!! Form::open(['method' => 'POST','route' => 'auth.login']) !!}
 	                        <div class="form-group">
-	                            {!! Form::label('email', 'E-mailadres:', ['class' => 'col-md-4 control-label']) !!}
+	                            {!! Form::label('username', 'Gebruikersnaam:', ['class' => 'col-md-4 control-label']) !!}
 	                            <div class="col-md-6">
-	                                {!! Form::text('email', old('email'), ['class' => 'form-control']) !!}
+	                                {!! Form::text('username', old('username'), ['class' => 'form-control']) !!}
 	                            </div>
 	                        </div>
 
 	                        <div class="form-group">
 	                            {!! Form::label('password', 'Wachtwoord:', ['class' => 'col-md-4 control-label']) !!}
 	                            <div class="col-md-6">
-	                                {!! Form::password('password', null, ['class' => 'form-control']) !!}
+	                                {!! Form::password('password', ['class' => 'form-control']) !!}
 	                            </div>
 	                        </div>
 

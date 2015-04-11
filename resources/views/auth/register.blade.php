@@ -6,7 +6,6 @@
             <div class="col-md-8 col-md-offset-2">
                 <h2 class="page-header">Registreren</h2>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Registreren</div>
                     <div class="panel-body">
                         @include('errors.partials._list')
 
@@ -21,14 +20,14 @@
                             <div class="form-group">
                                 {!! Form::label('password', 'Wachtwoord:', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
-                                    {!! Form::password('password', null, ['class' => 'form-control']) !!}
+                                    {!! Form::password('password', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('password_confirmation', 'Herhaal Wachtwoord:', ['class' => 'col-md-4 control-label']) !!}
                                 <div class="col-md-6">
-                                    {!! Form::password('password_confirmation', null, ['class' => 'form-control']) !!}
+                                    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 

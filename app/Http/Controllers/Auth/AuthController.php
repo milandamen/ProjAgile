@@ -55,7 +55,7 @@
 
         public function postLogin(LoginRequest $request)
         {
-            $credentials = $request->only('email', 'password');
+            $credentials = $request->only('username', 'password');
             $credentials['active'] = true;
             
             if ($this->auth->attempt($credentials, $request['remember']))
@@ -65,7 +65,7 @@
 
             return Redirect::route('auth.login')->withErrors
             ([
-                'emailAddress' => 'Het ingevoerde emailadres met wachtwoord combinatie klopt helaas niet. Wilt u het opnieuw proberen?',
+                'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.',
             ]);
         }
 
