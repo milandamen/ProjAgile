@@ -6,7 +6,7 @@ function searchArticle() {
 	var searchterm = document.getElementById('artikeltitel').value;
 	var searchresultsbody = document.getElementById('searchresults');
 
-	$.getJSON('/ProjAgile/public/NewsController/getArticlesByTitle/' + searchterm)
+	$.getJSON(getArticlesByTitleURI + searchterm)
 		.done(function (dataresult) {
 			console.log(dataresult);
 			
@@ -159,6 +159,8 @@ function calculateIndexes() {
 		i++;
 	});
 }
+
+calculateIndexes();
 
 function goBack() {
     window.history.back()

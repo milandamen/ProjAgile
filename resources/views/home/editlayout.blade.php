@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+		<div class="row">
+            <div class="col-md-12">
+                <h1>Wijzig home layout</h1>
+            </div>
+        </div>
 		<form id="dataform" method="post">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			
