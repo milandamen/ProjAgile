@@ -3,9 +3,10 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
+		
 			<h1>Wijzig  introductie </h1>
-			<p class="col-md-12"> 
+			<p > 
 				Op deze pagina kan de tekst van de introductie aangepast worden. De introductie is voornamelijk gericht op de home-pagina maar kan eventueel ook ingezet worden op andere pagina's. Hieronder ziet u de huidige introductie, die u kunt wijzigen naar wat u wilt. 
 
 			</p>
