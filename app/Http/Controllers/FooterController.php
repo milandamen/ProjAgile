@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Footer;
-use App\Repository\FooterRepository;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\RepositoryInterfaces\IFooterRepository;
 
@@ -37,19 +36,20 @@ class FooterController extends Controller
             $footerColumns[$item->col][$item->row] = $item;
         }
 
-        return view('footer/edit', $footerColumns);
+        return view('footer/edit', array('footer' => $footerColumns));
     }
 
     public function postEdit()
     {
         $footer = $this->footerRepository->getAll();
+        $maxCols = 3;
 
-        if(isset($_POST['footer']))
+        if(count($_POST['footer']) > 0)
         {
             //create new footer array from $_POST
             $newFooter = [];
 
-            for($colN = 0; $colN < count($_POST['footer']); $colN++)
+            for($colN = 0; $colN < $maxCols; $colN++)
             {
                 if(isset($_POST['footer'][$colN])) {
 
@@ -87,7 +87,7 @@ class FooterController extends Controller
                         {
                             $item->text = $entry->text;
                             $item->link = $entry->link;
-                            $this->footerRepository->save($item);
+                            $this->footerRepository->update($item);
                         }
 
                         $isNew = 0;
@@ -98,7 +98,7 @@ class FooterController extends Controller
                 if($isNew == 1)
                 {
                     //create
-                    $this->footerRepository->save($entry);
+                    $this->footerRepository->update($entry);
                 }
 
             }
@@ -118,7 +118,7 @@ class FooterController extends Controller
                 }
                 if($canDelete == 1)
                 {
-                    $this->footerRepository->delete($item);
+                    $this->footerRepository->destroy($item->footerId);
                 }
             }
         }
@@ -127,11 +127,11 @@ class FooterController extends Controller
             //if footer is not set (everything is removed) delete all items
             foreach($footer as $item)
             {
-                $this->footerRepository->delete($item);
+                $this->footerRepository->destroy($item->footerId);
             }
         }
 
-        return Redirect::action('FooterController@getEdit');
+        return Redirect::action('FooterController@edit');
     }
 
     public function footerUpdate()
