@@ -2,9 +2,9 @@
     namespace App\Repositories\EntityRepositories;
     
 	use App\Models\Districtsection;
-    use App\Repositories\RepositoryInterfaces\IDistricsectionRepository;
+    use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 
-	class EntityDistrictsectionRepository implements IDistricsectionRepository 
+	class EntityDistrictsectionRepository implements IDistrictSectionRepository 
 	{
         /**
          * Returns a Districtsection model depending on the id provided.

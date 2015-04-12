@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('flash::message')
         <div class="row">
             <div class="col-md-12">
                 {{-- Require de carousel hier --}}
@@ -28,4 +29,9 @@
             {{-- End layout script --}}
         </div>
     </div>
+@stop
+
+@section('additional_scripts')
+    <!-- JavaScript that enables the sliding upwards of flash messages -->
+    {!! HTML::script('custom/js/flash_message.js') !!}
 @stop
