@@ -64,4 +64,9 @@
             $model = Postal::findOrFail($id);
             $model->delete();
         }
+
+        public function getByCode($code)
+        {
+            return Postal::where('code', '=', $code)->first();
+        }
 	}
