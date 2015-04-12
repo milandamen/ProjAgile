@@ -3,9 +3,11 @@
     <ul class="dropdown-menu" role="menu">
 
         @foreach ($items as $item)
-                    <li><a href="{!! $item['main']->relativeUrl !!}">{!! $item['main']->name !!}</a></li>
+
                 @if(isset($item['sub']))
-                    @include('partials.menu.', ['items' => $item['sub']])
+                    @include('partials.menu.subItem', ['items' => $item['sub'],'main' => $item])
+                @else
+                    <li><a href="{!! $item['main']->relativeUrl !!}">{!! $item['main']->name !!}</a></li>
                 @endif
         @endforeach
-</ul>
+    </ul>
