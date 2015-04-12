@@ -28,14 +28,14 @@
 		/**
 		 * Laravel's automatic timestamps convention.
 		 * 
-		 * @var boolean
+		 * @var bool
 		 */
 		public $timestamps = false;
 
 		/**
 		 * Attributes that can be changed and thus are mass assingable.
 		 * 
-		 * @var array()
+		 * @var array
 		 */
 		protected $fillable = 
 		[
@@ -55,7 +55,7 @@
 		/**
 		 * Attributes that cannot be changed and thus are not mass assingable.
 		 * 
-		 * @var array()
+		 * @var array
 		 */
 		protected $guarded = 
 		[
@@ -65,7 +65,7 @@
 		/**
 		 * The attributes excluded from the model's JSON form.
 		 * 
-		 * @var array()
+		 * @var array
 		 */
 	    protected $hidden =
 	    [

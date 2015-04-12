@@ -65,6 +65,11 @@
             $model->delete();
         }
 
+        /**
+         * Returns a UserGroup model that has 'Administrator' as the name.
+         * 
+         * @return UserGroup
+         */ 
         public function getAdministratorUserGroup()
         {
             $userGroup = UserGroup::where('name', '=', 'Administrator')->first();
@@ -79,6 +84,11 @@
             return $userGroup;
         }
 
+        /**
+         * Returns a UserGroup model that has 'Content Beheerder' as the name.
+         * 
+         * @return UserGroup
+         */ 
         public function getContentAdministratorUserGroup()
         {
             $userGroup = UserGroup::where('name', '=', 'Content Beheerder')->first();
@@ -93,6 +103,11 @@
             return $userGroup;
         }
 
+        /**
+         * Returns a UserGroup model that has 'Bewoner' as the name.
+         * 
+         * @return UserGroup
+         */ 
         public function getInhabitantUserGroup()
         {
             $userGroup = UserGroup::where('name', '=', 'Bewoner')->first();

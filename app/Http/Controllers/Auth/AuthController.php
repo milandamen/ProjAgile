@@ -12,7 +12,18 @@
 
     class AuthController extends Controller
     {
+        /**
+         * The Guard implementation.
+         *
+         * @var Guard
+         */
         private $auth;
+
+        /**
+         * The UserRepository implementation.
+         * 
+         * @var IUserRepository
+         */
         private $userRepo;
 
         public function __construct(Guard $auth, IUserRepository $userRepo)

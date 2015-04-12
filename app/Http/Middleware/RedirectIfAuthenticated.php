@@ -40,6 +40,7 @@
 			if ($this->auth->check())
 			{
 				Flash::info('U bent al ingelogd!');
+				
 				return new RedirectResponse(url('/'));
 			}
 

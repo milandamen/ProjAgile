@@ -11,7 +11,7 @@
     class EntityUserRepository implements IUserRepository
     {
         /**
-         * DistrictSectionRepository instantiation.
+         * The DistrictSectionRepository implementation.
          * 
          * @var IDistrictSectionRepository
          */
@@ -19,14 +19,14 @@
 
 
         /**
-         * PostalRepository instantiation.
+         * The PostalRepository implementation.
          * 
          * @var IPostalRepository
          */
         private $postalRepo;
 
         /**
-         * UserGroupRepository instantiation.
+         * The UserGroupRepository implementation.
          * 
          * @var IUserGroupRepository
          */
@@ -110,5 +110,37 @@
             $model = User::findOrFail($id);
             $model['active'] = false;
             $model->save();
+        }
+
+        /**
+         * Checks if the provided user has the Administrator role.
+         * 
+         * @param  User $user
+         * 
+         * @return bool
+         */
+        public function isUserAdministrator($user)
+        {
+            if ($user->userGroupId == $this->userGroupRepo->getAdministratorUserGroup()->userGroupId)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Checks if the provided user has the Content Administrator role.
+         * 
+         * @param  User $user
+         * 
+         * @return bool
+         */
+        public function isUserContentAdministrator($user)
+        {
+            if ($user->userGroupId == $this->userGroupRepo->getContentAdministratorUserGroup()->userGroupId)
+            {
+                return true;
+            }
+            return false;
         }
     }
