@@ -93,6 +93,6 @@
          */ 
         public function deleteAllFromPage($pageNr)
         {
-            $this->getByPage($pageNr)->delete();
+        	$affectedRows = Sidebar::where('pageNr', '=', $pageNr)->delete();
         }
     }

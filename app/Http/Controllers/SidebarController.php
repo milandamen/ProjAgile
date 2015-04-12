@@ -41,6 +41,7 @@
 			$i=0;
 			$pageNr = $id;
 
+			// first delete all old items, to prevent double items and or not deleting rows.
 			$this->sidebarRepo->deleteAllFromPage($pageNr);
         
 
