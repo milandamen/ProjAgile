@@ -1,8 +1,9 @@
-<?php namespace App\Http\ViewComposers;
+<?php 
+    namespace App\Http\ViewComposers;
 
-use Illuminate\Contracts\View\View;
-use App\Http\Controllers\Controller;
-use App\Repository\MenuRepository;
+    use Illuminate\Contracts\View\View;
+    use App\Http\Controllers\Controller;
+    use App\Repositories\RepositoryInterfaces\IMenuRepository;
 
 class MenuComposer {
 

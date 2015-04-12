@@ -146,12 +146,13 @@ return
 		'App\Providers\RouteServiceProvider',
 
 		/*
-         * Custom Service Providers
+         * Custom Service Providers...
          */ 
-		'App\Providers\ComposerServiceProvider',
+		'App\Providers\ViewComposerServiceProvider',
+		'App\Providers\RepositoryServiceProvider',
 
         /*
-         * External Service Providers
+         * External Service Providers...
          */
         'Illuminate\Html\HtmlServiceProvider',
 	],
