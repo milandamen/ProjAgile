@@ -34,9 +34,8 @@
                         {{--*/ $i = 0; /*--}}
                         @foreach($sidebar as $sidebarRow)
                         <!-- Check if link goes out or stays in. -->
-                        <input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/>
-
                         <tr>
+                        	<td class="hidden"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
                             <td class="td-tekst">
                                 Tekst:
                                 <input type="text" name="sidebar[{!!$i!!}][text][]" id="sidebarText" value="{!!$sidebarRow->text!!}" required>
