@@ -2,10 +2,48 @@
     namespace App\Repositories\EntityRepositories;
 
     use App\Models\User;
+    use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+    use App\Repositories\RepositoryInterfaces\IPostalRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
+    use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
+    use Hash;
 
     class EntityUserRepository implements IUserRepository
     {
+        /**
+         * DistrictSectionRepository instantiation.
+         * 
+         * @var IDistrictSectionRepository
+         */
+        private $districtSectionRepo;
+
+
+        /**
+         * PostalRepository instantiation.
+         * 
+         * @var IPostalRepository
+         */
+        private $postalRepo;
+
+        /**
+         * UserGroupRepository instantiation.
+         * 
+         * @var IUserGroupRepository
+         */
+        private $userGroupRepo;
+
+        /**
+         * Create a new EntityUserRepository instance.
+         *
+         * @return void
+         */
+        public function __construct(IDistrictSectionRepository $districtSectionRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
+        {
+            $this->districtSectionRepo = $districtSectionRepo;
+            $this->postalRepo = $postalRepo;
+            $this->userGroupRepo = $userGroupRepo;
+        }
+
         /**
          * Returns a User model depending on the id provided.
          * 
@@ -37,6 +75,14 @@
          */
         public function create($attributes)
         {
+            $postal = $this->postalRepo->getByCode($attributes['postal']);
+
+            $attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
+            $attributes['districtSectionId'] = $postal->districtSectionId;
+            $attributes['postalId'] = $postal->postalId;
+            $attributes['password'] = Hash::make($attributes['password']);
+            $attributes['active'] = true;
+
             return User::create($attributes);
         }
 

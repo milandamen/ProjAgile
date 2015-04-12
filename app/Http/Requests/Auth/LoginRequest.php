@@ -37,6 +37,7 @@
 
 			$input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
 			$input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
+			$input['remember'] = filter_var($input['remember'], FILTER_SANITIZE_STRING);
 
 			$this->replace($input);
 		}

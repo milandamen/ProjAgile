@@ -64,4 +64,46 @@
             $model = UserGroup::findOrFail($id);
             $model->delete();
         }
+
+        public function getAdministratorUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Administrator')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Administrator'
+                ]);
+            }
+            return $userGroup;
+        }
+
+        public function getContentAdministratorUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Content Beheerder')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Content Beheerder'
+                ]);
+            }
+            return $userGroup;
+        }
+
+        public function getInhabitantUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Bewoner')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Bewoner'
+                ]);
+            }
+            return $userGroup;
+        }
     }

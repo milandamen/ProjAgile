@@ -26,7 +26,9 @@
 
 	                        <div class="form-group">
 	                            <div class="col-md-6 col-md-offset-4">
-	                            	{!! Form::label('<input type="checkbox" name="remember">', 'Onthoud mij') !!}
+	                            	<label>
+                            			<input type="checkbox" name="remember"></input> Onthoudt mij
+	                            	</label>
 	                            </div>
 	                        </div>
 

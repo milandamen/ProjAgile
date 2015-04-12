@@ -78,6 +78,16 @@
 		}
 
 		/**
+		 * Get all Postal models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Postal
+		 */
+		public function postals() 
+		{
+			return $this->hasMany('App\Models\Postal', 'districtSectionId');
+		}
+
+		/**
 		 * Get all Project models that reference this DistrictSection model.
 		 * 
 		 * @return Collection -> Project

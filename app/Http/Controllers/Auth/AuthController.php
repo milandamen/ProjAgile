@@ -5,9 +5,10 @@
     use App\Http\Requests\Auth\LoginRequest;
     use App\Http\Requests\Auth\RegisterRequest;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
+    use Auth;
+    use Flash;
     use Illuminate\Contracts\Auth\Guard;
-    use Illuminate\Support\Facades\Hash;
-    use Illuminate\Support\Facades\Redirect;
+    use Redirect;
 
     class AuthController extends Controller
     {
@@ -35,15 +36,16 @@
             $data = $request->only
             (
                 'username',
+                'password',
                 'firstName',
                 'surname',
                 'postal',
                 'houseNumber',
                 'email'
             );
-            $data['password'] = Hash::make($request['password']);
             $user = $this->userRepo->create($data);
             $this->auth->login($user);
+            Flash::success('U bent succesvol geregistreerd en u bent nu ingelogd.');
 
             return Redirect::route('home.index');
         }
@@ -56,23 +58,30 @@
         public function postLogin(LoginRequest $request)
         {
             $credentials = $request->only('username', 'password');
-            $credentials['active'] = true;
             
-            if ($this->auth->attempt($credentials, $request['remember']))
+            if (!$this->auth->attempt($credentials, $request['remember']))
             {
-                return Redirect::route('home.index');
+                return Redirect::route('auth.login')->withErrors
+                ([
+                    'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.',
+                ]);
             }
+            Flash::success('U bent succesvol ingelogd!');
 
-            return Redirect::route('auth.login')->withErrors
-            ([
-                'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.',
-            ]);
+            return Redirect::route('home.index');
         }
 
         public function getLogout()
         {
-            $this->auth->logout();
-
+            if (Auth::check())
+            {
+                $this->auth->logout();
+                Flash::success('U bent succesvol uitgelogd!');
+            }
+            else
+            {
+                Flash::info('U bent nog niet ingelogd. Hierdoor kunt u niet uitloggen.');
+            }
             return Redirect::route('home.index');
         }
     }

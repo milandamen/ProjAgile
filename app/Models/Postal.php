@@ -47,8 +47,18 @@
         ];
 
         /**
+         * Get the DistrictSection model that is referenced in this Postal model.
+         * 
+         * @return DistrictSection
+         */
+        public function districtSection() 
+        {
+            return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+        }
+
+        /**
          * Get all User models that reference this Postal model.
-         *
+         * 
          * @return Collection -> User
          */
         public function users()

@@ -118,7 +118,7 @@
 		 * 
 		 * @return Postal
 		 */
-		public function postal() 
+		public function postal()
 		{
 			return $this->belongsTo('App\Models\Postal', 'postalId');
 		}
