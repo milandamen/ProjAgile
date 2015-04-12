@@ -23,6 +23,12 @@
          * 
          * @return Collection -> Sidebar
          */
+
+        public function getSideRow($pageId, $rowId){
+        	return Sidebar::where('rowNr', '=', $rowId)->where('pageNr', '=', $pageId)->get()->first();
+        }
+
+
         public function getAll()
         {
             return Sidebar::all();

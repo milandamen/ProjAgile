@@ -75,10 +75,10 @@
                             }
                             $text = filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING);
 
-                            if(isset($rowItems['rowId']))
+                            if(isset($rowItems['rowId'][$row]))
                             {
-                                $rowId = $rowItems['rowId'];
-                                $sideRow = $this->sidebarRepo->get($rowId);
+                                $rowId = $rowItems['rowId'][$row];
+                                $sideRow = $this->sidebarRepo->getSideRow($pageNr,$rowId);
 
                                 if($sideRow != null)
                                 {
