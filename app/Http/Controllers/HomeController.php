@@ -31,8 +31,9 @@
 		 */
 		public function index()
         {
+
             $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getAll();
+            $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 
             return view('home.index', compact('news', 'introduction', 'layoutModules'));
@@ -91,7 +92,7 @@
          */
         public function editIntroduction()
         {
-            $introduction = $this->introRepo->get(1);
+            $introduction = $this->introRepo->getPageBar('1');
             return view('home.editIntroduction', compact('introduction'));
         }
 
@@ -103,15 +104,16 @@
         public function updateIntroduction()
         {
             $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+            // nl2br is needed and used to save line breaks in the submitted text.  
+            $content = nl2br(htmlentities($_POST['content'], ENT_QUOTES, 'UTF-8'));
             $pageId = $_POST['pageId'];
 
             $intro = $this->introRepo->getPageBar($pageId);
             $intro->pageId = $pageId;
             $intro->title = $title;
-            $intro->content = $content;
+            $intro->text = $content;
 
-            $this->introRepo($intro);
+            $intro->save();
 
             return Redirect::route('home.index');
         }

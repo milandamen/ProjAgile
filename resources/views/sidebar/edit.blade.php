@@ -12,8 +12,13 @@
                 <!--- Start Form of updating the sidebar -->
                 <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebar[0]->pageNr]) !!}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                    <datalist id="pagedata">
+                                    @foreach($menu as $menuitem)
+                                        <option value="{!!$menuitem->relativeUrl!!}" label="{!!$menuitem->name!!}">
+                                    @endforeach
+                     </datalist>
                     <input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
-
+                 	
                     <hr>
                     Koptekst:
                     <input type="text" name="title" id="sidebarTitle" value="{!! $sidebar[0]->title!!} " required> <br/><br/>
@@ -40,11 +45,7 @@
                             <td class="td-intern">
                                 Intern
                                 <input id="page_name" name="sidebar[{!!$i!!}][pagename][]" type="text" list="pagedata" />
-                                <datalist id="pagedata">
-                                    @foreach($menu as $menuitem)
-                                        <option value="{!!$menuitem->relativeUrl!!}" label="{!!$menuitem->name!!}">
-                                    @endforeach
-                                </datalist>
+                                
                             </td>
                             <td class="td-link" >Link naar: <input type="text" name="sidebar[{!!$i!!}][link][]" id="sidebarLink" value="{!!$sidebarRow->link!!}"> </td>
 
