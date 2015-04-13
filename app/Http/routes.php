@@ -19,3 +19,7 @@
     
     // Carousel controller routes
     include('RoutePartials/_carouselControllerRoutes.php');
+
+    // Menu controller routers
+    include ('RoutePartials/_menuControllerRoutes.php');
+

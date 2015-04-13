@@ -2,17 +2,9 @@
     namespace App\Http\Controllers;
 
     use App\Http\Requests;
-    use App\Repositories\RepositoryInterfaces\IUserRepository;
 
     class AdminController extends Controller
     {
-        private $userRepo;
-
-        public function __construct(IUserRepository $userRepo)
-        {
-            $this->userRepo = $userRepo;
-        }
-
         /**
          * Display a listing of the resource.
          *

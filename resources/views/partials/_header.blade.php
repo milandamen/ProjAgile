@@ -18,6 +18,20 @@
                 <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
                 <li><a href="#"><i class="fa fa-paper-plane"></i> Contact</a></li>
 
+                @if (!Auth::check())
+                    <li>
+                        <a href="{{ route('auth.login') }}">
+                            <i class="fa fa-spinner"></i> Inloggen
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('auth.logout') }}">
+                            <i class="fa fa-spinner"></i> Uitloggen
+                        </a>
+                    </li>
+                @endif
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
                     <ul class="dropdown-menu" style="padding:12px;">
