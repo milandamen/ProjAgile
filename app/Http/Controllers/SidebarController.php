@@ -3,6 +3,7 @@
 
     use App\Models\Sidebar;
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
+    use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Support\Facades\Redirect;
 
     class SidebarController extends Controller
@@ -17,9 +18,10 @@
 		*
 		* @return void
 		*/
-		public function __construct(ISidebarRepository $sidebarRepo)
+		public function __construct(ISidebarRepository $sidebarRepo, IMenuRepository $menuRepo)
 		{
 			$this->sidebarRepo = $sidebarRepo;
+			$this->menuRepo = $menuRepo;
 		}
 
 		public function edit($id)
@@ -27,7 +29,8 @@
 			if($this->sidebarRepo->getByPage($id) != null)
 			{
 				$sidebar = $this->sidebarRepo->getByPage($id);
-				return View('sidebar.edit', compact('sidebar'));
+				$menuList = $this->menuRepo->getAll();
+				return View('sidebar.edit', compact('sidebar', 'menuList'));
 			} else {
 				// Totdat er een error page is.
 				return Redirect::route('home.index');
