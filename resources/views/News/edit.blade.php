@@ -12,6 +12,7 @@
         format: 'dd/mm/yyyy'
     });
 </script>
+<script src="/ProjAgile/public/js/newsValidate.js"></script>
 
 
 @section('content')
@@ -94,74 +95,6 @@
                 </div>
             {!! Form::close() !!}
 
-            {{--<div class="btn-group" data-toggle="buttons">--}}
-                {{--<label class="btn btn-default">--}}
-                    {{--<input type="radio" name="hidden" value="true">Ja--}}
-                {{--</label>--}}
-                {{--<label class="btn btn-default active">--}}
-                    {{--<input type="radio" name="hidden" value="false" checked="true">Nee--}}
-                {{--</label>--}}
-            {{--</div>--}}
-
-
-                {{--<div class="row">--}}
-                    {{--<label class="label-form" for="Sectie">Sectie</label>--}}
-
-                {{--@if(count($files) > 0)--}}
-
-                    {{--{!! '<div class="row"><br/><p>Bestanden die gekoppeld zijn aan dit artikel:</p>' !!}--}}
-
-                    {{--foreach($files as $file)--}}
-                    {{--{--}}
-                        {{--{!!'<p>' . $file->path .'</p>'!!}--}}
-                    {{--}--}}
-
-                        {{--<label for="keepFiles" class="control-label input-group">Wilt u deze bestanden behouden?</label>--}}
-                        {{--<div class="btn-group" data-toggle="buttons">--}}
-                            {{--<label class="btn btn-default active">--}}
-                                {{--<input type="radio" name="keepFiles" value="true" checked="true">Ja--}}
-                            {{--</label>--}}
-                            {{--<label class="btn btn-default">--}}
-                                {{--<input type="radio" name="keepFiles" value="false">Nee--}}
-                            {{--</label>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--@foreach($data['files'] as $file)--}}
-                    {{--{{--}}
-                        {{--'<div class="row">--}}
-                            {{--<br>--}}
-                            {{--<input  id="upload" type='file' name='file[]' multiple>--}}
-                            {{--<br>--}}
-                            {{--<label class="btn btn-danger btn-md" id="cancel"> Verwijder bestand</label>--}}
-                        {{--</div>'--}}
-                    {{--}}--}}
-                    {{--@endforeach--}}
-                {{--@endif--}}
-
-                {{--<div class="row">--}}
-                    {{--<br/>--}}
-                    {{--<label for="hidden" class="control-label input-group">Verborgen</label>--}}
-                    {{--<div>--}}
-                        {{--<label for="publish" class="control-label input-group">Publiceer datum:</label>--}}
-                        {{--<input name="publish" class="datepicker" data-provide="datepicker">--}}
-                    {{--</div>--}}
-                    {{--<div>--}}
-                        {{--<label for="removePublish" class="control-label input-group">Publiceren tot:</label>--}}
-                        {{--<input name="removePublish" class="datepicker" data-provide="datepicker">--}}
-                    {{--</div>--}}
-                    {{--<div>--}}
-                        {{--<label for="priority" class="control-label input-group">Bovenaan de lijst?</label>--}}
-                        {{--<input name="priority" type="checkbox" checked="false">--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row">--}}
-                    {{--<br/>--}}
-                    {{--<input class="btn btn-submit" type="submit" value="opslaan">--}}
-                {{--</div>--}}
-            {{--</form>--}}
-
-            <script src="/ProjAgile/public/js/newsValidate.js"></script>
         </div>
     </div>
 @endsection
