@@ -64,4 +64,61 @@
             $model = UserGroup::findOrFail($id);
             $model->delete();
         }
+
+        /**
+         * Returns a UserGroup model that has 'Administrator' as the name.
+         * 
+         * @return UserGroup
+         */ 
+        public function getAdministratorUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Administrator')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Administrator'
+                ]);
+            }
+            return $userGroup;
+        }
+
+        /**
+         * Returns a UserGroup model that has 'Content Beheerder' as the name.
+         * 
+         * @return UserGroup
+         */ 
+        public function getContentAdministratorUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Content Beheerder')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Content Beheerder'
+                ]);
+            }
+            return $userGroup;
+        }
+
+        /**
+         * Returns a UserGroup model that has 'Bewoner' as the name.
+         * 
+         * @return UserGroup
+         */ 
+        public function getInhabitantUserGroup()
+        {
+            $userGroup = UserGroup::where('name', '=', 'Bewoner')->first();
+
+            if (!isset($userGroup) || empty($userGroup))
+            {
+                return $this->create(
+                [
+                    'name' => 'Bewoner'
+                ]);
+            }
+            return $userGroup;
+        }
     }

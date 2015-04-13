@@ -22,14 +22,14 @@
         /**
          * Laravel's automatic timestamps convention.
          * 
-         * @var boolean
+         * @var bool
          */
 		public $timestamps = false;
 
         /**
          * Attributes that can be changed and thus are mass assingable.
          * 
-         * @var array()
+         * @var array
          */
 		protected $fillable = 
 		[
@@ -40,7 +40,7 @@
         /**
          * Attributes that cannot be changed and thus are not mass assingable.
          * 
-         * @var array()
+         * @var array
          */
 		protected $guarded = 
 		[
@@ -75,6 +75,16 @@
 		public function news() 
 		{
 			return $this->hasMany('App\Models\News', 'districtSectionId');
+		}
+
+		/**
+		 * Get all Postal models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Postal
+		 */
+		public function postals() 
+		{
+			return $this->hasMany('App\Models\Postal', 'districtSectionId');
 		}
 
 		/**

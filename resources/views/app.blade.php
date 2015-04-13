@@ -8,18 +8,18 @@
         <meta name="description" content="@yield('description')">
         <title>@yield('title')</title>
     </head>
-    @include('partials.styles')
+    @include('partials._styles')
 
     <body>
-        @include('partials.header')
+        @include('partials._header')
 
         @yield('content')
 
      	@yield('sidebar')
 
-        @include('partials.footer')
+        @include('partials._footer')
 
-        @include('partials.scripts')
+        @include('partials._scripts')
 
         @yield('additional_scripts')
     </body>
