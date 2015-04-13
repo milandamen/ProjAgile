@@ -17,3 +17,9 @@
         'as' => 'news.postComment',
         'uses' => 'NewsController@postComment'
     ]);
+	
+	Route::get('nieuws/getArticlesByTitle/{id}',
+	[
+		'as' => 'news.getArticlesByTitle',
+		'uses' => 'NewsController@getArticlesByTitle'
+	]);

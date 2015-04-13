@@ -5,7 +5,7 @@
         @include('flash::message')
         <div class="row">
             <div class="col-md-12">
-                {{-- Require de carousel hier --}}
+                @include('home.partials._module-carousel')
             </div>
         </div>
         <div class="row">

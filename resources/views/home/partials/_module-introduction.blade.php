@@ -1,5 +1,6 @@
-<div class="introduction dragdiv">											<!-- The dragdiv class is used in /Home/editlayour -->
+<div class="introduction dragdiv">											<!-- The dragdiv class is used in /Home/editlayout -->
 	<input class="hiddenInput" type="text" name="module-introduction" />	<!-- This input gets sent in /Home/editlayout -->
+	
 	<div>
 		<h4> 
 			<!-- @\if(Auth:check)-->	
