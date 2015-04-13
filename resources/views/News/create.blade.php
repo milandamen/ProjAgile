@@ -1,17 +1,20 @@
-<div class="container">
+@extends('App')
 
-    <script type="text/javascript">$('.datepicker').datepicker()</script>
-    <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Content Panel</a></li>
-        <li class="active">Nieuws toevoegen</li>
-    </ol>
+@section('content')
+    <div class="container">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Nieuws toevoegen</h1>
+        <script type="text/javascript">$('.datepicker').datepicker()</script>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Content Panel</a></li>
+            <li class="active">Nieuws toevoegen</li>
+        </ol>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Nieuws toevoegen</h1>
+            </div>
         </div>
-    </div>
 
         <div class="col-lg-12">
             <form name="createNews" onsubmit="return validate()" action="/projagile/public/NewsController/save/true" method="post" enctype="multipart/form-data">
@@ -80,3 +83,6 @@
             </form>
 
             <script src="/ProjAgile/public/js/newsValidate.js"></script>
+        </div>
+    </div>
+@endsection

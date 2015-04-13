@@ -16,6 +16,10 @@ class DistrictsectionRepository extends BaseRepository
 	public function create($attributes = array()) {
 		return Districtsection::create($attributes);
 	}
-	
+
+    public function getAllToList()
+    {
+        return Districtsection::all()->lists('name','districtSectionId');
+    }
 }
 ?>

@@ -1,6 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repository\DistrictsectionRepository;
 use App\Repository\NewsRepository;
+use App\Repository\FileRepository;
+use League\Flysystem\File;
 use View;
 
 class NewsController extends Controller
@@ -13,19 +16,32 @@ class NewsController extends Controller
     public function getIndex()
     {
         $newsItems = $this->newsRepository->getAll();
-        return View::make('Resources\views\NewsView\index.php', compact('newsItems'));
+        return View::make('news/index', compact('newsItems'));
     }
 
     /*public function show($id)
     {
         $newsItem = $this->newsRepository->get($id);
-        return View::make('viewnaam', compact('newsItem'));
+        return View::make('viewnaam',news/detail compact('newsItem'));
     }*/
 
-    public function edit($id)
+    public function getEdit($id)
     {
         $newsItem = $this->newsRepository->get($id);
-        return View::make('viewnaam', compact('newsItem'));
+        //dd($newsItem->content);
+        $title = $newsItem->title;
+        $content = $newsItem->content;
+
+        //Files
+        $fileRepo = new FileRepository();
+        $files = $fileRepo->getAllByNewsId($id);
+
+        //DistrictSection
+        $districtRepo = new DistrictsectionRepository();
+        $districtSections = $districtRepo->getAllToList();
+        //dd($districtsections);
+
+        return View::make('news.edit', compact('newsItem', 'districtSections', 'files'));
     }
 
     public function delete($id)
