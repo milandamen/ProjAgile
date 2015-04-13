@@ -36,12 +36,17 @@
         	$news = $this->newsRepo->getLastWeek();
         	$oldnews = $this->newsRepo->oldNews();
         	$sidebar = $this->sidebarRepo->getByPage('2');
-
-
-
-
-        	
         	return view('news.index', compact('news', 'oldnews', 'sidebar'));
+        }
+
+        public function showHidden(){
+        	if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+	        	$news = $this->newsRepo->getAllHidden();
+	        	$sidebar = $this->sidebarRepo->getByPage('2');
+	        	return view('news.hidden', compact('news', 'sidebar'));
+	        } else {
+	        	echo 'U heeft geen rechten om op deze pagina te komen.';
+	        }
         }	
 
         public function show($newsId)

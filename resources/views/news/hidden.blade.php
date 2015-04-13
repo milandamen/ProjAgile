@@ -7,38 +7,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="page-header">
-                    	<!-- todo: hide this button als ingelogd -->
-                       <a href="{{ route('news.manage')}}"><i class="fa fa-pencil-square-o"></i></a>
-                        Nieuws
+                        Nieuws Manage
                     </h2>
+                    <p class="col-md-8"> Deze pagina is enkel zichtbaar voor de administrator en toont 
+                    	al het nieuws. Inclusief de verborgen nieuwsberichten en de 
+                    	berichten waarvan de publicatiedatum is verlopen.
+                    </p>
                 </div>
             </div>
 
              <div class="row">
              	<div class="col-md-8">
              	<div class="col-md-12 addmargin">
-             		<h3> Recent </h3>
-	             	<ul>
-						@foreach($news as $newsItem)
-							<li>
-								<p class="newstitle"><a href="{{ route('news.show', [$newsItem->newsId]) }}">{!! $newsItem->title !!} </a></p>
-								<p class="newsdate">{!! $newsItem->normalDate()!!} 
-									| <i class="fa fa-user"></i> <b>{!! $newsItem->user->username !!} </b> 
-									| @if($newsItem->districtSection != null)
-											{!! $newsItem->districtSection->name !!}
-										@else
-											Algemeen
-										@endif </p>
-								 {{--*/ $phrase = trunc($newsItem->content, 30); /*--}}
-								<p class="newstext"><i>	  {!! $phrase !!} <a href="{{ route('news.show', [$newsItem->newsId]) }}" class="reactions"> Lees verder </a></i></p>
-								<p class="reactions"><a href="{{ route('news.show', [$newsItem->newsId]) }}#reacties">Reacties ({!! count($newsItem->newsComments) !!}) </a></p>
-							</li>
-						@endforeach
-					</ul>
-				</div>
-
-				<div class="col-md-12 addmargin">
-					<h3> Oud </h3>
+			
 					<table class="table">
 						<thead> 
 							<tr>
@@ -53,7 +34,7 @@
 						</thead>
 						
 						<tbody>
-						@foreach($oldnews as $newsItem)
+						@foreach($news as $newsItem)
 							<tr>
 								<td> @if($newsItem->districtSection != null)
 										{!! $newsItem->districtSection->name !!}
