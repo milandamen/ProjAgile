@@ -4,4 +4,5 @@
     interface IMenuRepository extends IBaseRepository
     {
         public function getAllPublic();
+        public function getMenu();
     }

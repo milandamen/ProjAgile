@@ -23,6 +23,12 @@
          * 
          * @return Collection -> Sidebar
          */
+
+        public function getSideRow($pageId, $rowId){
+        	return Sidebar::where('rowNr', '=', $rowId)->where('pageNr', '=', $pageId)->get()->first();
+        }
+
+
         public function getAll()
         {
             return Sidebar::all();
@@ -87,6 +93,6 @@
          */ 
         public function deleteAllFromPage($pageNr)
         {
-            $this->getByPage($pageNr)->delete();
+        	Sidebar::where('pageNr', '=', $pageNr)->delete();
         }
     }
