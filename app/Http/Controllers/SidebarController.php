@@ -28,9 +28,9 @@
 		{
 			if($this->sidebarRepo->getByPage($id) != null)
 			{
-				$sidebar = $this->sidebarRepo->getByPage($id);
+				$sidebarList = $this->sidebarRepo->getByPage($id);
 				$menuList = $this->menuRepo->getAll();
-				return View('sidebar.edit', compact('sidebar', 'menuList'));
+				return View('sidebar.edit', compact('sidebarList', 'menuList'));
 			} else {
 				// Totdat er een error page is.
 				return Redirect::route('home.index');

@@ -18,3 +18,28 @@
 
 }
 
+.reactions {
+	font-size: 12px;
+	color: grey;
+}
+
+.reactions a{
+	font-size: 12px;
+	color: grey;
+}
+
+.newstitle {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0px;
+}
+
+.newsdate {
+	margin: 0px;
+}
+
+.newstext {
+	margin: 0px;
+}
+
+

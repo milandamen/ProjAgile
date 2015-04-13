@@ -19,21 +19,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">
-                        {{$news->title}}
+                        {!! $news->title !!}
                     </h2>
                 </div>
                 <div class="col-md-8">
                     <p class="news-info">
-                        {{ $news->date }}
-                        Door: {{ $news->user->username }} |
+                        {!! $news->date !!}
+                        Door: {!! $news->user->username !!} |
                         @if($news->districtSection != null)
-                            {{ $news->districtSection->name }}
+                            {!! $news->districtSection->name !!}
                         @else
                             Algemeen
                         @endif
                     </p>
 
-                    {{$news->content}}
+                    {!! nl2br($news->content) !!}
                     <br/>
                     @if(count($news->files) > 0)
                         <br/><p>{{'Bijlagen:'}}</p>
@@ -49,7 +49,7 @@
                 </div>
             </div>
             @if($news->newsComments->count() > 0)
-                <h2>Reacties</h2>
+                <h2 id="reacties">Reacties</h2>
                 @foreach($news->newsComments as $comment)
                     <div class="row">
                         <div class="col-lg-6">

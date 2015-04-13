@@ -77,4 +77,12 @@
 			$term = '%' . $term . '%';
 			return News::where('title', 'LIKE', $term)->where('hidden', '=', 0)->get();
 		}
+
+
+		public function getLastWeek(){
+        	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
+        	echo $date;
+
+        	return News::where('publishStartDate', '>', $date)->get();
+        }
 	}

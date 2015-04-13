@@ -32,8 +32,12 @@
         }
 
         public function index(){
-        	$news = $this->newsRepo->getAll();
+        	$news = $this->newsRepo->getLastWeek();
         	$sidebar = $this->sidebarRepo->getByPage('2');
+
+
+
+
         	
         	return view('news.index', compact('news', 'sidebar'));
         }	
