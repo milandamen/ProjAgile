@@ -6,6 +6,7 @@
     use App\Repositories\RepositoryInterfaces\INewsRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
     use Illuminate\Support\Facades\Redirect;
+	use Auth;
 
     class NewsController extends Controller
     {
@@ -59,4 +60,9 @@
 
             return Redirect::route('news.show', [$newsId]);
         }
+		
+		public function getArticlesByTitle($term) {
+			$data = $this->newsRepo->getByTitle($term);
+			echo json_encode($data);
+		}
     }

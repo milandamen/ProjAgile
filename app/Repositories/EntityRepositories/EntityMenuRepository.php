@@ -74,4 +74,31 @@
         {
             return Menu::where('publish', '=', '1')->get();
         }
+
+        public function getMenu()
+        {
+            $mainMenuItems = Menu::where('parentId', null)->orderBy('menuOrder')->get();
+            $allMenuItems  = $this->orderMenu($mainMenuItems);
+            return ($allMenuItems);
+        }
+
+        private function orderMenu($categories)
+        {
+                    $allCategories = array();
+                    foreach ($categories as $category) {
+                            $subArr = array();
+                            $subArr['main'] = $category;
+                            $subCategories = Menu::where('parentId', '=', $category->menuId)->get();
+
+                            if (!$subCategories->isEmpty()) {
+                                    $result = $this->orderMenu($subCategories);
+
+                                    $subArr['sub'] = $result;
+                               }
+
+                $allCategories[] = $subArr;
+            }
+
+            return $allCategories;
+        }
     }

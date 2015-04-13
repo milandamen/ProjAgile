@@ -3,5 +3,5 @@
 
     interface IPostalRepository extends IBaseRepository
     {
-    	
+    	public function getByCode($code);
     }
