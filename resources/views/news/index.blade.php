@@ -14,14 +14,17 @@
 
              <div class="row">
              	<div class="col-md-8">
-
+             	<ul>
 				@foreach($news as $newsItem)
+				<li> {!! $newsItem->date !!} - {!! $newsItem->title !!} 
+					  {{--*/ trunc($newsItem->content, 10); /*--}}
+				<br/> Reacties ({!! count($newsItem->newsComments) !!}) </li>
 
 
-				{!! $newsItem !!}
+				
 
 				@endforeach
-
+				</ul>
 				</div>
 
 		
