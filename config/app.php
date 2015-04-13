@@ -155,6 +155,7 @@ return
          * External Service Providers...
          */
         'Illuminate\Html\HtmlServiceProvider',
+        'Laracasts\Flash\FlashServiceProvider',
 	],
 
 	/*
@@ -211,5 +212,6 @@ return
          */
         'HTML'      => 'Illuminate\Html\HtmlFacade',
         'Form'      => 'Illuminate\Html\FormFacade',
+        'Flash'         => 'Laracasts\Flash\Flash',
 	],
 ];
