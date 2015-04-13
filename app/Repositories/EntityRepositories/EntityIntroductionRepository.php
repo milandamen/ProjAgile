@@ -75,6 +75,6 @@
          */ 
 		public function getPageBar($pageId)
 		{
-			return Introduction::where('pageId', '=', $pageId);
+			return Introduction::where('pageId', '=', $pageId)->first();
 		}
 	}

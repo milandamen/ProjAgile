@@ -19,7 +19,7 @@ function addSideRow(button){
  	var cellDelete = row.insertCell();
 
  	cellText.innerHTML = 'Tekst: <input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
- 	cellIntern.innerHTML = 'Zoek intern <input id="page_name" name="sidebar['+ tableNumber+'][pagename][]" type="text" list="pagedata" /><datalist id="pagedata">@foreach($menu as $menuitem)<option value="{{$menuitem->relativeUrl}}" label="{{$menuitem->name}}">@endforeach</datalist>';
+ 	cellIntern.innerHTML = 'Intern <input id="page_name" name="sidebar['+ tableNumber+'][pagename][]" type="text" list="pagedata" />';
  	cellLink.innerHTML = 'Link naar: <input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
 
 
