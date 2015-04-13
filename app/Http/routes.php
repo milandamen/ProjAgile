@@ -1,4 +1,7 @@
 <?php
+    // Admin controller routes
+    include('RoutePartials/_adminControllerRoutes.php');
+
 	// Auth controller routes
 	include('RoutePartials/_authControllerRoutes.php');
 
