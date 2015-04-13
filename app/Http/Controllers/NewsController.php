@@ -34,13 +34,14 @@
 
         public function index(){
         	$news = $this->newsRepo->getLastWeek();
+        	$oldnews = $this->newsRepo->oldNews();
         	$sidebar = $this->sidebarRepo->getByPage('2');
 
 
 
 
         	
-        	return view('news.index', compact('news', 'sidebar'));
+        	return view('news.index', compact('news', 'oldnews', 'sidebar'));
         }	
 
         public function show($newsId)
