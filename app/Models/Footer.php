@@ -17,7 +17,7 @@ class Footer extends Model
      * @var string
      */
     protected $primaryKey = 'footerId';
-    
+
     /**
      * Laravel's automatic timestamps convention.
      *
