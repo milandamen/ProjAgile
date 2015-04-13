@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+    	<div class="row">
+				{!! Breadcrumbs::render('sidebarpage', (object)['id' => $sidebarList[0]->pageNr, 'title' => $sidebarList[0]->title]) !!}
+			</div>
+
         <div class="row">
             <div class="col-md-12">
                 <h1>Wijzig sidebar </h1>

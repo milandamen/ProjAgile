@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+	    	<div class="row">
+				{!! Breadcrumbs::render('editintroduction') !!}
+			</div>
+
 	<div class="row">
 		<div class="col-md-8">
 		
