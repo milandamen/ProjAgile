@@ -9,10 +9,6 @@
 	{
 		private $carouselRepo;
 		
-		// minimum and maximum number that is prepended to image file
-		private $minRand = 100000;
-		private $maxRand = 999999;
-		
 		/**
 		 * Create a new CarouselController instance.
 		 *
