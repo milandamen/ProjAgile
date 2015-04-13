@@ -28,7 +28,7 @@
 		</form>
 		
 		<div>
-			<a href="#" class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
+			<a class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
 		</div>
 	</div>
 @endsection

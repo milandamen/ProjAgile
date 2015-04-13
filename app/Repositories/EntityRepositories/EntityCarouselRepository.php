@@ -73,6 +73,9 @@
          */ 
         public function deleteAll()
         {
-            $this->all()->delete();
+            $table = $this->getAll();
+			foreach ($table as $item) {
+				$item->delete();
+			}
         }
     }

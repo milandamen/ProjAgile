@@ -4,6 +4,7 @@
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
+	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
 
 	class HomeController extends Controller 
@@ -17,11 +18,12 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, INewsRepository $newsRepo)
+		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, INewsRepository $newsRepo, ICarouselRepository $carouselRepo)
 		{
 			$this->homeLayoutRepo = $homeLayoutRepo;
 			$this->introRepo = $introRepo;
 			$this->newsRepo = $newsRepo;
+			$this->carouselRepo = $carouselRepo;
 		}
 
 		/**
@@ -35,8 +37,9 @@
             $news = $this->newsRepo->getAll();
             $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
+			$carousel = $this->carouselRepo->getAll();
 
-            return view('home.index', compact('news', 'introduction', 'layoutModules'));
+            return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel'));
         }
 
         /**
@@ -47,7 +50,7 @@
         public function editLayout()
         {
             $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getAll();
+            $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 
             return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
@@ -62,20 +65,11 @@
         {
             if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
             {
-                #intro
-                $moduleIntro = $this->homeLayoutRepo->get('module-introduction');
-                $moduleIntro->orderNumber = $_POST['module-introduction'];
-                $this->homeLayoutRepo->update($moduleIntro);
-
-                #news
-                $moduleNews = $this->homeLayoutRepo->get('module-news');
-                $moduleNews->orderNumber = $_POST['module-news'];
-                $this->homeLayoutRepo->update($moduleNews);
-
-                #sidebar
-                $moduleSidebar = $this->homeLayoutRepo->get('module-sidebar');
-                $moduleSidebar->orderNumber = $_POST['module-sidebar'];
-                $this->homeLayoutRepo->update($moduleSidebar);
+				$modules = $this->homeLayoutRepo->getAll();
+				foreach ($modules as $module) {
+					$module->orderNumber = $_POST[$module->moduleName];
+					$module->save();
+				}
 
                 return Redirect::route('home.index');
             }
