@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - 503
+@stop
+
+@section('description')
+	De Bunders 503 error pagina.
+@stop
+
 @section('content')
     <div class="container">
         <div class="content">
