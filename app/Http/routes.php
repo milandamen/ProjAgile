@@ -13,3 +13,6 @@
 
     // Sidebar controller routes
     include('RoutePartials/_sidebarControllerRoutes.php');
+    
+    // Carousel controller routes
+    include('RoutePartials/_carouselControllerRoutes.php');
