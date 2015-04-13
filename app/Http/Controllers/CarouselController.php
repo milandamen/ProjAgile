@@ -38,17 +38,22 @@
 
 		public function update()
 		{
-			$this->carouselRepo->deleteAll();
-			
-			for ($i = 0; $i < count($_POST['artikel']); $i++) {
-				$newsId = $_POST['artikel'][$i];
-				$item = $this->carouselRepo->create(compact('newsId'));
-				$item->save();		// TODO Maybe not needed..
+			// if has permission then
+				$this->carouselRepo->deleteAll();
 				
-				$this->saveImage($item, $i);
-			}
-			
-			return Redirect::route('home.index');
+				for ($i = 0; $i < count($_POST['artikel']); $i++) {
+					$newsId = $_POST['artikel'][$i];
+					$item = $this->carouselRepo->create(compact('newsId'));
+					$item->save();
+					
+					$this->saveImage($item, $i);
+				}
+				
+				return Redirect::route('home.index');
+			// else
+				// // Totdat er een error page is.
+				// return Redirect::route('home.index');
+			// end if
 		}
 		
 		private function saveImage($item, $count) {
