@@ -59,4 +59,9 @@
 
             return Redirect::route('news.show', [$newsId]);
         }
+		
+		public function getArticlesByTitle($term) {
+			$data = $this->newsRepo->getByTitle($term);
+			echo json_encode($data);
+		}
     }
