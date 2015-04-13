@@ -5,6 +5,7 @@
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Support\Facades\Redirect;
+	use Auth;
 
     class SidebarController extends Controller
     {

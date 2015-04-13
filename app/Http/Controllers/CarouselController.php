@@ -4,6 +4,7 @@
 	use App\Models\Carousel;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
 	use Illuminate\Support\Facades\Redirect;
+	use Auth;
 	
 	class CarouselController extends Controller
 	{

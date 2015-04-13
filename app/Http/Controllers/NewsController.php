@@ -6,6 +6,7 @@
     use App\Repositories\RepositoryInterfaces\INewsRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
     use Illuminate\Support\Facades\Redirect;
+	use Auth;
 
     class NewsController extends Controller
     {
