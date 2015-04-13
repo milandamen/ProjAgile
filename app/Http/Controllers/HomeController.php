@@ -6,6 +6,7 @@
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
+	use Auth;
 
 	class HomeController extends Controller 
 	{
@@ -33,7 +34,6 @@
 		 */
 		public function index()
         {
-
             $news = $this->newsRepo->getAll();
             $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
@@ -49,11 +49,15 @@
          */
         public function editLayout()
         {
-            $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getPageBar('1');
-            $layoutModules = $this->homeLayoutRepo->getAll();
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				$news = $this->newsRepo->getAll();
+				$introduction = $this->introRepo->getPageBar('1');
+				$layoutModules = $this->homeLayoutRepo->getAll();
 
-            return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
         }
 
         /**
@@ -63,20 +67,24 @@
          */
         public function updateLayout()
         {
-            if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
-            {
-				$modules = $this->homeLayoutRepo->getAll();
-				foreach ($modules as $module) {
-					$module->orderNumber = $_POST[$module->moduleName];
-					$module->save();
-				}
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
+				{
+					$modules = $this->homeLayoutRepo->getAll();
+					foreach ($modules as $module) {
+						$module->orderNumber = $_POST[$module->moduleName];
+						$module->save();
+					}
 
-                return Redirect::route('home.index');
-            }
-            else
-            {
-                return Redirect::route('home.editLayout');
-            }
+					return Redirect::route('home.index');
+				}
+				else
+				{
+					return Redirect::route('home.editLayout');
+				}
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
         }
 
         /**
@@ -86,8 +94,12 @@
          */
         public function editIntroduction()
         {
-            $introduction = $this->introRepo->getPageBar('1');
-            return view('home.editIntroduction', compact('introduction'));
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				$introduction = $this->introRepo->getPageBar('1');
+				return view('home.editIntroduction', compact('introduction'));
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
         }
 
         /**
@@ -97,18 +109,22 @@
          */
         public function updateIntroduction()
         {
-            $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            // nl2br is needed and used to save line breaks in the submitted text.  
-            $content = nl2br(htmlentities($_POST['content'], ENT_QUOTES, 'UTF-8'));
-            $pageId = $_POST['pageId'];
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+				// nl2br is needed and used to save line breaks in the submitted text.  
+				$content = nl2br(htmlentities($_POST['content'], ENT_QUOTES, 'UTF-8'));
+				$pageId = $_POST['pageId'];
 
-            $intro = $this->introRepo->getPageBar($pageId);
-            $intro->pageId = $pageId;
-            $intro->title = $title;
-            $intro->text = $content;
+				$intro = $this->introRepo->getPageBar($pageId);
+				$intro->pageId = $pageId;
+				$intro->title = $title;
+				$intro->text = $content;
 
-            $intro->save();
+				$intro->save();
 
-            return Redirect::route('home.index');
+				return Redirect::route('home.index');
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
         }
     }

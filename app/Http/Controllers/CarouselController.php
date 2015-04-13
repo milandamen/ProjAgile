@@ -27,18 +27,17 @@
 		
 		public function edit()
 		{
-			// if has permission then
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
 				$carousel = $this->carouselRepo->getAll();
 				return View('carousel.edit', compact('carousel', 'publicpathh'));
-			// else
-				// // Totdat er een error page is.
-				// return Redirect::route('home.index');
-			// end if
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
 		}
 
 		public function update()
 		{
-			// if has permission then
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
 				$this->carouselRepo->deleteAll();
 				
 				for ($i = 0; $i < count($_POST['artikel']); $i++) {
@@ -50,10 +49,9 @@
 				}
 				
 				return Redirect::route('home.index');
-			// else
-				// // Totdat er een error page is.
-				// return Redirect::route('home.index');
-			// end if
+			} else {
+				echo 'U heeft geen rechten om op deze pagina te komen.';
+			}
 		}
 		
 		private function saveImage($item, $count) {
