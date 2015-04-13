@@ -59,10 +59,21 @@
                     {!! Form::checkbox('top', 0); !!}
                 </div>
                 <div class="form-group">
+                    {!! Form::label('fileUpload', 'Files toevoegen') !!}<br/>
+                    <table name="fileUpload">
                     @foreach($files as $file)
-                        {!! Form::file($file->path) !!}
+                        {!!    '<tr><td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width:500px;']) . '</td>' !!}
 
+                            <td style="padding-top:5px;"><button id="{!! $file->fileId!!}" style="margin-left: 10px" type="button" class="btn btn-danger" aria-label="Left Align">
+                                <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button></td></tr>
                     @endforeach
+                        {!! '<tr><td style="padding-top:5px;">' . Form::file('Voeg een nieuwe file toe') . '</td>' !!}
+
+                        <td style="padding-top:5px;"><button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
+                            <span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button></td>
+                    </table>
                 </div>
                 <div class="form-group">
                     {!! Form::submit('opslaan', ['class' => 'btn btn-default']) !!} <!-- , ['class' => 'btn btn-submit'] -->

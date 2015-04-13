@@ -39,7 +39,6 @@ class NewsController extends Controller
         //DistrictSection
         $districtRepo = new DistrictsectionRepository();
         $districtSections = $districtRepo->getAllToList();
-        //dd($districtsections);
 
         return View::make('news.edit', compact('newsItem', 'districtSections', 'files'));
     }

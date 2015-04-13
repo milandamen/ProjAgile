@@ -18,7 +18,7 @@ class FileRepository extends BaseRepository {
      */
     public function getAllByNewsId($newsId)
     {
-        return File::where('newsId', '=', 'newsId')->get();
+        return File::where('newsId', '=', $newsId)->get();
     }
 
     /**
