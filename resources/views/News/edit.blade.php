@@ -1,9 +1,20 @@
 @extends('App')
 
-{{--<link href="bootstrap.css" rel="stylesheet">--}}
-{{--<link href="bootstrap-switch.css" rel="stylesheet">--}}
-{{--<script src="jquery.js"></script>--}}
-{{--<script src="bootstrap-switch.js"></script>--}}
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-switch.css" rel="stylesheet">
+<script src="jquery.js"></script>
+<script src="bootstrap-switch.js"></script>
+<script type="text/javascript">
+    $('.switch').bootstrapSwitch();
+
+    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy'
+    });
+</script>
+<script src="/ProjAgile/public/js/newsValidate.js"></script>
+
+
 
 @section('content')
     <div class="container">
