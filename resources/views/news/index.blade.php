@@ -7,9 +7,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="page-header">
-                    	<!-- todo: hide this button als ingelogd -->
-                       <a href="{{ route('news.manage')}}"><i class="fa fa-pencil-square-o"></i></a>
-                        Nieuws
+						@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+							<a href="{{ route('news.manage')}}"><i class="fa fa-pencil-square-o"></i></a>
+						@endif
+						Nieuws
                     </h2>
                 </div>
             </div>
