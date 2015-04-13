@@ -23,6 +23,6 @@ class MenuComposer
     public function compose(View $view)
     {
     	$menu = $this->menuRepo->getMenu();
-		$view->with('menu', $menu); 
+		$view->with('menu', $menu);
     }
 }
