@@ -47,7 +47,7 @@
         public function editLayout()
         {
             $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getAll();
+            $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 
             return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
