@@ -59,6 +59,12 @@
                     {!! Form::checkbox('top', 0); !!}
                 </div>
                 <div class="form-group">
+                    @foreach($files as $file)
+                        {!! Form::file($file->path) !!}
+
+                    @endforeach
+                </div>
+                <div class="form-group">
                     {!! Form::submit('opslaan', ['class' => 'btn btn-default']) !!} <!-- , ['class' => 'btn btn-submit'] -->
                 </div>
             {!! Form::close() !!}
