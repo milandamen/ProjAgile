@@ -1,15 +1,19 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Footer;
+use App\Models\Menu;
+use App\Repositories\RepositoryInterfaces\IMenuRepository;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\RepositoryInterfaces\IFooterRepository;
+use Input;
 
 class FooterController extends Controller
 {
 
-    public function __construct(IFooterRepository $footerRepository)
+    public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository)
     {
         $this->footerRepository = $footerRepository;
+        $this->menuRepository = $menuRepository;
     }
 
     public function edit()
@@ -134,105 +138,35 @@ class FooterController extends Controller
         return Redirect::action('FooterController@edit');
     }
 
-    public function footerUpdate()
+    public function autocomplete()
     {
-        if($this->getAuth()->loggedIn() && $_SESSION['userGroupId'] == 1){
-            //require db, create it and get the footer
-            require_once "../app/repository/footerRepository.php";
-            require_once '../app/model/Footer.php';
-            $footerdb = new FooterRepository();
-            $footer = $footerdb->getAll();
-            if($_POST)
-            {
-                //create new footer array from $_POST
-                $newFooter = [];
-                for($colN = 0; $colN < count($_POST['footer']); $colN++)
-                {
-                    $column = $_POST['footer'][$colN];
-                    for($rowN = 0; $rowN < count($column['text']); $rowN++)
-                    {
-                        //check if text has been filled in
-                        if($column['text'][$rowN] != null)
-                        {
-                            $newFooter[] = new Footer($colN, $rowN, filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING), filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING));
-                        }
-                        else
-                        {
-                            echo "Vul a.u.b. alle verplichte velden in";
-                            return;
-                        }
-                    }
-                }
-                //loop through new entries, adding or updating them
-                foreach($newFooter as $entry)
-                {
-                    //loop through old footer
-                    $isNew = 1;
-                    foreach($footer as $item)
-                    {
-                        if($item->getCol() == $entry->getCol() && $item->getRow() == $entry->getRow())
-                        {
-                            $isNew = 0;
-                            break;
-                        }
-                    }
-                    if($isNew == 1)
-                    {
-                        $footerdb->add($entry);
-                    }
-                    else
-                    {
-                        $footerdb->update($entry);
-                    }
-                }
-                //delete removed items
-                foreach($footer as $item)
-                {
-                    $canDelete = 1;
-                    foreach($newFooter as $entry)
-                    {
-                        if($item->getCol() == $entry->getCol() && $item->getRow() == $entry->getRow())
-                        {
-                            $canDelete = 0;
-                            break;
-                        }
-                    }
-                    if($canDelete == 1)
-                    {
-                        $footerdb->remove($item);
-                    }
-                }
-                global $Base_URI;
-                header('Location: ' . $Base_URI);
-                return;
-            }
-            else
-            {
-                $numColumns = 0;
-                foreach($footer as $item)
-                {
-                    if($item->getCol() >= $numColumns)
-                    {
-                        $numColumns = $item->getCol()+1;
-                    }
-                }
-                $footerColumns = [];
-                for($i = 0; $i < $numColumns; $i++)
-                {
-                    $footerColumns[] = [];
-                }
-                foreach($footer as $item)
-                {
-                    $footerColumns[$item->getCol()][] = $item;
-                }
-                $this->header("Update Footer");
-                $this->menu();
-                $this->view('footer/footerUpdate', ['footerColumns' => $footerColumns]);
-                $this->footer();
-            }
-        }  else {
-            global $Base_URI;
-            header('Location: ' . $Base_URI . 'Shared/noPermission');
+        //prevent direct access (check if ajax request)
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
+        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        if(!$isAjax) {
+            $user_error = 'Access denied - not an AJAX request...';
+            trigger_error($user_error, E_USER_ERROR);
         }
+
+        //get what user typed in autocomplete input
+        $term = trim(Input::get('term'));
+
+        $a_json = array();
+        $a_json_row = array();
+
+        // replace multiple spaces with one
+        $term = preg_replace('/\s+/', ' ', $term);
+
+        $items = Menu::where('name', 'LIKE', '%' . $term . '%')->get();
+
+        foreach($items as $item)
+        {
+            $a_json_row["label"] = $item->name;
+            $a_json_row["value"] = $item->relativeUrl;
+            array_push($a_json, $a_json_row);
+        }
+
+        $json = json_encode($a_json);
+        print $json;
     }
 }

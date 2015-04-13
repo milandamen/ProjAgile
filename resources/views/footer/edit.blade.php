@@ -1,6 +1,8 @@
 @extends('app')
 
 @section('content')
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -39,7 +41,7 @@
                                     <td>
                                         Titel: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
                                         <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="footerAutocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                     </td>
                                 </tr>
 
@@ -48,7 +50,7 @@
                                     <td>
                                         Text: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
                                         <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="footerAutocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                     </td>
                                 </tr>
                             @endif
@@ -67,10 +69,12 @@
     </div>
 </div>
 
-
 @endsection
 
 @section('additional_scripts')
     <!-- JavaScript that enables adding and removing columns and rows -->
     {!! HTML::script('custom/js/footerUpdate.js') !!}
+    {!! HTML::script('custom/js/autocomplete.js') !!}
 @endsection
+
+
