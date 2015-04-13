@@ -1,4 +1,11 @@
 <?php	
+
+	Route::get('nieuws', 
+	[
+		'as' => 'news.index',
+		'uses' => 'NewsController@index'
+	]);
+
 	Route::get('nieuws/{id}',
     [
         'as' => 'news.show',
