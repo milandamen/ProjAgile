@@ -1,18 +1,9 @@
 @extends('App')
 
-<link href="bootstrap.css" rel="stylesheet">
-<link href="bootstrap-switch.css" rel="stylesheet">
-<script src="jquery.js"></script>
-<script src="bootstrap-switch.js"></script>
-<script type="text/javascript">
-    $('.switch').bootstrapSwitch();
-
-    $('.datepicker').datepicker();
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy'
-    });
-</script>
-
+{{--<link href="bootstrap.css" rel="stylesheet">--}}
+{{--<link href="bootstrap-switch.css" rel="stylesheet">--}}
+{{--<script src="jquery.js"></script>--}}
+{{--<script src="bootstrap-switch.js"></script>--}}
 
 @section('content')
     <div class="container">
@@ -160,6 +151,23 @@
                     {{--<input class="btn btn-submit" type="submit" value="opslaan">--}}
                 {{--</div>--}}
             {{--</form>--}}
+
+            {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js') !!}
+
+            {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js') !!}
+
+
+            {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css') !!}
+
+            <input id="datetimepicker" type="text">
+
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('#datetimepicker').datepicker();
+                })
+            </script>
+
+
 
             <script src="/ProjAgile/public/js/newsValidate.js"></script>
         </div>
