@@ -43,6 +43,16 @@
                     {!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
+                    <!-- Dit omzetten naar laravel form -->
+                    <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default">
+                    <input type="radio" name="hidden" value="true">Ja
+                    </label>
+                    <label class="btn btn-default active">
+                    <input type="radio" name="hidden" value="false" checked="true">Nee
+                    </label>
+                    </div>
+                    <!-- tot hier -->
                     {!! Form::label('hidden', 'Verbergen?') !!}<br/>
                     {!! Form::checkbox('hidden', old($newsItem->hidden), ['class' => 'form-control switch', 'id' => 'switch']) !!}
                 </div>
