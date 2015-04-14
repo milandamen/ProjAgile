@@ -1,4 +1,17 @@
 <?php	
+
+	Route::get('nieuws', 
+	[
+		'as' => 'news.index',
+		'uses' => 'NewsController@index'
+	]);
+
+	Route::get('nieuws/manage', 
+	[
+		'as' => 'news.manage',
+		'uses' => 'NewsController@showHidden'
+	]);
+
 	Route::get('nieuws/{id}',
     [
         'as' => 'news.show',
