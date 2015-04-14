@@ -15,7 +15,7 @@
 
         @yield('content')
 
-     	@yield('sidebar')
+     
 
         @include('partials._footer')
 

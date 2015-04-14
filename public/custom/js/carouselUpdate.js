@@ -6,7 +6,7 @@ function searchArticle() {
 	var searchterm = document.getElementById('artikeltitel').value;
 	var searchresultsbody = document.getElementById('searchresults');
 
-	$.getJSON('/ProjAgile/public/NewsController/getArticlesByTitle/' + searchterm)
+	$.getJSON(getArticlesByTitleURL + '/' + searchterm)
 		.done(function (dataresult) {
 			console.log(dataresult);
 			
@@ -58,7 +58,7 @@ function addArticle(button) {
 				'<span>' + id + '</span>' +
 			'</td>' +
 			'<td>' +
-				title +
+				'<span>' + title + '</span>' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
@@ -159,6 +159,8 @@ function calculateIndexes() {
 		i++;
 	});
 }
+
+calculateIndexes();
 
 function goBack() {
     window.history.back()
