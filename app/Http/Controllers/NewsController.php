@@ -2,6 +2,7 @@
     namespace App\Http\Controllers;
 
     use App\Models\Newscomment;
+    use App\Models\News;
     use App\Repositories\RepositoryInterfaces\IFileRepository;
     use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
     use App\Repositories\RepositoryInterfaces\INewsCommentRepository;
@@ -79,8 +80,28 @@
                 return view('errors.404');
             }
 
-
             return view('news.show', compact('news', 'fileLinks'));
+        }
+
+        /**
+         * Show the create news page.
+         *
+         * @return Response
+         */
+        public function create()
+        {
+            if (Auth::check())
+            {
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $newsItem = new News();
+                    $districtSections = $this->districtSectionRepo->getAllToList();
+
+                    return view('news.create', compact('newsItem', 'districtSections'));
+                }
+                abort(403);
+            } 
+            abort(401);
         }
 
         /**
@@ -90,18 +111,38 @@
          */
 		public function edit($id)
 		{
-			$newsItem = $this->newsRepo->get($id);
-			$title = $newsItem->title;
-			$content = $newsItem->content;
+            if (Auth::check())
+            {
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $newsItem = $this->newsRepo->get($id);
+                    $files = $this->fileRepo->getAllByNewsId($id);
+                    $districtSections = $this->districtSectionRepo->getAllToList();
 
-			// Files
-			$files = $this->fileRepo->getAllByNewsId($id);
-
-			// DistrictSection
-			$districtSections = $this->districtSectionRepo->getAllToList();
-
-			return View::make('news.edit', compact('newsItem', 'districtSections', 'files'));
+                    return view('news.edit', compact('newsItem', 'districtSections', 'files'));
+                }
+                abort(403);
+            } 
+            abort(401);
 		}
+
+        public function update(NewsRequest $request)
+        {
+            if (Auth::check())
+            {
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $newsItem = $this->newsRepo->get($request->newsId);
+                    $newsItem->
+
+
+
+                    return Redirect::route('news.show', []);
+                }
+                abort(403);
+            } 
+            abort(401);
+        }
 
         /**
          * Show all news articles including the hidden ones. 
@@ -185,8 +226,8 @@
         {
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
             {
-				
 				$news = $this->newsRepo->get($id);
+
 				if(count($news) > 0)
                 {
 					$news->hidden = false;

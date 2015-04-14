@@ -5,6 +5,18 @@
 		'uses' => 'NewsController@index'
 	]);
 
+	Route::get('nieuws/aanmaken', 
+	[
+		'as' => 'news.create',
+		'uses' => 'NewsController@create'
+	]);
+
+	Route::put('nieuws/aanmaken', 
+	[
+		'as' => 'news.store',
+		'uses' => 'NewsController@store'
+	]);
+
 	Route::get('nieuws/manage', 
 	[
 		'as' => 'news.manage',
