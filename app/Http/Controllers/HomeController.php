@@ -123,7 +123,7 @@
 
 				return Redirect::route('home.index');
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errrors/403');
 			}
         }
 

@@ -97,7 +97,6 @@
 		}
 
 		public function hide($id){
-
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
 				$news = $this->newsRepo->get($id);
 				if(count($news) > 0){
