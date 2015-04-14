@@ -9,9 +9,9 @@
         <!-- Features Section -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="page-header">Beheer</h2>
-                        <p> Op deze pagina zijn alle elementen te vinden die men kan beheren.</p>
-                        <p> U heeft toegang tot alle onderdelen die hieronder te vinden zijn. Mocht u een onderdeel missen meld dit dan bij de beheerder!</p>
+                    <h2 >Beheer</h2>
+                        <p class="col-md-8"> Op deze pagina zijn alle elementen te vinden die men kan beheren.
+                        	U heeft toegang tot alle onderdelen die hieronder te vinden zijn. Mocht u een onderdeel missen meld dit dan bij de beheerder!</p>
 
                         @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
                     <div class="col-lg-8 col-md-offset-2">
