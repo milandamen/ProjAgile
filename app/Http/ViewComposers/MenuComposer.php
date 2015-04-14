@@ -1,14 +1,16 @@
-<?php namespace App\Http\ViewComposers;
-
+<?php
+namespace App\Http\ViewComposers;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Repository\MenuRepository;
+use App\Repositories\RepositoryInterfaces\IMenuRepository;
 
-class MenuComposer {
+class MenuComposer
+{
+    private $menuRepo;
 
-    public function __construct(MenuRepository $menurepo)
-    {	
-    	$this->menurepo = $menurepo;
+    public function __construct(IMenuRepository $menuRepo)
+    {
+        $this->menuRepo = $menuRepo;
     }
 
     /**
@@ -20,8 +22,7 @@ class MenuComposer {
 
     public function compose(View $view)
     {
-    	$menu = $this->menurepo->getAll();
-		$view->with('menu', $menu); 
+    	$menu = $this->menuRepo->getMenu();
+		$view->with('menu', $menu);
     }
-
 }

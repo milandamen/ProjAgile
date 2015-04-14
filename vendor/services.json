@@ -27,8 +27,11 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ComposerServiceProvider",
-        "Illuminate\\Html\\HtmlServiceProvider"
+        "App\\Providers\\ViewComposerServiceProvider",
+        "App\\Providers\\RepositoryServiceProvider",
+        "Illuminate\\Html\\HtmlServiceProvider",
+        "Laracasts\\Flash\\FlashServiceProvider",
+        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -47,7 +50,10 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ComposerServiceProvider"
+        "App\\Providers\\ViewComposerServiceProvider",
+        "App\\Providers\\RepositoryServiceProvider",
+        "Laracasts\\Flash\\FlashServiceProvider",
+        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

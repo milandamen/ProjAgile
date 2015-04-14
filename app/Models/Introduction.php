@@ -1,23 +1,50 @@
-<?php namespace App\Models;
+<?php
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
 
-class Introduction extends Model {
+    class Introduction extends Model 
+    {
+        /**
+         * Table name.
+         * 
+         * @var string
+         */
+        protected $table = 'introduction';
 
-	protected $table = 'introduction';
+        /**
+         * PrimaryKey name.
+         * 
+         * @var string
+         */
+        protected $primaryKey = 'introductionId';
 
-	# Primary Key
-	protected $primaryKey = 'id';
-	protected $guarded = ['id'];
+        /**
+         * Laravel's automatic timestamps convention.
+         * 
+         * @var bool
+         */
+        public $timestamps = false;
 
-	# Properties that can be changed
-	protected $fillable = ['pageId', 'title', 'text'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+        /**
+         * Attributes that can be changed and thus are mass assingable.
+         * 
+         * @var array
+         */
+        protected $fillable = 
+        [
+        	'pageId', 
+        	'title', 
+        	'text'
+        ];
 
-
-}
-
-
-?>
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable.
+         * 
+         * @var array
+         */
+        protected $guarded = 
+        [
+        	'introductionId'
+        ];
+    }

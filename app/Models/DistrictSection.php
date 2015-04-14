@@ -1,29 +1,109 @@
-<?php namespace App\Models;
+<?php
+	namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-class Districtsection extends Model {
+	class Districtsection extends Model 
+	{
+	    /**
+	     * Table name.
+	     * 
+	     * @var string
+	     */
+		protected $table = 'districtSection';
 
-	protected $table = 'districtsection';
+        /**
+         * PrimaryKey name.
+         * 
+         * @var string
+         */
+		protected $primaryKey = 'districtSectionId';
 
-	# Primary Key
-//	protected $guarded = ['districtSectionId'];  // Geen Auto-increment?
-	protected $primaryKey = 'districtsectionId';
+        /**
+         * Laravel's automatic timestamps convention.
+         * 
+         * @var bool
+         */
+		public $timestamps = false;
 
-	# Properties that can be changed
-	protected $fillable = ['districtsectionId', 'name', 'generalInfo'];
-	
-	# Laravel's automatic timestamps (like updated_at) 
-	public $timestamps = false;
+        /**
+         * Attributes that can be changed and thus are mass assingable.
+         * 
+         * @var array
+         */
+		protected $fillable = 
+		[
+			'name', 
+			'generalInfo'
+		];
+		
+        /**
+         * Attributes that cannot be changed and thus are not mass assingable.
+         * 
+         * @var array
+         */
+		protected $guarded = 
+		[
+			'districtSectionId'
+		];
 
-	public function news() {
-		return $this->hasMany('App\Models\News', 'newsId');
+		/**
+		 * Get all Activity models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Activity
+		 */
+		public function activities() 
+		{
+			return $this->hasMany('App\Models\Activity', 'districtSectionId');
+		}
+
+		/**
+		 * Get all Contact models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Contact
+		 */
+		public function contacts() 
+		{
+			return $this->hasMany('App\Models\Contact', 'districtSectionId');
+		}
+
+		/**
+		 * Get all News models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> News
+		 */
+		public function news() 
+		{
+			return $this->hasMany('App\Models\News', 'districtSectionId');
+		}
+
+		/**
+		 * Get all Postal models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Postal
+		 */
+		public function postals() 
+		{
+			return $this->hasMany('App\Models\Postal', 'districtSectionId');
+		}
+
+		/**
+		 * Get all Project models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> Project
+		 */
+		public function projects() 
+		{
+			return $this->hasMany('App\Models\Project', 'districtSectionId');
+		}
+
+		/**
+		 * Get all User models that reference this DistrictSection model.
+		 * 
+		 * @return Collection -> User
+		 */
+		public function users() 
+		{
+			return $this->hasMany('App\Models\User', 'districtSectionId');
+		}
 	}
-
-	public function users(){
-		return $this->hasMany('App\Models\User', 'foreign_key', 'districtsectionId');
-	}
-
-}
-
-?>
