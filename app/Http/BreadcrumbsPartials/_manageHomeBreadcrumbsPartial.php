@@ -1,13 +1,13 @@
 <?php
-    //!!!!! LET OP NOG GEEN ROUTE!
+
     // Home > Manage  (( ADMIN PANEEL ))
     Breadcrumbs::register('manage', function($breadcrumbs)
     {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push('Manage');
+        $breadcrumbs->push('Manage', route('admin.index'));
     });
 
-    //!!!!! LET OP NOG GEEN ROUTE!
+    //!!!!! LET OP GEEN ROUTE!
     // Home > Manage > Wijzig Sidebar
     Breadcrumbs::register('editsidebar', function($breadcrumbs)
     {
@@ -44,7 +44,6 @@
     });
 
 
-    //!!!!! LET OP NOG GEEN ROUTE!
     // Home > Manage > Wijzig footer
     Breadcrumbs::register('editfooter', function($breadcrumbs)
     {
@@ -52,10 +51,10 @@
         $breadcrumbs->push('Wijzig Footer', route('footer.edit'));
     });
 
-    //!!!!! LET OP NOG GEEN ROUTE!
+
     // Home > Manage > Wijzig menu
     Breadcrumbs::register('editmenu', function($breadcrumbs)
     {
         $breadcrumbs->parent('manage');
-        $breadcrumbs->push('Wijzig Menu');
+        $breadcrumbs->push('Wijzig Menu', route('menu.edit'));
     });
