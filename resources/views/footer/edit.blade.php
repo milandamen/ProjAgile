@@ -1,8 +1,6 @@
 @extends('app')
 
 @section('content')
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
-
 <div class="container">
     <div class="row">
         {!! Breadcrumbs::render('editfooter') !!}
