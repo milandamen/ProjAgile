@@ -2,6 +2,7 @@
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
+            <a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -9,14 +10,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {!! HTML::image('custom/img/logo.png') !!}
-
+            
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
                 <li><a href="#"><i class="fa fa-paper-plane"></i> Contact</a></li>
+
+                @if (!Auth::check())
+                    <li>
+                        <a href="{{ route('auth.login') }}">
+                            <i class="fa fa-spinner"></i> Inloggen
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('auth.logout') }}">
+                            <i class="fa fa-spinner"></i> Uitloggen
+                        </a>
+                    </li>
+                @endif
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
