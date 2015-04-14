@@ -4,3 +4,6 @@
 
 <!-- Bootstrap Core JavaScript -->
 {!! HTML::script('bootstrap/js/bootstrap.js') !!}
+
+<!-- Multi level menu -->
+{!! HTML::script('custom/js/multilevel_menu.js') !!}

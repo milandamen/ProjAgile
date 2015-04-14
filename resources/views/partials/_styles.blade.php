@@ -14,6 +14,9 @@
 {!! HTML::style('custom/css/sidebar.css') !!}
 {!! HTML::style('custom/css/carousel-update.css') !!}
 
+<!-- Multi level menu -->
+{!! HTML::style('custom/css/multilevel_menu.css') !!}
+
 <!-- Fonts -->
 {!! HTML::style('font-awesome/css/font-awesome.min.css') !!}
 

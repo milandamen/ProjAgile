@@ -1,13 +1,13 @@
-<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{!! $main['main']->name !!} <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-
-        @foreach ($items as $item)
-
-                @if(isset($item['sub']))
-                    @include('partials.partials._subMenuItem', ['items' => $item['sub'],'main' => $item])
-                @else
-                    <li><a href="{!! $item['main']->relativeUrl !!}">{!! $item['main']->name !!}</a></li>
-                @endif
-        @endforeach
-    </ul>
+@foreach ($items as $item)
+	<li>
+		@if(isset($item['sub']))
+			<a href="#" class="trigger right-caret">{{ $main['main']->name }}</a>
+			
+			<ul class="dropdown-menu sub-menu">
+				@include('partials.partials._subMenuItem', ['items' => $item['sub'],'main' => $item])
+			</ul>
+		@else
+			<a href="{{ url($item['main']->relativeUrl) }}">{{ $item['main']->name }}</a>
+		@endif
+	</li>
+@endforeach
