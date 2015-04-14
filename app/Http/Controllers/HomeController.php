@@ -7,6 +7,7 @@
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
 	use Auth;
+	use Request;
 
 	class HomeController extends Controller 
 	{
@@ -56,7 +57,7 @@
 
 				return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 
@@ -83,7 +84,7 @@
 					return Redirect::route('home.editLayout');
 				}
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 
@@ -98,7 +99,7 @@
 				$introduction = $this->introRepo->getPageBar('1');
 				return view('home.editIntroduction', compact('introduction'));
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 
@@ -126,7 +127,18 @@
 				return view('errrors/403');
 			}
         }
-
+		
+		/**
+         * Show the results of the search query.
+         *
+         * @return Response
+         */
+		public function search(Request $request) {
+			
+			// TODO search results.
+			return view('errors/404');
+		}
+		
 
         private function getNews(){
         	$news = $this->newsRepo->getAll();

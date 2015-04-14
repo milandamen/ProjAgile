@@ -24,7 +24,7 @@ class MenuController extends Controller {
 
     public function index()
 	{
-        $allMenuItems = $this->menuRepo->getAll();
+        $allMenuItems = $this->menuRepo->getAllMenuItems();
         return view('menu.index', compact('allMenuItems'));
 	}
 

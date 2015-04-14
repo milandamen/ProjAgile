@@ -102,7 +102,7 @@
 		 */
 		public function files() 
 		{
-			return $this->hasMany('App\Models\File', 'fileId');
+			return $this->hasMany('App\Models\File', 'newsId');
 		}
 
 		/**

@@ -77,6 +77,13 @@
 
         public function getMenu()
         {
+            $mainMenuItems = Menu::where('parentId', null)->where('publish', 1)->orderBy('menuOrder')->get();
+            $allMenuItems  = $this->orderMenu($mainMenuItems);
+            return ($allMenuItems);
+        }
+
+        public function getAllMenuItems()
+        {
             $mainMenuItems = Menu::where('parentId', null)->orderBy('menuOrder')->get();
             $allMenuItems  = $this->orderMenu($mainMenuItems);
             return ($allMenuItems);

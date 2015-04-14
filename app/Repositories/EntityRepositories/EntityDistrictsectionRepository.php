@@ -1,50 +1,50 @@
 <?php
     namespace App\Repositories\EntityRepositories;
     
-	use App\Models\Districtsection;
+	use App\Models\DistrictSection;
     use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 
-	class EntityDistrictsectionRepository implements IDistrictSectionRepository 
+	class EntityDistrictSectionRepository implements IDistrictSectionRepository 
 	{
         /**
-         * Returns a Districtsection model depending on the id provided.
+         * Returns a DistrictSection model depending on the id provided.
          * 
          * @param  int $id
          * 
-         * @return Districtsection
+         * @return DistrictSection
          */ 
         public function get($id)
         {
-            return Districtsection::find($id);
+            return DistrictSection::find($id);
         }
 
         /**
-         * Returns all the Districtsection models in the database.
+         * Returns all the DistrictSection models in the database.
          * 
-         * @return Collection -> Districtsection
+         * @return Collection -> DistrictSection
          */
         public function getAll()
         {
-            return Districtsection::all();
+            return DistrictSection::all();
         }
 
         /**
-         * Creates a Districtsection record in the database.
+         * Creates a DistrictSection record in the database.
          * 
          * @param  array() $attributes
          * 
-         * @return Districtsection
+         * @return DistrictSection
          */
         public function create($attributes)
         {
-            return Districtsection::Create($attributes);
+            return DistrictSection::Create($attributes);
         }
 
         /**
-         * Updates a Districtsection record in the database depending on 
-         * the Districtsection model provided.
+         * Updates a DistrictSection record in the database depending on 
+         * the DistrictSection model provided.
          * 
-         * @param  Districtsection $model
+         * @param  DistrictSection $model
          * 
          * @return void
          */
@@ -54,7 +54,7 @@
         }
 
         /**
-         * Deletes a Districtsection record depending on the id provided.
+         * Deletes a DistrictSection record depending on the id provided.
          * 
          * @param  int $id
          * 
@@ -62,18 +62,18 @@
          */
         public function destroy($id)
         {
-            $model = Districtsection::findOrFail($id);
+            $model = DistrictSection::findOrFail($id);
             $model->delete();
         }
 
         /**
-         * Returns all the Districtsection models from the database and 
+         * Returns all the DistrictSection models from the database and 
          * converts it to a list. This is for select box use only.
          * 
-         * @return List -> Districtsection
+         * @return List -> DistrictSection
          */
         public function getAllToList()
         {
-            return Districtsection::all()->lists('name', 'districtSectionId');
+            return DistrictSection::all()->lists('name', 'districtSectionId');
         }
 	}

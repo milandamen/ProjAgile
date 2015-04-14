@@ -45,7 +45,7 @@
 	        	$sidebar = $this->sidebarRepo->getByPage('2');
 	        	return view('news.hidden', compact('news', 'sidebar'));
 	        } else {
-	        	echo 'U heeft geen rechten om op deze pagina te komen.';
+	        	return view('errors.403');
 	        }
         }	
 
@@ -59,7 +59,7 @@
                 foreach($news->files as $file)
                 {
                     $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                    $fileLinks[] = '<a href="' . route('file.download') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
+                    $fileLinks[] = '<a href="' . route('file.download', $file->path) . '">'. $withoutId . '</a><br/>';
                 }
                 return view('news.show', compact('news', 'fileLinks'));
             }

@@ -41,7 +41,7 @@
 					return view('errors.404');
 				}
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
 		}
 
@@ -104,7 +104,7 @@
 				}
 				return Redirect::route('home.index');
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
 		}
     }
