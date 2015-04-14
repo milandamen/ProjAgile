@@ -1,6 +1,6 @@
 $(function() {
-    $(".footerAutocomplete").autocomplete({
-        source: "/footer/autocomplete",
+    $(".autocomplete").autocomplete({
+        source: "/autocomplete/",
         minLength: 2
     });
 });

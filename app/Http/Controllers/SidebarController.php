@@ -28,14 +28,17 @@
 		public function edit($id)
 		{
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
-				if($this->sidebarRepo->getByPage($id) != null)
+
+				$sidebar = $this->sidebarRepo->getByPage($id);
+				if(count($sidebar) > 0)
 				{
 					$sidebarList = $this->sidebarRepo->getByPage($id);
 					$menuList = $this->menuRepo->getAll();
 					return View('sidebar.edit', compact('sidebarList', 'menuList'));
 				} else {
 					// Totdat er een error page is.
-					return Redirect::route('home.index');
+					//return Redirect::route('home.index');
+					return view('errors.404');
 				}
 			} else {
 				echo 'U heeft geen rechten om op deze pagina te komen.';

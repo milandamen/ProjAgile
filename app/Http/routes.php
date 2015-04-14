@@ -31,3 +31,7 @@
      */
     include('RoutePartials/_carouselControllerRoutes.php');
 
+    /**
+     * Autocomplete Controller routes
+     */
+    include('RoutePartials/_autocompleteControllerRoutes.php');

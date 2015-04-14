@@ -35,7 +35,7 @@
                                     <td>
                                         Titel: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
                                         <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="footerAutocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                     </td>
                                 </tr>
 
@@ -44,7 +44,7 @@
                                     <td>
                                         Text: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
                                         <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="footerAutocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                     </td>
                                 </tr>
                             @endif

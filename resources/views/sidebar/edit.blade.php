@@ -47,7 +47,7 @@
 
                             <td class="td-intern">
                                 Intern
-                                <input id="page_name" name="sidebar[{!!$i!!}][pagename][]" type="text" list="pagedata" />
+                                <input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" type="text" list="pagedata" />
                                 
                             </td>
                             <td class="td-link" >Link naar: <input type="text" name="sidebar[{!!$i!!}][link][]" id="sidebarLink" value="{!!$sidebarRow->link!!}"> </td>
@@ -88,4 +88,5 @@
 @section('additional_scripts')
     <!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
+    {!! HTML::script('custom/js/autocomplete.js') !!}
 @endsection

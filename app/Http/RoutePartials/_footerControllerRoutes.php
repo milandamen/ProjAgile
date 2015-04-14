@@ -6,12 +6,6 @@
         'uses' => 'FooterController@edit'
     ]);
 
-    Route::get('footer/autocomplete',
-    [
-       'as' => 'footer.autocomplete',
-        'uses' => 'FooterController@autocomplete'
-    ]);
-
     Route::post('footer/postWijziging',
     [
         'as' => 'footer.postEdit',
