@@ -5,3 +5,7 @@
 .addmargin {
 	margin-bottom: 20px;
 }
+
+.pos-relative {
+	position: relative;
+}
