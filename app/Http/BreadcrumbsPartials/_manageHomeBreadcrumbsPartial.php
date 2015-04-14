@@ -49,7 +49,7 @@
     Breadcrumbs::register('editfooter', function($breadcrumbs)
     {
         $breadcrumbs->parent('manage');
-        $breadcrumbs->push('Wijzig Footer');
+        $breadcrumbs->push('Wijzig Footer', route('footer.edit'));
     });
 
     //!!!!! LET OP NOG GEEN ROUTE!

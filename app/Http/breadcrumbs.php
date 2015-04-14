@@ -1,4 +1,5 @@
 <?php
+
     /**
     * Home
     */
@@ -18,3 +19,5 @@
     * Home > Error
     */
     include('BreadcrumbsPartials/_errorBreadcrumbsPartial.php');
+
+?>
