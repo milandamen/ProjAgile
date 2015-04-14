@@ -3,11 +3,9 @@
 	<div class="panel-heading">
 		<h4> 
 			Nieuws
-			
-			{{-- TODO --}}
-			{{-- Check if user logged in and is an admin or editor --}}
-				{{-- <a href="NewsController/create"><i class="fa fa-plus"></i></a> --}}
-			{{-- End auth check --}}
+			@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+				<a href="{{-- route('news.create')--}}" class="right"><i class="fa fa-plus"></i></a> 
+			@endif
 		</h4>
 	</div>
 	<div class="panel-body">

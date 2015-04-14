@@ -29,3 +29,15 @@
 		'as' => 'news.getArticlesByTitle',
 		'uses' => 'NewsController@getArticlesByTitle'
 	]);
+
+	Route::get('nieuws/hide/{id}',
+		[
+			'as'=>'news.hide',
+			'uses'=>'NewsController@hide'
+		]);
+
+	Route::get('nieuws/unhide/{id}',
+		[
+			'as'=>'news.unhide',
+			'uses'=>'NewsController@unhide'
+		]);

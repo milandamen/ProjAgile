@@ -68,6 +68,13 @@
             return date_format($date,'d-m-Y') ;
         }
 
+        public function endDate()
+        {
+            $date = date_create($this->publishEndDate);
+
+            return date_format($date,'d-m-Y') ;
+        }
+
 		/**
 		 * Get all Carousel models that reference this News model.
 		 * 
