@@ -121,16 +121,35 @@
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
+
+                	if($request->hidden === 'false'){
+                    	$hidden = false;
+                    } else {
+                    	$hidden = true;
+                    }
+
+                    if($request->commentable === 'false'){
+                    	$commentable = false;
+                    } else {
+                    	$commentable = true;
+                    }
+
+                    if($request->top === 'false'){
+                    	$top = false;
+                    } else {
+                    	$top = true;
+                    }
+
                     $attributes = 
                     [
                         'districtSectionId' => $request->districtSectionId,
                         'title' => $request->title,
                         'content' => $request->content,
-                        'hidden' => $request->hidden,
-                        'commentable' => $request->commentable,
+                        'hidden' => $hidden,
+                        'commentable' => $commentable,
                         'publishStartDate' => $request->publishStartDate,
                         'publishEndDate' => $request->publishEndDate,
-                        'top' => $request->top
+                        'top' => $top
                     ];
                     $newsItem = $this->newsRepo->create($attributes);
 
@@ -176,20 +195,39 @@
          */
         public function update($id, NewsRequest $request)
         {
+
             if (Auth::check())
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
                     $newsItem = $this->newsRepo->get($id);
 
+                    if($request->hidden === 'false'){
+                    	$hidden = false;
+                    } else {
+                    	$hidden = true;
+                    }
+
+                    if($request->commentable === 'false'){
+                    	$commentable = false;
+                    } else {
+                    	$commentable = true;
+                    }
+
+                    if($request->top === 'false'){
+                    	$top = false;
+                    } else {
+                    	$top = true;
+                    }
+
                     $newsItem->districtSectionId = $request->districtSectionId;
                     $newsItem->title = $request->title;
                     $newsItem->content = $request->content;
-                    $newsItem->hidden = $request->hidden;
-                    $newsItem->commentable = $request->commentable;
+                    $newsItem->hidden = $hidden;
+                    $newsItem->commentable = $commentable;
                     $newsItem->publishStartDate = $request->publishStartDate;
                     $newsItem->publishEndDate = $request->publishEndDate;
-                    $newsItem->top = $request->top;
+                    $newsItem->top = $top;
 
                     $this->newsRepo->update($newsItem);
 
