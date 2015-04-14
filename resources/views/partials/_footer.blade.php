@@ -25,10 +25,9 @@
             </div>
         @endfor
 <div class="footer-edit-link">
-{{--@if($data['loggedIn'] && $_SESSION['userGroupId'] == 1){--}}
-{{----}}
-    {{--echo '<a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>';--}}
-{{--}--}}
+@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+        <a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>
+@endif
 </div>
 </div>
 </div>
