@@ -41,9 +41,13 @@
                     <ul class="nav navbar-nav">
                         @foreach($menu as $subMenu)
                             @if(isset($subMenu['sub']))
-                                @include('partials.menu._subMenuItem', ['items' => $subMenu['sub'],'main' =>$subMenu])
+								<li class="dropdown" style="position: relative;">
+									@include('partials.menu._subMenuItem', ['items' => $subMenu['sub'],'main' =>$subMenu])
+								</li>
                             @else
-                                <li><a href="{!! $subMenu['main']->relativeUrl !!}">{!! $subMenu['main']->name !!}</a></li>
+                                <li>
+									<a href="{!! $subMenu['main']->relativeUrl !!}">{!! $subMenu['main']->name !!}</a>
+								</li>
                             @endif
                         @endforeach
                     </ul>
