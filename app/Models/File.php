@@ -54,6 +54,6 @@
 		 */
 		public function news() 
 		{
-			return $this->belongsTo('App\Models\News', 'newsId');
+			return $this->belongsTo('App\Models\News', 'fileId');
 		}
 	}

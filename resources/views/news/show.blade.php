@@ -49,6 +49,7 @@
 
                     {!! nl2br($news->content) !!}
                     <br/>
+
                     @if(count($news->files) > 0)
                         <br/><p>{{'Bijlagen:'}}</p>
                     @endif
@@ -79,17 +80,20 @@
             <div class="row">
                 <div class="col-lg-6">
                     {{--Post a comment, not finished yet. --}}
-                    @if($news->districtSection != null)
+                    @if($news->districtSection != null && $news->commentable === 1)
 
-                        @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator' || Auth::user()->districtSection->name === $news->districtSection->name)
-                        {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
-                            <h3>Plaats een reactie</h3>
-                            <div class="form-group">
-                                <input type="hidden" name="newsId" value="{{$news->newsId}}">
-                                <textarea name="comment" class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
-                        {!! Form::close() !!}
+                        @if(Auth::check())
+
+                            @if(Auth::user()->usergroup->name === 'Administrator' || Auth::user()->districtSection->name === $news->districtSection->name)
+                                {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
+                                <h3>Plaats een reactie</h3>
+                                <div class="form-group">
+                                    <input type="hidden" name="newsId" value="{{$news->newsId}}">
+                                    <textarea name="comment" class="form-control"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
+                                {!! Form::close() !!}
+                            @endif
                         @endif
 
                     @else
