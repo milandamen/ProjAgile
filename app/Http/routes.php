@@ -23,8 +23,11 @@
      * Sidebar controller routes
      */
     include('RoutePartials/_sidebarControllerRoutes.php');
-    
+    // Footer controller routes
+    include('RoutePartials/_footerControllerRoutes.php');
+
     /**
      * Carousel controller routes
      */
     include('RoutePartials/_carouselControllerRoutes.php');
+
