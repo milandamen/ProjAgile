@@ -88,8 +88,5 @@
 @section('additional_scripts')
     <!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
-    <!-- JavaScript that enables adding and removing columns and rows -->
-    {!! HTML::script('custom/js/footerUpdate.js') !!}
-
     {!! HTML::script('custom/js/autocomplete.js') !!}
 @endsection
