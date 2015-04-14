@@ -9,3 +9,7 @@
 .pos-relative {
 	position: relative;
 }
+
+.carousel-text-shadow {
+	text-shadow: #000 2px 2px 2px;
+}
