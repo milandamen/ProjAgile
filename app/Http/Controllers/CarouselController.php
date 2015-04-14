@@ -83,15 +83,18 @@
 					move_uploaded_file($tmp, $target);
 					
 					$item->imagePath = $newFileName;
-					$item->save();
 				} elseif ($oldItem != null) {
 					$item->imagePath = $oldItem->imagePath;
-					$item->save();
+				} else {
+					$item->imagepath = 'blank.jpg';
 				}
 			} elseif ($oldItem != null) {
 				$item->imagePath = $oldItem->imagePath;
-				$item->save();
+			} else {
+				$item->imagepath = 'blank.jpg';
 			}
+			
+			$item->save();
 		}
 		
 	}
