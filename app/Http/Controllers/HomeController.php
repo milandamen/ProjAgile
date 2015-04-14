@@ -34,7 +34,7 @@
 		 */
 		public function index()
         {
-            $news = $this->newsRepo->getAll();
+            $news = $this->getNews();
             $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
@@ -50,7 +50,7 @@
         public function editLayout()
         {
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
-				$news = $this->newsRepo->getAll();
+				$news = $this->getNews();
 				$introduction = $this->introRepo->getPageBar('1');
 				$layoutModules = $this->homeLayoutRepo->getAll();
 
@@ -123,7 +123,30 @@
 
 				return Redirect::route('home.index');
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errrors/403');
 			}
+        }
+
+
+        private function getNews(){
+        	$news = $this->newsRepo->getAll();
+        	$newsList = array();
+
+        	foreach($news as $newsItem){
+        		if($newsItem->top){
+        			$newsList[] = $newsItem;
+        		}
+        	}
+
+        	foreach($news as $newsItem){
+        		if(!$newsItem->top){
+        			$newsList[] = $newsItem;
+        		}
+        	}
+
+        	$modulenews = array_slice($newsList, 0, 5);
+        	
+        	return $modulenews;
+
         }
     }

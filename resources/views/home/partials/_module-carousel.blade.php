@@ -20,7 +20,7 @@
 				<div class="item active">
 					<a href="{{ route('news.show', $item->news->newsId) }}">
 						<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="...">
-						<div class="carousel-caption">
+						<div class="carousel-caption carousel-text-shadow">
 							<h3>{{ $item->news->title }}</h3>
 						</div>
 					</a>
@@ -29,7 +29,7 @@
 				<div class="item">
 					<a href="{{ route('news.show', $item->news->newsId) }}">
 						<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="...">
-						<div class="carousel-caption">
+						<div class="carousel-caption carousel-text-shadow">
 							<h3>{{ $item->news->title }}</h3>
 						</div>
 					</a>

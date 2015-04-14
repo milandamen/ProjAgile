@@ -70,9 +70,15 @@
                 foreach($news->files as $file)
                 {
                     $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                    $fileLinks[] = '<a href="' . route('file.download') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
+                    $fileLinks[] = '<a href="' . route('file.download', $file->path) . '">'. $withoutId . '</a><br/>';
                 }
+                return view('news.show', compact('news', 'fileLinks'));
             }
+            else
+            {
+                return view('errors.404');
+            }
+
 
             return view('news.show', compact('news', 'fileLinks'));
         }
@@ -105,17 +111,14 @@
          */
         public function showHidden()
         {
-        	if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+            if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
             {
 	        	$news = $this->newsRepo->getAllHidden();
 	        	$sidebar = $this->sidebarRepo->getByPage('2');
 
 	        	return view('news.hidden', compact('news', 'sidebar'));
 	        } 
-            else 
-            {
-	        	abort(403);
-	        }
+        	abort(403);
         }	
 
         /**
@@ -125,19 +128,25 @@
          */
         public function postComment()
         {
-            $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
-            $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
+            if(Auth::check())
+            {
+                $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+                $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
 
-            $attributes['newsId'] = $newsId;
-            // Needs to be changed later on
-            $attributes['userId'] = 1;
-            $attributes['message'] = $comment;
+                $attributes['newsId'] = $newsId;
+                // Needs to be changed later on
+                $attributes['userId'] = Auth::user()->userId;
+                $attributes['message'] = $comment;
 
-            $this->newsCommentRepo->create($attributes);
+                $this->newsCommentRepo->create($attributes);
 
-            return Redirect::route('news.show', [$newsId]);
+                return Redirect::route('news.show', [$newsId]);
+            }
+            else
+            {
+                return view('errors.401');
+            }
         }
-
 
         /**
          * Get all the articles by title name.
@@ -148,5 +157,50 @@
         {
 			$data = $this->newsRepo->getByTitle($term);
 			echo json_encode($data);
+		}
+
+		public function hide($id)
+        {
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+            {
+				$news = $this->newsRepo->get($id);
+				if(count($news) > 0)
+                {
+					$news->hidden = true;
+					$news->save();
+				} 
+                else
+                {
+					return view('errors/404');
+				}
+				return Redirect::route('news.manage');
+			}
+             else 
+            {
+				return view('errors/403');
+			}
+		}
+
+		public function unhide($id)
+        {
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+            {
+				
+				$news = $this->newsRepo->get($id);
+				if(count($news) > 0)
+                {
+					$news->hidden = false;
+					$news->save();
+				} 
+                else 
+                {
+					return view('errors/404');
+				}
+				return Redirect::route('news.manage');
+			}
+             else 
+            {
+				return view('errors/403');
+			}
 		}
     }

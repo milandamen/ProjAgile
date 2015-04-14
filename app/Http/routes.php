@@ -1,18 +1,53 @@
 <?php
-	// Auth controller routes
+    // Admin controller routes
+    include('RoutePartials/_adminControllerRoutes.php');
+
+	/**
+    * Auth controller routes
+    */
 	include('RoutePartials/_authControllerRoutes.php');
 
-	// File controller routes
+	/**
+    * File controller routes
+    */
 	include('RoutePartials/_fileControllerRoutes.php');
 
-	// Home controller routes
+	/**
+    * Home controller routes
+    */
 	include('RoutePartials/_homeControllerRoutes.php');
 
-	// News controller routes
+	/**
+	 * News controller routes
+	 */
 	include('RoutePartials/_newsControllerRoutes.php');
 
-    // Sidebar controller routes
+    /**
+     * Sidebar controller routes
+     */
     include('RoutePartials/_sidebarControllerRoutes.php');
-    
-    // Carousel controller routes
+    /**
+     *  Footer controller routes
+     */
+    include('RoutePartials/_footerControllerRoutes.php');
+
+    /**
+     * Carousel controller routes
+     */
     include('RoutePartials/_carouselControllerRoutes.php');
+
+    /**
+     * Autocomplete Controller routes
+     */
+    include('RoutePartials/_autocompleteControllerRoutes.php');
+
+    /**
+     * Carousel controller routes
+     */
+    include('RoutePartials/_carouselControllerRoutes.php');
+
+    /**
+     * Menu controller routers
+     */ 
+    include ('RoutePartials/_menuControllerRoutes.php');
+

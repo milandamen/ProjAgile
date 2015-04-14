@@ -1,6 +1,9 @@
 <!-- Bootstrap Core CSS -->
 {!! HTML::style('bootstrap/css/bootstrap.css') !!}
 
+<!-- jQuery UI -->
+{!! HTML::style('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css') !!}
+
 <!-- Custom CSS -->
 {!! HTML::style('custom/css/forum.css') !!}
 {!! HTML::style('custom/css/partners.css') !!}
@@ -10,6 +13,9 @@
 {!! HTML::style('custom/css/footer.css') !!}
 {!! HTML::style('custom/css/sidebar.css') !!}
 {!! HTML::style('custom/css/carousel-update.css') !!}
+
+<!-- Multi level menu -->
+{!! HTML::style('custom/css/multilevel_menu.css') !!}
 
 <!-- Fonts -->
 {!! HTML::style('font-awesome/css/font-awesome.min.css') !!}
