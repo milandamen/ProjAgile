@@ -28,3 +28,10 @@
 		'as' => 'home.updateIntroduction',
 		'uses' => 'HomeController@updateIntroduction'
 	]);
+	
+	Route::post('home/zoek',
+	[
+		'as' => 'home.search',
+		'uses' => 'HomeController@search'
+	]);
+	

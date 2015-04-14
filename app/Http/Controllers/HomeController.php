@@ -7,6 +7,7 @@
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
 	use Auth;
+	use Request;
 
 	class HomeController extends Controller 
 	{
@@ -126,7 +127,18 @@
 				return view('errrors/403');
 			}
         }
-
+		
+		/**
+         * Show the results of the search query.
+         *
+         * @return Response
+         */
+		public function search(Request $request) {
+			
+			// TODO search results.
+			return view('errors/404');
+		}
+		
 
         private function getNews(){
         	$news = $this->newsRepo->getAll();

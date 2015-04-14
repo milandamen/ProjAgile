@@ -35,7 +35,7 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
                     <ul class="dropdown-menu" style="padding:12px;">
-                        {!! Form::model(null, ['class' => 'navbar-form', 'role' => 'search']) !!}
+                        {!! Form::model(null, ['route' => 'home.search', 'class' => 'navbar-form', 'role' => 'search']) !!}
                             <div class="input-group">
                                 <div class="col-md-12" style="padding:0">
                                 {!! Form::text('query', null, ['placeholder' => 'Zoeken...', 'class' => 'form-control','style' => 'cols="20"']) !!}
