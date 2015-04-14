@@ -57,7 +57,7 @@
 
 				return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 
@@ -84,7 +84,7 @@
 					return Redirect::route('home.editLayout');
 				}
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 
@@ -99,7 +99,7 @@
 				$introduction = $this->introRepo->getPageBar('1');
 				return view('home.editIntroduction', compact('introduction'));
 			} else {
-				echo 'U heeft geen rechten om op deze pagina te komen.';
+				return view('errors.403');
 			}
         }
 

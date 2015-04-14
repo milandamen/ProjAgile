@@ -45,7 +45,7 @@
 	        	$sidebar = $this->sidebarRepo->getByPage('2');
 	        	return view('news.hidden', compact('news', 'sidebar'));
 	        } else {
-	        	echo 'U heeft geen rechten om op deze pagina te komen.';
+	        	return view('errors.403');
 	        }
         }	
 
