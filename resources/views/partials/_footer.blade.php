@@ -26,7 +26,7 @@
         @endfor
 <div class="footer-edit-link">
 @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-        <a href="' . $Base_URI . 'footerController/footerupdate"><i class="fa fa-pencil-square-o"></i></a>
+        <a href="{{route('footer.edit')}}"><i class="fa fa-pencil-square-o"></i></a>
 @endif
 </div>
 </div>
