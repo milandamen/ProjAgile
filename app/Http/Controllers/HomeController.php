@@ -110,9 +110,8 @@
         public function updateIntroduction()
         {
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
-				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-				// nl2br is needed and used to save line breaks in the submitted text.  
-				$content = nl2br(htmlentities($_POST['content'], ENT_QUOTES, 'UTF-8'));
+				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);  
+				$content = filter_var($_POST['content'],FILTER_SANITIZE_STRING);
 				$pageId = $_POST['pageId'];
 
 				$intro = $this->introRepo->getPageBar($pageId);

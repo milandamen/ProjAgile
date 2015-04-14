@@ -63,7 +63,7 @@
          */
         public function normalDate()
         {
-            $date = date_create($this->date);
+            $date = date_create($this->publishStartDate);
 
             return date_format($date,'d-m-Y') ;
         }

@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+    	<div class="row">
+				{!! Breadcrumbs::render('editcarousel') !!}
+		</div>
         <div class="row">
             <div class="col-md-12">
                 <h1>Wijzig carousel</h1>

@@ -20,5 +20,8 @@
 				</br>
 			@endif
 		@endforeach
+
+
+		<p class="goback"><a href="{{ route('news.index') }}">Toon alles</a> </p>
 	</div>
 </div>

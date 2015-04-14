@@ -5,6 +5,7 @@
     use App\Repositories\RepositoryInterfaces\INewsCommentRepository;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
+    use App\Repositories\RepositoryInterfaces\ISidebarRepository;
     use Illuminate\Support\Facades\Redirect;
 	use Auth;
 
@@ -23,12 +24,30 @@
          *
          * @return void
          */
-        public function __construct(INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo)
+        public function __construct(INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo, ISidebarRepository $sidebarRepo)
         {
             $this->newsCommentRepo = $newsCommentRepo;
             $this->newsRepo = $newsRepo;
             $this->userRepo = $userRepo;
+            $this->sidebarRepo = $sidebarRepo;
         }
+
+        public function index(){
+        	$news = $this->newsRepo->getLastWeek();
+        	$oldnews = $this->newsRepo->oldNews();
+        	$sidebar = $this->sidebarRepo->getByPage('2');
+        	return view('news.index', compact('news', 'oldnews', 'sidebar'));
+        }
+
+        public function showHidden(){
+        	if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+	        	$news = $this->newsRepo->getAllHidden();
+	        	$sidebar = $this->sidebarRepo->getByPage('2');
+	        	return view('news.hidden', compact('news', 'sidebar'));
+	        } else {
+	        	echo 'U heeft geen rechten om op deze pagina te komen.';
+	        }
+        }	
 
         public function show($newsId)
         {
