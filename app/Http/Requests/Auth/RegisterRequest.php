@@ -22,13 +22,6 @@
 		 */
 		public function rules()
 		{
-			if (strlen($this->input('postal')) == 6)
-			{
-				$postal_fix = substr_replace($this->input('postal'), ' ', 4, 0);
-
-				$this->merge(['postal' => $postal_fix]);
-			}
-
 			return 
 			[
                 'username' => 'required|max:30|unique:User,username',
@@ -42,7 +35,12 @@
 			];
 		}
 
-		private function sanitize()
+		/**
+		 * Sanitizes the provided input that will be used by the validator and controller.
+		 *
+		 * @return array
+		 */
+		public function sanitize()
 		{
 			$input = $this->all();
 
@@ -55,6 +53,28 @@
 			$input['postal'] = filter_var($input['postal'], FILTER_SANITIZE_STRING);
 			$input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
 
-			$this->replace($input);
+			$input['postal'] = $this->fixPostal($input['postal']);
+
+			return $input;
+		}
+
+		/**
+		 * Fixes the postal input before it is used by the validator.
+		 *
+		 * @return string
+		 */
+		private function fixPostal($postal)
+		{
+			if (strlen($postal) > 7)
+			{
+				$postal = preg_replace('/\s+/', '', $postal);
+			}
+
+			if (strlen($postal) == 6)
+			{
+				$postal = substr_replace($postal, ' ', 4, 0);
+			}
+
+			return $postal;
 		}
 	}

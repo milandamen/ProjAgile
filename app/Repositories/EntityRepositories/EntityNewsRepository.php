@@ -25,7 +25,9 @@
          */
 		public function getAll() 
 		{
-			return News::all();
+		   	$curDate = date('Y-m-d H:i:s',time());
+
+			return News::where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->get();
 		}
 		
         /**
@@ -77,4 +79,24 @@
 			$term = '%' . $term . '%';
 			return News::where('title', 'LIKE', $term)->where('hidden', '=', 0)->get();
 		}
-	}
+
+
+		public function getLastWeek(){
+        	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
+        	$curDate = date('Y-m-d H:i:s',time());
+
+        	return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->get();
+        }
+
+        public function oldNews(){
+        	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
+        	$curDate = date('Y-m-d H:i:s',time());
+
+        	return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->get();
+        }
+
+        public function getAllHidden(){
+			return News::all();
+		}
+
+    }

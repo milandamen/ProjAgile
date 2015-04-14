@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+    	<div class="row">
+				{!! Breadcrumbs::render('sidebarpage', (object)['id' => $sidebarList[0]->pageNr, 'title' => $sidebarList[0]->title]) !!}
+			</div>
+
         <div class="row">
             <div class="col-md-12">
                 <h1>Wijzig sidebar </h1>
@@ -10,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!--- Start Form of updating the sidebar -->
-                <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebar[0]->pageNr]) !!}">
+                <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->pageNr]) !!}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <datalist id="pagedata">
                                     @foreach($menuList as $menuitem)
@@ -21,7 +25,7 @@
                  	
                     <hr>
                     Koptekst:
-                    <input type="text" name="title" id="sidebarTitle" value="{!! $sidebar[0]->title!!} " required> <br/><br/>
+                    <input type="text" name="title" id="sidebarTitle" value="{!! $sidebarList[0]->title!!} " required> <br/><br/>
                     <!-- Add new row-button -->
                     <table name="X" id="sidebarTable" class="col-md-12">
                         <tr>
@@ -32,7 +36,7 @@
 
                         <!-- Loop through all fields and make editable. 	-->
                         {{--*/ $i = 0; /*--}}
-                        @foreach($sidebar as $sidebarRow)
+                        @foreach($sidebarList as $sidebarRow)
                         <!-- Check if link goes out or stays in. -->
                         <tr>
                         	<td class="hidden"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
