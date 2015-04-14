@@ -128,7 +128,7 @@
         }
 
 
-        public function getNews(){
+        private function getNews(){
         	$news = $this->newsRepo->getAll();
         	$newsList = array();
 

@@ -97,19 +97,35 @@
 		}
 
 		public function hide($id){
-			$news = $this->newsRepo->get($id);
-			$news->hidden = true;
-			$news->save();
 
-			return Redirect::route('news.manage');
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				$news = $this->newsRepo->get($id);
+				if(count($news) > 0){
+					$news->hidden = true;
+					$news->save();
+				} else {
+					return view('errors/404');
+				}
+				return Redirect::route('news.manage');
+			} else {
+				return view('errors/403');
+			}
 		}
 
 		public function unhide($id){
-			$news = $this->newsRepo->get($id);
-			$news->hidden = false;
-			$news->save();
-
-			return Redirect::route('news.manage');			
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				
+				$news = $this->newsRepo->get($id);
+				if(count($news) > 0){
+					$news->hidden = false;
+					$news->save();
+				} else {
+					return view('errors/404');
+				}
+				return Redirect::route('news.manage');
+			} else {
+				return view('errors/403');
+			}
 		}
 
     }
