@@ -7,19 +7,24 @@
                  <ul class="col-sm-4">
 
             @for($r = 0; $r < count($footer[$c]); $r++)
-
-                {{--*/ $link = '#'; /*--}}
-
                 @if($footer[$c][$r]->link != null)
                     {{--*/ $link = $footer[$c][$r]->link; /*--}}
-                @endif
 
-                @if($r === 0)
-                    <li><a href=""><h3>{{$footer[$c][$r]->text}}</h3></a></li>
+                     @if($r === 0)
+                         <li><a href="{!! url($link) !!}"><h3>{{$footer[$c][$r]->text}}</h3></a></li>
+                     @else
+                         <li><a href="{!! url($link) !!}">{{$footer[$c][$r]->text}}</a></li>
+                     @endif
+
                 @else
-                    <li><a href="">{{$footer[$c][$r]->text}}</a></li>
-                @endif
 
+                     @if($r === 0)
+                         <li><h3><a href="#">{{$footer[$c][$r]->text}}</a></h3></li>
+                     @else
+                         <li><a href="#">{{$footer[$c][$r]->text}}</a></li>
+                     @endif
+
+                @endif
             @endfor
                 </ul>
             </div>

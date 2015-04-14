@@ -29,13 +29,6 @@
                             </tr>
 
                         @for($r = 0; $r < count($footer[$c]); $r++)
-
-                            {{--*/ $link = '#'; /*--}}
-
-                            @if($footer[$c][$r]->link != null)
-                                {{--*/ $link = $footer[$c][$r]->link; /*--}}
-                            @endif
-
                             @if($r === 0)
 
                                 <tr>
