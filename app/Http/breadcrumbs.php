@@ -117,12 +117,11 @@ Breadcrumbs::register('editlayout', function($breadcrumbs)
 });
 
 
-//!!!!! LET OP NOG GEEN ROUTE!
 // Home > Manage > Wijzig footer
 Breadcrumbs::register('editfooter', function($breadcrumbs)
 {
     $breadcrumbs->parent('manage');
-    $breadcrumbs->push('Wijzig Footer');
+    $breadcrumbs->push('Wijzig Footer', route('footer.edit'));
 });
 
 //!!!!! LET OP NOG GEEN ROUTE!

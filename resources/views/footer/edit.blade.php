@@ -5,6 +5,9 @@
 
 <div class="container">
     <div class="row">
+        {!! Breadcrumbs::render('editfooter') !!}
+    </div>
+    <div class="row">
         <div class="col-lg-12">
             <h1>Wijzig Footer</h1>
         </div>
