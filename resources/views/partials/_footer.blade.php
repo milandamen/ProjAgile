@@ -19,7 +19,7 @@
                 @else
 
                      @if($r === 0)
-                         <li><h3><a href="#">{{$footer[$c][$r]->text}}</a></h3></li>
+                         <li><a href="#"><h3>{{$footer[$c][$r]->text}}</h3></a></li>
                      @else
                          <li><a href="#">{{$footer[$c][$r]->text}}</a></li>
                      @endif
