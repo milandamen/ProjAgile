@@ -1,18 +1,17 @@
 <?php
     namespace App\Http\Controllers;
 
-    use App\Models\Newscomment;
     use App\Models\News;
+    use App\Http\Requests\News\NewsRequest;
     use App\Repositories\RepositoryInterfaces\IFileRepository;
     use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
     use App\Repositories\RepositoryInterfaces\INewsCommentRepository;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
-    use Illuminate\Support\Facades\Redirect;
-	use League\Flysystem\File;
+    use Auth;
+    use Redirect;
 	use View;
-	use Auth;
 
     class NewsController extends Controller
     {
@@ -105,6 +104,28 @@
         }
 
         /**
+         * Stores the created article in the database.
+         * 
+         * @param  NewsRequest $request
+         * 
+         * @return Response
+         */
+        public function store(NewsRequest $request)
+        {
+            if (Auth::check())
+            {
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $newsItem = $this->newsRepo->get($request->newsId);
+
+                    return Redirect::route('news.show', []);
+                }
+                return view('errors.403');
+            } 
+            return view('errors.401');
+        }
+
+        /**
          * Show the edit news page.
          *
          * @return Response
@@ -126,13 +147,22 @@
             return view('errors.401');
 		}
 
-        public function update(NewsRequest $request)
+        /**
+         * Updates the existing article in the database.
+         * 
+         * @param  NewsRequest $request
+         * 
+         * @return Response
+         */
+        public function update($id, NewsRequest $request)
         {
             if (Auth::check())
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
-                    $newsItem = $this->newsRepo->get($request->newsId);
+                    $newsItem = $this->newsRepo->get(id);
+
+                    
 
                     return Redirect::route('news.show', []);
                 }

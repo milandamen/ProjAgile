@@ -12,7 +12,7 @@
 		 */
 		public function authorize()
 		{
-			return false;
+			return true;
 		}
 
 		/**
@@ -26,5 +26,17 @@
 			[
 
 			];
+		}
+
+		/**
+		 * Sanitizes the provided input that will be used by the validator and controller.
+		 *
+		 * @return array
+		 */
+		public function sanitize()
+		{
+			$input = $this->all();
+			
+			return $input;
 		}
 	}

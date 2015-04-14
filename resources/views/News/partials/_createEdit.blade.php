@@ -1,11 +1,11 @@
 <div class="form-group">
     {!! Form::label('title', 'Titel') !!}
-    {!! Form::text('title', old($newsItem->title), ['placeholder' => 'Titel', 'class' => 'form-control']) !!}
+    {!! Form::text('title', old('title'), ['placeholder' => 'Titel', 'class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('content', 'Content') !!}
-    {!! Form::text('textarea', old($newsItem->content), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
+    {!! Form::text('textarea', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
 </div>
 
 <div class="form-group">
@@ -40,7 +40,7 @@
 <div class="form-group">
     {!! Form::label('publishStartDate', 'Publicatiedatum') !!}
     <div class="input-group date" id="datetimepicker">
-        {!! Form::text('publishStartDate', old($newsItem->publishStartDate), ['class' => 'form-control']) 
+        {!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
             . '<span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>' 
@@ -51,7 +51,7 @@
 <div class="form-group">
     {!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
     <div class="input-group date" id="datetimepicker">
-        {!! Form::text('publishEndDate', old($newsItem->publishEndDate), ['class' => 'form-control'])
+        {!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
             . '<span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>' 
@@ -74,6 +74,7 @@
 <div class="form-group">
     {!! Form::label('fileUpload', 'Files toevoegen') !!}<br/>
     <table name="fileUpload">
+    @if(isset($files))
         @foreach($files as $file)
             {!! '<tr>
                 <td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width:500px;']) . '</td>' !!}
@@ -84,6 +85,7 @@
                 </td>
             </tr>
         @endforeach
+    @endif
         {!! '<tr>
             <td style="padding-top:5px;">' . Form::file('Voeg een nieuwe file toe') . '</td>' !!}
             <td style="padding-top:5px;">
@@ -94,7 +96,6 @@
         </tr>
     </table>
 </div>
-
 <div class="form-group">
     {!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
 </div>
