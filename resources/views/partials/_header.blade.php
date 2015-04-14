@@ -63,7 +63,7 @@
 								</li>
                             @else
                                 <li>
-									<a href="{{ url($item['main']->relativeUrl) }}">{{ $subMenu['main']->name }}</a>
+									<a href="{{ url($subMenu['main']->relativeUrl) }}">{{ $subMenu['main']->name }}</a>
 								</li>
                             @endif
                         @endforeach
