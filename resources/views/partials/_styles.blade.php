@@ -1,6 +1,9 @@
 <!-- Bootstrap Core CSS -->
 {!! HTML::style('bootstrap/css/bootstrap.css') !!}
 
+<!-- jQuery UI -->
+{!! HTML::style('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css') !!}
+
 <!-- Custom CSS -->
 {!! HTML::style('custom/css/forum.css') !!}
 {!! HTML::style('custom/css/partners.css') !!}
