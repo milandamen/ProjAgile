@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\RepositoryInterfaces\IMenuRepository;
 
 use Illuminate\Http\Request;
 
@@ -12,9 +13,19 @@ class MenuController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+
+    private $menuRepo;
+
+
+    public function __construct(IMenuRepository $menuRepo)
+    {
+        $this->menuRepo = $menuRepo;
+    }
+
+    public function index()
 	{
-        return view('menu.index');
+        $allMenuItems = $this->menuRepo->getAll();
+        return view('menu.index', compact('allMenuItems'));
 	}
 
 	/**

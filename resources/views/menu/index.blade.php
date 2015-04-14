@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="page-header">Menu Beheer</h2>
-
+                {{ $allMenuItems }}
 
 
             </div>

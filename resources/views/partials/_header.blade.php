@@ -2,6 +2,7 @@
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
+            <a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -9,8 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {!! HTML::image('custom/img/logo.png') !!}
-
+            
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
