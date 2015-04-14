@@ -27,7 +27,7 @@
 		{
 		   	$curDate = date('Y-m-d H:i:s',time());
 
-			return News::where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->get();
+			return News::where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
 		}
 		
         /**

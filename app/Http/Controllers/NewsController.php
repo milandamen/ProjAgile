@@ -84,4 +84,21 @@
 			$data = $this->newsRepo->getByTitle($term);
 			echo json_encode($data);
 		}
+
+		public function hide($id){
+			$news = $this->newsRepo->get($id);
+			$news->hidden = true;
+			$news->save();
+
+			return Redirect::route('news.manage');
+		}
+
+		public function unhide($id){
+			$news = $this->newsRepo->get($id);
+			$news->hidden = false;
+			$news->save();
+
+			return Redirect::route('news.manage');			
+		}
+
     }
