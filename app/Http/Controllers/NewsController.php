@@ -2,6 +2,8 @@
     namespace App\Http\Controllers;
 
     use App\Models\Newscomment;
+    use App\Repositories\RepositoryInterfaces\IFileRepository;
+    use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
     use App\Repositories\RepositoryInterfaces\INewsCommentRepository;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
     use App\Repositories\RepositoryInterfaces\IUserRepository;
@@ -13,6 +15,8 @@
 
     class NewsController extends Controller
     {
+        private $fileRepo;
+        private $districtSectionRepo;
         private $newsCommentRepo;
         private $newsRepo;
         private $userRepo;
@@ -20,14 +24,17 @@
         /**
          * Creates a new NewsController instance.
          *
+         * @param IFileRepository        $fileRepo
          * @param INewsCommentRepository $newsCommentRepo
          * @param INewsRepository        $newsRepo
          * @param IUserRepository        $userRepo
          *
          * @return void
          */
-        public function __construct(INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo, ISidebarRepository $sidebarRepo)
+        public function __construct(IFileRepository $fileRepo, IDistrictSectionRepository $districtSectionRepo, INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, IUserRepository $userRepo, ISidebarRepository $sidebarRepo)
         {
+            $this->fileRepo = $fileRepo;
+            $this->districtSectionRepo = $districtSectionRepo;
             $this->newsCommentRepo = $newsCommentRepo;
             $this->newsRepo = $newsRepo;
             $this->userRepo = $userRepo;
@@ -36,37 +43,28 @@
 		
 		public function getIndex()
 		{
-			$newsItems = $this->newsRepository->getAll();
+			$newsItems = $this->newsRepo->getAll();
 			return View::make('news/index', compact('newsItems'));
 		}
 
-		/*public function show($id)
+		public function edit($id)
 		{
-			$newsItem = $this->newsRepository->get($id);
-			return View::make('viewnaam',news/detail compact('newsItem'));
-		}*/
-
-		public function getEdit($id)
-		{
-			$newsItem = $this->newsRepository->get($id);
-			//dd($newsItem->content);
+			$newsItem = $this->newsRepo->get($id);
 			$title = $newsItem->title;
 			$content = $newsItem->content;
 
 			//Files
-			$fileRepo = new FileRepository();
-			$files = $fileRepo->getAllByNewsId($id);
+			$files = $this->fileRepo->getAllByNewsId($id);
 
 			//DistrictSection
-			$districtRepo = new DistrictsectionRepository();
-			$districtSections = $districtRepo->getAllToList();
+			$districtSections = $this->districtSectionRepo->getAllToList();
 
 			return View::make('news.edit', compact('newsItem', 'districtSections', 'files'));
 		}
 
 		public function getDetail($newsId)
 		{
-			$news = $this->newsRepository->get($newsId);
+			$news = $this->$newsRepo->get($newsId);
 		}
 
         public function index(){

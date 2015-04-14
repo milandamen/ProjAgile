@@ -12,6 +12,12 @@
 		'uses' => 'NewsController@showHidden'
 	]);
 
+    Route::get('nieuws/wijzigen/{id}',
+    [
+        'as' => 'news.edit',
+        'uses' => 'NewsController@edit'
+    ]);
+
 	Route::get('nieuws/{id}',
     [
         'as' => 'news.show',
