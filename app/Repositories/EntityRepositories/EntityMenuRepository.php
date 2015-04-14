@@ -84,21 +84,21 @@
 
         private function orderMenu($categories)
         {
-                    $allCategories = array();
-                    foreach ($categories as $category) {
-                            $subArr = array();
-                            $subArr['main'] = $category;
-                            $subCategories = Menu::where('parentId', '=', $category->menuId)->get();
+            $allCategories = [];
 
-                            if (!$subCategories->isEmpty()) {
-                                    $result = $this->orderMenu($subCategories);
+            foreach ($categories as $category)
+            {
+                $subArr = [];
+                $subArr['main'] = $category;
+                $subCategories = Menu::where('parentId', '=', $category->menuId)->get();
 
-                                    $subArr['sub'] = $result;
-                               }
-
+                if (!$subCategories->isEmpty())
+                {
+                    $result = $this->orderMenu($subCategories);
+                    $subArr['sub'] = $result;
+                }
                 $allCategories[] = $subArr;
             }
-
             return $allCategories;
         }
     }

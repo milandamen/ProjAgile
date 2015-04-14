@@ -1,4 +1,7 @@
 <?php
+    // Admin controller routes
+    include('RoutePartials/_adminControllerRoutes.php');
+
 	/**
     * Auth controller routes
     */
@@ -23,7 +26,9 @@
      * Sidebar controller routes
      */
     include('RoutePartials/_sidebarControllerRoutes.php');
-    // Footer controller routes
+    /**
+     *  Footer controller routes
+     */
     include('RoutePartials/_footerControllerRoutes.php');
 
     /**
@@ -35,3 +40,14 @@
      * Autocomplete Controller routes
      */
     include('RoutePartials/_autocompleteControllerRoutes.php');
+
+    /**
+     * Carousel controller routes
+     */
+    include('RoutePartials/_carouselControllerRoutes.php');
+
+    /**
+     * Menu controller routers
+     */ 
+    include ('RoutePartials/_menuControllerRoutes.php');
+
