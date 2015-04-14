@@ -32,6 +32,7 @@
 		
 		<div>
 			<a class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
+			<a class="btn btn-danger" onclick="goBack()">Annuleer</a>
 		</div>
 	</div>
 @endsection
