@@ -3,7 +3,7 @@
 	<div class="panel-heading sidebar">
 		<h4>
 			{!! $sidebar[0]->title !!}
-			@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+			@if(Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder'))
 				 <a class="right" href="{{ route('sidebar.edit', [$sidebar[0]->pageNr]) }}"><i class="fa fa-pencil-square-o"></i></a>
 			@endif
 		</h4>

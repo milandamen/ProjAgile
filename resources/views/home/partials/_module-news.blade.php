@@ -3,7 +3,7 @@
 	<div class="panel-heading">
 		<h4> 
 			Nieuws
-			@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+			@if(Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder'))
 				<a href="{{-- route('news.create')--}}" class="right"><i class="fa fa-plus"></i></a> 
 			@endif
 		</h4>
