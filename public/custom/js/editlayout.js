@@ -169,7 +169,6 @@ function calculateElementOrderValues(form) {
 			if (item.tagName.toLowerCase() == 'input' && item.classList.contains('hiddenInput')) {		// Is element of tag input and is hidden
 				item.value = i;
 				i++;
-				alert(i);
 			}
 		}
 	});
