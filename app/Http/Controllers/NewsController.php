@@ -59,7 +59,7 @@
                 foreach($news->files as $file)
                 {
                     $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                    $fileLinks[] = '<a href="' . route('file.download') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
+                    $fileLinks[] = '<a href="' . route('file.download', $file->path) . '">'. $withoutId . '</a><br/>';
                 }
                 return view('news.show', compact('news', 'fileLinks'));
             }
