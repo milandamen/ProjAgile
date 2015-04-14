@@ -5,7 +5,7 @@
         @foreach ($items as $item)
 
                 @if(isset($item['sub']))
-                    @include('partials.menu._subMenuItem', ['items' => $item['sub'],'main' => $item])
+                    @include('partials.partials._subMenuItem', ['items' => $item['sub'],'main' => $item])
                 @else
                     <li><a href="{!! $item['main']->relativeUrl !!}">{!! $item['main']->name !!}</a></li>
                 @endif
