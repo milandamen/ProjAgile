@@ -34,7 +34,7 @@ class AdminMiddleware {
             }
             abort(403, 'Unauthorized.');
         }
-        return redirect('inloggen');
+        return view('errors.403');
 	}
 
 }
