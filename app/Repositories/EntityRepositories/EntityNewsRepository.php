@@ -85,18 +85,18 @@
         	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
         	$curDate = date('Y-m-d H:i:s',time());
 
-        	return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->get();
+        	return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
         }
 
         public function oldNews(){
         	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
         	$curDate = date('Y-m-d H:i:s',time());
 
-        	return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->get();
+        	return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
         }
 
         public function getAllHidden(){
-			return News::all();
+			return News::orderBy('publishStartDate', 'desc')->get();
 		}
 
     }
