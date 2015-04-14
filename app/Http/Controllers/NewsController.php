@@ -99,9 +99,9 @@
 
                     return view('news.create', compact('newsItem', 'districtSections'));
                 }
-                abort(403);
+                return view('errors.403');
             } 
-            abort(401);
+            return view('errors.401');
         }
 
         /**
@@ -121,9 +121,9 @@
 
                     return view('news.edit', compact('newsItem', 'districtSections', 'files'));
                 }
-                abort(403);
+                return view('errors.403');
             } 
-            abort(401);
+            return view('errors.401');
 		}
 
         public function update(NewsRequest $request)
@@ -133,15 +133,12 @@
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
                     $newsItem = $this->newsRepo->get($request->newsId);
-                    $newsItem->
-
-
 
                     return Redirect::route('news.show', []);
                 }
-                abort(403);
+                return view('errors.403');
             } 
-            abort(401);
+            return view('errors.401');
         }
 
         /**
@@ -152,15 +149,19 @@
          */
         public function showHidden()
         {
-            if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+            if (Auth::check()) 
             {
-	        	$news = $this->newsRepo->getAllHidden();
-	        	$sidebar = $this->sidebarRepo->getByPage('2');
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $news = $this->newsRepo->getAllHidden();
+                    $sidebar = $this->sidebarRepo->getByPage('2');
 
-	        	return view('news.hidden', compact('news', 'sidebar'));
-	        } 
-        	abort(403);
-        }	
+                    return view('news.hidden', compact('news', 'sidebar'));
+                }
+                return view('errors.403');
+            } 
+            return view('errors.401');
+        }   
 
         /**
          * Store a comment with the provided news article id.
@@ -175,7 +176,6 @@
                 $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
 
                 $attributes['newsId'] = $newsId;
-                // Needs to be changed later on
                 $attributes['userId'] = Auth::user()->userId;
                 $attributes['message'] = $comment;
 
@@ -183,14 +183,13 @@
 
                 return Redirect::route('news.show', [$newsId]);
             }
-            else
-            {
-                return view('errors.401');
-            }
+            return view('errors.401');
         }
 
         /**
          * Get all the articles by title name.
+         *
+         * @param  String $term
          *
          * @return JSon
          */
@@ -200,48 +199,65 @@
 			echo json_encode($data);
 		}
 
+        /**
+         * Hides an article depending on the id provided.
+         *
+         * @param int $id
+         *
+         * @return Response
+         */
 		public function hide($id)
         {
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+			if (Auth::check())
             {
-				$news = $this->newsRepo->get($id);
-				if(count($news) > 0)
+                if (Auth::user()->usergroup->name === 'Administrator')
                 {
-					$news->hidden = true;
-					$news->save();
-				} 
-                else
-                {
-					return view('errors/404');
-				}
-				return Redirect::route('news.manage');
+                    $news = $this->newsRepo->get($id);
+
+                    if(count($news) > 0)
+                    {
+                        $news->hidden = true;
+                        $news->save();
+                    } 
+                    else
+                    {
+                        return view('errors.404');
+                    }
+                    return Redirect::route('news.manage');
+                }
+				return view('errors.403');
 			}
-             else 
-            {
-				return view('errors/403');
-			}
+			return view('errors.401');
 		}
 
+        /**
+         * Unhides an article depending on the id provided.
+         *
+         * @param int $id
+         *
+         * @return Response
+         */
 		public function unhide($id)
         {
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+			if (Auth::check()) 
             {
-				$news = $this->newsRepo->get($id);
+                if (Auth::user()->usergroup->name === 'Administrator')
+                {
+                    $news = $this->newsRepo->get($id);
 
-				if(count($news) > 0)
-                {
-					$news->hidden = false;
-					$news->save();
-				} 
-                else 
-                {
-					return view('errors/404');
-				}
-				return Redirect::route('news.manage');
+                    if(count($news) > 0)
+                    {
+                        $news->hidden = false;
+                        $news->save();
+                    } 
+                    else 
+                    {
+                        return view('errors.404');
+                    }
+                    return Redirect::route('news.manage');
+                }
+                return view('errors.403');
 			}
-             else 
-            {
-				return view('errors/403');
-			}
+		  return view('errors.401');
 		}
     }

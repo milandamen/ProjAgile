@@ -53,11 +53,7 @@
 										<span>{{ $article->news->title }}</span>
 									</td>
 									<td>
-										@if ($article->imagePath == null)
-											<input type="file" name="file[0]" /> 
-										@else
-											{{ $article->imagePath }}
-										@endif
+										<input type="file" name="file[0]" />
 									</td>
 									<td>
 										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
