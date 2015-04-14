@@ -4,22 +4,27 @@
 @section('content')
 
 	 <div class="container">
-            <div class="row">
+
+	 	<div class="row">
+			{!! Breadcrumbs::render('newsmanage') !!}
+		</div>
+
+            <div class="row">	
                 <div class="col-md-12">
                     <h2 class="page-header">
                         Nieuws Manage
                     </h2>
-                    <p class="col-md-8"> Deze pagina is enkel zichtbaar voor de administrator en toont 
-                    	al het nieuws. Inclusief de verborgen nieuwsberichten en de 
-                    	berichten waarvan de publicatiedatum is verlopen.
-                    </p>
                 </div>
             </div>
 
              <div class="row">
              	<div class="col-md-8">
+             		     <p> Deze pagina is enkel zichtbaar voor de administrator en toont 
+                    	al het nieuws. Inclusief de verborgen nieuwsberichten en de 
+                    	berichten waarvan de publicatiedatum is verlopen.
+                    </p>
              	<div class="col-md-12 addmargin">
-			
+					
 					<table class="table">
 						<thead> 
 							<tr>
