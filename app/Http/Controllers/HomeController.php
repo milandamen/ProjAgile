@@ -110,7 +110,7 @@
          */
         public function updateIntroduction()
         {
-			if (Auth::check() && A(Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);  
 				$content = filter_var($_POST['content'],FILTER_SANITIZE_STRING);
 				$pageId = $_POST['pageId'];
