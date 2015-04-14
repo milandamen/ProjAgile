@@ -1,18 +1,30 @@
 <?php
-	// Auth controller routes
+	/**
+    * Auth controller routes
+    */
 	include('RoutePartials/_authControllerRoutes.php');
 
-	// File controller routes
+	/**
+    * File controller routes
+    */
 	include('RoutePartials/_fileControllerRoutes.php');
 
-	// Home controller routes
+	/**
+    * Home controller routes
+    */
 	include('RoutePartials/_homeControllerRoutes.php');
 
-	// News controller routes
+	/**
+	 * News controller routes
+	 */
 	include('RoutePartials/_newsControllerRoutes.php');
 
-    // Sidebar controller routes
+    /**
+     * Sidebar controller routes
+     */
     include('RoutePartials/_sidebarControllerRoutes.php');
     
-    // Carousel controller routes
+    /**
+     * Carousel controller routes
+     */
     include('RoutePartials/_carouselControllerRoutes.php');
