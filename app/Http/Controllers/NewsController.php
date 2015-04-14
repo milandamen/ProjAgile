@@ -61,23 +61,34 @@
                     $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
                     $fileLinks[] = '<a href="' . route('file.download') . '/' . $file->path . '">'. $withoutId . '</a><br/>';
                 }
+                return view('news.show', compact('news', 'fileLinks'));
             }
-            return view('news.show', compact('news', 'fileLinks'));
+            else
+            {
+                return view('errors.404');
+            }
         }
 
         public function postComment()
         {
-            $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
-            $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
+            if(Auth::check())
+            {
+                $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+                $newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
 
-            $attributes['newsId'] = $newsId;
-            // Needs to be changed later on
-            $attributes['userId'] = 1;
-            $attributes['message'] = $comment;
+                $attributes['newsId'] = $newsId;
+                // Needs to be changed later on
+                $attributes['userId'] = Auth::user()->userId;
+                $attributes['message'] = $comment;
 
-            $this->newsCommentRepo->create($attributes);
+                $this->newsCommentRepo->create($attributes);
 
-            return Redirect::route('news.show', [$newsId]);
+                return Redirect::route('news.show', [$newsId]);
+            }
+            else
+            {
+                return view('errors.401');
+            }
         }
 		
 		public function getArticlesByTitle($term) {
