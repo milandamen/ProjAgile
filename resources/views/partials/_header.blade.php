@@ -56,14 +56,14 @@
                         @foreach($menu as $subMenu)
                             @if(isset($subMenu['sub']))
 								<li class="dropdown pos-relative">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $subMenu['main']->name !!} <span class="caret"></span></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $subMenu['main']->name }} <span class="caret"></span></a>
 									<ul class="dropdown-menu">
 										@include('partials.menu._subMenuItem', ['items' => $subMenu['sub'],'main' =>$subMenu])
 									</ul>
 								</li>
                             @else
                                 <li>
-									<a href="{!! $subMenu['main']->relativeUrl !!}">{!! $subMenu['main']->name !!}</a>
+									<a href="{{ url($item['main']->relativeUrl) }}">{{ $subMenu['main']->name }}</a>
 								</li>
                             @endif
                         @endforeach
