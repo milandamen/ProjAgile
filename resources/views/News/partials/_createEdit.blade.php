@@ -5,7 +5,7 @@
 
 <div class="form-group">
     {!! Form::label('content', 'Content') !!}
-    {!! Form::text('textarea', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
+    {!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
 </div>
 
 <div class="form-group">
@@ -15,7 +15,7 @@
 
 <div class="form-group">
     {!! Form::label('hidden', 'Verbergen?') !!}<br/>
-    <div name="hide" class="btn-group" data-toggle="buttons">
+    <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
             <input type="radio" name="hidden" value="true" {{ $newsItem->hidden ? 'checked=true' : '' }}>Ja
         </label>
@@ -27,7 +27,7 @@
 
 <div class="form-group">
     {!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
-    <div name="hide" class="btn-group" data-toggle="buttons">
+    <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
             <input type="radio" name="commentable" value="true" {{ $newsItem->commentable ? 'checked=true' : '' }}>Ja
         </label>
@@ -61,7 +61,7 @@
 
 <div class="form-group">
     {!! Form::label('onTop', 'Bovenaan de pagina?') !!}<br/>
-    <div name="onTop" class="btn-group" data-toggle="buttons">
+    <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
             <input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked=true' : '' }}>Ja
         </label>

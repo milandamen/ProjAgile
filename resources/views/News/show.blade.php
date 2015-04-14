@@ -3,12 +3,9 @@
 @section('content')
     @if($news == null)
         <div class="container">
-
-        <div class="row">
-		{!! Breadcrumbs::render('news') !!}
-		</div>
-
-
+            <div class="row">
+                {!! Breadcrumbs::render('news') !!}
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">Dit artikel bestaat niet!</h2>
@@ -22,26 +19,24 @@
         </div>
     @else
         <div class="container">
-
 	       	<div class="row">
 				{!! Breadcrumbs::render('article', (object)['id' => $news->newsId, 'title' => $news->title]) !!}
 			</div>
-
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">
                     	@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-							<a href="#"><i class="fa fa-pencil-square-o"></i></a>
+							<a href="{{ route('news.edit', [$news->newsId]) }}"><i class="fa fa-pencil-square-o"></i></a>
 						@endif
                         {!! $news->title !!}
                     </h2>
                 </div>
                 <div class="col-md-8">
                     <p class="news-info">
-                        {!! $news->date !!}
-                        Door: {!! $news->user->username !!} |
+                        {{ $news->date }}
+                        Door: {{ $news->user->username }} |
                         @if($news->districtSection != null)
-                            {!! $news->districtSection->name !!}
+                            {{ $news->districtSection->name }}
                         @else
                             Algemeen
                         @endif
@@ -51,7 +46,7 @@
                     <br/>
 
                     @if(count($news->files) > 0)
-                        <br/><p>{{'Bijlagen:'}}</p>
+                        <br/><p>Bijlagen:</p>
                     @endif
 
                     @foreach($fileLinks as $link)
@@ -114,4 +109,4 @@
             </div>
         </div>
     @endif
-@endsection
+@stop

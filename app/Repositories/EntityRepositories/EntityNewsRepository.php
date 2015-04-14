@@ -3,6 +3,8 @@
     
 	use App\Models\News;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use Auth;
+    use Carbon\Carbon;
 
 	class EntityNewsRepository implements INewsRepository
 	{
@@ -33,12 +35,15 @@
         /**
          * Creates a News record in the database
          * 
-         * @param  array() $attributes
+         * @param  array $attributes
          * 
          * @return News
          */
 		public function create($attributes) 
 		{
+            $attributes['userId'] = Auth::user()->userId;
+            $attributes['date'] = Carbon::now();
+
 			return News::create($attributes);
 		}
 
@@ -47,11 +52,13 @@
          * 
          * @param  News $model
          * 
-         * @return void
+         * @return News
          */
         public function update($model)
         {
-            $model->save();
+            $model->userId = Auth::user()->userId;
+
+            return $model->save();
         }
 
         /**
@@ -87,8 +94,8 @@
          */
 		public function getLastWeek()
         {
-        	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
-        	$curDate = date('Y-m-d H:i:s',time());
+        	$date = date('Y-m-d H:i:s', time() - (7 * 86400)); // 7 days ago
+        	$curDate = date('Y-m-d H:i:s', time());
 
         	return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
         }
@@ -100,8 +107,8 @@
          */
         public function oldNews()
         {
-        	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
-        	$curDate = date('Y-m-d H:i:s',time());
+        	$date = date('Y-m-d H:i:s', time() - (7 * 86400)); // 7 days ago
+        	$curDate = date('Y-m-d H:i:s', time());
 
         	return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
         }
