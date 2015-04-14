@@ -6,23 +6,29 @@
 		'uses' => 'NewsController@index'
 	]);
 
-	Route::get('nieuws/manage', 
-	[
-		'as' => 'news.manage',
-		'uses' => 'NewsController@showHidden'
-	]);
-
-    Route::get('nieuws/wijzigen/{id}',
-    [
-        'as' => 'news.edit',
-        'uses' => 'NewsController@edit'
-    ]);
-
 	Route::get('nieuws/{id}',
     [
         'as' => 'news.show',
         'uses' => 'NewsController@show'
     ]);
+
+    Route::get('nieuws/{id}/wijzigen',
+    [
+        'as' => 'news.edit',
+        'uses' => 'NewsController@edit'
+    ]);
+
+    Route::patch('nieuws/{id}/wijzigen',
+    [
+    	'as' => 'news.update',
+    	'uses' => 'NewsController@update'
+    ]);
+
+	Route::get('nieuws/manage', 
+	[
+		'as' => 'news.manage',
+		'uses' => 'NewsController@showHidden'
+	]);
 
     Route::post('nieuws/comment',
     [

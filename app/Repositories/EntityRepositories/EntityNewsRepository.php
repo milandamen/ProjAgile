@@ -80,23 +80,39 @@
 			return News::where('title', 'LIKE', $term)->where('hidden', '=', 0)->get();
 		}
 
-
-		public function getLastWeek(){
+        /**
+         * Returns a News Collection which are published seven days ago until now and are not hidden.
+         * 
+         * @return Collection -> News
+         */
+		public function getLastWeek()
+        {
         	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
         	$curDate = date('Y-m-d H:i:s',time());
 
         	return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->get();
         }
 
-        public function oldNews(){
+        /**
+         * Returns a News Collection which are older than seven days ago and are not hidden.
+         * 
+         * @return Collection -> News
+         */
+        public function oldNews()
+        {
         	$date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
         	$curDate = date('Y-m-d H:i:s',time());
 
         	return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->get();
         }
 
-        public function getAllHidden(){
+        /**
+         * Returns literaly all news articles.
+         * 
+         * @return Collection -> News
+         */
+        public function getAllHidden()
+        {
 			return News::all();
 		}
-
     }
