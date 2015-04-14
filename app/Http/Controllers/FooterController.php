@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Footer;
-use App\Models\Menu;
 use App\Repositories\RepositoryInterfaces\IMenuRepository;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\RepositoryInterfaces\IFooterRepository;
@@ -47,7 +46,7 @@ class FooterController extends Controller
         }
         else
         {
-            echo 'U moet ingelogd zijn.';
+            return view('errors.401');
         }
 
     }
@@ -150,7 +149,7 @@ class FooterController extends Controller
         }
         else
         {
-            echo 'U moet ingelogd zijn als admin om de footer te wijzigen.';
+            return view('errors.401');
         }
 
     }
