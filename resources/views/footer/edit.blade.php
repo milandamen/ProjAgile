@@ -29,26 +29,13 @@
                             </tr>
 
                         @for($r = 0; $r < count($footer[$c]); $r++)
-                            @if($r === 0)
-
-                                <tr>
-                                    <td>
-                                        Titel: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
-                                        <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
-                                    </td>
-                                </tr>
-
-                            @else
-                                <tr>
-                                    <td>
-                                        Text: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
-                                        <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                        <br/> Link: <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
-                                    </td>
-                                </tr>
-                            @endif
-
+                            <tr>
+                                <td>
+                                    Tekst: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
+                                    <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
+                                    <br/> Link: &nbsp; <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                </td>
+                            </tr>
                         @endfor
                         </table>
                     @endfor
@@ -62,6 +49,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
+</script>
 
 @endsection
 
