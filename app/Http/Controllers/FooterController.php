@@ -18,31 +18,38 @@ class FooterController extends Controller
 
     public function edit()
     {
-        if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+        if(Auth::check())
         {
-            $footer = $this->footerRepository->getAll();
-
-            $numColumns = 0;
-            foreach($footer as $item)
+            if(Auth::user()->usergroup->name === 'Administrator')
             {
-                if($item->col >= $numColumns)
+                $footer = $this->footerRepository->getAll();
+
+                $numColumns = 0;
+                foreach($footer as $item)
                 {
-                    $numColumns = $item->col + 1;
+                    if($item->col >= $numColumns)
+                    {
+                        $numColumns = $item->col + 1;
+                    }
                 }
+
+                $footerColumns = [];
+
+                for($i = 0; $i < $numColumns; $i++)
+                {
+                    $footerColumns[] = [];
+                }
+                foreach($footer as $item)
+                {
+                    $footerColumns[$item->col][$item->row] = $item;
+                }
+
+                return view('footer/edit', array('footer' => $footerColumns));
             }
-
-            $footerColumns = [];
-
-            for($i = 0; $i < $numColumns; $i++)
+            else
             {
-                $footerColumns[] = [];
+                return view('errors.403');
             }
-            foreach($footer as $item)
-            {
-                $footerColumns[$item->col][$item->row] = $item;
-            }
-
-            return view('footer/edit', array('footer' => $footerColumns));
         }
         else
         {
@@ -53,104 +60,110 @@ class FooterController extends Controller
 
     public function postEdit()
     {
-        if (Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+        if(Auth::check())
         {
-            $footer = $this->footerRepository->getAll();
-            $maxCols = 3;
-
-            if(isset($_POST['footer']) && count($_POST['footer']) > 0)
+            if(Auth::user()->usergroup->name === 'Administrator')
             {
-                //create new footer array from $_POST
-                $newFooter = [];
+                $footer = $this->footerRepository->getAll();
+                $maxCols = 3;
 
-                for($colN = 0; $colN < $maxCols; $colN++)
+                if(isset($_POST['footer']) && count($_POST['footer']) > 0)
                 {
-                    if(isset($_POST['footer'][$colN])) {
+                    //create new footer array from $_POST
+                    $newFooter = [];
 
-                        $column = $_POST['footer'][$colN];
-
-                        for ($rowN = 0; $rowN < count($column['text']); $rowN++) {
-                            //check if text has been filled in
-                            if ($column['text'][$rowN] != null) {
-                                $newFooterItem = new Footer();
-                                $newFooterItem->col = $colN;
-                                $newFooterItem->row = $rowN;
-                                $newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
-                                $newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
-                                $newFooter[] = $newFooterItem;
-                            } else {
-                                echo "Vul a.u.b. alle verplichte velden in";
-                                return;
-                            }
-                        }
-
-                    }
-                }
-
-                //loop through new entries, adding or updating them
-                foreach($newFooter as $entry)
-                {
-                    //loop through old footer
-                    $isNew = 1;
-                    foreach($footer as $item)
+                    for($colN = 0; $colN < $maxCols; $colN++)
                     {
-                        if($item->col == $entry->col && $item->row == $entry->row)
-                        {
-                            //check if text or link have changed, if not do nothing, else update item
-                            if($item->text != $entry->text || $item->link != $entry->link)
-                            {
-                                $item->text = $entry->text;
-                                $item->link = $entry->link;
-                                $this->footerRepository->update($item);
+                        if(isset($_POST['footer'][$colN])) {
+
+                            $column = $_POST['footer'][$colN];
+
+                            for ($rowN = 0; $rowN < count($column['text']); $rowN++) {
+                                //check if text has been filled in
+                                if ($column['text'][$rowN] != null) {
+                                    $newFooterItem = new Footer();
+                                    $newFooterItem->col = $colN;
+                                    $newFooterItem->row = $rowN;
+                                    $newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
+                                    $newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
+                                    $newFooter[] = $newFooterItem;
+                                } else {
+                                    echo "Vul a.u.b. alle verplichte velden in";
+                                    return;
+                                }
                             }
 
-                            $isNew = 0;
-                            break;
                         }
                     }
 
-                    if($isNew == 1)
-                    {
-                        //create
-                        $this->footerRepository->update($entry);
-                    }
-
-                }
-
-                //delete removed items
-                foreach($footer as $item)
-                {
-                    $canDelete = 1;
+                    //loop through new entries, adding or updating them
                     foreach($newFooter as $entry)
                     {
-                        //if the item from the db matches the item in new footer do not delete it
-                        if($item->col == $entry->col && $item->row == $entry->row)
+                        //loop through old footer
+                        $isNew = 1;
+                        foreach($footer as $item)
                         {
-                            $canDelete = 0;
-                            break;
+                            if($item->col == $entry->col && $item->row == $entry->row)
+                            {
+                                //check if text or link have changed, if not do nothing, else update item
+                                if($item->text != $entry->text || $item->link != $entry->link)
+                                {
+                                    $item->text = $entry->text;
+                                    $item->link = $entry->link;
+                                    $this->footerRepository->update($item);
+                                }
+
+                                $isNew = 0;
+                                break;
+                            }
+                        }
+
+                        if($isNew == 1)
+                        {
+                            //create
+                            $this->footerRepository->update($entry);
+                        }
+
+                    }
+
+                    //delete removed items
+                    foreach($footer as $item)
+                    {
+                        $canDelete = 1;
+                        foreach($newFooter as $entry)
+                        {
+                            //if the item from the db matches the item in new footer do not delete it
+                            if($item->col == $entry->col && $item->row == $entry->row)
+                            {
+                                $canDelete = 0;
+                                break;
+                            }
+                        }
+                        if($canDelete == 1)
+                        {
+                            $this->footerRepository->destroy($item->footerId);
                         }
                     }
-                    if($canDelete == 1)
+                }
+                else
+                {
+                    //if footer is not set (everything is removed) delete all items
+                    foreach($footer as $item)
                     {
                         $this->footerRepository->destroy($item->footerId);
                     }
                 }
+
+                return Redirect::action('FooterController@edit');
             }
             else
             {
-                //if footer is not set (everything is removed) delete all items
-                foreach($footer as $item)
-                {
-                    $this->footerRepository->destroy($item->footerId);
-                }
+                return view('errors.403');
             }
-
-            return Redirect::action('FooterController@edit');
         }
         else
         {
             return view('errors.401');
         }
-
     }
 }
