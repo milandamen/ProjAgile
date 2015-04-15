@@ -47,7 +47,7 @@
     	'uses' => 'NewsController@update'
     ]);
 	
-	Route::get('nieuws/{id}/getArticlesByTitle',
+	Route::get('nieuws/getArticlesByTitle/{term}',
 	[
 		'as' => 'news.getArticlesByTitle',
 		'uses' => 'NewsController@getArticlesByTitle'
