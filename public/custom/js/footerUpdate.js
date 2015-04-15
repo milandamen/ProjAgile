@@ -31,7 +31,7 @@ function addColumn()
 
         $(function() {
             $(".autocomplete").autocomplete({
-                source: "/autocomplete/",
+                source: autocompleteURL,
                 minLength: 2
             });
         });
@@ -63,7 +63,7 @@ function addRow(button)
 
 	$(function() {
 	    $(".autocomplete").autocomplete({
-	        source: "/autocomplete/",
+	        source: autocompleteURL,
 	        minLength: 2
 	    });
 	});

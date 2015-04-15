@@ -50,6 +50,10 @@
     </div>
 </div>
 
+<script>
+    var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
+</script>
+
 @endsection
 
 @section('additional_scripts')
