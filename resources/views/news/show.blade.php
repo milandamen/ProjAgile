@@ -49,8 +49,9 @@
                         <br/><p>Bijlagen:</p>
                     @endif
 
-                    @foreach($fileLinks as $link)
-                        {!! $link !!}
+                    @foreach($news->files as $file)
+                        <a href="{{ asset('uploads/img/news/' . $file->path) }}">{{ $file->path }}</a>
+                        <br>
                     @endforeach
 
                     <br/>

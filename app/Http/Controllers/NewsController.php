@@ -1,6 +1,7 @@
 <?php
     namespace App\Http\Controllers;
 
+    use App\Models\File;
     use App\Models\News;
     use App\Http\Requests\News\NewsRequest;
     use App\Repositories\RepositoryInterfaces\IFileRepository;
@@ -66,24 +67,13 @@
         public function show($newsId)
         {
             $news = $this->newsRepo->get($newsId);
-            $fileLinks = [];
 
             if($news != null)
             {
-                foreach($news->files as $file)
-                {
-                    $withoutId = substr($file->path, stripos($file->path, 'd') + 1);
-                    $fileLinks[] = '<a href="' . route('file.download', $file->path) . '">'. $withoutId . '</a><br/>';
-                }
-
-                return view('news.show', compact('news', 'fileLinks'));
-            }
-            else
-            {
-                return view('errors.404');
+                return view('news.show', compact('news'));
             }
 
-            return view('news.show', compact('news', 'fileLinks'));
+            return view('errors.404');
         }
 
         /**
@@ -122,7 +112,19 @@
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
-                    $newsItem = $this->newsRepo->create($request->all());
+                    $news = $this->newsRepo->create($request->all());
+                    $oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
+
+                    dd($request);
+                    for($i = 0; $i < count($request->file); $i++)
+                    {
+                        $this->saveFile($news, $i, $oldFiles);
+                    }
+
+                    foreach ($oldItems as $oldItem)
+                    {
+                        $this->fileRepo->destroy($oldItem);
+                    }
 
                     return Redirect::route('news.show', [$newsItem->newsId]);
                 }
@@ -184,18 +186,19 @@
                     $news = $this->newsRepo->update($newsItem);
                     $oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
 
-                    if (Request::hasFile())
+                    for($i = 0; $i < count($request->file); $i++)
                     {
-                        dd($request);
-                        for($i = 0; $i < count($request->file); $i++)
-                        {
-                            $this->saveImage($news, $i, $oldFiles);
-                        }
+                        $file = new File();
+                        $file->newsId = $news->newsId;
+                        $file->path = "temp";
+                        $file->save();
+
+                        $this->saveFile($file, $i, $oldFiles);
                     }
 
-                    foreach ($oldItems as $oldItem)
+                    foreach ($oldFiles as $oldFile)
                     {
-                        $this->fileRepo->destroy($oldItem);
+                        $this->fileRepo->destroy($oldFile);
                     }
 
                     return Redirect::route('news.show', [$id]);
@@ -334,7 +337,7 @@
 		  return view('errors.401');
 		}
 
-        private function saveImage($item, $count, $oldItems) 
+        private function saveFile($item, $count, $oldItems) 
         {
             $oldItem = null;
             $newsId = $item->newsId;
@@ -350,41 +353,41 @@
             
             if (isset($_FILES) && isset($_FILES['file'])) 
             {
-                $target = public_path() . '/uploads/img/carousel/';
-                
-                $allowed = ['png' , 'jpg'];
-                
+                $target = public_path() . '/uploads/img/news/';
+                $allowed = ['png', 'jpg'];
                 $filename = $_FILES['file']['name'][$count];
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 
+                //dd($_FILES);
+
                 // If there are no files selected you will get an empty '' string therefore the !empty check.
                 if (!empty($filename) && in_array($ext, $allowed)) 
                 {
                     $tmp = $_FILES['file']['tmp_name'][$count];
                     
-                    $newFileName = $item->carouselId . '.' . $ext;
+                    $newFileName = $item->fileId . '.' . $ext;
                     $target = $target . $newFileName;
                     
                     move_uploaded_file($tmp, $target);
                     
-                    $item->imagePath = $newFileName;
+                    $item->path = $newFileName;
                 } 
                 elseif ($oldItem != null) 
                 {
-                    $item->imagePath = $oldItem->imagePath;
+                    $item->path = $oldItem->path;
                 } 
                 else 
                 {
-                    $item->imagepath = 'blank.jpg';
+                    $item->path = 'blank.jpg';
                 }
             } 
             elseif ($oldItem != null) 
             {
-                $item->imagePath = $oldItem->imagePath;
+                $item->path = $oldItem->path;
             } 
             else 
             {
-                $item->imagepath = 'blank.jpg';
+                $item->path = 'blank.jpg';
             }
             $item->save();
         }
