@@ -6,7 +6,7 @@
 	 <div class="container">
 
 	 	<div class="row">
-				{!! Breadcrumbs::render('news') !!}
+			{!! Breadcrumbs::render('news') !!}
 		</div>
 
             <div class="row">
