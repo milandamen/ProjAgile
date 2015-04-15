@@ -3,8 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row">
+            {!! Breadcrumbs::render('addnews') !!}
+        </div>
+        <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Nieuws wijzigen</h1>
+                <h1 class="page-header">Nieuws Aanmaken</h1>
             </div>
         </div>
         <div class="col-lg-12">

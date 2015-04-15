@@ -24,20 +24,12 @@
     Breadcrumbs::register('addnews', function($breadcrumbs)
     {
         $breadcrumbs->parent('news');
-        $breadcrumbs->push('Nieuw bericht');
+        $breadcrumbs->push('Nieuw bericht', route('news.create'));
     });
 
-    // Home > Nieuws > Wijzigen
-    Breadcrumbs::register('editnews', function($breadcrumbs)
-    {
-        $breadcrumbs->parent('news');
-        $breadcrumbs->push('Wijzig bericht');
-    });
-
-    //!!!!! LET OP NOG GEEN ROUTE!
     // Home > Nieuws > Wijzigen > [ bericht ] 
-    Breadcrumbs::register('editnewsarticle', function($breadcrumbs,$article)
+    Breadcrumbs::register('editnewsarticle', function($breadcrumbs, $article)
     {
-        $breadcrumbs->parent('editnews');
-        $breadcrumbs->push($article->title);
+        $breadcrumbs->parent('newsmanage');
+        $breadcrumbs->push($article->title, route('news.edit', [$article->id]));
     });

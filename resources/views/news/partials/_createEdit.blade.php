@@ -11,28 +11,6 @@
     {!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('hidden', 'Verbergen?') !!}<br/>
-    <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
-            <input type="radio" name="hidden" value="true" {{ $newsItem->hidden ? 'checked=true' : '' }}>Ja
-        </label>
-        <label class="btn btn-default {{ !$newsItem->hidden ? 'active' : '' }}">
-            <input type="radio" name="hidden" value="false" {{ !$newsItem->hidden ? 'checked=true' : '' }}>Nee
-        </label>
-    </div>
-</div>
-<div class="form-group">
-    {!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
-    <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
-            <input type="radio" name="commentable" value="true" {{ $newsItem->commentable ? 'checked=true' : '' }}>Ja
-        </label>
-        <label class="btn btn-default {{ !$newsItem->commentable ? 'active' : '' }}">
-            <input type="radio" name="commentable" value="false" {{ !$newsItem->commentable ? 'checked=true' : '' }}>Nee
-        </label>
-    </div>
-</div>
-<div class="form-group">
     {!! Form::label('publishStartDate', 'Publicatiedatum') !!}
     <div class="input-group date" id="datetimepicker">
         {!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
@@ -50,17 +28,6 @@
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>' 
         !!}
-    </div>
-</div>
-<div class="form-group">
-    {!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
-    <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
-            <input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked=true' : '' }}>Ja
-        </label>
-        <label class="btn btn-default {{ !$newsItem->top ? 'active' : '' }}">
-            <input type="radio" name="top" value="false" {{ !$newsItem->top ? 'checked=true' : '' }}">Nee
-        </label>
     </div>
 </div>
 <div class="form-group">
@@ -83,6 +50,41 @@
         </tr>
     </table>
 </div>
+<div class="form-group col-md-12">
+    <div class="col-md-2">
+        {!! Form::label('hidden', 'Verbergen?') !!}<br/>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
+                <input type="radio" name="hidden" value="true" {{ $newsItem->hidden ? 'checked=true' : '' }}>Ja
+            </label>
+            <label class="btn btn-default {{ !$newsItem->hidden ? 'active' : '' }}">
+                <input type="radio" name="hidden" value="false" {{ !$newsItem->hidden ? 'checked=true' : '' }}>Nee
+            </label>
+        </div>
+    </div>
+    <div class="col-md-2">
+        {!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
+                <input type="radio" name="commentable" value="true" {{ $newsItem->commentable ? 'checked=true' : '' }}>Ja
+            </label>
+            <label class="btn btn-default {{ !$newsItem->commentable ? 'active' : '' }}">
+                <input type="radio" name="commentable" value="false" {{ !$newsItem->commentable ? 'checked=true' : '' }}>Nee
+            </label>
+        </div>
+    </div>
+    <div class="col-md-2">
+        {!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
+                <input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked=true' : '' }}>Ja
+			</label>
+            <label class="btn btn-default {{ !$newsItem->top ? 'active' : '' }}">
+                <input type="radio" name="top" value="false" {{ !$newsItem->top ? 'checked=true' : '' }}">Nee
+            </label>
+        </div>
+	</div>
+</div>
 <div class="form-group">
-    {!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
+	{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
 </div>
