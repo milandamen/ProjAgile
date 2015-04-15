@@ -13,8 +13,9 @@
                         <p class="col-md-8"> Op deze pagina zijn alle elementen te vinden die men kan beheren.
                         	U heeft toegang tot alle onderdelen die hieronder te vinden zijn. Mocht u een onderdeel missen meld dit dan bij de beheerder!</p>
 
+					<div class="col-lg-8 col-md-offset-2">
                         @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-                    <div class="col-lg-8 col-md-offset-2">
+                    
                        <div class="col-md-4">
 	           			<h3>Layout modules</h3>
 	           				<div class="btn-group-vertical">
@@ -42,7 +43,7 @@
 	           				</div>
 	           			</div>
                     
-                    </div>
+                  
                     @elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
                     <div class="col-md-4">
                             <h3>Layout modules</h3>
@@ -59,6 +60,7 @@
                             </div>
                         </div>
                         @endif
+                          </div>
                 </div>
             </div>
     </div>
