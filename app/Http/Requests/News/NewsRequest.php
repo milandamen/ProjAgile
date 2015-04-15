@@ -51,7 +51,14 @@
 			$input['publishStartDate'] = filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
 			$input['publishEndDate'] = filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
 			$input['top'] = filter_var($input['top'], FILTER_SANITIZE_STRING);
+
+			$input['districtSectionId'] = parseSelectorField($input['districtSectionId']);
+			$input['hidden'] = parseCheckboxOrRadioButton($input['hidden']);
+			$input['commentable'] = parseCheckboxOrRadioButton($input['commentable']);
+			$input['top'] = parseCheckboxOrRadioButton($input['top']);
 			
+			$this->replace($input);
+
 			return $input;
 		}
 	}

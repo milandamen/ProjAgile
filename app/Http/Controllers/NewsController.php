@@ -121,37 +121,7 @@
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
-
-                	if($request->hidden === 'false'){
-                    	$hidden = false;
-                    } else {
-                    	$hidden = true;
-                    }
-
-                    if($request->commentable === 'false'){
-                    	$commentable = false;
-                    } else {
-                    	$commentable = true;
-                    }
-
-                    if($request->top === 'false'){
-                    	$top = false;
-                    } else {
-                    	$top = true;
-                    }
-
-                    $attributes = 
-                    [
-                        'districtSectionId' => $request->districtSectionId,
-                        'title' => $request->title,
-                        'content' => $request->content,
-                        'hidden' => $hidden,
-                        'commentable' => $commentable,
-                        'publishStartDate' => $request->publishStartDate,
-                        'publishEndDate' => $request->publishEndDate,
-                        'top' => $top
-                    ];
-                    $newsItem = $this->newsRepo->create($attributes);
+                    $newsItem = $this->newsRepo->create($request->all());
 
                     return Redirect::route('news.show', [$newsItem->newsId]);
                 }
@@ -195,39 +165,20 @@
          */
         public function update($id, NewsRequest $request)
         {
-
             if (Auth::check())
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
                     $newsItem = $this->newsRepo->get($id);
 
-                    if($request->hidden === 'false'){
-                    	$hidden = false;
-                    } else {
-                    	$hidden = true;
-                    }
-
-                    if($request->commentable === 'false'){
-                    	$commentable = false;
-                    } else {
-                    	$commentable = true;
-                    }
-
-                    if($request->top === 'false'){
-                    	$top = false;
-                    } else {
-                    	$top = true;
-                    }
-
                     $newsItem->districtSectionId = $request->districtSectionId;
                     $newsItem->title = $request->title;
                     $newsItem->content = $request->content;
-                    $newsItem->hidden = $hidden;
-                    $newsItem->commentable = $commentable;
+                    $newsItem->hidden = $request->hidden;
+                    $newsItem->commentable = $request->commentable;
                     $newsItem->publishStartDate = $request->publishStartDate;
                     $newsItem->publishEndDate = $request->publishEndDate;
-                    $newsItem->top = $top;
+                    $newsItem->top = $request->top;
 
                     $this->newsRepo->update($newsItem);
 
@@ -293,7 +244,7 @@
          *
          * @param  String $term
          *
-         * @return JSon
+         * @return Json
          */
 		public function getArticlesByTitle($term) 
         {
@@ -319,7 +270,7 @@
                     if(count($news) > 0)
                     {
                         $news->hidden = true;
-                        $news->save();
+                        $this->newsRepo->update($news);
 
                         return Redirect::route('news.manage');
                     } 
@@ -351,7 +302,7 @@
                     if(count($news) > 0)
                     {
                         $news->hidden = false;
-                        $news->save();
+                        $this->newsRepo->update($news);
                     } 
                     else 
                     {

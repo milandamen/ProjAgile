@@ -55,6 +55,8 @@
 
 			$input['postal'] = $this->fixPostal($input['postal']);
 
+			$this->replace($input);
+
 			return $input;
 		}
 
