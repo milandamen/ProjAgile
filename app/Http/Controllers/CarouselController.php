@@ -24,7 +24,7 @@
 		
 		public function edit()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$carousel = $this->carouselRepo->getAll();
 				return View('carousel.edit', compact('carousel', 'publicpathh'));
 			} else {
@@ -34,7 +34,7 @@
 
 		public function update()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$oldItems = $this->carouselRepo->getAll();
 				
 				for ($i = 0; $i < count($_POST['artikel']); $i++) {

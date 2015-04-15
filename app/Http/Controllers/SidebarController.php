@@ -27,7 +27,7 @@
 
 		public function edit($id)
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 
 				$sidebar = $this->sidebarRepo->getByPage($id);
 				if(count($sidebar) > 0)
@@ -47,7 +47,7 @@
 
 		public function update($id)
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 				$maxrowindex = $_POST['maxRowIndex'];
 				$i=0;

@@ -95,7 +95,7 @@
          */
         public function editIntroduction()
         {
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$introduction = $this->introRepo->getPageBar('1');
 				return view('home.editIntroduction', compact('introduction'));
 			} else {
@@ -110,7 +110,7 @@
          */
         public function updateIntroduction()
         {
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);  
 				$content = filter_var($_POST['content'],FILTER_SANITIZE_STRING);
 				$pageId = $_POST['pageId'];
