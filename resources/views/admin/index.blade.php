@@ -28,7 +28,7 @@
            				<div class="col-md-4">
 	           				<h3>Content wijzigen</h3>
 	           				<div class="btn-group-vertical">
-	           					<a class="btn btn-default" href="#" role="button">Nieuws toevoegen</a>
+	           					<a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws toevoegen</a>
 	           					<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Introductie wijzigen</a>
 	           				</div>
            				</div>
@@ -54,7 +54,7 @@
                         <div class="col-md-4">
                             <h3>Content wijzigen</h3>
                             <div class="btn-group-vertical">
-                                <a class="btn btn-default" href="#" role="button">Nieuws toevoegen</a>
+                                <a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws toevoegen</a>
                                 <a class="btn btn-default" href="{{ route('home.editIntroduction') }}" role="button">Introductie wijzigen</a>
                             </div>
                         </div>
