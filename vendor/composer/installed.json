@@ -3053,5 +3053,40 @@
         "keywords": [
             "laravel"
         ]
+    },
+    {
+        "name": "summernote/summernote",
+        "version": "v0.6.1",
+        "version_normalized": "0.6.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/prochor666/summernote.git",
+            "reference": "ab6772d07073683b2c463ff765085e5d0ad575a0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/prochor666/summernote/zipball/ab6772d07073683b2c463ff765085e5d0ad575a0",
+            "reference": "ab6772d07073683b2c463ff765085e5d0ad575a0",
+            "shasum": ""
+        },
+        "time": "2015-02-08 10:04:34",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alan",
+                "email": "susukang98@gmail.com",
+                "role": "lead"
+            }
+        ],
+        "description": "Super Simple WYSIWYG Editor on Bootstrap(3.0 and 2.x).",
+        "homepage": "http://summernote.org/",
+        "keywords": [
+            "wysiwyg"
+        ]
     }
 ]

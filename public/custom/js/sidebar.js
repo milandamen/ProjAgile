@@ -19,8 +19,15 @@ function addSideRow(button){
  	var cellDelete = row.insertCell();
 
  	cellText.innerHTML = 'Tekst: <input type="text" name="sidebar['+ tableNumber+'][text][]" id="sidebarText" value="" required>';
- 	cellIntern.innerHTML = 'Intern <input id="page_name" name="sidebar['+ tableNumber+'][pagename][]" type="text" list="pagedata" />';
+ 	cellIntern.innerHTML = 'Intern <input id="page_name" class="autocomplete ui-autocomplete-input" name="sidebar['+ tableNumber+'][pagename][]" type="text"/>';
  	cellLink.innerHTML = 'Link naar: <input type="text" name="sidebar['+ tableNumber+'][link][]" id="sidebarText" value=""> ';
+ 
+	$(function() {
+	    $(".autocomplete").autocomplete({
+	        source: "/autocomplete/",
+	        minLength: 2
+	    });
+	});
 
 
  	var div = document.createElement("div");

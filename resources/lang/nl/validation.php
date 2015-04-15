@@ -112,5 +112,9 @@
             'houseNumber'           => 'Huisnummer',
             'postal'                => 'Postcode',
             'email'                 => 'E-mailadres',
+            'title'                 => 'Titel',
+            'content'               => 'Content',
+            'publishStartDate'      => 'Publicatiedatum',
+            'publishEndDate'        => 'Einde Publicatiedatum',
         ],
     ];

@@ -46,6 +46,8 @@
 				$input['remember'] = filter_var($input['remember'], FILTER_SANITIZE_STRING);
 			}
 
+			$this->replace($input);
+
 			return $input;
 		}
 	}

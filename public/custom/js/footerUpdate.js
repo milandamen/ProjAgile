@@ -52,14 +52,14 @@ function addRow(button)
     var cell = row.insertCell(0);
     cell.innerHTML = 'Text: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
     ' <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
-    '<br/> Link: <input type="text" name="footer[' + tableNumber + '][link][]" class="footerAutocomplete ui-autocomplete-input" id="footerLink">';
+    '<br/> Link: <input type="text" name="footer[' + tableNumber + '][link][]" class="autocomplete ui-autocomplete-input" id="footerLink">';
 
-    $(function() {
-        $(".footerAutocomplete").autocomplete({
-            source: "/footer/autocomplete",
-            minLength: 2
-        });
-    });
+	$(function() {
+	    $(".autocomplete").autocomplete({
+	        source: "/autocomplete/",
+	        minLength: 2
+	    });
+	});
 }
 
 function removeRow(button)

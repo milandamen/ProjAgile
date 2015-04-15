@@ -50,7 +50,7 @@
 									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden == 1))
 										<i class="fa fa-archive"></i>
 									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden == 1))
-										<i class="fa fa-history fa-lg"></i> <i class="fa fa-lock fa-lg"></i> 
+										<i class="fa fa-archive fa-lg"></i> <i class="fa fa-lock fa-lg"></i> 
 									@elseif($newsItem->publishStartDate > $curDate)
 										<i class="fa fa-repeat fa-lg"></i>
 									@endif

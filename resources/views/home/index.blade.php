@@ -19,13 +19,15 @@
         <div class="row">
             {{-- Script for laying out modules on correct spots --}}
             <div class="col-md-8">
-                @for ($i = 0; $i < count($layoutModules) - 1; $i++)					{{-- Loop all modules, except the last one --}}
+                @for ($i = 0; $i < count($layoutModules) - 2; $i++)					{{-- Loop all modules, except the last one --}}
                     @include('home.partials._' . $layoutModules[$i]->moduleName)
                 @endfor
             </div>
 
             <div class="col-md-4">
-                @include('home.partials._' . $layoutModules[count($layoutModules) - 1 ]->moduleName)
+				@for ($i = count($layoutModules) - 2; $i < count($layoutModules); $i++)	
+					@include('home.partials._' . $layoutModules[$i]->moduleName)
+				@endfor
             </div>
             {{-- End layout script --}}
         </div>

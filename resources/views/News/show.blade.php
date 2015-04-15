@@ -3,12 +3,9 @@
 @section('content')
     @if($news == null)
         <div class="container">
-
-        <div class="row">
-		{!! Breadcrumbs::render('news') !!}
-		</div>
-
-
+            <div class="row">
+                {!! Breadcrumbs::render('news') !!}
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">Dit artikel bestaat niet!</h2>
@@ -22,26 +19,24 @@
         </div>
     @else
         <div class="container">
-
 	       	<div class="row">
 				{!! Breadcrumbs::render('article', (object)['id' => $news->newsId, 'title' => $news->title]) !!}
 			</div>
-
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="page-header">
-                    	@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-							<a href="#"><i class="fa fa-pencil-square-o"></i></a>
+                    	@if(Auth::check() &&  (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder'))
+							<a href="{{ route('news.edit', [$news->newsId]) }}"><i class="fa fa-pencil-square-o"></i></a>
 						@endif
                         {!! $news->title !!}
                     </h2>
                 </div>
                 <div class="col-md-8">
                     <p class="news-info">
-                        {!! $news->date !!}
-                        Door: {!! $news->user->username !!} |
+                        {{ $news->date }}
+                        Door: {{ $news->user->username }} |
                         @if($news->districtSection != null)
-                            {!! $news->districtSection->name !!}
+                            {{ $news->districtSection->name }}
                         @else
                             Algemeen
                         @endif
@@ -51,7 +46,7 @@
                     <br/>
 
                     @if(count($news->files) > 0)
-                        <br/><p>{{'Bijlagen:'}}</p>
+                        <br/><p>Bijlagen:</p>
                     @endif
 
                     @foreach($fileLinks as $link)
@@ -80,11 +75,11 @@
             <div class="row">
                 <div class="col-lg-6">
                     {{--Post a comment, not finished yet. --}}
-                    @if($news->districtSection != null && $news->commentable === 1)
+                    @if($news->districtSection != null && ($news->commentable === 1  || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')))
 
                         @if(Auth::check())
 
-                            @if(Auth::user()->usergroup->name === 'Administrator' || Auth::user()->districtSection->name === $news->districtSection->name)
+                            @if((Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') || Auth::user()->districtSection->name === $news->districtSection->name)
                                 {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
                                 <h3>Plaats een reactie</h3>
                                 <div class="form-group">
@@ -96,22 +91,9 @@
                             @endif
                         @endif
 
-                    @else
-
-                        @if(Auth::check())
-                            {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
-                            <h3>Plaats een reactie</h3>
-                            <div class="form-group">
-                                <input type="hidden" name="newsId" value="{{$news->newsId}}">
-                                <textarea name="comment" class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
-                            {!! Form::close() !!}
-                        @endif
-
                     @endif
                 </div>
             </div>
         </div>
     @endif
-@endsection
+@stop

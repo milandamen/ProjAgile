@@ -55,18 +55,18 @@
 			'newsId'
 		];
 
-        /**
-         * Get the date of this news item, in a d-m-Y format (so without the time).
-         * In order to call this, call $newsItem->normalDate() and NOT $newsItem->normalDate.
-         *
-         * @return string
-         */
-        public function normalDate()
-        {
-            $date = date_create($this->publishStartDate);
+		/**
+		 * Get the date of this news item, in a d-m-Y format (so without the time).
+		 * In order to call this, call $newsItem->normalDate() and NOT $newsItem->normalDate.
+		 *
+		 * @return string
+		 */
+		public function normalDate()
+		{
+			$date = date_create($this->publishStartDate);
 
-            return date_format($date,'d-m-Y') ;
-        }
+			return date_format($date,'d-m-Y') ;
+		}
 
         public function endDate()
         {
@@ -122,6 +122,6 @@
 		 */
 		public function user() 
 		{
-	        return $this->belongsTo('App\Models\User', 'userId');
+			return $this->belongsTo('App\Models\User', 'userId');
 		}
 	}
