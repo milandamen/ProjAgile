@@ -22,12 +22,19 @@ function addColumn()
         //create first link
         var row = table.insertRow(2);
         var cell = row.insertCell(0);
-        cell.innerHTML = 'Titel: <input type="text" name="footer[' + numTables + '][text][]" id="footerText" required>'+
+        cell.innerHTML = 'Tekst: <input type="text" name="footer[' + numTables + '][text][]" id="footerText" required>'+
         '<button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
-        '<br/> Link: <input type="text" name="footer[' + numTables + '][link][]" id="footerLink">';
+        '<br/> Link: &nbsp; <input type="text" class="autocomplete ui-autocomplete-input" name="footer[' + numTables + '][link][]" id="footerLink">';
 
         //finally, append table to container
         container.appendChild(table);
+
+        $(function() {
+            $(".autocomplete").autocomplete({
+                source: "/autocomplete/",
+                minLength: 2
+            });
+        });
     }
     else
     {
@@ -50,9 +57,9 @@ function addRow(button)
     var tableNumber = $(button).closest('table').attr("name");
     var row = table.insertRow(table.rows.length);
     var cell = row.insertCell(0);
-    cell.innerHTML = 'Text: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
+    cell.innerHTML = 'Tekst: <input type="text" name="footer[' + tableNumber + '][text][]" id="footerText" required>'+
     ' <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>'+
-    '<br/> Link: <input type="text" name="footer[' + tableNumber + '][link][]" class="autocomplete ui-autocomplete-input" id="footerLink">';
+    '<br/> Link: &nbsp; <input type="text" name="footer[' + tableNumber + '][link][]" class="autocomplete ui-autocomplete-input" id="footerLink">';
 
 	$(function() {
 	    $(".autocomplete").autocomplete({

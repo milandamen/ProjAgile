@@ -58,7 +58,7 @@ class FooterController extends Controller
             $footer = $this->footerRepository->getAll();
             $maxCols = 3;
 
-            if(count($_POST['footer']) > 0)
+            if(isset($_POST['footer']) && count($_POST['footer']) > 0)
             {
                 //create new footer array from $_POST
                 $newFooter = [];
