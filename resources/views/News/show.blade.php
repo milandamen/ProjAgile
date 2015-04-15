@@ -74,24 +74,32 @@
             @endif
             <div class="row">
                 <div class="col-lg-6">
-                    {{--Post a comment, not finished yet. --}}
-                    @if($news->districtSection != null && ($news->commentable === 1  || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')))
+                	@if(Auth::check())
+                		@if($news->commentable === 1 || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
+                			@if($news->districtSection != null)
+                				@if(Auth::user()->districtSection->name === $news->districtSection->name || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
+                					{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
+										<h3>Plaats een reactie</h3>
+										<div class="form-group">
+											<input type="hidden" name="newsId" value="{{$news->newsId}}">
+											<textarea name="comment" class="form-control"></textarea>
+										</div>
+										<button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
+									{!! Form::close() !!}
+                				@endif
+                			@else
+                				{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
+										<h3>Plaats een reactie</h3>
+										<div class="form-group">
+											<input type="hidden" name="newsId" value="{{$news->newsId}}">
+											<textarea name="comment" class="form-control"></textarea>
+										</div>
+										<button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
+									{!! Form::close() !!}
+                			@endif
+                		@endif
+                	@endif
 
-                        @if(Auth::check())
-
-                            @if((Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') || Auth::user()->districtSection->name === $news->districtSection->name)
-                                {!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
-                                <h3>Plaats een reactie</h3>
-                                <div class="form-group">
-                                    <input type="hidden" name="newsId" value="{{$news->newsId}}">
-                                    <textarea name="comment" class="form-control"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
-                                {!! Form::close() !!}
-                            @endif
-                        @endif
-
-                    @endif
                 </div>
             </div>
         </div>
