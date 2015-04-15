@@ -87,7 +87,7 @@
 										<button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
 									{!! Form::close() !!}
                 				@endif
-                			@elseif($news->districtSection == null)
+                			@else
                 				{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
 										<h3>Plaats een reactie</h3>
 										<div class="form-group">
