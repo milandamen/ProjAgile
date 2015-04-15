@@ -2,17 +2,14 @@
     {!! Form::label('title', 'Titel') !!}
     {!! Form::text('title', old('title'), ['placeholder' => 'Titel', 'class' => 'form-control']) !!}
 </div>
-
 <div class="form-group">
     {!! Form::label('content', 'Content') !!}
     {!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
 </div>
-
 <div class="form-group">
     {!! Form::label('districtSection', 'Sectie') !!}
     {!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
 </div>
-
 <div class="form-group">
     {!! Form::label('hidden', 'Verbergen?') !!}<br/>
     <div class="btn-group" data-toggle="buttons">
@@ -24,7 +21,6 @@
         </label>
     </div>
 </div>
-
 <div class="form-group">
     {!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
     <div class="btn-group" data-toggle="buttons">
@@ -36,7 +32,6 @@
         </label>
     </div>
 </div>
-
 <div class="form-group">
     {!! Form::label('publishStartDate', 'Publicatiedatum') !!}
     <div class="input-group date" id="datetimepicker">
@@ -47,7 +42,6 @@
         !!}
     </div>
 </div>
-
 <div class="form-group">
     {!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
     <div class="input-group date" id="datetimepicker">
@@ -58,9 +52,8 @@
         !!}
     </div>
 </div>
-
 <div class="form-group">
-    {!! Form::label('onTop', 'Bovenaan de pagina?') !!}<br/>
+    {!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
     <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
             <input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked=true' : '' }}>Ja
@@ -70,9 +63,8 @@
         </label>
     </div>
 </div>
-
 <div class="form-group">
-    {!! Form::label('fileUpload', 'Files toevoegen') !!}<br/>
+    {!! Form::label('fileUpload', 'File Toevoegen') !!}<br/>
     <table name="fileUpload">
     @if(isset($files))
         @foreach($files as $file)
@@ -87,12 +79,7 @@
         @endforeach
     @endif
         {!! '<tr>
-            <td style="padding-top:5px;">' . Form::file('Voeg een nieuwe file toe') . '</td>' !!}
-            <td style="padding-top:5px;">
-                <button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
-                    <span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-            </td>
+            <td style="padding-top:5px;">' . Form::file('file[0]') . '</td>' !!}
         </tr>
     </table>
 </div>
