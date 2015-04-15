@@ -57,8 +57,9 @@
         public function update($model)
         {
             $model->userId = Auth::user()->userId;
+            $model->save();
 
-            return $model->save();
+            return $model;
         }
 
         /**

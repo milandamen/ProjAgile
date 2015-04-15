@@ -11,6 +11,7 @@
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
     use Auth;
     use Redirect;
+    use Request;
 	use View;
 
     class NewsController extends Controller
@@ -180,7 +181,22 @@
                     $newsItem->publishEndDate = $request->publishEndDate;
                     $newsItem->top = $request->top;
 
-                    $this->newsRepo->update($newsItem);
+                    $news = $this->newsRepo->update($newsItem);
+                    $oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
+
+                    if (Request::hasFile())
+                    {
+                        dd($request);
+                        for($i = 0; $i < count($request->file); $i++)
+                        {
+                            $this->saveImage($news, $i, $oldFiles);
+                        }
+                    }
+
+                    foreach ($oldItems as $oldItem)
+                    {
+                        $this->fileRepo->destroy($oldItem);
+                    }
 
                     return Redirect::route('news.show', [$id]);
                 }
@@ -317,4 +333,59 @@
 
 		  return view('errors.401');
 		}
+
+        private function saveImage($item, $count, $oldItems) 
+        {
+            $oldItem = null;
+            $newsId = $item->newsId;
+
+            foreach ($oldItems as $oI) 
+            {
+                if ($oI->newsId == $newsId) 
+                {
+                    $oldItem = $oI;
+                    break;
+                }
+            }
+            
+            if (isset($_FILES) && isset($_FILES['file'])) 
+            {
+                $target = public_path() . '/uploads/img/carousel/';
+                
+                $allowed = ['png' , 'jpg'];
+                
+                $filename = $_FILES['file']['name'][$count];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                
+                // If there are no files selected you will get an empty '' string therefore the !empty check.
+                if (!empty($filename) && in_array($ext, $allowed)) 
+                {
+                    $tmp = $_FILES['file']['tmp_name'][$count];
+                    
+                    $newFileName = $item->carouselId . '.' . $ext;
+                    $target = $target . $newFileName;
+                    
+                    move_uploaded_file($tmp, $target);
+                    
+                    $item->imagePath = $newFileName;
+                } 
+                elseif ($oldItem != null) 
+                {
+                    $item->imagePath = $oldItem->imagePath;
+                } 
+                else 
+                {
+                    $item->imagepath = 'blank.jpg';
+                }
+            } 
+            elseif ($oldItem != null) 
+            {
+                $item->imagePath = $oldItem->imagePath;
+            } 
+            else 
+            {
+                $item->imagepath = 'blank.jpg';
+            }
+            $item->save();
+        }
     }
