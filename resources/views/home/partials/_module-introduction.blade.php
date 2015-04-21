@@ -6,8 +6,8 @@
 			@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
 				<a href="{{ route('home.editIntroduction')}}"><i class="fa fa-pencil-square-o"></i></a>
 			@endif 
-           
-			{!! $introduction->title  !!}
+           Hallo
+                {!! $introduction->title  !!}
 		</h4>
 	</div>
 	<div class="panel-body">
