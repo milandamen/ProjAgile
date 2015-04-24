@@ -13,7 +13,6 @@
     <div class="row">
         <div class="col-lg-12">
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
-                <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
                 <hr/>
                 <div id="footer-tables" class="footer-tables">
                     @for($c = 0; $c < count($footer); $c++)
@@ -21,7 +20,6 @@
                             <tr>
                                 <td>
                                     <button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button>
-                                    <button type="button" onclick="removeColumn(this)" class="btn btn-primary btn-sm">Verwijder kolom</button>
                                 </td>
                             </tr>
                             <tr>
@@ -42,7 +40,7 @@
                 </div>
                 <div id="success" class="col-lg-12">
                     <br/>
-                    <button type="button" class="btn btn-danger" onclick="goBack()">Annuleren</button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
                     <button type="submit" class="btn btn-success">Opslaan</button>
                 </div>
             {!! Form::close() !!}
