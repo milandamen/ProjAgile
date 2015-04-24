@@ -3,7 +3,8 @@
 
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
-	use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+    use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
 	use Auth;
@@ -20,12 +21,14 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, INewsRepository $newsRepo, ICarouselRepository $carouselRepo)
+		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo,
+                                    INewsRepository $newsRepo, ICarouselRepository $carouselRepo, INewOnSiteRepository $newOnSiteRepository)
 		{
 			$this->homeLayoutRepo = $homeLayoutRepo;
 			$this->introRepo = $introRepo;
 			$this->newsRepo = $newsRepo;
 			$this->carouselRepo = $carouselRepo;
+            $this->newOnSiteRepository = $newOnSiteRepository;
 		}
 
 		/**
@@ -39,8 +42,9 @@
             $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
+            $newOnSite = $this->newOnSiteRepository->getAll();
 
-            return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel'));
+            return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
         }
 
         /**
@@ -159,6 +163,12 @@
         	$modulenews = array_slice($newsList, 0, 5);
         	
         	return $modulenews;
+
+        }
+
+        private function getNewOnSite()
+        {
+            $NewOnSite = $this->newOnSiteRepository->getAll();
 
         }
     }
