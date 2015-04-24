@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="container">
-    	
-        @include('flash::message')
         <div class="row">
             <div class="col-md-12">
                 @include('home.partials._module-carousel')
             </div>
         </div>
+        @include('flash::message')
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">De Bunders</h2>
