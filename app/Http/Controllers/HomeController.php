@@ -42,7 +42,7 @@
             $introduction = $this->introRepo->getPageBar('1');
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
-            $newOnSite = $this->newOnSiteRepository->getAll();
+            $newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
             return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
         }
@@ -163,12 +163,6 @@
         	$modulenews = array_slice($newsList, 0, 5);
         	
         	return $modulenews;
-
-        }
-
-        private function getNewOnSite()
-        {
-            $NewOnSite = $this->newOnSiteRepository->getAll();
 
         }
     }

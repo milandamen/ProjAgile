@@ -8,12 +8,8 @@
 	<div class="panel-body">
 		<ul class="">
             @foreach($newOnSite as $newOnSiteItem)
-                <li class="sidebar">{{$newOnSiteItem->created_at}} - {{$newOnSiteItem->message}}</li>
+                <li class="sidebar">{{$newOnSiteItem->dateOnly()}} - {{$newOnSiteItem->message}}</li>
             @endforeach
-			<li class="sidebar"> 13-04-2015 - Nieuws overzicht toegevoegd</li>
-			<li class="sidebar"> 12-04-2015 - Inloggen </li>
-			<li class="sidebar"> 11-04-2015 - Introductie toegevoegd </li>
-			<li class="sidebar"> 11-04-2015 - Nieuws module toegevoegd</li>
 		</ul>
 	</div>
 </div>

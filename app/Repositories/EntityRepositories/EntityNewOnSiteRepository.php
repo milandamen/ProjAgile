@@ -6,6 +6,9 @@ use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 
 class EntityNewOnSiteRepository implements INewOnSiteRepository
 {
+
+    private $maxItems = 5;
+
     /**
      * Returns a NewsComment model depending on the id provided.
      *
@@ -26,6 +29,11 @@ class EntityNewOnSiteRepository implements INewOnSiteRepository
     public function getAll()
     {
         return NewOnSite::all();
+    }
+
+    public function getAllOrdered()
+    {
+        return NewOnSite::orderBy('created_at', 'asc')->take($this->maxItems)->get();
     }
 
     /**

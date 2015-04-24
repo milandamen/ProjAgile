@@ -15,6 +15,7 @@
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
                 <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
                 <hr/>
+                <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
                 <div id="footer-tables" class="footer-tables">
                     @for($c = 0; $c < count($footer); $c++)
                         <table name="{{$c}}" class="col-sm-4">
@@ -43,7 +44,7 @@
                 <div id="success" class="col-lg-12">
                     <br/>
                     <button type="button" class="btn btn-danger" onclick="goBack()">Annuleren</button>
-                    <button type="submit" class="btn btn-success">Opslaan</button>
+                    <button type="submit" onclick="validate()" class="btn btn-success">Opslaan</button>
                 </div>
             {!! Form::close() !!}
         </div>

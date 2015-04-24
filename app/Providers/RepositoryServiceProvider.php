@@ -37,6 +37,7 @@
             $this->app->bind('App\Repositories\RepositoryInterfaces\IIntroductionRepository',       'App\Repositories\EntityRepositories\EntityIntroductionRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IMenuRepository',               'App\Repositories\EntityRepositories\EntityMenuRepository');
 
+            $this->app->bind('App\Repositories\RepositoryInterfaces\INewOnSiteRepository',        'App\Repositories\EntityRepositories\EntityNewOnSiteRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\INewsCommentRepository',        'App\Repositories\EntityRepositories\EntityNewsCommentRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\INewsRepository',               'App\Repositories\EntityRepositories\EntityNewsRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IPartnerRepository',            'App\Repositories\EntityRepositories\EntityPartnerRepository');

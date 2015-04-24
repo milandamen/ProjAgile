@@ -39,4 +39,10 @@ class NewOnSite extends Model
      * @var array
      */
     protected $guarded = ['newonsiteId'];
+
+    public function DateOnly()
+    {
+        $date = date_create($this->created_at);
+        return date_format($date,'d-m-Y') ;
+    }
 }
