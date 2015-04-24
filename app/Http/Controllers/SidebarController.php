@@ -76,12 +76,8 @@
 										$extern = true;
 										$link = $rowItems['pagename'][$row];
 									} else {
-										if($rowItems['pagename'][$row] != ''){
-											$link = $rowItems['pagename'][$row];
-										} else {
-											$link = $rowItems['pagename'][$row];
-										}
 										$extern = false;
+                                        $link = $rowItems['pagename'][$row];
 									}
 
 									$newSidebarRow = new Sidebar();
