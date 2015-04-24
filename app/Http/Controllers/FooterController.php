@@ -162,7 +162,7 @@ class FooterController extends Controller
                 if($newOnSite === true)
                 {
                     $attributes['message'] = "De footer is gewijzigd";
-                    $attributes['created_at'] = new DateTime('now');
+                    $attributes['created_at'] = new \DateTime('now');
 
                     $this->newOnSiteRepository->create($attributes);
                 }
