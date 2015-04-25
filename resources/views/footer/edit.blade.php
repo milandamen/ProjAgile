@@ -13,7 +13,6 @@
     <div class="row">
         <div class="col-lg-12">
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
-                <button type="button" onclick="addColumn()" class="btn btn-primary">Voeg kolom toe</button>
                 <hr/>
                 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
                 <div id="footer-tables" class="footer-tables">
@@ -22,7 +21,6 @@
                             <tr>
                                 <td>
                                     <button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button>
-                                    <button type="button" onclick="removeColumn(this)" class="btn btn-primary btn-sm">Verwijder kolom</button>
                                 </td>
                             </tr>
                             <tr>
@@ -32,7 +30,7 @@
                         @for($r = 0; $r < count($footer[$c]); $r++)
                             <tr>
                                 <td>
-                                    Tekst: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" required>
+                                    Tekst: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" maxlength="22 " required>
                                     <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
                                     <br/> Link: &nbsp; <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                 </td>
@@ -43,8 +41,8 @@
                 </div>
                 <div id="success" class="col-lg-12">
                     <br/>
-                    <button type="button" class="btn btn-danger" onclick="goBack()">Annuleren</button>
-                    <button type="submit" onclick="validate()" class="btn btn-success">Opslaan</button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
+                    <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
                 </div>
             {!! Form::close() !!}
         </div>
@@ -54,7 +52,6 @@
 <script>
     var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
 </script>
-
 @endsection
 
 @section('additional_scripts')

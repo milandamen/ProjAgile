@@ -115,7 +115,6 @@
                     $news = $this->newsRepo->create($request->all());
                     $oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
 
-                    dd($request);
                     for($i = 0; $i < count($request->file); $i++)
                     {
                         $this->saveFile($news, $i, $oldFiles);
