@@ -12,5 +12,17 @@
 	list-style: none;
 }
 
+.td-tekst {
+    width: 25%;
+}
 
+.td-intern {
+    width: 50%;
+}
 
+.td-intern > input{
+    width: 75%;
+}
+
+.td-radio1 {
+}

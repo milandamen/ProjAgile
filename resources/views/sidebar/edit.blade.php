@@ -8,7 +8,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h1>Wijzig sidebar </h1>
+                <h1>Wijzig sidebar</h1>
             </div>
         </div>
         <div class="row">
@@ -34,18 +34,16 @@
                         @foreach($sidebarList as $sidebarRow)
                         <!-- Check if link goes out or stays in. -->
                         <tr>
-                        	<td class="hidden"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
+                        	<td class="hidden form-control"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
                             <td class="td-tekst">
                                 Tekst:
                                 <input type="text" name="sidebar[{!!$i!!}][text][]" id="sidebarText" value="{!!$sidebarRow->text!!}" required>
                             </td>
 
                             <td class="td-intern">
-                                Intern
-                                <input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" type="text"/>
-                                
+                                Link
+                                <input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" id="sidebarLink" value="{!!$sidebarRow->link!!}" type="text"/>
                             </td>
-                            <td class="td-link" >Link naar: <input type="text" name="sidebar[{!!$i!!}][link][]" id="sidebarLink" value="{!!$sidebarRow->link!!}"> </td>
 
                             <!--- Make decision for intern or extern link -->
                             <td class="td-radio1">
