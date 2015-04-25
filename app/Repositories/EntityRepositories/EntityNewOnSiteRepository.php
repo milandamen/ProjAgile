@@ -33,7 +33,7 @@ class EntityNewOnSiteRepository implements INewOnSiteRepository
 
     public function getAllOrdered()
     {
-        return NewOnSite::orderBy('created_at', 'asc')->take($this->maxItems)->get();
+        return NewOnSite::orderBy('created_at', 'desc')->take($this->maxItems)->get();
     }
 
     /**

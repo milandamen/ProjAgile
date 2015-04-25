@@ -77,8 +77,6 @@ function removeRow(button)
 
 function validate()
 {
-    alert('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ?');
-
     if(confirm('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ?'))
     {
         document.getElementById("newOnSiteCheck").value = "TRUE";

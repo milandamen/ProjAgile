@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Footer;
-use App\Models\NewOnSite;
 use App\Repositories\RepositoryInterfaces\IMenuRepository;
 use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 use Illuminate\Support\Facades\Redirect;
