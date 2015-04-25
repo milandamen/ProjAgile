@@ -22,3 +22,14 @@ function removeRow(button)
     var row = button.parentNode;
     row.parentNode.removeChild(row);
 }
+
+function validate()
+{
+    if(confirm('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ?'))
+    {
+        document.getElementById("newOnSiteCheck").value = "TRUE";
+    }
+
+    return true;
+}
+

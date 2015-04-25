@@ -14,6 +14,7 @@
         <div class="col-lg-12">
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
                 <hr/>
+                <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
                 <div id="footer-tables" class="footer-tables">
                     @for($c = 0; $c < count($footer); $c++)
                         <table name="{{$c}}" class="col-sm-4">
@@ -51,7 +52,6 @@
 <script>
     var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
 </script>
-
 @endsection
 
 @section('additional_scripts')
