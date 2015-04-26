@@ -15,6 +15,7 @@
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
                 <hr/>
                 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
                 <div id="footer-tables" class="footer-tables">
                     @for($c = 0; $c < count($footer); $c++)
                         <table name="{{$c}}" class="col-sm-4">

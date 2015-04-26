@@ -130,7 +130,7 @@
 
                 if($newOnSite === true)
                 {
-                    $attributes['message'] = "De introductie is gewijzigd";
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
                     $attributes['created_at'] = new \DateTime('now');
 
                     $this->newOnSiteRepository->create($attributes);

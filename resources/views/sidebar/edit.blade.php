@@ -18,6 +18,7 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
                     <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 
                     <hr>
                     Koptekst:

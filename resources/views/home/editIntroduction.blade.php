@@ -20,6 +20,7 @@
 		<div class="col-md-12">
 			{!! Form:: open() !!}
             <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+            <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 			<input type="hidden" name="pageId" value="{!! $introduction->pageId !!}" >
 			<div class="row col-md-8">
 				<div class="form-group">
