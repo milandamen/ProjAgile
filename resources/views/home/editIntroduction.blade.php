@@ -18,8 +18,10 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			{!! Form:: open() !!}
-			<input type="hidden" name="pageId" value="{!! $introduction->pageId !!}" >
+			@include('errors.partials._list')
+			{!! Form::model($introduction, ['method' => 'POST'])!!}
+				{!! Form::hidden('pageId', $introduction->pageId) !!}
+		
 			<div class="row col-md-8">
 				<div class="form-group">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
@@ -29,8 +31,8 @@
 
 			<div class="row col-md-8">
 				<div class="form-group">
-				{!! Form::label('content', 'Content', ['class' => 'label-form'])!!}
-				{!! Form::textarea('content', $introduction->text, ['class' => 'form-control', 'placeholder' => 'Introductie tekst', 'rows' => '6']) !!}
+					{!! Form::label('content', 'Content', ['class' => 'label-form']) !!}
+					{!! Form::textarea('content', $introduction->text, ['placeholder' => 'Introductie tekst', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}
 				</div>
 			</div>
 
