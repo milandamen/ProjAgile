@@ -50,7 +50,3 @@
 </div>
 @endsection
 
-@section('additional_scripts')
-	<!-- JavaScript that enables adding and removing rows -->
-	{!! HTML::script('custom/js/introUpdate.js') !!}
-@endsection
