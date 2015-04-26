@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 use App\Repositories\RepositoryInterfaces\IUserRepository;
 use App\Repositories\RepositoryInterfaces\ISidebarRepository;
@@ -31,10 +32,45 @@ class UserController extends Controller
         return view('user.index', compact('users'));
     }
 
+    public function create()
+    {
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
+                $user = new User();
+                return view('user.create', compact('user'));
+            }
+            return view('errors.403');
+        }
+        return view('errors.401');
+    }
+
+    public function store()
+    {
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
+
+            }
+            return view('errors.403');
+        }
+        return view('errors.401');
+    }
+
     public function edit($id)
     {
-        $user = $this->userRepo->get($id);
-        return view('user.edit', compact('user'));
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
+                $user = $this->userRepo->get($id);
+                return view('user.edit', compact('user'));
+            }
+            return view('errors.403');
+        }
+        return view('errors.401');
     }
 
     public function update($id, Request $request)
@@ -53,7 +89,7 @@ class UserController extends Controller
             return view('errors.403');
         }
 
-        return view('errors.404');
+        return view('errors.401');
     }
 
 }

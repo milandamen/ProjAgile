@@ -3,6 +3,11 @@
 @section('content')
 
     <div class="container">
+
+        <div class="row">
+            {!! Breadcrumbs::render('edituser', (object)['id' => $user->userId]) !!}
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Gebruiker wijzigen</h1>
@@ -26,6 +31,11 @@
             <div class="form-group">
                 {!! Form::label('surname', 'Achternaam') !!}
                 {!! Form::text('surname', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('email', 'E-mail') !!}
+                {!! Form::email('email', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">

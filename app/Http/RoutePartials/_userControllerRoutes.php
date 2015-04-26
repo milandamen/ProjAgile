@@ -17,3 +17,15 @@
         'as' => 'user.update',
         'uses' => 'UserController@update'
     ]);
+
+    Route::get('gebruikers/aanmaken',
+    [
+        'as' => 'user.create',
+        'uses' => 'UserController@create'
+    ]);
+
+    Route::put('gebruikers/aanmaken',
+    [
+        'as' => 'user.store',
+        'uses' => 'UserController@store'
+    ]);
