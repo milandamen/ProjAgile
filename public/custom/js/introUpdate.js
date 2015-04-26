@@ -13,4 +13,8 @@ function validate() {
         alert("Vul a.u.b. een tekst in.");
         return false;
     }
+    if(confirm('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ?'))
+    {
+        document.getElementById("newOnSiteCheck").value = "TRUE";
+    }
 }

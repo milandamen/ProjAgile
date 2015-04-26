@@ -126,6 +126,16 @@
 
 				$intro->save();
 
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = "De introductie is gewijzigd";
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
+
 				return Redirect::route('home.index');
 			} else {
 				return view('errrors/403');
