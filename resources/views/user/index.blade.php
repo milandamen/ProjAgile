@@ -7,9 +7,6 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">
-                    @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-                        <a href="{{ route('news.manage')}}"><i class="fa fa-pencil-square-o"></i></a>
-                    @endif
                     Gebruikers
                 </h2>
             </div>

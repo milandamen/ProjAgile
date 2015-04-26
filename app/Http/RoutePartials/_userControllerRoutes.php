@@ -11,3 +11,9 @@
         'as' => 'user.edit',
         'uses' => 'UserController@edit'
     ]);
+
+    Route::patch('gebruikers/{id}/wijzigen',
+    [
+        'as' => 'user.update',
+        'uses' => 'UserController@update'
+    ]);

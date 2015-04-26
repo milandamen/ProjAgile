@@ -33,7 +33,27 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        return 'edit user'. $id ;
+        $user = $this->userRepo->get($id);
+        return view('user.edit', compact('user'));
+    }
+
+    public function update($id, Request $request)
+    {
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator') {
+                $user = $this->userRepo->get($id);
+                $user->fill($request->input());
+                $this->userRepo->update($user);
+
+                return redirect('user.index');
+
+            }
+
+            return view('errors.403');
+        }
+
+        return view('errors.404');
     }
 
 }
