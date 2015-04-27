@@ -15,3 +15,6 @@
 {!! HTML::script('summernote/js/summernote.min.js') !!}
 
 {!! HTML::script('custom/js/summernoteFunctions.js') !!}
+
+<!-- Useful methods used in multiple scripts -->
+{!! HTML::script('custom/js/main.js') !!}

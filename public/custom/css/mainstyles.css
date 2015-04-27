@@ -10,16 +10,15 @@
 	position: relative;
 }
 
-.carousel-text-shadow {
-	text-shadow: #000 2px 2px 2px;
-}
-
 .black {
 	color: #000;
 }
 
-.white
-{
+.white {
 	color: #FFF;
 	float: right;
+}
+
+.table-shade-selected {
+	background-color: #EEF;
 }
