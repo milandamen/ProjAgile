@@ -16,7 +16,8 @@
 
         <div class="col-lg-12">
 
-            {!! Form::model($user, ['url' => route('user.index', [$user->userId]), 'method' => 'PUT']) !!}
+            {!! Form::model($user, ['url' => route('user.store'), 'method' => 'PUT']) !!}
+
 
             <div class="form-group">
                 {!! Form::label('username', 'Gebruikersnaam') !!}

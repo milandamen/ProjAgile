@@ -52,7 +52,7 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator')
             {
-
+                dd(Request::input());
             }
             return view('errors.403');
         }
@@ -73,17 +73,16 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function update($id, Request $request)
+    public function update($id)
     {
         if (Auth::check())
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->fill($request->input());
+                $user->fill(Request::input());
                 $this->userRepo->update($user);
 
-                return redirect('user.index');
-
+                return redirect::route('user.index');
             }
 
             return view('errors.403');

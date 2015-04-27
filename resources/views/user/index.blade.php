@@ -5,6 +5,10 @@
     <div class="container">
 
         <div class="row">
+            {!! Breadcrumbs::render('user') !!}
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">
                     Gebruikers
@@ -14,7 +18,7 @@
 
         <div class="row">
             <div class="col-md-10">
-
+                {!! link_to_route('user.create', 'Nieuwe Gebruiker', [], array('class' => 'btn btn-success white')) !!}
                 <div class="col-md-12 addmargin">
                     <table class="table">
                         <thead>

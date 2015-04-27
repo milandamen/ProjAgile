@@ -5,7 +5,7 @@
     <div class="container">
 
         <div class="row">
-            {!! Breadcrumbs::render('edituser', (object)['id' => $user->userId]) !!}
+            {!! Breadcrumbs::render('edituser', (object)['id' => $user->userId, 'username' => $user->username]) !!}
         </div>
 
         <div class="row">
@@ -16,7 +16,7 @@
 
         <div class="col-lg-12">
 
-            {!! Form::model($user, ['url' => route('user.index', [$user->userId]), 'method' => 'PATCH']) !!}
+            {!! Form::model($user, ['url' => route('user.update', [$user->userId]), 'method' => 'PATCH']) !!}
 
             <div class="form-group">
                 {!! Form::label('username', 'Gebruikersnaam') !!}
