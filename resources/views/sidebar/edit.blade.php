@@ -89,4 +89,5 @@
     <!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
     {!! HTML::script('custom/js/autocomplete.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection

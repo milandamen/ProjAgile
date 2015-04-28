@@ -1,9 +1,5 @@
-function goBack() {
-    window.history.back()
-}
-
-function validate() {
-
+function validate()
+{
     var message = prompt('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ? (max. 30 karakters)');
 
     while(message.length > 30)
@@ -16,4 +12,6 @@ function validate() {
         document.getElementById("newOnSiteCheck").value = "TRUE";
         document.getElementById("newOnSiteMessage").value = message;
     }
+
+    return true;
 }

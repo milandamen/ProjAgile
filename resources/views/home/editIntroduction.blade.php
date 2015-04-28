@@ -55,4 +55,9 @@
 	</div>
 </div>
 @endsection
-
+@section('additional_scripts')
+    <!-- include summernote js-->
+    {!! HTML::script('summernote/js/summernote.js') !!}
+    {!! HTML::script('custom/js/summernoteFunctions.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
+@endsection

@@ -5,13 +5,6 @@
 <!-- Multi level menu -->
 {!! HTML::script('custom/js/multilevel_menu.js') !!}
 
-<!-- include libries(jQuery, bootstrap, fontawesome) NIET MEER NODIG? boven wordt jquery al gebruikt. -->
-<!-- {!! HTML::script('https://code.jquery.com/jquery-1.9.1.min.js') !!} -->
-
 <!-- Bootstrap Core JavaScript   (NEEDS TO BE AFTER JQUERY )-->
 {!! HTML::script('bootstrap/js/bootstrap.js') !!}
 
-<!-- include summernote js-->
-{!! HTML::script('summernote/js/summernote.js') !!}
-
-{!! HTML::script('custom/js/summernoteFunctions.js') !!}
