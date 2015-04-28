@@ -7,6 +7,7 @@
     use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
+    use App\Http\Requests\Home\IntroductionRequest;
 	use Auth;
 	use Request;
 
@@ -40,6 +41,7 @@
         {
             $news = $this->getNews();
             $introduction = $this->introRepo->getPageBar('1');
+            htmlspecialchars($introduction);
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
             $newOnSite = $this->newOnSiteRepository->getAllOrdered();
@@ -58,8 +60,9 @@
 				$news = $this->getNews();
 				$introduction = $this->introRepo->getPageBar('1');
 				$layoutModules = $this->homeLayoutRepo->getAll();
+				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-				return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
 			} else {
 				return view('errors.403');
 			}
@@ -112,19 +115,26 @@
          *
          * @return Response
          */
-        public function updateIntroduction()
+        public function updateIntroduction(IntroductionRequest $request)
         {
 			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
-				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);  
-				$content = filter_var($_POST['content'],FILTER_SANITIZE_STRING);
-				$pageId = $_POST['pageId'];
 
-				$intro = $this->introRepo->getPageBar($pageId);
-				$intro->pageId = $pageId;
-				$intro->title = $title;
-				$intro->text = $content;
+				$intro = $this->introRepo->getPageBar($request->pageId);
+				$intro->pageId = $request->pageId;
+				$intro->title = $request->title;
+				$intro->text = $request->content;
 
-				$intro->save();
+				$this->introRepo->update($intro);
+
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
 
 				return Redirect::route('home.index');
 			} else {

@@ -2218,7 +2218,8 @@
         ['height', ['height']],
         ['table', ['table']],
         ['insert', ['link', 'picture', 'hr']],
-        ['view', ['fullscreen', 'codeview']],
+        ['misc', ['undo']],
+        ['view', ['fullscreen']],
         ['help', ['help']]
       ],
 

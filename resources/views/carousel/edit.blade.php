@@ -70,7 +70,7 @@
 					</table>
 					
 					<button type="submit" class="btn btn-success">Opslaan</button>
-					<button type="button" class="btn btn-danger" onclick="goBack()">Annuleer</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>
 				</form>
 			</div>
 		</div>

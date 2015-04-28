@@ -43,8 +43,3 @@ function addSideRow(button){
 	
 	document.getElementById("maxRowIndex").value = maxRowIndex;
 }
-
-
-function goBack() {
-    window.history.back()
-}
