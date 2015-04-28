@@ -71,7 +71,7 @@
                         @endforeach
                     </table>
                     <div id="success">
-                        <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>
+                        <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleer</button>
                         <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
                     </div>
                 </form>
