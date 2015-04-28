@@ -12,6 +12,6 @@
 {!! HTML::script('bootstrap/js/bootstrap.js') !!}
 
 <!-- include summernote js-->
-{!! HTML::script('summernote/js/summernote.min.js') !!}
+{!! HTML::script('summernote/js/summernote.js') !!}
 
 {!! HTML::script('custom/js/summernoteFunctions.js') !!}
