@@ -60,7 +60,7 @@
 				$news = $this->getNews();
 				$introduction = $this->introRepo->getPageBar('1');
 				$layoutModules = $this->homeLayoutRepo->getAll();
-				 $newOnSite = $this->newOnSiteRepository->getAllOrdered();
+				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
 				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
 			} else {
