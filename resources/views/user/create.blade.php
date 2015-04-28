@@ -45,6 +45,16 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('houseNumber', 'Huisnummer') !!}
+                {!! Form::text('houseNumber', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('postal', 'Postcode') !!}
+                {!! Form::text('postal', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::submit('Gebruiker Aanmaken', ['class' => 'btn btn-default']) !!}
             </div>
 

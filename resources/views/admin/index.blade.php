@@ -31,19 +31,19 @@
 	           				<div class="btn-group-vertical">
 	           					<a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws toevoegen</a>
 	           					<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Introductie wijzigen</a>
+                                <a class="btn btn-default" href="#" role="button">Deelwijken</a>
 	           				</div>
            				</div>
 
            				<div class="col-md-4">
 	           				<h3>Gebruikers beheer</h3>
 	           				<div class="btn-group-vertical">
-	           					<a class="btn btn-default" href="#" role="button">Content beheerders</a>
-	           					<a class="btn btn-default" href="#" role="button">Administrators</a>
-	           					<a class="btn btn-default" href="#" role="button">Deelwijken</a>
+	           					<a class="btn btn-default" href="#" role="button">Gebruiker overzicht</a>
+	           					<a class="btn btn-default" href="#" role="button">Gebruiker toevoegen</a>
+
 	           				</div>
 	           			</div>
-                    
-                  
+
                     @elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
                     <div class="col-md-4">
                             <h3>Layout modules</h3>

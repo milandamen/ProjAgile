@@ -29,7 +29,12 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepo->getAll();
-        return view('user.index', compact('users'));
+
+        $admins = $this->userRepo->getAllByUserGroup(1);
+        $contentmanagers = $this->userRepo->getAllByUserGroup(2);
+        $residents = $this->userRepo->getAllByUserGroup(3);
+
+        return view('user.index', compact('admins', 'contentmanagers', 'residents'));
     }
 
     public function create()
@@ -52,7 +57,9 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator')
             {
-                dd(Request::input());
+                $data = Request::input();
+                $user = $this->userRepo->create($data);
+                return redirect::route('user.index');
             }
             return view('errors.403');
         }
@@ -79,7 +86,16 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->fill(Request::input());
+                $user->username = Request::get('username');
+                $user->firstName = Request::get('firstName');
+                $user->surname = Request::get('surname');
+                $user->email = Request::get('email');
+
+                if (Request::get('password') != '')
+                {
+                    $user->password = Request::get('password');
+                }
+                //$user->fill(Request::input());
                 $this->userRepo->update($user);
 
                 return redirect::route('user.index');

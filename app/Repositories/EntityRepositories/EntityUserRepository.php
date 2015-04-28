@@ -67,6 +67,17 @@
         }
 
         /**
+         * Returns all the Administrator User models in the database.
+         *
+         * @return Collection -> User
+         */
+        public function getAllByUserGroup($userGroupId)
+        {
+            return User::where('userGroupId', $userGroupId)->get();
+        }
+
+
+        /**
          * Creates a User record in the database.
          * 
          * @param  array() $attributes
