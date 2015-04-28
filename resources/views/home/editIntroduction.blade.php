@@ -44,9 +44,9 @@
 
 			<div class="row col-md-8">
 				<div class="form-group">
-				{!! Form:: submit('Annuleer', ['class' => 'btn btn-danger', 'onclick' => 'goBack()'])!!}
-				{!! Form:: submit('Opslaan', ['class' => 'btn btn-success'])!!}
-				</div>
+					{!! HTML::linkRoute('admin.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
+					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success'])!!}
+				</div
 			</div>
 
 			<!--</form>-->
