@@ -14,11 +14,11 @@ try {
 try {
 	if (carousel_transition_interval) {
 		if (carousel_transition_interval <= carousel_transition_duration) {
-			carousel_transition_interval = carousel_transition_duration + 4000;				// The default interval is 5 seconds, unless otherwise specified.
+			carousel_transition_interval = carousel_transition_duration + 9000;				// The default interval is 5 seconds, unless otherwise specified.
 		}
 	}
 } catch(e) {
-	carousel_transition_interval = carousel_transition_duration + 4000;						// The default interval is 5 seconds, unless otherwise specified.
+	carousel_transition_interval = carousel_transition_duration + 9000;						// The default interval is 5 seconds, unless otherwise specified.
 }
 
 var carousel = document.getElementById('mod-carousel');
@@ -81,13 +81,34 @@ function carouselTransition() {
 	
 	carousel_selected_img.style.display = 'inline-block';
 	
+	var c_sel_img_img = null;
+	var c_sel_img_text = null;
+	execActionOnElementsInArray(carousel_selected_img.children, 'img', function (item) {
+		c_sel_img_img = item;
+	});
+	execActionOnElementsInArray(carousel_selected_img.children, 'h3', function (item) {
+		c_sel_img_text = item;
+	});
+	
+	var c_sel_img_old_img = null;
+	var c_sel_img_old_text = null;
+	execActionOnElementsInArray(carousel_selected_img_old.children, 'img', function (item) {
+		c_sel_img_old_img = item;
+	});
+	execActionOnElementsInArray(carousel_selected_link_old.children, 'h3', function (item) {
+		c_sel_img_old_text = item;
+	});
+	
+	var c_trans_dur_half = carousel_transition_duration / 2;
 	var transitionStart = new Date().valueOf();
-	while (new Date().valueOf() - transitionStart < carousel_transition_duration) {
-		var now = new Date().valueOf();
+	while (new Date().valueOf() - transitionStart < c_trans_dur_half) {
+		var now = new Date().valueOf();			// TODO potentially put in while statement
 		var diff = now - transitionStart;
 		var perc = diff / carousel_transition_duration;
 		perc = Math.max(0, Math.min(1, perc));				// Clamp perc between 0 and 1. (0% and 100%)
 		
+		c_sel_img_img.style.opacity = perc;
+		c_sel_img_old_img.style.opacity = 1 - perc;
 	}
 	
 	

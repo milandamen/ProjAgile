@@ -4,9 +4,7 @@
 		@foreach ($carousel as $item)
 			<a href="{{ route('news.show', $item->news->newsId) }}">
 				<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="..." />
-				<div>
-					<h3>{{ $item->news->title }}</h3>
-				</div>
+				<h3>{{ $item->news->title }}</h3>
 			</a>
 		@endforeach
 	</div>
