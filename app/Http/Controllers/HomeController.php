@@ -60,8 +60,9 @@
 				$news = $this->getNews();
 				$introduction = $this->introRepo->getPageBar('1');
 				$layoutModules = $this->homeLayoutRepo->getAll();
+				 $newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-				return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
 			} else {
 				return view('errors.403');
 			}
