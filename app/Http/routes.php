@@ -51,3 +51,8 @@
      */ 
     include ('RoutePartials/_menuControllerRoutes.php');
 
+     /**
+     * Page controller routers
+     */ 
+    include ('RoutePartials/_pageControllerRoutes.php');
+
