@@ -17,7 +17,9 @@
                 <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->pageNr]) !!}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
-                 	
+                    <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+
                     <hr>
                     Koptekst:
                     <input type="text" name="title" id="sidebarTitle" value="{!! $sidebarList[0]->title!!} " required> <br/><br/>
@@ -70,7 +72,7 @@
                     </table>
                     <div id="success">
                         <button type="button" class="btn btn-danger" onclick="goBack()">Annuleer</button>
-                        <button type="submit" class="btn btn-success">Opslaan</button>
+                        <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
                     </div>
                 </form>
             </div>
@@ -87,4 +89,5 @@
     <!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
     {!! HTML::script('custom/js/autocomplete.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection

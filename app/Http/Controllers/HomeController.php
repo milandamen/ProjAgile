@@ -41,6 +41,7 @@
         {
             $news = $this->getNews();
             $introduction = $this->introRepo->getPageBar('1');
+            htmlspecialchars($introduction);
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
             $newOnSite = $this->newOnSiteRepository->getAllOrdered();
@@ -123,6 +124,16 @@
 				$intro->text = $request->content;
 
 				$this->introRepo->update($intro);
+
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
 
 				return Redirect::route('home.index');
 			} else {

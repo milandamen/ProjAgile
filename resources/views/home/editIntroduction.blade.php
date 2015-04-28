@@ -18,10 +18,16 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
+
+			{!! Form:: open() !!}
+            <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+            <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+			<input type="hidden" name="pageId" value="{!! $introduction->pageId !!}" >
+
 			@include('errors.partials._list')
 			{!! Form::model($introduction, ['method' => 'POST'])!!}
 				{!! Form::hidden('pageId', $introduction->pageId) !!}
-		
+
 			<div class="row col-md-8">
 				<div class="form-group">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
@@ -49,4 +55,9 @@
 	</div>
 </div>
 @endsection
-
+@section('additional_scripts')
+    <!-- include summernote js-->
+    {!! HTML::script('summernote/js/summernote.js') !!}
+    {!! HTML::script('custom/js/summernoteFunctions.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
+@endsection
