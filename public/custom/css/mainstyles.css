@@ -23,3 +23,14 @@
 	color: #FFF;
 	float: right;
 }
+
+.showMore
+{
+    float: right;
+}
+
+.showMore a
+{
+    text-decoration: none;
+    color: dimgray;
+}
