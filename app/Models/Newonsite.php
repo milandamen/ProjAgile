@@ -31,7 +31,7 @@ class NewOnSite extends Model
      *
      * @var array
      */
-    protected $fillable = ['message', 'created_at'];
+    protected $fillable = ['message', 'created_at', 'link'];
 
     /**
      * Attributes that cannot be changed and thus are not mass assingable.
