@@ -2,6 +2,9 @@
     namespace App\Http\Controllers;
 
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\IPanelRepository;
+	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
 	use App\Models\Page;
@@ -16,9 +19,13 @@
     class PageController extends Controller
     {
 
-    	public function __construct(IIntroductionRepository $introrepo){
+    	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo, 
+    								IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo){
+    		
     		$this->introrepo = $introrepo;
-
+    		$this->pagerepo = $pagerepo;
+    		$this->panelrepo = $panelrepo;
+    		$this->pagepanelrepo = $pagepanelrepo;
     	}
 
 
@@ -51,13 +58,34 @@
          */
         public function store(PageRequest $request)
         {
-            $this->introrepo->create([
+            $introduction = $this->introrepo->create([
             	'pageId' => 2,
             	'title' => $request->title, 
             	'text' => $request->content,
             	]);
 
-            echo 'saved introduction';
+            $introId = $introduction->introductionId;
+
+            echo 'intro id ' . $introId;
+
+            $page = $this->pagerepo->create([
+            	'introduction_introductionId' => $introId,
+            	'sidebar' => $request->sidebar,
+            	]);
+
+            echo ' page id ' . $page->pageId;
+
+            foreach($request->panel as $pagepanel){
+            	$panel = $this->panelrepo->getBySize($panel['size']);
+            	$this->pagepanelrepo->create([
+            		'page_id' => $page->pageId,
+            		'title' => $pagepanel['title'],
+            		'text' => $pagepanel['content'],
+            		'panel_id' =>$panel->panelId
+            	]);
+            }
+            
+            echo ' saved';
         }
 
         /**
@@ -68,7 +96,7 @@
          */
         public function show($id)
         {
-            //
+            
         }
 
         /**

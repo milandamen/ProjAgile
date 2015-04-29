@@ -41,6 +41,7 @@
 
 			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
             $input['content'] = htmlspecialchars_decode($input['content']);
+            $input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
 
             if(isset($input['panel'])){
 	            foreach($input['panel'] as $panel){
