@@ -13,7 +13,6 @@ class NewOnSiteController extends Controller
     public function index()
     {
         $items = $this->newOnSiteRepository->getAll();
-
         return view('newOnSite/index', array('items' => $items));
     }
 
