@@ -20,3 +20,8 @@ Route::get('pagina/wijzigen',
 	'middleware' => 'admin'
 ]);
 
+Route::get('pagina/{id}',
+[
+	'as' => 'page.show',
+	'uses' => 'PageController@show',
+]);

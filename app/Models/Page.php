@@ -49,4 +49,21 @@
 			'pageId'
 		];
 
+		
+		/** 
+		 * Get all PagePanel models that reference this Page model.
+		 * 
+		 * @return Collection -> PagePanels
+		 */
+		public function panels()
+		{
+	        return $this->hasMany('App\Models\PagePanel', 'page_id');
+		}	
+
+		public function introduction()
+		{
+	        return $this->belongsTo('App\Models\Introduction', 'introduction_introductionId');
+		}
+
+
 	}

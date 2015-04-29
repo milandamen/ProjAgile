@@ -1,15 +1,18 @@
 <?php
     namespace App\Http\Controllers;
 
+	use App\Models\Page;
+	use App\Models\Panel;
+	use App\Models\PagePanel;
+	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
+	
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
-	use App\Models\Page;
-	use App\Models\Panel;
-	use App\Models\PagePanel;
+	
 	use Auth;
 	use Redirect;
 	use Request;
@@ -20,12 +23,13 @@
     {
 
     	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo, 
-    								IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo){
+    								IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo, ISidebarRepository $sidebarrepo){
     		
     		$this->introrepo = $introrepo;
     		$this->pagerepo = $pagerepo;
     		$this->panelrepo = $panelrepo;
     		$this->pagepanelrepo = $pagepanelrepo;
+    		$this->sidebarrepo = $sidebarrepo;
     	}
 
 
@@ -66,17 +70,15 @@
 
             $introId = $introduction->introductionId;
 
-            echo 'intro id ' . $introId;
-
             $page = $this->pagerepo->create([
             	'introduction_introductionId' => $introId,
             	'sidebar' => $request->sidebar,
             	]);
 
-            echo ' page id ' . $page->pageId;
-
+            if(count($request->panel) > 0){
             foreach($request->panel as $pagepanel){
-            	$panel = $this->panelrepo->getBySize($panel['size']);
+            	$panel = $this->panelrepo->getBySize($pagepanel['size']);
+
             	$this->pagepanelrepo->create([
             		'page_id' => $page->pageId,
             		'title' => $pagepanel['title'],
@@ -84,7 +86,33 @@
             		'panel_id' =>$panel->panelId
             	]);
             }
+        }
+
+            $pageid = $page->pageId;
+
+            if($request->sidebar){
+            	$sidebar = $this->sidebarrepo->create([
+            		'pageNr' => $pageid,
+            		'page_pageId' => $pageid,
+            		'rowNr' => 0,
+            		'title' => $request->title,
+            		'text' => 'Home',
+            		'extern' => 'false',
+            		'link' => '/'
+            		]);
+            }
             
+
+		// protected $fillable = 
+		// [
+		// 	'pageNr',
+		// 	'rowNr', 
+		// 	'title', 
+		// 	'text', 
+		// 	'link', 
+		// 	'extern'
+		// ];
+
             echo ' saved';
         }
 
@@ -96,7 +124,17 @@
          */
         public function show($id)
         {
-            
+            $page = $this->pagerepo->get($id);
+           	if(isset($page)){
+	            if($page->sidebar){
+	            	$sidebar = $this->sidebarrepo->getByPage($page->pageId);
+	            	return View('page.show', compact('page', 'sidebar'));
+	            } else {
+					return View('page.show', compact('page'));
+	            }
+	        }else {
+	        	return view('errors.404');
+	        }
         }
 
         /**

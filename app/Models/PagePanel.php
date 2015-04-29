@@ -49,4 +49,26 @@
 			'pagepanelId'
 		];
 
+			/** 
+		 * Get all Page models that reference this Pagepanel model.
+		 * 
+		 * @return Collection -> Page
+		 */
+		public function pages()
+		{
+	        return $this->belongsTo('App\Models\Page', 'page_id');
+		}
+
+			/** 
+		 * Get all Panel models that reference this Pagepanel model.
+		 * 
+		 * @return Collection -> PagePanels
+		 */
+		public function panel()
+		{
+	        return $this->belongsTo('App\Models\Panel', 'panel_id');
+		}
+
+
+
 	}

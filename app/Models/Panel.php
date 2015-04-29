@@ -46,4 +46,14 @@
 			'panelId'
 		];
 
+			/** 
+		 * Get all PagePanel models that reference this Panel model.
+		 * 
+		 * @return Collection -> PagePanels
+		 */
+		public function pages()
+		{
+	        return $this->hasMany('App\Models\PagePanel', 'panel_id');
+		}
+
 	}
