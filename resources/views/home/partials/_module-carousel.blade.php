@@ -10,7 +10,7 @@
 	</div>
 	<div id="mod-carousel-linklist" class="mod-carousel-linklist">
 		@foreach ($carousel as $item)
-			<table>
+			<table onclick="goToSlide(this)">
 				<tbody>
 					<tr>
 						<td>

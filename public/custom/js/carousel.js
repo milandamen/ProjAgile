@@ -14,11 +14,11 @@ try {
 try {
 	if (carousel_transition_interval) {
 		if (carousel_transition_interval <= carousel_transition_duration) {
-			carousel_transition_interval = carousel_transition_duration + 9000;				// The default interval is 5 seconds, unless otherwise specified.
+			carousel_transition_interval = carousel_transition_duration + 4000;				// The default interval is 5 seconds, unless otherwise specified.
 		}
 	}
 } catch(e) {
-	carousel_transition_interval = carousel_transition_duration + 9000;						// The default interval is 5 seconds, unless otherwise specified.
+	carousel_transition_interval = carousel_transition_duration + 4000;						// The default interval is 5 seconds, unless otherwise specified.
 }
 
 var carousel = document.getElementById('mod-carousel');
@@ -30,11 +30,14 @@ var carousel_selected_i = 0;
 var carousel_selected_i_old = 0;
 var carousel_selected_img = null;
 var carousel_selected_link = null;
+var carousel_special_transition = false;
+var carouselIntervalId = 0;
 
 execActionOnElementsInArray(carousel_imagelist_div.children, 'a', function (item) {
 	carousel_imagelist.push(item);
-	item.style.display = 'none';
 });
+makeImagesInvisible(carousel_imagelist);
+makeH3Invisible(carousel_imagelist);
 
 execActionOnElementsInArray(carousel_linklist_div.children, 'table', function (item) {
 	carousel_linklist.push(item);
@@ -56,33 +59,38 @@ if (carousel_count !== 0) {
 	carousel_selected_i = 0;
 	carousel_selected_img = carousel_imagelist[0];
 	carousel_selected_link = carousel_linklist[0];
-	carousel_selected_img.style.display = 'inline-block';
 	carousel_selected_link.classList.add('table-shade-selected');
 	
 	if (carousel_count !== 1) {
-		carousel_selected_i_old = carousel_count - 1;
-		setInterval('carouselTransition()', carousel_transition_interval);
+		carousel_selected_i = 0;
+		carouselIntervalId = setInterval('carouselTransition(-1)', carousel_transition_interval);
 	}
 } else {
 	carousel.style.display = 'none';				// Hide the whole carousel if there are no items to display.
 }
 
-function carouselTransition() {
+function carouselTransition(new_sel_i) {
+	if (new_sel_i === -1) {
+		new_sel_i = carousel_selected_i + 1;
+		carousel_special_transition = false;
+	} else {
+		carousel_special_transition = true;
+	}
+	
 	carousel_selected_i_old = carousel_selected_i;
-	carousel_selected_i++;
+	carousel_selected_i = new_sel_i;
+	
 	if (carousel_selected_i >= carousel_count) {
 		carousel_selected_i = 0;
 	}
 	
-	var carousel_selected_img_old = carousel_selected_img;
-	var carousel_selected_link_old = carousel_selected_link;
-	carousel_selected_img = carousel_imagelist[carousel_selected_i];
-	carousel_selected_link = carousel_linklist[carousel_selected_i];
+	var carousel_selected_img_old = carousel_selected_img;					// tag a
+	var carousel_selected_link_old = carousel_selected_link;				// tag table
+	carousel_selected_img = carousel_imagelist[carousel_selected_i];		// tag a
+	carousel_selected_link = carousel_linklist[carousel_selected_i];		// tag table
 	
-	carousel_selected_img.style.display = 'inline-block';
-	
-	var c_sel_img_img = null;
-	var c_sel_img_text = null;
+	var c_sel_img_img = null;												// tag img
+	var c_sel_img_text = null;												// tag h3
 	execActionOnElementsInArray(carousel_selected_img.children, 'img', function (item) {
 		c_sel_img_img = item;
 	});
@@ -90,31 +98,76 @@ function carouselTransition() {
 		c_sel_img_text = item;
 	});
 	
-	var c_sel_img_old_img = null;
-	var c_sel_img_old_text = null;
+	var c_sel_img_old_img = null;											// tag img
+	var c_sel_img_old_text = null;											// tag h3
 	execActionOnElementsInArray(carousel_selected_img_old.children, 'img', function (item) {
 		c_sel_img_old_img = item;
 	});
-	execActionOnElementsInArray(carousel_selected_link_old.children, 'h3', function (item) {
+	execActionOnElementsInArray(carousel_selected_img_old.children, 'h3', function (item) {
 		c_sel_img_old_text = item;
 	});
 	
-	var c_trans_dur_half = carousel_transition_duration / 2;
-	var transitionStart = new Date().valueOf();
-	while (new Date().valueOf() - transitionStart < c_trans_dur_half) {
-		var now = new Date().valueOf();			// TODO potentially put in while statement
-		var diff = now - transitionStart;
-		var perc = diff / carousel_transition_duration;
-		perc = Math.max(0, Math.min(1, perc));				// Clamp perc between 0 and 1. (0% and 100%)
-		
-		c_sel_img_img.style.opacity = perc;
-		c_sel_img_old_img.style.opacity = 1 - perc;
+	// Imagelist side
+	$(c_sel_img_img).fadeIn(carousel_transition_duration);
+	$(c_sel_img_old_img).fadeOut(carousel_transition_duration);
+	$(c_sel_img_text).fadeIn(carousel_transition_duration);
+	$(c_sel_img_old_text).fadeOut(carousel_transition_duration);
+	
+	// Linklist side
+	$(carousel_selected_link_old).delay(carousel_transition_duration/2).removeClass('table-shade-selected');
+	$(carousel_selected_link).delay(carousel_transition_duration/2).addClass('table-shade-selected');
+	
+	if (carousel_special_transition) {
+		clearInterval(carouselIntervalId);
+		carouselIntervalId = setInterval('carouselTransition(-1)', carousel_transition_interval);
+	}
+}
+
+function makeImagesInvisible(array) {
+	var first = true;
+	[].forEach.call(array, function(a) {
+		if (first) {
+			first = false;
+		} else {
+			execActionOnElementsInArray(a.children, 'img', function (item) {
+				$(item).fadeOut(0);
+			});
+		}
+	});
+}
+
+function makeH3Invisible(array) {
+	var first = true;
+	[].forEach.call(array, function(a) {
+		if (first) {
+			first = false;
+		} else {
+			execActionOnElementsInArray(a.children, 'h3', function (item) {
+				$(item).fadeOut(0);
+			});
+		}
+	});
+}
+
+function goToSlide(tableItem) {
+	console.log(goToSlide);
+	
+	var found = false;
+	var i = 0;
+	execActionOnElementsInArray(carousel_linklist, 'table', function (item) {
+		if (!found) {
+			if (tableItem === item) {
+				found = true;
+			} else {
+				i++;
+			}
+		}
+	});
+	
+	if (found) {
+		clearInterval(carouselIntervalId);
+		carouselTransition(i);
 	}
 	
-	
-	
-	carousel_selected_img_old.style.display = 'none';
-	carousel_selected_link_old.classList.remove('table-shade-selected');
-	
-	carousel_selected_link.classList.add('table-shade-selected');
 }
+
