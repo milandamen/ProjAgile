@@ -16,22 +16,24 @@
 
             {!! Form:: open() !!}
             @include('errors.partials._list')
-            <div class="row col-md-8">
-				<div class="form-group">
+            <div class="row col-md-5">
+				<div class="form-group col-md-8">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
 				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
 				</div>
 			</div>
 
-			 <div class="row col-md-8">
-				<div class="form-group">
-				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-				{!! Form::text('content', old('content') , ['class' => 'form-control', 'placeholder' => 'Inhoud','id' => 'summernote']) !!}
-				</div>
-			</div>
+				<div class="row col-md-7">
+				<div class="col-md-8 form-group">
+					{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} <br/>
+					{!!  Form:: button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
+					{!!  Form:: button('Klein vak',['class' => 'btn btn-default', 'onclick' => 'newPanel(4)']) !!}
+					{!!  Form:: button('Medium vak',['class' => 'btn btn-default', 'onclick' => 'newPanel(8)']) !!}
+					{!!  Form:: button('Groot vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(12)']) !!}
 
-			<div class="row col-md-8">
+				</div>
 				<div class="col-md-4 form-group">
+					<div class="col-md-12 form-group">
 					{!! Form::label('sidebar', 'Sidebar toevoegen') !!}<br/>
 					<div class="btn-group" data-toggle="buttons">
 						<label class="btn btn-default">
@@ -42,7 +44,27 @@
 						</label>
 					</div>
 				</div>
+
+				</div>
+
 			</div>
+
+			 <div class="row col-md-12">
+				<div class="form-group col-md-12">
+				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
+				{!! Form::text('content', old('content') , ['class' => 'form-control', 'placeholder' => 'Inhoud','id' => 'summernote']) !!}
+				</div>
+			</div>
+
+
+			<!-- div for new panels -->
+			<div class="row col-md-8">
+				<div class="col-md-12 form-group" id="newPanels">
+				</div>
+			</div>
+
+
+			
 
 			<div class="row col-md-8">
 				<div class="form-group">
@@ -64,4 +86,5 @@
     <!-- include summernote js-->
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
+    {!! HTML::script('custom/js/page.js') !!}
 @endsection

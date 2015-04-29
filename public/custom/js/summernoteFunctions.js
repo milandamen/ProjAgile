@@ -2,5 +2,6 @@ $(document).ready(function() {
   $('#summernote').summernote();
 });
 
-
-$('.summernote').summernote();
+function summer(){
+	$('.summernote').summernote();
+}
