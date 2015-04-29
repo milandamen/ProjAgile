@@ -20,7 +20,11 @@
                         @foreach($items as $item)
                             <tr>
                                 <td>{{$item->created_at}}</td>
-                                <td>{{$item->message}}</td>
+                                @if($item->link != null)
+                                    <td><a href="{!! url($item->link) !!}">{{$item->message}}</a></td>
+                                @else
+                                    <td>{{$item->message}}</td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
