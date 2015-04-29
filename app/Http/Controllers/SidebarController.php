@@ -2,6 +2,7 @@
     namespace App\Http\Controllers;
 
     use App\Models\Sidebar;
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Support\Facades\Redirect;
@@ -19,10 +20,11 @@
 		*
 		* @return void
 		*/
-		public function __construct(ISidebarRepository $sidebarRepo, IMenuRepository $menuRepo)
+		public function __construct(ISidebarRepository $sidebarRepo, IMenuRepository $menuRepo, INewOnSiteRepository $newOnSiteRepository)
 		{
 			$this->sidebarRepo = $sidebarRepo;
 			$this->menuRepo = $menuRepo;
+            $this->newOnSiteRepository = $newOnSiteRepository;
 		}
 
 		public function edit($id)
@@ -98,6 +100,17 @@
 						}
 					}             
 				}
+
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
+
 				return Redirect::route('home.index');
 			} else {
 				return view('errors.403');

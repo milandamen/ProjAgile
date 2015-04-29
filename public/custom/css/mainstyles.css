@@ -22,3 +22,12 @@
 .table-shade-selected {
 	background-color: #EEF;
 }
+
+.showMore {
+    float: right;
+}
+
+.showMore a {
+    text-decoration: none;
+    color: dimgray;
+}

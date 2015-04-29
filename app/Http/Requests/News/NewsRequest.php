@@ -44,7 +44,7 @@
 			$input = $this->all();
 
 			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
-			$input['content'] = $input['content'];
+            $input['content'] = htmlspecialchars_decode($_POST['content']);
 			$input['districtSectionId'] = filter_var($input['districtSectionId'], FILTER_SANITIZE_STRING);
 			$input['hidden'] = filter_var($input['hidden'], FILTER_SANITIZE_STRING);
 			$input['commentable'] = filter_var($input['commentable'], FILTER_SANITIZE_STRING);

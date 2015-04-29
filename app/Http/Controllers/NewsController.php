@@ -1,5 +1,4 @@
-<?php
-    namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
     use App\Models\File;
     use App\Models\News;
@@ -70,6 +69,7 @@
 
             if($news != null)
             {
+                htmlspecialchars($news->content);
                 return view('news.show', compact('news'));
             }
 
@@ -120,12 +120,12 @@
                         $this->saveFile($news, $i, $oldFiles);
                     }
 
-                    foreach ($oldItems as $oldItem)
+                    foreach ($oldFiles as $oldItem)
                     {
                         $this->fileRepo->destroy($oldItem);
                     }
 
-                    return Redirect::route('news.show', [$newsItem->newsId]);
+                    return Redirect::route('news.show', [$news->newsId]);
                 }
 
                 return view('errors.403');
