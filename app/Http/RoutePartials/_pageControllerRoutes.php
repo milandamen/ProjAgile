@@ -6,6 +6,13 @@ Route::get('pagina/nieuw',
 	'middleware' => 'admin'
 	]);
 
+Route::post('pagina/nieuw',
+[
+	'as' => 'page.store',
+	'uses' => 'PageController@store',
+	'middleware' => 'admin'
+	]);
+
 Route::get('pagina/wijzigen',
 [
 	'as' => 'page.edit',

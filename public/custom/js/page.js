@@ -8,9 +8,9 @@ function newPanel(size){
 	var newDiv = document.createElement("div");
 	var label= '<h4 >Nieuw vak met grootte ' + size + '<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>';
 
-	var inputtitle = '<input type="text" class="form-control" placeholder="Titel" name="panel['+panelIndex+'][\'title\']"/><br/>';
-	var inputcontent = '<input type="text" class="summernote" name="panel[\'content\']['+panelIndex+'] placeholder="Inhoud"/>';
-	var hiddenfield = '<input type="hidden" name="panel[\'size\']['+panelIndex+']  value="'+size +'"/>'
+	var inputtitle = '<input type="text" class="form-control" placeholder="Titel" name="panel['+panelIndex+'][title]"/><br/>';
+	var inputcontent = '<textarea class="summernote" name="panel['+panelIndex+'][content] placeholder="Inhoud"> </textarea>';
+	var hiddenfield = '<input type="number" name="panel['+panelIndex+'][size]"  value="'+size+'" hidden/>';
 
 	newDiv.innerHTML = label + inputtitle + inputcontent + hiddenfield;
 	div.appendChild(newDiv);

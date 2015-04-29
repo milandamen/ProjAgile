@@ -17,6 +17,7 @@
             {!! Form:: open() !!}
             @include('errors.partials._list')
             <div class="row col-md-5">
+            	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
 				<div class="form-group col-md-8">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
 				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
@@ -52,8 +53,7 @@
 			 <div class="row col-md-12">
 				<div class="form-group col-md-12">
 				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-				{!! Form::text('content', old('content') , ['class' => 'form-control', 'placeholder' => 'Inhoud','id' => 'summernote']) !!}
-				</div>
+				{!! Form::textarea('content', old('content'), ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
 			</div>
 
 
