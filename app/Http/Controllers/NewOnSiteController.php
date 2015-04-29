@@ -1,11 +1,20 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+
 class NewOnSiteController extends Controller
 {
 
+    public function __construct(INewOnSiteRepository $newOnSiteRepository)
+    {
+        $this->newOnSiteRepository = $newOnSiteRepository;
+    }
+
     public function index()
     {
-        return view('newOnSite/index');
+        $items = $this->newOnSiteRepository->getAll();
+
+        return view('newOnSite/index', array('items' => $items));
     }
 
 }
