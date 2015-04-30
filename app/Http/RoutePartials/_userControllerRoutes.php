@@ -29,3 +29,21 @@
         'as' => 'user.store',
         'uses' => 'UserController@store'
     ]);
+
+    Route::post('gebruikers',
+    [
+        'as' => 'user.filter',
+        'uses' => 'UserController@index'
+    ]);
+
+    Route::get('gebruikers/{id}/deactiveer',
+    [
+        'as' => 'user.deactivate',
+        'uses' => 'UserController@deactivate'
+    ]);
+
+    Route::get('gebruikers/{id}/activeer',
+    [
+        'as' => 'user.activate',
+        'uses' => 'UserController@activate'
+    ]);

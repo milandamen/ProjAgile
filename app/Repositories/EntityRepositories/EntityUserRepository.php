@@ -67,13 +67,24 @@
         }
 
         /**
-         * Returns all the Administrator User models in the database.
+         * Returns all the User models in the database filtered by user group.
          *
          * @return Collection -> User
          */
         public function getAllByUserGroup($userGroupId)
         {
             return User::where('userGroupId', $userGroupId)->get();
+        }
+
+        /**
+         * Returns all the User models in the database filtered by user group and search criteria
+         *
+         * @return Collection -> User
+         */
+        public function filterAllByUserGroup($userGroupId, $criteria)
+        {
+            $users = User::where('username', 'LIKE', "%$criteria%")->get();
+            return $users->where('userGroupId', $userGroupId);
         }
 
 

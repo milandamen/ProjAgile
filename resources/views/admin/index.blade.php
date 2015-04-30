@@ -38,8 +38,8 @@
            				<div class="col-md-4">
 	           				<h3>Gebruikers beheer</h3>
 	           				<div class="btn-group-vertical">
-	           					<a class="btn btn-default" href="#" role="button">Gebruiker overzicht</a>
-	           					<a class="btn btn-default" href="#" role="button">Gebruiker toevoegen</a>
+	           					<a class="btn btn-default" href="{{ route('user.index') }}" role="button">Gebruiker overzicht</a>
+	           					<a class="btn btn-default" href="{{ route('user.create') }}" role="button">Gebruiker toevoegen</a>
 
 	           				</div>
 	           			</div>

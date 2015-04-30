@@ -28,13 +28,21 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->userRepo->getAll();
+        if (Request::get('search') === null || Request::get('search') === '')
+        {
+            $admins = $this->userRepo->getAllByUserGroup(1);
+            $contentmanagers = $this->userRepo->getAllByUserGroup(2);
+            $residents = $this->userRepo->getAllByUserGroup(3);
+        }
+        else
+        {
+            $criteria = Request::get('search');
+            $admins = $this->userRepo->filterAllByUserGroup(1, $criteria);
+            $contentmanagers = $this->userRepo->filterAllByUserGroup(2, $criteria);
+            $residents = $this->userRepo->filterAllByUserGroup(3, $criteria);
+        }
 
-        $admins = $this->userRepo->getAllByUserGroup(1);
-        $contentmanagers = $this->userRepo->getAllByUserGroup(2);
-        $residents = $this->userRepo->getAllByUserGroup(3);
-
-        return view('user.index', compact('admins', 'contentmanagers', 'residents'));
+        return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria'));
     }
 
     public function create()
@@ -96,6 +104,42 @@ class UserController extends Controller
                     $user->password = Request::get('password');
                 }
                 //$user->fill(Request::input());
+                $this->userRepo->update($user);
+
+                return redirect::route('user.index');
+            }
+
+            return view('errors.403');
+        }
+
+        return view('errors.401');
+    }
+
+    public function deactivate($id)
+    {
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator') {
+                $user = $this->userRepo->get($id);
+                $user->active = 0;
+                $this->userRepo->update($user);
+
+                return redirect::route('user.index');
+            }
+
+            return view('errors.403');
+        }
+
+        return view('errors.401');
+    }
+
+    public function activate($id)
+    {
+        if (Auth::check())
+        {
+            if (Auth::user()->usergroup->name === 'Administrator') {
+                $user = $this->userRepo->get($id);
+                $user->active = 1;
                 $this->userRepo->update($user);
 
                 return redirect::route('user.index');
