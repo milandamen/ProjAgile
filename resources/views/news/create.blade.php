@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+    Placeholder News Create Title
+@stop
+
+@section('description')
+    Placeholder News Create Description
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -17,11 +25,14 @@
             {!! Form::close() !!}
         </div>
     </div>
-
 @stop
 
 @section('additional_scripts')
-    <!-- include summernote js-->
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
-@endsection
+
+    {!! HTML::script('moment/moment.js') !!}
+    {!! HTML::script('moment/locale/nl.js') !!}
+    {!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
+    {!! HTML::script('custom/js/datepicker.js') !!}
+@stop

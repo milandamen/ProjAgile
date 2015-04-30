@@ -26,6 +26,12 @@
 		 */
 		public $timestamps = false;
 
+		protected $dates =
+		[
+			'publishStartDate',
+			'publishEndDate'
+		];
+
 		/**
 		 * Attributes that can be changed and thus are mass assingable.
 		 * 

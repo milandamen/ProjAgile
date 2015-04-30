@@ -28,8 +28,8 @@
 				'content' => 'required',
 				'hidden' => 'required',
 				'commentable' => 'required',
-				'publishStartDate' => 'required|date',
-				'publishEndDate' => 'required|date',
+				'publishStartDate' => 'required|date|before:publishEndDate',
+				'publishEndDate' => 'required|date|after:publishStartDate',
 				'top' => 'required',
 			];
 		}

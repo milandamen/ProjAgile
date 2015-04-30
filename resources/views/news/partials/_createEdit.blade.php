@@ -10,24 +10,26 @@
     {!! Form::label('districtSection', 'Sectie') !!}
     {!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
 </div>
-<div class="form-group">
-    {!! Form::label('publishStartDate', 'Publicatiedatum') !!}
-    <div class="input-group date" id="datetimepicker">
-        {!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
-            . '<span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>' 
-        !!}
+<div class="form-group col-md-12 newstable-grouping">
+    <div class="col-md-4 newstable-grouping">
+        {!! Form::label('publishStartDate', 'Publicatiedatum') !!}
+        <div class="input-group date">
+            {!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
+                . '<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>' 
+            !!}
+        </div>
     </div>
-</div>
-<div class="form-group">
-    {!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
-    <div class="input-group date" id="datetimepicker">
-        {!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
-            . '<span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>' 
-        !!}
+    <div class="col-md-4 newstable-grouping">
+        {!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
+        <div class="input-group date">
+            {!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
+                . '<span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>' 
+            !!}
+        </div>
     </div>
 </div>
 <div class="form-group">
@@ -50,8 +52,8 @@
         </tr>
     </table>
 </div>
-<div class="form-group col-md-12">
-    <div class="col-md-2">
+<div class="form-group col-md-12 newstable-grouping">
+    <div class="col-md-2 newstable-grouping">
         {!! Form::label('hidden', 'Verbergen?') !!}<br/>
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
@@ -62,7 +64,7 @@
             </label>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 newstable-grouping">
         {!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
@@ -73,7 +75,7 @@
             </label>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 newstable-grouping">
         {!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">

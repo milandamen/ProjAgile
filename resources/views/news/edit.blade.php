@@ -20,7 +20,11 @@
 @stop
 
 @section('additional_scripts')
-    <!-- include summernote js-->
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
+
+    {!! HTML::script('moment/moment.js') !!}
+    {!! HTML::script('moment/locale/nl.js') !!}
+    {!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
+    {!! HTML::script('custom/js/datepicker.js') !!}
 @endsection
