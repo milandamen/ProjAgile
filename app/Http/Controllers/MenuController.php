@@ -92,6 +92,24 @@
 
         public function updateMenuOrder(Request $request)
         {
-            dd($request);
+            /*
+            for($i = 2; $i < count($request->all()); $i++)
+            {
+                $request->all()[$i]->key();
+                $request->all()[$i -1 ]->key();
+            }
+            */
+            foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
+            {
+                if (! is_string ( $key )){
+                    echo $key;
+                    $requestItemPart = explode(".", $requestItem);
+                        if (!$requestItemPart[0] == 0)
+                        {
+                            $tempParentOrder = $requestItemPart[1];
+                        }
+                }
+            }
+
         }
     }

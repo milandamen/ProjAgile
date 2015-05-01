@@ -1,37 +1,38 @@
-
 function submitForm(){
     var menuForm = document.getElementById('menuForm');
     calculateOrder();
 
-    //menuForm.submit();
+    menuForm.submit();
 }
 
 
 function calculateOrder(){
 
     var fullMenuList = document.getElementById('fullMenuList');
-
-    [].forEach.call(fullMenuList.children, function(liItem)
-    {
-
-
-        handleListItem(liItem);
-    });
-
+    var parentOrder = 0;
+    handleListItem(fullMenuList, parentOrder);
 }
 
-function handleListItem(liItem){
-    console.log(liItem);
+function handleListItem(liItem, parentOrder){
 
-    [].forEach.call(liItem.children, function (item) {													// Get all elements in the li
-        if (item.nodeType == 1) {																		// Is element of type html-object/tag
-            if (item.tagName.toLowerCase() == 'ul' && item.classList.contains('space') && item.classList.contains('ui-sortable')) {		// Is element of tag ul and is the correct one
-                if (item.children.length > 0){
-                    [].forEach.call(item.children, function (liItemItem) {
-                        handleListItem(liItemItem);
-                    });
-                }
+    var order = 1;
+    [].forEach.call(liItem.children, function (item) {												                                	// Get all elements in the li
+        //Let's find the input field
+        [].forEach.call(item.children, function (element) {
+            if (element.className == "menuGroupItem") {
+                element.value = parentOrder + '.' + order;
+                order++;
+                console.log(order);
             }
-        }
+            if(element.tagName == "UL" && element.children.length > 0)
+            {
+                var temp = parentOrder;
+                temp++;
+                handleListItem(element, temp);
+            }
+        });
     });
+
+
+
 }

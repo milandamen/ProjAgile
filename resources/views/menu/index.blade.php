@@ -10,7 +10,7 @@
                 <ul class='space first-space' id='fullMenuList'>
                     @foreach($allMenuItems as $subMenu)
                         <li class='route'>
-                            {!! Form::text($subMenu['main']->menuId, $subMenu['main']->menuOrder, ['class' => 'menuGroupItem']) !!}
+                            {!! Form::hidden($subMenu['main']->menuId, $subMenu['main']->menuOrder, ['class' => 'menuGroupItem' ]) !!}
                             <h3 class='title'>{!! $subMenu['main']->name !!}</h3>
                             <span class='ui-icon ui-icon-arrow-4-diag'></span>
                             <ul class='space'>

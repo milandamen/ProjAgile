@@ -1,6 +1,6 @@
 @foreach ($items as $item)
     <li class='route'>
-        {!! Form::text($item['main']->menuId, $item['main']->menuOrder, ['class' => 'menuGroupItem'] ) !!}
+        {!! Form::hidden($item['main']->menuId, $item['main']->menuOrder, ['class' => 'menuGroupItem'] ) !!}
         <h3 class='title'>{!! $item['main']->name !!}</h3>
         <span class='ui-icon ui-icon-arrow-4-diag'></span>
         <ul class='space'>

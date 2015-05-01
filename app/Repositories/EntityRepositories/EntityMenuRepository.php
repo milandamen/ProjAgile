@@ -111,4 +111,12 @@
 
             return $allCategories;
         }
+
+        public function updateMenuItemOrder($id, $order, $parent)
+        {
+            $model = $this->get($id);
+            $model->parentId = $parent;
+            $model->menuOrder = $order;
+            $this->update($model);
+        }
     }
