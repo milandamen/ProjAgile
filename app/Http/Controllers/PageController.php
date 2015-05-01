@@ -154,6 +154,9 @@
         public function update($id, PageRequest $request)
         {
             
+        	$old = $this->pagerepo->get($id)->sidebar;
+        	$new = $request->sidebar;
+
         	// update introduction
         	$introduction = $this->introrepo->get($request->intro_id);
         	$introduction->title = $request->title;	
@@ -183,6 +186,10 @@
             	}
         	}
 
+        	$pageid = $page->pageId;
+        	$title = $request->title;
+        	$this->updateSidebar($old, $new, $pageid, $title);
+
         	return Redirect::route('page.show', [$page->pageId]);
 
         }
@@ -202,7 +209,7 @@
          * When old is the same as $new, both are false or true
          *	
 		 */
-        private function updateSidebar($old, $new){
+        private function updateSidebar($old, $new, $pageid, $title){
 
         	if($old === $new){
         		// do nothing
@@ -212,13 +219,13 @@
             		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
-            		'title' => $request->title,
+            		'title' => $title,
             		'text' => 'Home',
             		'extern' => 'false',
             		'link' => '/'
             		]);
         		} else {
-
+        			$this->sidebarrepo->deleteAllFromPage($pageid);
         		}
 
         	}

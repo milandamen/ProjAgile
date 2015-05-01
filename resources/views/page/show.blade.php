@@ -23,7 +23,7 @@
 				{!! nl2br($page->introduction->text) !!}
 			</div>
 
-			@if($sidebar->count())
+			@if(isset($sidebar))
 			@include('partials/_sidebar')
 			@endif
 		</div>
