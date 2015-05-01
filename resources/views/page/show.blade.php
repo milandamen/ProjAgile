@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="col-md-8">
 			<h4>	@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
-				<a href="{{ route('home.editIntroduction')}}"><i class="fa fa-pencil-square-o"></i></a>
+				<a href="{{ route('page.edit', [$page->pageId])}}"><i class="fa fa-pencil-square-o"></i></a>
 				@endif
 			 {!! $page->introduction->title  !!} </h4>
 			</div>
