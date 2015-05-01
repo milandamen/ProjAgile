@@ -123,7 +123,7 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function deactivate($id)
+    public function deactivate($id, $crit = null)
     {
         if (Auth::check())
         {
@@ -131,7 +131,6 @@ class UserController extends Controller
                 $user = $this->userRepo->get($id);
                 $user->active = 0;
                 $this->userRepo->update($user);
-                $crit = "hello";
 
                 return redirect::route('user.index', [$crit]);
             }
@@ -142,7 +141,7 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function activate($id)
+    public function activate($id, $crit = null)
     {
         if (Auth::check())
         {
@@ -151,7 +150,7 @@ class UserController extends Controller
                 $user->active = 1;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index');
+                return redirect::route('user.index', [$crit]);
             }
 
             return view('errors.403');

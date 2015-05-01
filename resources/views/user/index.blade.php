@@ -8,9 +8,11 @@
             @if(isset($criteria))
                 {!! Breadcrumbs::render('filter', (object)['criteria' => $criteria]) !!}
             @else
+                {!! $criteria = null; !!}
                 {!! Breadcrumbs::render('user') !!}
             @endif
         </div>
+
 
 
         @if (isset($count) && $count === 0)
@@ -82,11 +84,11 @@
                                     </td>
                                     <td>
                                         @if($admin->active == 1)
-                                            <a href="{{ route('user.deactivate', [$admin->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($admin->active == 0)
-                                            <a href="{{ route('user.activate', [$admin->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -142,11 +144,11 @@
                                     </td>
                                     <td>
                                         @if($contentmanager->active == 1)
-                                            <a href="{{ route('user.deactivate', [$contentmanager->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($contentmanager->active == 0)
-                                            <a href="{{ route('user.activate', [$contentmanager->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -200,11 +202,11 @@
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
