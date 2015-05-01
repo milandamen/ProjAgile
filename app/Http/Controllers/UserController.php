@@ -26,9 +26,9 @@ class UserController extends Controller
         $this->userRepo = $userRepo;
     }
 
-    public function index()
+    public function index($crit = null)
     {
-        if (Request::get('search') === null || Request::get('search') === '')
+        if ((Request::get('search') === null || Request::get('search') === '') && $crit === null)
         {
             $admins = $this->userRepo->getAllByUserGroup(1);
             $contentmanagers = $this->userRepo->getAllByUserGroup(2);
@@ -36,13 +36,21 @@ class UserController extends Controller
         }
         else
         {
-            $criteria = Request::get('search');
+            if ($crit !== null)
+            {
+                $criteria = $crit;
+            }
+            else
+            {
+                $criteria = Request::get('search');
+            }
             $admins = $this->userRepo->filterAllByUserGroup(1, $criteria);
             $contentmanagers = $this->userRepo->filterAllByUserGroup(2, $criteria);
             $residents = $this->userRepo->filterAllByUserGroup(3, $criteria);
+            $count = count($admins) + count($contentmanagers) + count($residents);
         }
 
-        return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria'));
+        return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
     }
 
     public function create()
@@ -123,8 +131,9 @@ class UserController extends Controller
                 $user = $this->userRepo->get($id);
                 $user->active = 0;
                 $this->userRepo->update($user);
+                $crit = "hello";
 
-                return redirect::route('user.index');
+                return redirect::route('user.index', [$crit]);
             }
 
             return view('errors.403');

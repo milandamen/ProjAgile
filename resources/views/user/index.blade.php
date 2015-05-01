@@ -12,6 +12,14 @@
             @endif
         </div>
 
+
+        @if (isset($count) && $count === 0)
+            <div class="row">
+                <h2>{!! "Helaas, er zijn geen zoekresultaten" !!}</h2>
+            </div>
+        @else
+
+
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-header">
@@ -48,6 +56,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -59,6 +70,11 @@
                                     <td> {!! $admin->firstName !!} </td>
                                     <td> {!! $admin->surname !!} </td>
                                     <td> {!! $admin->email !!} </td>
+                                    <td>
+                                        <a href="{{ route('user.index', [$admin->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="right" href="{{ route('user.edit', [$admin->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
@@ -100,6 +116,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -111,6 +130,11 @@
                                     <td> {!! $contentmanager->firstName !!} </td>
                                     <td> {!! $contentmanager->surname !!} </td>
                                     <td> {!! $contentmanager->email !!} </td>
+                                    <td>
+                                        <a href="{{ route('user.index', [$contentmanager->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="right" href="{{ route('user.edit', [$contentmanager->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
@@ -150,6 +174,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -161,6 +188,11 @@
                                     <td> {!! $resident->firstName !!} </td>
                                     <td> {!! $resident->surname !!} </td>
                                     <td> {!! $resident->email !!} </td>
+                                    <td>
+                                        <a href="{{ route('user.index', [$resident->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="right" href="{{ route('user.edit', [$resident->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
@@ -185,6 +217,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
     </div>
 
