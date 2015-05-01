@@ -21,6 +21,11 @@
     include('BreadcrumbsPartials/_errorBreadcrumbsPartial.php');
 
     /**
+     * Home > User
+     */
+    include('BreadcrumbsPartials/_userBreadcrumbsPartial.php');
+
+    /**
      * Home > NewOnSite
      */
     include('BreadcrumbsPartials/_newOnSiteBreadcrumbsPartial.php');

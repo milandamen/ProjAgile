@@ -52,6 +52,11 @@
     include ('RoutePartials/_menuControllerRoutes.php');
 
     /**
+     * Menu controller routers
+     */
+    include ('RoutePartials/_userControllerRoutes.php');
+
+    /**
      * NewOnSite controller routes
      */
     include ('RoutePartials/_newOnSiteRoutes.php');
