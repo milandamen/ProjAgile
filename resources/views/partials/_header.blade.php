@@ -3,16 +3,15 @@
     <div class="container">
         <div class="navbar-header">
             <a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>
-
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse navHeaderCollapse">
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
@@ -21,14 +20,21 @@
                 @if (!Auth::check())
                     <li>
                         <a href="{{ route('auth.login') }}">
-                            <i class="fa fa-spinner"></i> Inloggen
+                            <i class="fa fa-user"></i> Inloggen
                         </a>
                     </li>
                 @else
-                    <li>
-                        <a href="{{ route('auth.logout') }}">
-                            <i class="fa fa-spinner"></i> Uitloggen
+                    <li class="dropdown pos-relative">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            {{ Auth::user()->username }}
+                            <span class="caret"></span>
+
                         </a>
+                        <ul class="dropdown-menu" style="padding:12px;">
+                            <li><a href="#">Wijzig profiel</a></li>
+                            <li><a href="{{ route('auth.logout') }}">Uitloggen</a></li>
+                            <li><a href="#">etc.</a></li>
+                        </ul>
                     </li>
                 @endif
 

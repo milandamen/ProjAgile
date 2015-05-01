@@ -2,8 +2,11 @@
 {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
 {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js') !!}
 
-<!-- Bootstrap Core JavaScript -->
-{!! HTML::script('bootstrap/js/bootstrap.js') !!}
-
 <!-- Multi level menu -->
 {!! HTML::script('custom/js/multilevel_menu.js') !!}
+
+<!-- Bootstrap Core JavaScript   (NEEDS TO BE AFTER JQUERY )-->
+{!! HTML::script('bootstrap/js/bootstrap.js') !!}
+
+<!-- Useful methods used in multiple scripts -->
+{!! HTML::script('custom/js/main.js') !!}

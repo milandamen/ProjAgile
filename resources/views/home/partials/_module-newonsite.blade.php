@@ -7,10 +7,14 @@
 	</div>
 	<div class="panel-body">
 		<ul class="">
-			<li class="sidebar"> 13-04-2015 - Nieuws overzicht toegevoegd</li>
-			<li class="sidebar"> 12-04-2015 - Inloggen </li>
-			<li class="sidebar"> 11-04-2015 - Introductie toegevoegd </li>
-			<li class="sidebar"> 11-04-2015 - Nieuws module toegevoegd</li>
+            @foreach($newOnSite as $newOnSiteItem)
+                @if($newOnSiteItem->link != null)
+                    <li class="sidebar">{{$newOnSiteItem->dateOnly()}} - <a href="{!! url($newOnSiteItem->link) !!}">{{$newOnSiteItem->message}}</a></li>
+                @else
+                    <li class="sidebar">{{$newOnSiteItem->dateOnly()}} - {{$newOnSiteItem->message}}</li>
+                @endif
+            @endforeach
 		</ul>
+        <p class="showMore"><a href="{{ route('newOnSite.index') }}">Toon alles</a></p>
 	</div>
 </div>

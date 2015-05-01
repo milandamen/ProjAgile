@@ -53,6 +53,9 @@
 										<span>{{ $article->news->title }}</span>
 									</td>
 									<td>
+										@if ($article->imagePath !== 'blank.jpg')
+											<a href="{{ asset('uploads/img/carousel/' . $article->imagePath) }}" target="_blank">Bekijk huidig</a>
+										@endif
 										<input type="file" name="file[0]" />
 									</td>
 									<td>
@@ -70,7 +73,7 @@
 					</table>
 					
 					<button type="submit" class="btn btn-success">Opslaan</button>
-					<button type="button" class="btn btn-danger" onclick="goBack()">Annuleer</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>
 				</form>
 			</div>
 		</div>

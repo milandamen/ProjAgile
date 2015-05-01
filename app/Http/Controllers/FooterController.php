@@ -2,6 +2,7 @@
 
 use App\Models\Footer;
 use App\Repositories\RepositoryInterfaces\IMenuRepository;
+use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\RepositoryInterfaces\IFooterRepository;
 use Input;
@@ -10,10 +11,11 @@ use Auth;
 class FooterController extends Controller
 {
 
-    public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository)
+    public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository, INewOnSiteRepository $newOnSiteRepository)
     {
         $this->footerRepository = $footerRepository;
         $this->menuRepository = $menuRepository;
+        $this->newOnSiteRepository = $newOnSiteRepository;
     }
 
     public function edit()
@@ -152,6 +154,16 @@ class FooterController extends Controller
                     {
                         $this->footerRepository->destroy($item->footerId);
                     }
+                }
+
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
                 }
 
                 return Redirect::action('FooterController@edit');

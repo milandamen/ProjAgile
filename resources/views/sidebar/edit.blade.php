@@ -8,7 +8,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h1>Wijzig sidebar </h1>
+                <h1>Wijzig sidebar</h1>
             </div>
         </div>
         <div class="row">
@@ -17,7 +17,9 @@
                 <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->pageNr]) !!}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
-                 	
+                    <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+
                     <hr>
                     Koptekst:
                     <input type="text" name="title" id="sidebarTitle" value="{!! $sidebarList[0]->title!!} " required> <br/><br/>
@@ -34,18 +36,16 @@
                         @foreach($sidebarList as $sidebarRow)
                         <!-- Check if link goes out or stays in. -->
                         <tr>
-                        	<td class="hidden"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
+                        	<td class="hidden form-control"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
                             <td class="td-tekst">
                                 Tekst:
                                 <input type="text" name="sidebar[{!!$i!!}][text][]" id="sidebarText" value="{!!$sidebarRow->text!!}" required>
                             </td>
 
                             <td class="td-intern">
-                                Intern
-                                <input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" type="text"/>
-                                
+                                Link
+                                <input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" id="sidebarLink" value="{!!$sidebarRow->link!!}" type="text"/>
                             </td>
-                            <td class="td-link" >Link naar: <input type="text" name="sidebar[{!!$i!!}][link][]" id="sidebarLink" value="{!!$sidebarRow->link!!}"> </td>
 
                             <!--- Make decision for intern or extern link -->
                             <td class="td-radio1">
@@ -71,8 +71,8 @@
                         @endforeach
                     </table>
                     <div id="success">
-                        <button type="button" class="btn btn-danger" onclick="goBack()">Annuleer</button>
-                        <button type="submit" class="btn btn-success">Opslaan</button>
+                        <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleer</button>
+                        <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
                     </div>
                 </form>
             </div>
@@ -89,4 +89,5 @@
     <!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
     {!! HTML::script('custom/js/autocomplete.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection

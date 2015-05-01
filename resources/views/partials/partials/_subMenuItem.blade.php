@@ -1,7 +1,7 @@
 @foreach ($items as $item)
 	<li>
 		@if(isset($item['sub']))
-			<a href="#" class="trigger right-caret">{{ $main['main']->name }}</a>
+			<a class="trigger right-caret">{{ $main['main']->name }}</a>
 			
 			<ul class="dropdown-menu sub-menu">
 				@include('partials.partials._subMenuItem', ['items' => $item['sub'],'main' => $item])
