@@ -47,7 +47,7 @@
     include('RoutePartials/_carouselControllerRoutes.php');
 
     /**
-     * Menu controller routers
+     * Menu controller routes
      */ 
     include ('RoutePartials/_menuControllerRoutes.php');
 
@@ -55,4 +55,10 @@
      * Page controller routers
      */ 
     include ('RoutePartials/_pageControllerRoutes.php');
+
+    /**
+     * NewOnSite controller routes
+     */
+    include ('RoutePartials/_newOnSiteRoutes.php');
+
 
