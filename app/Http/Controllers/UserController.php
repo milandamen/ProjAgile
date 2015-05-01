@@ -88,6 +88,21 @@ class UserController extends Controller
         return view('errors.401');
     }
 
+    public function show($id)
+    {
+        $user = $this->userRepo->get($id);
+
+        if($user != null)
+        {
+            return view('user.show', compact('user'));
+        }
+        else
+        {
+            return view('errors.404');
+        }
+
+    }
+
     public function update($id)
     {
         if (Auth::check())

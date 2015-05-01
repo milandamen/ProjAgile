@@ -26,3 +26,10 @@ Breadcrumbs::register('edituser', function($breadcrumbs, $user)
     $breadcrumbs->parent('user');
     $breadcrumbs->push($user->username, route('user.edit', [$user->id]));
 });
+
+// Home > Manage > Gebruikers > [ gebruikersnaam ]
+Breadcrumbs::register('showuser', function($breadcrumbs, $user)
+{
+    $breadcrumbs->parent('user');
+    $breadcrumbs->push($user->username, route('user.show', [$user->id]));
+});
