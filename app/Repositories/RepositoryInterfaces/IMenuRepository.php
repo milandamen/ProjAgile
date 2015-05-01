@@ -5,5 +5,5 @@
     {
         public function getAllPublic();
         public function getMenu();
-        public function updateMenuItemOrder();
+        public function updateMenuItemOrder($id, $order, $parent);
     }
