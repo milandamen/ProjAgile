@@ -14,6 +14,7 @@
             @endif
         </div>
 
+        <!-- notify if no search results are found -->
         @if (isset($count) && $count === 0)
             <div class="row">
                 <h2>{!! "Helaas, er zijn geen zoekresultaten" !!}</h2>
