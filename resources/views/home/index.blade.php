@@ -36,4 +36,5 @@
 @section('additional_scripts')
     <!-- JavaScript that enables the sliding upwards of flash messages -->
     {!! HTML::script('custom/js/flash_message.js') !!}
+	{!! HTML::script('custom/js/carousel.js') !!}
 @stop

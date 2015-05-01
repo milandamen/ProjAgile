@@ -10,27 +10,24 @@
 	position: relative;
 }
 
-.carousel-text-shadow {
-	text-shadow: #000 2px 2px 2px;
-}
-
 .black {
 	color: #000;
 }
 
-.white
-{
+.white {
 	color: #FFF;
 	float: right;
 }
 
-.showMore
-{
+.table-shade-selected {
+	background-color: #EEF;
+}
+
+.showMore {
     float: right;
 }
 
-.showMore a
-{
+.showMore a {
     text-decoration: none;
     color: dimgray;
 }
