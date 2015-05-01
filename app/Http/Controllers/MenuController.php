@@ -99,15 +99,22 @@
                 $request->all()[$i -1 ]->key();
             }
             */
+
             foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
             {
                 if (! is_string ( $key )){
-                    echo $key;
                     $requestItemPart = explode(".", $requestItem);
                         if (!$requestItemPart[0] == 0)
                         {
-                            $tempParentOrder = $requestItemPart[1];
+
                         }
+                        else
+                        {
+                            $parentId = $key;
+                            $requestItemPart[0] = NULL;
+                        }
+
+                        $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1], $requestItemPart[1] );
                 }
             }
 
