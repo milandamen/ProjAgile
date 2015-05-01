@@ -6,7 +6,6 @@ Breadcrumbs::register('pages', function($breadcrumbs)
 	$breadcrumbs->push('Pagina\'s', route('page.index'));
 });
 
-//!!!!! LET OP GEEN ROUTE!
 // Home > Manage > Pages > New Page 
 Breadcrumbs::register('newpage', function($breadcrumbs)
 {
@@ -14,7 +13,7 @@ Breadcrumbs::register('newpage', function($breadcrumbs)
 	$breadcrumbs->push('Nieuwe pagina', route('page.create'));
 });
 
-
+//!!!!! LET OP GEEN ROUTE!
 // Home > Manage > Pages > Edit Page
 Breadcrumbs::register('editpage', function($breadcrumbs)
 {
