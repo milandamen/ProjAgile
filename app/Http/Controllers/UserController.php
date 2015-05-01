@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Robin
- * Date: 26-4-2015
- * Time: 21:04
- */
 
 namespace App\Http\Controllers;
 
@@ -111,7 +105,7 @@ class UserController extends Controller
                 {
                     $user->password = Request::get('password');
                 }
-                //$user->fill(Request::input());
+
                 $this->userRepo->update($user);
 
                 return redirect::route('user.index');
