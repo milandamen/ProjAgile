@@ -53,6 +53,9 @@
 										<span>{{ $article->news->title }}</span>
 									</td>
 									<td>
+										@if ($article->imagePath !== 'blank.jpg')
+											<a href="{{ asset('uploads/img/carousel/' . $article->imagePath) }}" target="_blank">Bekijk huidig</a>
+										@endif
 										<input type="file" name="file[0]" />
 									</td>
 									<td>
