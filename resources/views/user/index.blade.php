@@ -4,6 +4,7 @@
 
     <div class="container">
 
+        <!-- breadcrumbs, show search criteria if given -->
         <div class="row">
             @if(isset($criteria))
                 {!! Breadcrumbs::render('filter', (object)['criteria' => $criteria]) !!}
@@ -13,14 +14,11 @@
             @endif
         </div>
 
-
-
         @if (isset($count) && $count === 0)
             <div class="row">
                 <h2>{!! "Helaas, er zijn geen zoekresultaten" !!}</h2>
             </div>
         @else
-
 
         <div class="row">
             <div class="col-md-12">
