@@ -7,7 +7,7 @@
         <!-- breadcrumbs, show search criteria if given -->
         <div class="row">
             @if(isset($criteria))
-                {!! Breadcrumbs::render('filter', (object)['criteria' => $criteria]) !!}
+                {!! Breadcrumbs::render('userfilter', (object)['criteria' => $criteria]) !!}
             @else
                 {!! $criteria = null; !!}
                 {!! Breadcrumbs::render('user') !!}

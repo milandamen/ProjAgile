@@ -118,6 +118,7 @@
          */
         public function update($model)
         {
+            $model['password'] = Hash::make($model['password']);
             $model->save();
         }
 

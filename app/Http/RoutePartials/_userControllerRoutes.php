@@ -24,7 +24,7 @@
         'uses' => 'UserController@create'
     ]);
 
-    Route::put('gebruikers/aanmaken',
+    Route::post('gebruikers/aanmaken',
     [
         'as' => 'user.store',
         'uses' => 'UserController@store'

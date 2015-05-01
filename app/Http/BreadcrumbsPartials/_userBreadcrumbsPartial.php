@@ -7,7 +7,7 @@ Breadcrumbs::register('user', function($breadcrumbs)
 });
 
 // Home > Manage > Gebruikers > Filter
-Breadcrumbs::register('filter', function($breadcrumbs, $criteria)
+Breadcrumbs::register('userfilter', function($breadcrumbs, $criteria)
 {
     $breadcrumbs->parent('user');
     $breadcrumbs->push($criteria->criteria, route('user.index', [$criteria->criteria]));
