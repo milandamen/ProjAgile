@@ -101,19 +101,8 @@
             		'link' => '/'
             		]);
             }
-            
 
-		// protected $fillable = 
-		// [
-		// 	'pageNr',
-		// 	'rowNr', 
-		// 	'title', 
-		// 	'text', 
-		// 	'link', 
-		// 	'extern'
-		// ];
-
-            echo ' saved';
+           return Redirect::route('page.show', [$page->pageId]);
         }
 
         /**
