@@ -52,7 +52,7 @@
     include ('RoutePartials/_menuControllerRoutes.php');
 
     /**
-     * Menu controller routers
+     * User controller routers
      */
     include ('RoutePartials/_userControllerRoutes.php');
 
