@@ -64,7 +64,7 @@
 						<div>
 							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>
 							<input type="text" class="form-control"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
-							<textarea class="summernote" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
+							<textarea class="summernote summervalid" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
 							<input type="number" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
 							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
 						</div>
@@ -76,7 +76,7 @@
 			<div class="row col-md-8">
 				<div class="form-group">
 					{!! HTML::linkRoute('admin.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
-					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success'])!!}
+					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validate()'])!!}
 				</div>
 			</div>
 

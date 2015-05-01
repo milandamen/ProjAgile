@@ -24,3 +24,25 @@ function removePanel(link){
 	newDiv = link.parentNode.parentNode;
 	div.removeChild(newDiv);
 }
+
+function validate(){
+
+	if (document.getElementById("title").value == "") {
+        alert("Vul a.u.b. een titel in.");
+        event.preventDefault();
+        return false;
+    }
+
+	var code = $('#summernote').code(),
+    filteredContent = $(code).text().replace(/\s+/g, '');
+
+	if(filteredContent.length > 0) {
+	    // content is not empty
+	} else {
+	   	alert("De pagina introductie heeft geen inhoud, voer deze alstublieft in.");
+        event.preventDefault();
+        return false;
+	}
+
+
+}

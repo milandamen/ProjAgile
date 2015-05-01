@@ -196,7 +196,29 @@
             //
         }
 
-        private function updateSidebar(){
+        /**
+         * When old is the same as $new, both are false or true
+         *	
+		 */
+        private function updateSidebar($old, $new){
 
+        	if($old === $new){
+        		// do nothing
+        	} else{   
+        		if($new){
+        			$sidebar = $this->sidebarrepo->create([
+            		'pageNr' => $pageid,
+            		'page_pageId' => $pageid,
+            		'rowNr' => 0,
+            		'title' => $request->title,
+            		'text' => 'Home',
+            		'extern' => 'false',
+            		'link' => '/'
+            		]);
+        		} else {
+
+        		}
+
+        	}
         }
     }
