@@ -31,7 +31,7 @@
 	                        <div class="form-group">
 	                            <div class="col-md-6 col-md-offset-4">
 	                            	<label>
-                            			<input type="checkbox" name="remember"></input> Onthoudt mij
+                            			<input type="checkbox" name="remember"></input> Onthoud mij
 	                            	</label>
 	                            </div>
 	                        </div>

@@ -31,6 +31,7 @@
 								<a class="btn btn-default" href="{{ route('carousel.edit') }}" role="button">Carrousel wijzigen</a>
 								<a class="btn btn-default" href="{{ route('sidebar.edit', 1) }}" role="button">Sidebar Home wijzigen</a>
 	           					<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Introductie wijzigen</a>
+
 	           				</div>
            				</div>
            				<div class="col-md-3">
@@ -44,13 +45,12 @@
            				<div class="col-md-3">
 	           				<h3>Gebruikers beheer</h3>
 	           				<div class="btn-group-vertical">
-	           					<a class="btn btn-default" href="#" role="button">Content beheerders</a>
-	           					<a class="btn btn-default" href="#" role="button">Administrators</a>
-	           					<a class="btn btn-default" href="#" role="button">Deelwijken</a>
+	           					<a class="btn btn-default" href="{{ route('user.index') }}" role="button">Gebruiker overzicht</a>
+	           					<a class="btn btn-default" href="{{ route('user.create') }}" role="button">Gebruiker toevoegen</a>
+
 	           				</div>
 	           			</div>
-                    
-                  
+
                     @elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
                     
            				<div class="col-md-3">

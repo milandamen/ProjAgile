@@ -14,7 +14,10 @@
 
 		<div class="row">
 			<div class="col-md-8">
-				<h4> {!! $page->introduction->title  !!} </h4>
+			<h4>	@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
+				<a href="{{ route('home.editIntroduction')}}"><i class="fa fa-pencil-square-o"></i></a>
+				@endif
+			 {!! $page->introduction->title  !!} </h4>
 			</div>
 			<div class="panel-body col-md-8">
 				{!! nl2br($page->introduction->text) !!}
