@@ -134,7 +134,13 @@
          */
         public function edit($id)
         {
-            //
+            $page = $this->pagerepo->get($id);
+            if(isset($page)){
+            	return View('page.edit', compact('page'));
+            } else {
+	        	return view('errors.404');
+	        }
+
         }
 
         /**
@@ -143,9 +149,40 @@
          * @param  int  $id
          * @return Response
          */
-        public function update($id)
+        public function update($id, PageRequest $request)
         {
-            //
+            
+        	// update introduction
+        	$introduction = $this->introrepo->get($request->intro_id);
+        	$introduction->title = $request->title;	
+        	$introduction->text = $request->content;
+
+        	$this->introrepo->update($introduction);
+
+        	// update page
+			$page = $this->pagerepo->get($id);	
+			$page->sidebar = $request->sidebar;
+			$this->pagerepo->update($page);
+
+			// delete all old panels 
+			$this->pagepanelrepo->deleteAllFromPage($id);
+
+        	// update panels 
+			if(count($request->panel) > 0){
+            foreach($request->panel as $pagepanel){
+            	$panel = $this->panelrepo->getBySize($pagepanel['size']);
+	          		
+				$this->pagepanelrepo->create([
+					'page_id' => $page->pageId,
+					'title' => $pagepanel['title'],
+					'text' => $pagepanel['content'],
+					'panel_id' =>$panel->panelId
+					]);					
+            	}
+        	}
+
+        	return Redirect::route('page.show', [$page->pageId]);
+
         }
 
         /**
@@ -157,5 +194,9 @@
         public function destroy($id)
         {
             //
+        }
+
+        private function updateSidebar(){
+
         }
     }

@@ -13,14 +13,14 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
-            @include('errors.partials._list')
-            {!! Form:: open() !!}
+			@include('errors.partials._list')
+            {!! Form::model($page, ['method' => 'POST']) !!}
             <div class="row col-md-5">
             	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
+            	<input type="text" name="intro_id" id="intro_id" value="{!! $page->introduction->introductionId !!}" class="hiddenInput" />
 				<div class="form-group col-md-8">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
-				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
+				{!! Form::text('title', $page->introduction->title , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
 				</div>
 			</div>
 
@@ -37,11 +37,11 @@
 					<div class="col-md-12 form-group">
 					{!! Form::label('sidebar', 'Sidebar toevoegen') !!}<br/>
 					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-default">
-						<input type="radio" name="sidebar" value="true">Ja
+						<label class="btn btn-default {{ $page->sidebar ? 'active' : '' }}">
+						<input type="radio" name="sidebar" value="true" {!! $page->sidebar ? 'checked=true' : '' !!}>Ja
 						</label>
-						<label class="btn btn-default">
-						<input type="radio" name="sidebar" value="false" checked="true">Nee
+						<label class="btn btn-default {{ !$page->sidebar ? 'active' : '' }}">
+						<input type="radio" name="sidebar" value="false" {!! !$page->sidebar ? 'checked=true' : '' !!}>Nee
 						</label>
 					</div>
 				</div>
@@ -53,19 +53,25 @@
 			 <div class="row col-md-12">
 				<div class="form-group col-md-12">
 				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-				{!! Form::textarea('content', old('content'), ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
+				{!! Form::textarea('content', $page->introduction->text , ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
 			</div>
-
 
 			<!-- div for new panels -->
 			<div class="row col-md-8">
 				<div class="col-md-12 form-group" id="newPanels">
-					
+					{{--*/ $i = 0; /*--}}
+					@foreach($page->panels as $panel)	{{-- Loop all panels --}}
+						<div>
+							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>
+							<input type="text" class="form-control"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
+							<textarea class="summernote" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
+							<input type="number" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
+							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
+						</div>
+						{{--*/ $i++; /*--}}
+					@endforeach					
 				</div>
 			</div>
-
-
-			
 
 			<div class="row col-md-8">
 				<div class="form-group">

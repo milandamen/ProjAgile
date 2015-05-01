@@ -13,10 +13,17 @@ Route::post('pagina/nieuw',
 	'middleware' => 'admin'
 	]);
 
-Route::get('pagina/wijzigen',
+Route::get('pagina/{id}/wijzigen',
 [
 	'as' => 'page.edit',
 	'uses' => 'PageController@edit',
+	'middleware' => 'admin'
+]);
+
+Route::post('pagina/{id}/wijzigen',
+[
+	'as' => 'page.update',
+	'uses' => 'PageController@update',
 	'middleware' => 'admin'
 ]);
 

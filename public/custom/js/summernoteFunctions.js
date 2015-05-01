@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $('#summernote').summernote();
+  summer();
 });
 
 function summer(){
