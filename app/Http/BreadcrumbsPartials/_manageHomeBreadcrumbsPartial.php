@@ -36,6 +36,14 @@
         $breadcrumbs->push('Wijzig Introductie', route('home.editIntroduction'));
     });
 
+
+    // Home > Manage > Postcodes beheren
+    Breadcrumbs::register('editPostal', function($breadcrumbs)
+    {
+        $breadcrumbs->parent('manage');
+        $breadcrumbs->push('Postcodes beheren', route('postal.index'));
+    });
+
     // Home > Manage > Wijzig layout
     Breadcrumbs::register('editlayout', function($breadcrumbs)
     {

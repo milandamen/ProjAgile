@@ -31,6 +31,7 @@
 	           				<div class="btn-group-vertical">
 	           					<a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws toevoegen</a>
 	           					<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Introductie wijzigen</a>
+                                <a class="btn btn-default" href="{{ route('postal.index')}}" role="button">Postcodes beheren</a>
 	           				</div>
            				</div>
 

@@ -51,3 +51,8 @@
      */ 
     include ('RoutePartials/_menuControllerRoutes.php');
 
+    /**
+     * Postal controller routers
+     */
+    include ('RoutePartials/_postalControllerRoutes.php');
+
