@@ -91,3 +91,9 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+@media (max-width: 1007px) {
+	.mod-carousel {
+		display: none;
+	}
+}
