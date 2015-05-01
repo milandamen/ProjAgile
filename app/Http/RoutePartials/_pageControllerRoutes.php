@@ -1,4 +1,12 @@
 <?php
+
+Route::get('pagina',[
+	'as' => 'page.index',
+	'uses' => 'PageController@index',
+	'middleware' => 'admin'
+]);
+
+
 Route::get('pagina/nieuw',
 [
 	'as' => 'page.create',

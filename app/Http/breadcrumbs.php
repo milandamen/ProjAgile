@@ -20,8 +20,6 @@
     */
     include('BreadcrumbsPartials/_managePageBreadcrumbsPartial.php');
 
-
-
     /**
     * Home > Error
     */

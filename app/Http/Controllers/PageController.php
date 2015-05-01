@@ -40,8 +40,10 @@
          */
 
         public function index()
-        {
-           //
+        {	
+           $pages = $this->pagerepo->getAll();
+
+           return view('page.index', compact('pages'));
         }
 
         /**

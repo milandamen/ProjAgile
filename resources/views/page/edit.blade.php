@@ -3,12 +3,12 @@
 @section('content')
     <div class="container">
     	<div class="row">
-				{!! Breadcrumbs::render('newpage') !!}
+				{!! Breadcrumbs::render('editpagetitle', (object)['id' => $page->pageId, 'title' => $page->introduction->title]) !!}
 			</div>
 
         <div class="row">
             <div class="col-md-12">
-                <h1>Nieuwe pagina</h1>
+                <h1>Pagina wijzigen</h1>
             </div>
         </div>
         <div class="row">
@@ -64,7 +64,7 @@
 						<div>
 							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>
 							<input type="text" class="form-control"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
-							<textarea class="summernote summervalid" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
+							<textarea class="summernote" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
 							<input type="number" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
 							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
 						</div>

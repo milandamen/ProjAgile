@@ -3,6 +3,10 @@
 @section('content')
 	<div class="container">
 		<div class="row">
+				{!! Breadcrumbs::render('showpage', (object)['id' => $page->pageId, 'title' => $page->introduction->title]) !!}
+			</div>
+
+		<div class="row">
 			<div class="col-md-12">
 				<h2 class="page-header">{!! $page->title !!}</h2>
 			</div>
