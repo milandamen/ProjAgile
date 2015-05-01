@@ -90,16 +90,31 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = $this->userRepo->get($id);
-
-        if($user != null)
+        if(Auth::check())
         {
-            return view('user.show', compact('user'));
+            if(Auth::user()->usergroup->name === 'Administrator')
+            {
+                $user = $this->userRepo->get($id);
+
+                if($user != null)
+                {
+                    return view('user.show', compact('user'));
+                }
+                else
+                {
+                    return view('errors.404');
+                }
+            }
+            else
+            {
+                return view('errors.403');
+            }
         }
         else
         {
-            return view('errors.404');
+            return view('errors.401');
         }
+
 
     }
 
