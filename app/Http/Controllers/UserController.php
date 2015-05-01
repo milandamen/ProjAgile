@@ -14,6 +14,9 @@ use View;
 class UserController extends Controller
 {
     private $userRepo;
+    const ADMIN_GROUP_ID = 1;
+    const CONTENT_GROUP_ID = 2;
+    const RESIDENT_GROUP_ID = 3;
 
     public function __construct(IUserRepository $userRepo)
     {
@@ -22,29 +25,36 @@ class UserController extends Controller
 
     public function index($crit = null)
     {
-        if ((Request::get('search') === null || Request::get('search') === '') && $crit === null)
+        if (Auth::check())
         {
-            $admins = $this->userRepo->getAllByUserGroup(1);
-            $contentmanagers = $this->userRepo->getAllByUserGroup(2);
-            $residents = $this->userRepo->getAllByUserGroup(3);
-        }
-        else
-        {
-            if ($crit !== null)
+            if (Auth::user()->usergroup->name === 'Administrator')
             {
-                $criteria = $crit;
+                if ((Request::get('search') === null || Request::get('search') === '') && $crit === null)
+                {
+                    $admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
+                    $contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
+                    $residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
+                }
+                else
+                {
+                    if ($crit !== null)
+                    {
+                        $criteria = $crit;
+                    }
+                    else
+                    {
+                        $criteria = Request::get('search');
+                    }
+                    $admins = $this->userRepo->filterAllByUserGroup(self::ADMIN_GROUP_ID, $criteria);
+                    $contentmanagers = $this->userRepo->filterAllByUserGroup(self::CONTENT_GROUP_ID, $criteria);
+                    $residents = $this->userRepo->filterAllByUserGroup(self::RESIDENT_GROUP_ID, $criteria);
+                    $count = count($admins) + count($contentmanagers) + count($residents);
+                }
+                return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
             }
-            else
-            {
-                $criteria = Request::get('search');
-            }
-            $admins = $this->userRepo->filterAllByUserGroup(1, $criteria);
-            $contentmanagers = $this->userRepo->filterAllByUserGroup(2, $criteria);
-            $residents = $this->userRepo->filterAllByUserGroup(3, $criteria);
-            $count = count($admins) + count($contentmanagers) + count($residents);
+            return view('errors.403');
         }
-
-        return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
+        return view('errors.401');
     }
 
     public function create()
