@@ -226,6 +226,6 @@
 @stop
 
 @section('additional_scripts')
-    {!! HTML::script('custom/js/filterUserTables.js') !!}
     {!! HTML::script('custom/js/autocomplete.js') !!}
+    {!! HTML::script('custom/js/filterUserTables.js') !!}
 @endsection
