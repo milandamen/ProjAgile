@@ -34,7 +34,7 @@
         <div class="col-md-12">
             {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
-            {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'zoek']) !!}
+            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'zoek']) !!}
             </div>
             {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
@@ -113,7 +113,7 @@
                             <thead>
                             <tr>
                                 <th> Id </th>
-                                <th> Gebruikersnaam </th>
+                                <th class="username"> Gebruikersnaam </th>
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
@@ -221,5 +221,45 @@
         @endif
 
     </div>
-
 @stop
+
+@section('additional_scripts')
+
+
+
+    {{--<script>--}}
+        {{--$(document).ready(function () {--}}
+            {{--$("#search").keyup(function () {--}}
+                {{--var reg = new RegExp(this.value, 'i'); // <-- regex case insensitive--}}
+                {{--var ind = $(".username").index(); // index of th - so we know which side to filter--}}
+                {{--var tds = $('tr').find('td:eq(' + ind + ')'); // get the corresponding td's--}}
+                {{--var match = tds.filter(function (i, v) {--}}
+                    {{--return reg.test($(v).text()); // test to see if text matches value in textbox--}}
+                {{--});--}}
+                {{--tds.not(match).css('visibility', 'hidden'); // hide ones that don't match--}}
+                {{--match.css('visibility', 'visible'); // hide matching--}}
+            {{--}).focus(function () {--}}
+                {{--this.value = "";--}}
+                {{--$(this).css({--}}
+                    {{--"color": "black"--}}
+                {{--});--}}
+                {{--$(this).unbind('focus');--}}
+            {{--}).css({--}}
+                {{--"color": "#C0C0C0"--}}
+            {{--});;--}}
+        {{--});--}}
+    {{--</script>--}}
+
+    <script>
+        var $rows = $('tr');
+        $('#search').keyup(function() {
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+            $rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                return !~text.indexOf(val);
+            }).hide();
+        });
+    </script>
+
+@endsection
