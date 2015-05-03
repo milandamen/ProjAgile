@@ -34,7 +34,7 @@
         <div class="col-md-12">
             {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
-            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'zoek']) !!}
+            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control autocomplete', 'placeholder' => 'zoek']) !!}
             </div>
             {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
@@ -219,10 +219,13 @@
             </div>
         </div>
         @endif
-
     </div>
+    <script>
+        var autocompleteURL = "{!! route('autocomplete.userAutocomplete', '') !!}";
+    </script>
 @stop
 
 @section('additional_scripts')
     {!! HTML::script('custom/js/filterUserTables.js') !!}
+    {!! HTML::script('custom/js/autocomplete.js') !!}
 @endsection
