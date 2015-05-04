@@ -224,7 +224,7 @@
             		'extern' => 'false',
             		'link' => '/'
             		]);
-        		} else if(!$new) {
+        		} else {
         			$this->sidebarrepo->deleteAllFromPage($pageid);
         		}
 
