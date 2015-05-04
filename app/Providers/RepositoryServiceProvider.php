@@ -49,5 +49,13 @@
             $this->app->bind('App\Repositories\RepositoryInterfaces\ITopicRepository',              'App\Repositories\EntityRepositories\EntityTopicRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IUserGroupRepository',          'App\Repositories\EntityRepositories\EntityUserGroupRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IUserRepository',               'App\Repositories\EntityRepositories\EntityUserRepository');
+
+            $this->app->bind('App\Repositories\RepositoryInterfaces\IPageRepository',               'App\Repositories\EntityRepositories\EntityPageRepository');
+            $this->app->bind('App\Repositories\RepositoryInterfaces\IPanelRepository',               'App\Repositories\EntityRepositories\EntityPanelRepository');
+            $this->app->bind('App\Repositories\RepositoryInterfaces\IPagePanelRepository',               'App\Repositories\EntityRepositories\EntityPagePanelRepository');
+
+
+
+
         }
     }
