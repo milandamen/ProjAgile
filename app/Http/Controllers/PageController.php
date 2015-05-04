@@ -211,7 +211,7 @@
 		 */
         private function updateSidebar($old, $new, $pageid, $title){
 
-        	if($old === $new){
+        	if($old == $new){
         		// do nothing
         	} else{   
         		if($new){
@@ -224,7 +224,7 @@
             		'extern' => 'false',
             		'link' => '/'
             		]);
-        		} else {
+        		} else if(!$new) {
         			$this->sidebarrepo->deleteAllFromPage($pageid);
         		}
 
