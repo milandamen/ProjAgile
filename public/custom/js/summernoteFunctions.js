@@ -20,6 +20,9 @@ function summer(){
  */
 
 function validateSummer(){
+	var success = true;
+
+	// For a single field
 	var code = $('#summernote').code(),
     filteredContent = $(code).text().replace(/\s+/g, '');
 
@@ -27,7 +30,28 @@ function validateSummer(){
 	    // content is not empty
 	} else {
 	   	alert("Het veld 'inhoud' is niet ingevuld, vul deze alstublieft in.");
-        event.preventDefault();
-        return false;
+        success = false;
 	}
+
+ 	// For multiple field.
+
+	var code = $('.summernote').each(function(){
+     	var panel = $(this).code();
+
+     	var paneltext = $(panel).text();
+     	console.log(paneltext);
+		filteredContent = $(panel).text().replace(/\s+/g, '');
+
+		if(filteredContent.length > 0) {
+		    // content is not empty
+		} else {
+		   	alert("Het panelveld 'inhoud' is bij een van de panels niet ingevuld, vul deze alstublieft in.");
+	        success = false;
+		}
+
+	});
+
+	event.preventDefault();
+	return false;
+
 }
