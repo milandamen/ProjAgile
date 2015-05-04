@@ -3,5 +3,6 @@
 
     interface IPagePanelRepository extends IBaseRepository
     {
-
+    	public function getPagePanels($pageId);
+    	public function deleteAllFromPage($pageId);
     }

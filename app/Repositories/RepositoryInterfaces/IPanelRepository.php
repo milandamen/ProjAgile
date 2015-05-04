@@ -3,5 +3,6 @@
 
     interface IPanelRepository extends IBaseRepository
     {
-
-    }
+    	 public function getBySize($size);
+    	 
+    }	

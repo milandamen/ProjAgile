@@ -1,9 +1,9 @@
 var panelIndex = document.getElementById("newPanels").getElementsByTagName("div").length;
 document.getElementById('panelIndex').value = panelIndex;
 
+var div = document.getElementById('newPanels');
 
 function newPanel(size){
-	var div = document.querySelector('#newPanels');
 
 	var newDiv = document.createElement("div");
 	var label= '<h4 >Nieuw vak met grootte ' + size + '<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>';
@@ -20,7 +20,7 @@ function newPanel(size){
 }
 
 function removePanel(link){
-	var div = document.querySelector('#newPanels');
+	
 	newDiv = link.parentNode.parentNode;
 	div.removeChild(newDiv);
 }
@@ -33,16 +33,7 @@ function validate(){
         return false;
     }
 
-	var code = $('#summernote').code(),
-    filteredContent = $(code).text().replace(/\s+/g, '');
-
-	if(filteredContent.length > 0) {
-	    // content is not empty
-	} else {
-	   	alert("De pagina introductie heeft geen inhoud, voer deze alstublieft in.");
-        event.preventDefault();
-        return false;
-	}
+	validateSummer();
 
 
 }
