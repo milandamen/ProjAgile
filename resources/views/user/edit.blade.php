@@ -15,8 +15,10 @@
         </div>
 
         <div class="col-lg-12">
-
+            @include('errors.partials._list')
             {!! Form::model($user, ['url' => route('user.update', [$user->userId]), 'method' => 'PATCH']) !!}
+
+            {!! Form::hidden('userId', $user->userId) !!}
 
             <div class="form-group">
                 {!! Form::label('username', 'Gebruikersnaam') !!}
@@ -41,6 +43,21 @@
             <div class="form-group">
                 {!! Form::label('password', 'Wachtwoord') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('postal', 'Postcode') !!}
+                {!! Form::text('postal', $postal, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('houseNumber', 'Huisnummer') !!}
+                {!! Form::text('houseNumber', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('userGroupId', 'Gebruikersgroep') !!}
+                {!! Form::select('userGroupId', $userGroups, $user->userGroupId, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">

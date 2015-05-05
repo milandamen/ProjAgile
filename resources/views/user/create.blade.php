@@ -45,13 +45,18 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('postal', 'Postcode') !!}
+                {!! Form::text('postal', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::label('houseNumber', 'Huisnummer') !!}
                 {!! Form::text('houseNumber', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('postal', 'Postcode') !!}
-                {!! Form::text('postal', null, ['class' => 'form-control']) !!}
+                {!! Form::label('userGroupId', 'Gebruikersgroep') !!}
+                {!! Form::select('userGroupId', $userGroups, $user->userGroupId, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">

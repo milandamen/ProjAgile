@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+use App\Repositories\RepositoryInterfaces\IPostalRepository;
 use App\Repositories\RepositoryInterfaces\IUserRepository;
-use App\Repositories\RepositoryInterfaces\ISidebarRepository;
+use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
 use Auth;
 use Redirect;
 use Request;
@@ -14,13 +15,17 @@ use View;
 class UserController extends Controller
 {
     private $userRepo;
+    private $userGroupRepo;
+    private $postalRepo;
     const ADMIN_GROUP_ID = 1;
     const CONTENT_GROUP_ID = 2;
     const RESIDENT_GROUP_ID = 3;
 
-    public function __construct(IUserRepository $userRepo)
+    public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo)
     {
         $this->userRepo = $userRepo;
+        $this->userGroupRepo = $userGroupRepo;
+        $this->postalRepo = $postalRepo;
     }
 
     public function index($crit = null)
@@ -64,7 +69,8 @@ class UserController extends Controller
             if (Auth::user()->usergroup->name === 'Administrator')
             {
                 $user = new User();
-                return view('user.create', compact('user'));
+                $userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+                return view('user.create', compact('user', 'userGroups'));
             }
             return view('errors.403');
         }
@@ -93,28 +99,32 @@ class UserController extends Controller
             if (Auth::user()->usergroup->name === 'Administrator')
             {
                 $user = $this->userRepo->get($id);
-                return view('user.edit', compact('user'));
+                $userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+                $postal = $this->postalRepo->getById($user->postalId)->code;
+                return view('user.edit', compact('user', 'userGroups', 'postal'));
             }
             return view('errors.403');
         }
         return view('errors.401');
     }
 
-    public function update($id)
+    public function update($id, UpdateUserRequest $userRequest)
     {
         if (Auth::check())
         {
-            if (Auth::user()->usergroup->name === 'Administrator') {
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
                 $user = $this->userRepo->get($id);
-                $user->username = Request::get('username');
-                $user->firstName = Request::get('firstName');
-                $user->surname = Request::get('surname');
-                $user->email = Request::get('email');
+                $user->fill($userRequest->input());
 
-                if (Request::get('password') != '')
+                if ( $userRequest->get('password') != '')
                 {
-                    $user->password = Request::get('password');
+                    $user->password =  $userRequest->get('password');
                 }
+
+                $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+                $user->districtSectionId = $postal->districtSectionId;
+                $user->postalId = $postal->postalId;
 
                 $this->userRepo->update($user);
 
