@@ -13,6 +13,7 @@
 {!! HTML::style('custom/css/footer.css') !!}
 {!! HTML::style('custom/css/sidebar.css') !!}
 {!! HTML::style('custom/css/carousel-update.css') !!}
+{!! HTML::style('custom/css/showUser.css') !!}
 
 
 <!-- Multi level menu -->
