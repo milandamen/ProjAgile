@@ -49,8 +49,8 @@
 	margin: 0px;
 }
 
-.newstable-grouping
+.no-padding
 {
 	padding-left: 0px;
-	padding-right: 30px;
+	padding-right: 0px;
 }
