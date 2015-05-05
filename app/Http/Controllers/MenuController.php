@@ -3,6 +3,7 @@
 
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Redirect;
 
     class MenuController extends Controller {
 
@@ -115,5 +116,7 @@
                     $parentId = $key;
                 }
             }
+
+            return Redirect::route('menu.index');
         }
     }

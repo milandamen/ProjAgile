@@ -17,7 +17,7 @@ $(document).ready(function(){
 	function calcWidth(obj){
 		console.log('---- calcWidth -----');
 
-		var titles = 
+		var titles =
 		$(obj).siblings('.space').children('.route').children('.title');
 
 		$(titles).each(function(index, element){
@@ -31,11 +31,11 @@ $(document).ready(function(){
 
 				newWidth = newWidth - 10;
 			}
-
+/*
 			$(element).css({
 				'width': newWidth,
 			})
-
+*/
 			calcWidth(element);
 		});
 

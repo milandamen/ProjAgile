@@ -77,8 +77,8 @@
 
         public function getMenu()
         {
-            $mainMenuItems = Menu::where('parentId', null)->where('publish', 1)->orderBy('menuOrder')->get();
-            $allMenuItems  = $this->orderMenu($mainMenuItems);
+            $mainMenuItems = Menu::where('parentId', null)->where('publish', true)->orderBy('menuOrder')->get();
+            $allMenuItems  = $this->orderMenu($mainMenuItems, true);
 
             return ($allMenuItems);
         }
@@ -86,12 +86,12 @@
         public function getAllMenuItems()
         {
             $mainMenuItems = Menu::where('parentId', null)->orderBy('menuOrder')->get();
-            $allMenuItems  = $this->orderMenu($mainMenuItems);
+            $allMenuItems  = $this->orderMenu($mainMenuItems, false);
 
             return ($allMenuItems);
         }
 
-        private function orderMenu($categories)
+        private function orderMenu($categories, $publishCheck)
         {
             $allCategories = [];
 
@@ -99,11 +99,19 @@
             {
                 $subArr = [];
                 $subArr['main'] = $category;
-                $subCategories = Menu::where('parentId', '=', $category->menuId)->where('publish', '=', 1)->get();
+
+                if ($publishCheck)
+                {
+                    $subCategories = Menu::where('parentId', '=', $category->menuId)->where('publish', true)->orderBy('menuOrder')->get();
+                }
+                else
+                {
+                    $subCategories = Menu::where('parentId', '=', $category->menuId)->orderBy('menuOrder')->get();
+                }
 
                 if (!$subCategories->isEmpty())
                 {
-                    $result = $this->orderMenu($subCategories);
+                    $result = $this->orderMenu($subCategories, $publishCheck);
                     $subArr['sub'] = $result;
                 }
                 $allCategories[] = $subArr;
