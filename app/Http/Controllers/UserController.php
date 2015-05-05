@@ -146,7 +146,7 @@ class UserController extends Controller
                 $user->active = 0;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index', [$crit]);
+                return redirect::route('user.filter', [$crit]);
             }
 
             return view('errors.403');
@@ -164,7 +164,7 @@ class UserController extends Controller
                 $user->active = 1;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index', [$crit]);
+                return redirect::route('user.filter', [$crit]);
             }
 
             return view('errors.403');

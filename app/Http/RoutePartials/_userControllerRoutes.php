@@ -1,6 +1,6 @@
 <?php
 
-    Route::get('gebruikers/{crit?}',
+    Route::get('gebruikers',
     [
         'as' => 'user.index',
         'uses' => 'UserController@index'
@@ -30,7 +30,13 @@
         'uses' => 'UserController@store'
     ]);
 
-    Route::post('gebruikers',
+    Route::get('gebruikers/{crit?}',
+    [
+        'as' => 'user.filter',
+        'uses' => 'UserController@index'
+    ]);
+
+    Route::post('gebruikers/{crit?}',
     [
         'as' => 'user.filter',
         'uses' => 'UserController@index'
