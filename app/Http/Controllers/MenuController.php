@@ -92,31 +92,28 @@
 
         public function updateMenuOrder(Request $request)
         {
-            /*
-            for($i = 2; $i < count($request->all()); $i++)
-            {
-                $request->all()[$i]->key();
-                $request->all()[$i -1 ]->key();
-            }
-            */
-
+            $parentId = NULL;
+            $array = [];
             foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
             {
                 if (! is_string ( $key )){
                     $requestItemPart = explode(".", $requestItem);
-                        if (!$requestItemPart[0] == 0)
+                        if ($requestItemPart[0] == 0)
                         {
-
+                            $array = [];
+                            $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1], NULL );
                         }
                         else
                         {
-                            $parentId = $key;
-                            $requestItemPart[0] = NULL;
-                        }
+                            if(isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]]))
+                            {
+                                $array = array_add($array, $requestItemPart[0], $parentId);
+                            }
 
-                        $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1], $requestItemPart[1] );
+                            $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1],$array[$requestItemPart[0]] );
+                        }
+                    $parentId = $key;
                 }
             }
-
         }
     }
