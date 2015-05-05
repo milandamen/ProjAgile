@@ -13,7 +13,6 @@
 	use Auth;
 	use Redirect;
 	use Request;
-	use View;
 
 	class NewsController extends Controller
 	{

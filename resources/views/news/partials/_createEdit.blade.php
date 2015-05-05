@@ -38,7 +38,7 @@
     @if(isset($files))
         @foreach($files as $file)
             {!! '<tr>
-                <td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width:500px;']) . '</td>' !!}
+                <td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width: 500px;']) . '</td>' !!}
                 <td style="padding-top:5px;">
                     <button id="{!! $file->fileId !!}" style="margin-left: 10px" type="button" class="btn btn-danger" aria-label="Left Align">
                         <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
