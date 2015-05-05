@@ -1,7 +1,6 @@
 @extends('app')
 
 @section('content')
-
     <div class="container">
 
         <!-- breadcrumbs, show search criteria if given -->
@@ -34,7 +33,7 @@
         <div class="col-md-12">
             {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
-            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control autocomplete', 'placeholder' => 'zoek']) !!}
+            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control autocomplete', 'placeholder' => 'filter']) !!}
             </div>
             {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
