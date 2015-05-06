@@ -38,8 +38,6 @@
 					$menuList = $this->menuRepo->getAll();
 					return View('sidebar.edit', compact('sidebarList', 'menuList'));
 				} else {
-					// Totdat er een error page is.
-					//return Redirect::route('home.index');
 					return view('errors.404');
 				}
 			} else {
@@ -83,7 +81,7 @@
 									}
 
 									$newSidebarRow = new Sidebar();
-									$newSidebarRow->pageNr = $pageNr;
+									$newSidebarRow->page_pageId = $pageNr;
 									$newSidebarRow->rowNr = $i;
 									$newSidebarRow->title= $title;
 									$newSidebarRow->text = $text;

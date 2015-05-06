@@ -33,7 +33,6 @@
 		 */
 		protected $fillable = 
 		[
-			'pageNr',
 			'page_pageId',
 			'rowNr', 
 			'title', 
