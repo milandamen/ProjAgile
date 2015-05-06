@@ -25,8 +25,8 @@
 								<th class="cu-smallcol">		<!-- Article ID -->
 									ID
 								</th>
-								<th style="width: 100%";>		<!-- Article title -->
-									Nieuws artikel
+								<th class="fullwidth">		<!-- Article title -->
+									Beschrijving
 								</th>
 								<th>
 									Image
@@ -50,11 +50,14 @@
 										<span>{{ $article->news->newsId }}</span>
 									</td>
 									<td>
-										<span>{{ $article->news->title }}</span>
+										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}" />
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
 											<a href="{{ asset('uploads/img/carousel/' . $article->imagePath) }}" target="_blank">Bekijk huidig</a>
+											<div class="floatRight">
+												<input type="checkbox" name="deletefile[0]" value="true" /> Verwijder huidig
+											</div>
 										@endif
 										<input type="file" name="file[0]" />
 									</td>
