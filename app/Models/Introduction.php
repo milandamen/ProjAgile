@@ -47,4 +47,10 @@
         [
         	'introductionId'
         ];
+
+
+        public function page()
+		{
+	        return $this->hasOne('App\Models\Page', 'pageId');
+		}
     }

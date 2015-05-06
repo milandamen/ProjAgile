@@ -46,7 +46,7 @@
 				<div class="form-group">
 					{!! HTML::linkRoute('admin.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
 					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success'])!!}
-				</div
+				</div>
 			</div>
 
 			<!--</form>-->
