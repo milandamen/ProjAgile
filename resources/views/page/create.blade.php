@@ -23,8 +23,15 @@
 				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
 				</div>
 			</div>
+ 			 <div class="row col-md-5">
+            	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
+				<div class="form-group col-md-8">
+				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				</div>
+			</div>
 
-				<div class="row col-md-7">
+			<div class="row col-md-7">
 				<div class="col-md-8 form-group">
 					{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} <br/>
 					{!!  Form:: button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
@@ -40,7 +47,7 @@
 						<label class="btn btn-default">
 						<input type="radio" name="sidebar" value="true">Ja
 						</label>
-						<label class="btn btn-default">
+						<label class="btn btn-default active">
 						<input type="radio" name="sidebar" value="false" checked="true">Nee
 						</label>
 					</div>

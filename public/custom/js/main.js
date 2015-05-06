@@ -15,3 +15,8 @@ function execActionOnElementsInArray(array, tagname, func_action) {
 		}
 	});
 }
+
+
+function verify(){
+	return confirm('Weet u zeker dat u wilt verwijderen?');
+}

@@ -208,7 +208,6 @@
 
             $this->pagepanelrepo->deleteAllFromPage($id);
             $this->pagerepo->destroy($id);
-
             $this->introrepo->destroy($page->introduction->introductionId);
 
 
