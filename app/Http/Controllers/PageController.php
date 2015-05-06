@@ -94,7 +94,6 @@
 
             if($request->sidebar){
             	$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $request->title,
@@ -227,7 +226,6 @@
         	} else{   
         		if($new){
         			$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $title,
