@@ -42,17 +42,23 @@
 								{{--*/ $phrase = trunc($page->introduction->text, 30); /*--}}
 								<td> {!! $phrase !!}	</td>
 								<td>	</td>
-								<td> 
-									<a href="{{ route('page.show', [$page->pageId]) }}"> 
-										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
-									</a>
-								</td>
+								
 								<td> 
 									<a class="right" href="{{ route('page.edit', [$page->pageId]) }}">
 										<i class="fa fa-pencil-square-o"></i>
 									</a>
 								</td>
-								<td></td>
+								<td>
+									<a class="right" href="{{ route('page.del', [$page->pageId]) }}">
+										<i class="fa fa-times text-danger"></i>
+									</a>
+								</td>
+								<td> 
+									<a href="{{ route('page.show', [$page->pageId]) }}"> 
+										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+									</a>
+								</td>
+								
 							</tr>
 						@endforeach
 					</tbody>

@@ -202,7 +202,18 @@
          */
         public function destroy($id)
         {
-            //
+        	$page = $this->pagerepo->get($id);
+            if($page->sidebar){
+  				$this->sidebarrepo->deleteAllFromPage($id);
+        	}
+
+            $this->pagepanelrepo->deleteAllFromPage($id);
+            $this->pagerepo->destroy($id);
+
+            $this->introrepo->destroy($page->introduction->introductionId);
+
+
+            return Redirect::route('page.index');
         }
 
         /**
