@@ -19,11 +19,13 @@
                     <tr><td class="table-left">Achternaam:</td><td>{{$user->surname}}</td></tr>
                     <tr><td class="table-left">Huisnummer:</td><td>{{$user->houseNumber}}</td></tr>
                     <tr><td class="table-left">Email:</td><td>{{$user->email}}</td></tr>
+                    <tr><td class="table-left">Actief:</td><td>
                     @if($user->active === 0)
-                        <tr><td class="table-left">Actief:</td><td>Nee</td></tr>
+                        Nee
                     @else
-                        <tr><td class="table-left">Actief:</td><td>Ja</td></tr>
+                        Ja
                     @endif
+                    </td></tr>
                 </table>
             </div>
         </div>
