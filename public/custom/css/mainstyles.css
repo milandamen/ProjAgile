@@ -27,7 +27,23 @@
     float: right;
 }
 
+.floatLeft {
+	float: left;
+}
+
+.floatRight {
+	float: right;
+}
+
 .showMore a {
     text-decoration: none;
     color: dimgray;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+.textBold {
+	font-weight: bold;
 }
