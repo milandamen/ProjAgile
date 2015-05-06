@@ -7,6 +7,7 @@
 
     class SidebarComposer
     {
+        private $homePageNumber = 1;
         private $sidebarRepo;
 
         public function __construct(ISidebarRepository $sidebarRepo)
@@ -23,8 +24,8 @@
          */
         public function compose(View $view)
         {
-        	//$sidebar = $this->sidebarRepo->getByPage(1);
-			$sidebar = []; 			// TODO CHANGE AFTER SIDEBAR DEBUG
+
+        	$sidebar = $this->sidebarRepo->getByPage($this->homePageNumber);
     		$view->with('sidebar', $sidebar); 
         }
     }
