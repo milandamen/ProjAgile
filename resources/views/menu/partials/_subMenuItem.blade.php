@@ -10,7 +10,7 @@
                     <i class="fa fa-eye"></i>
                 @endif
                 <i class="fa fa-pencil-square-o"></i>
-                <i class="fa fa-times"></i>
+                <a onclick="removeItem(this)"><i class="fa fa-times"></i></a>
             </div>
         </h3>
         {!! Form::hidden($item['main']->menuId, $item['main']->menuOrder, ['class' => 'menuGroupItem'] ) !!}

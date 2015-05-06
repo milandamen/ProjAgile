@@ -32,7 +32,12 @@ function handleListItem(liItem, parentOrder){
             }
         });
     });
+}
 
 
+function removeItem($item){
+
+    var listItem = $item.parentNode.parentNode.parentNode;
+    listItem.parentNode.removeChild(listItem);
 
 }

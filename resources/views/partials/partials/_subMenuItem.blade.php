@@ -7,7 +7,7 @@
 				@include('partials.partials._subMenuItem', ['items' => $item['sub'],'main' => $item])
 			</ul>
 		@else
-			<a href="{{ url($item['main']->relativeUrl) }}">{{ $item['main']->name }}</a>
+			<a href="{{ url($item['main']->link) }}">{{ $item['main']->name }}</a>
 		@endif
 	</li>
 @endforeach

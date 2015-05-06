@@ -37,6 +37,8 @@
          */
         public function create($attributes)
         {
+            $NewMenuOrder = Menu::where('parentId', '=', NULL)->orderBy('menuOrder', 'desc')->first()->menuOrder + 1;
+            $attributes = array_add($attributes, 'menuOrder', $NewMenuOrder);
             return Menu::create($attributes);
         }
 

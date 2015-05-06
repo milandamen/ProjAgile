@@ -56,5 +56,5 @@
     Breadcrumbs::register('editmenu', function($breadcrumbs)
     {
         $breadcrumbs->parent('manage');
-        $breadcrumbs->push('Wijzig Menu', route('menu.edit'));
+        $breadcrumbs->push('Wijzig Menu', route('menu.index'));
     });

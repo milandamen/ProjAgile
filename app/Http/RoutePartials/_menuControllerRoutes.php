@@ -12,3 +12,17 @@
         'uses' => 'MenuController@updateMenuOrder',
         'middleware' => 'admin'
     ]);
+
+    Route::get('menuitemaanmaken',
+    [
+        'as' => 'menu.create',
+        'uses' => 'MenuController@create',
+        'middleware' => 'admin'
+    ]);
+
+    Route::put('menuitemaanmaken',
+    [
+        'as' => 'menu.create',
+        'uses' => 'MenuController@store',
+        'middleware' => 'admin'
+    ]);

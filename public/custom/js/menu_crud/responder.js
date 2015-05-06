@@ -46,7 +46,7 @@ $(document).ready(function(){
 		connectWith:'.space',
 		// handle:'.title',
 		// placeholder: ....,
-		tolerance:'intersect',
+        tolerance:'intersect',
 		over:function(event,ui){
 			// //Recaculate width of all children
 			// var pTitleWidth = parseInt($(this).siblings('.title').css('width').replace('px', ''));

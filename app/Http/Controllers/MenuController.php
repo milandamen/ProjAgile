@@ -4,6 +4,7 @@
     use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Redirect;
+    use App\Http\Requests\Menu\MenuRequest;
 
     class MenuController extends Controller {
 
@@ -34,7 +35,7 @@
          */
         public function create()
         {
-            //
+            return view('menu.create');
         }
 
         /**
@@ -42,9 +43,10 @@
          *
          * @return Response
          */
-        public function store()
+        public function store(MenuRequest $request)
         {
-            //
+            $this->menuRepo->create($request->all());
+            return Redirect::route ('menu.index');
         }
 
         /**
@@ -95,10 +97,24 @@
         {
             $parentId = NULL;
             $array = [];
+            $allMenuItems = $this->menuRepo->getAll();
+
             foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
             {
                 if (! is_string ( $key )){
-                    $requestItemPart = explode(".", $requestItem);
+
+
+                        foreach($allMenuItems as $oldIndex => $oldItem)
+                        {
+                            if ($oldItem->menuId == $key)
+                            {
+                                unset($allMenuItems[$oldIndex]);
+                                break;
+                            }
+                        }
+
+
+                        $requestItemPart = explode(".", $requestItem);
                         if ($requestItemPart[0] == 0)
                         {
                             $array = [];
@@ -115,6 +131,11 @@
                         }
                     $parentId = $key;
                 }
+            }
+
+            foreach($allMenuItems as $oldItem)
+            {
+                $this->menuRepo->destroy($oldItem->menuId);
             }
 
             return Redirect::route('menu.index');

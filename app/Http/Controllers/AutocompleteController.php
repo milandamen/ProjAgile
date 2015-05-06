@@ -30,7 +30,7 @@ class AutocompleteController extends Controller
         foreach($items as $item)
         {
             $a_json_row["label"] = $item->name;
-            $a_json_row["value"] = $item->relativeUrl;
+            $a_json_row["value"] = $item->link;
             array_push($a_json, $a_json_row);
         }
 

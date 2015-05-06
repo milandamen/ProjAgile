@@ -39,7 +39,6 @@
   background: #4af;
   border-radius: 2px;
   box-shadow: 0px 0px 0px 2px #29f;
-  pointer-events: none;
 }
 
 .first-title { margin-left: 10px; }

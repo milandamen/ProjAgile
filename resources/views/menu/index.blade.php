@@ -2,11 +2,15 @@
 
 @section('content')
     <div class="container">
-        <!-- Features Section -->
-
+        <div class="row">
+            {!! Breadcrumbs::render('editmenu') !!}
+        </div>
             <div class="col-lg-12">
-                <h2 class="page-header">Menu Beheer</h2>
+                <h2 class="page-header">Menu Wijzigen</h2>
+                <a class="btn btn-default" href="{{ route('menu.create') }}" role="button">Nieuw Menu Item Aanmaken </a>
                 {!! Form::open (['id' => 'menuForm','method' => 'PATCH']) !!}
+
+                <a class="btn btn-default pull-right" onclick="submitForm()"> Opslaan </a>
                 <ul class='space first-space' id='fullMenuList'>
                     @foreach($allMenuItems as $subMenu)
                         <li class='route'>
@@ -19,8 +23,8 @@
                                     @else
                                         <i class="fa fa-eye"></i>
                                     @endif
-                                        <i class="fa fa-pencil-square-o"></i>
-                                        <i class="fa fa-times"></i>
+                                    <i class="fa fa-pencil-square-o"></i>
+                                    <a onclick="removeItem(this)"><i class="fa fa-times"></i></a>
                                 </div>
                             </h3>
 
@@ -35,13 +39,11 @@
                 </ul>
             </div>
 
-        <div class="row"></div>
+
 
         <a class="btn btn-default pull-right" onclick="submitForm()"> Opslaan </a>
         {!! Form::close() !!}
     </div>
-
-
 @stop
 
 @section('additional_scripts')
