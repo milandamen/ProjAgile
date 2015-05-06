@@ -23,7 +23,8 @@
          */
         public function compose(View $view)
         {
-        	$sidebar = $this->sidebarRepo->getByPage(1);
+        	//$sidebar = $this->sidebarRepo->getByPage(1);
+			$sidebar = []; 			// TODO CHANGE AFTER SIDEBAR DEBUG
     		$view->with('sidebar', $sidebar); 
         }
     }
