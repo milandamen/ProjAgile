@@ -1,5 +1,6 @@
 <?php namespace App\Http\Requests\User;
 
+use App\Http\Controllers\UserController;
 use App\Http\Requests\Request;
 use Auth;
 
@@ -22,17 +23,36 @@ class CreateUserRequest extends Request {
 	 */
 	public function rules()
 	{
-        return
-            [
-                'username' => 'required|max:30|unique:User,username',
-                'password' => 'required|confirmed|min:8',
-                'password_confirmation' => 'required',
-                'firstName' => 'required|max:50',
-                'surname' => 'required|max:80',
-                'houseNumber' => 'required|integer|digits_between:1,8',
-                'postal' => 'required|min:6|max:7|exists:Postal,code',
-                'email' => 'required|max:60|email|unique:User,email',
-            ];
+        //return rules based on userGroup.
+        //postal and houseNumber attributes are required only for residents.
+        if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
+        {
+            return
+                [
+                    'username' => 'required|max:30|unique:User,username',
+                    'password' => 'required|confirmed|min:8',
+                    'password_confirmation' => 'required',
+                    'firstName' => 'required|max:50',
+                    'surname' => 'required|max:80',
+                    'email' => 'required|max:60|email|unique:User,email',
+                    'houseNumber' => 'required|integer|digits_between:1,8',
+                    'postal' => 'required|min:6|max:7|exists:Postal,code',
+                ];
+        }
+        else
+        {
+            return
+                [
+                    'username' => 'required|max:30|unique:User,username',
+                    'password' => 'required|confirmed|min:8',
+                    'password_confirmation' => 'required',
+                    'firstName' => 'required|max:50',
+                    'surname' => 'required|max:80',
+                    'email' => 'required|max:60|email|unique:User,email',
+                    'houseNumber' => 'integer|digits_between:1,8',
+                    'postal' => 'min:6|max:7|exists:Postal,code',
+                ];
+        }
 	}
 
     /**

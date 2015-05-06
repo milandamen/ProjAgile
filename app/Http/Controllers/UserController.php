@@ -12,6 +12,7 @@ use Auth;
 use Redirect;
 use Request;
 use View;
+use Hash;
 
 class UserController extends Controller
 {
@@ -88,13 +89,16 @@ class UserController extends Controller
                 $data = $userRequest->only
                 (
                     'username',
-                    'password',
                     'firstName',
                     'surname',
+                    'email',
+                    'password',
                     'postal',
                     'houseNumber',
-                    'email'
+                    'userGroupId'
                 );
+
+                //return $userRequest->get('userGroupId');
                 $this->userRepo->create($data);
                 return redirect::route('user.index');
             }
@@ -132,16 +136,17 @@ class UserController extends Controller
                     'firstName',
                     'surname',
                     'email',
-                    'password',
                     'postal',
                     'houseNumber',
                     'userGroupId'
                 );
+
                 $user->fill($data);
 
-                if ( $userRequest->get('password') != '')
+                //only change password when given. If the field is emtpy the password need not be changed.
+                if ( $userRequest->get('password') !== '')
                 {
-                    $user->password =  $userRequest->get('password');
+                    $user->password =  Hash::make($userRequest->get('password'));
                 }
 
                 $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
