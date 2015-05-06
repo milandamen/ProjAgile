@@ -10,30 +10,13 @@
 	<div class="col-md-12 no-padding">
 		{!! Form::label('districtSection', 'Sectie') !!}
 	</div>
-	<div class="col-md-4 no-padding">
+	<div class="col-md-3 no-padding">
 		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
 	</div>
-	<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
-		<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
-		<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
-		<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
-		<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
-		<div class="col-md-4 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
-	</div>
+	<div class="col-md-1"></div>
 </div>
 <div class="form-group col-md-12 no-padding">
-	<div class="col-md-4 no-padding">
+	<div class="col-md-3 no-padding">
 		{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
@@ -43,7 +26,8 @@
 			!!}
 		</div>
 	</div>
-	<div class="col-md-4 no-padding">
+	<div class="col-md-1"></div>
+	<div class="col-md-3 no-padding">
 		{!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
@@ -53,23 +37,6 @@
 			!!}
 		</div>
 	</div>
-</div>
-<div class="form-group">
-	<!-- {!! Form::label('fileUpload', 'File Toevoegen') !!}<br/> -->
-	<table name="fileUpload">
-	@if(isset($files))
-		@foreach($files as $file)
-			{!! '<tr>
-				<td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width: 500px;']) . '</td>' !!}
-				<td style="padding-top:5px;">
-					<button id="{!! $file->fileId !!}" style="margin-left: 10px" type="button" class="btn btn-danger" aria-label="Left Align">
-						<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-				</td>
-			</tr>
-		@endforeach
-	@endif
-	</table>
 </div>
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-2 no-padding">

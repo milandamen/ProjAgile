@@ -273,6 +273,17 @@
 		}
 
 		/**
+		 * Get all the district sections.
+		 *
+		 * @return Json
+		 */
+		public function getAllDistrictSections() 
+		{
+			$data = $this->districtSectionRepo->getAll();
+			echo json_encode($data);
+		}
+
+		/**
 		 * Hides an article depending on the id provided.
 		 *
 		 * @param int $id

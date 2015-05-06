@@ -37,7 +37,7 @@
             $this->app->bind('App\Repositories\RepositoryInterfaces\IIntroductionRepository',       'App\Repositories\EntityRepositories\EntityIntroductionRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IMenuRepository',               'App\Repositories\EntityRepositories\EntityMenuRepository');
 
-            $this->app->bind('App\Repositories\RepositoryInterfaces\INewOnSiteRepository',        'App\Repositories\EntityRepositories\EntityNewOnSiteRepository');
+            $this->app->bind('App\Repositories\RepositoryInterfaces\INewOnSiteRepository',          'App\Repositories\EntityRepositories\EntityNewOnSiteRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\INewsCommentRepository',        'App\Repositories\EntityRepositories\EntityNewsCommentRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\INewsRepository',               'App\Repositories\EntityRepositories\EntityNewsRepository');
             $this->app->bind('App\Repositories\RepositoryInterfaces\IPartnerRepository',            'App\Repositories\EntityRepositories\EntityPartnerRepository');
@@ -51,11 +51,7 @@
             $this->app->bind('App\Repositories\RepositoryInterfaces\IUserRepository',               'App\Repositories\EntityRepositories\EntityUserRepository');
 
             $this->app->bind('App\Repositories\RepositoryInterfaces\IPageRepository',               'App\Repositories\EntityRepositories\EntityPageRepository');
-            $this->app->bind('App\Repositories\RepositoryInterfaces\IPanelRepository',               'App\Repositories\EntityRepositories\EntityPanelRepository');
-            $this->app->bind('App\Repositories\RepositoryInterfaces\IPagePanelRepository',               'App\Repositories\EntityRepositories\EntityPagePanelRepository');
-
-
-
-
+            $this->app->bind('App\Repositories\RepositoryInterfaces\IPanelRepository',              'App\Repositories\EntityRepositories\EntityPanelRepository');
+            $this->app->bind('App\Repositories\RepositoryInterfaces\IPagePanelRepository',          'App\Repositories\EntityRepositories\EntityPagePanelRepository');
         }
     }
