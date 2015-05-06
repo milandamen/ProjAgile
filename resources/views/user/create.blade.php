@@ -15,9 +15,8 @@
         </div>
 
         <div class="col-lg-12">
-
+            @include('errors.partials._list')
             {!! Form::model($user, ['url' => route('user.store'), 'method' => 'POST']) !!}
-
 
             <div class="form-group">
                 {!! Form::label('username', 'Gebruikersnaam') !!}
@@ -42,6 +41,11 @@
             <div class="form-group">
                 {!! Form::label('password', 'Wachtwoord') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('password_confirmation', 'Herhaal Wachtwoord') !!}
+                {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">

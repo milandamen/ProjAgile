@@ -45,6 +45,7 @@ class UpdateUserRequest extends Request {
         $input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
         $input['firstName'] = filter_var($input['firstName'], FILTER_SANITIZE_STRING);
         $input['surname'] = filter_var($input['surname'], FILTER_SANITIZE_STRING);
+        $input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
         $input['houseNumber'] = filter_var($input['houseNumber'], FILTER_SANITIZE_STRING);
         $input['postal'] = filter_var($input['postal'], FILTER_SANITIZE_STRING);
         $input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);

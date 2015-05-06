@@ -24,12 +24,14 @@ class CreateUserRequest extends Request {
 	{
         return
             [
-                'username' => 'required|max:30|unique:User,userId'.$this->get('userId'),
+                'username' => 'required|max:30|unique:User,username',
+                'password' => 'required|confirmed|min:8',
+                'password_confirmation' => 'required',
                 'firstName' => 'required|max:50',
                 'surname' => 'required|max:80',
                 'houseNumber' => 'required|integer|digits_between:1,8',
                 'postal' => 'required|min:6|max:7|exists:Postal,code',
-                'email' => 'required|max:60|email|unique:User,userId'.$this->get('userId'),
+                'email' => 'required|max:60|email|unique:User,email',
             ];
 	}
 
@@ -43,6 +45,8 @@ class CreateUserRequest extends Request {
         $input = $this->all();
 
         $input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
+        $input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
+        $input['password_confirmation'] = filter_var($input['password_confirmation'], FILTER_SANITIZE_STRING);
         $input['firstName'] = filter_var($input['firstName'], FILTER_SANITIZE_STRING);
         $input['surname'] = filter_var($input['surname'], FILTER_SANITIZE_STRING);
         $input['houseNumber'] = filter_var($input['houseNumber'], FILTER_SANITIZE_STRING);

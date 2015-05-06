@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\RepositoryInterfaces\IPostalRepository;
@@ -77,14 +78,24 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function store()
+    public function store(CreateUserRequest $userRequest)
     {
         if (Auth::check())
         {
             if (Auth::user()->usergroup->name === 'Administrator')
             {
-                $data = Request::input();
-                $user = $this->userRepo->create($data);
+                //$data = $userRequest->input();
+                $data = $userRequest->only
+                (
+                    'username',
+                    'password',
+                    'firstName',
+                    'surname',
+                    'postal',
+                    'houseNumber',
+                    'email'
+                );
+                $this->userRepo->create($data);
                 return redirect::route('user.index');
             }
             return view('errors.403');
@@ -115,7 +126,18 @@ class UserController extends Controller
             if (Auth::user()->usergroup->name === 'Administrator')
             {
                 $user = $this->userRepo->get($id);
-                $user->fill($userRequest->input());
+                $data = $userRequest->only
+                (
+                    'username',
+                    'firstName',
+                    'surname',
+                    'email',
+                    'password',
+                    'postal',
+                    'houseNumber',
+                    'userGroupId'
+                );
+                $user->fill($data);
 
                 if ( $userRequest->get('password') != '')
                 {
@@ -143,7 +165,7 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->active = 0;
+                $user->active = false;
                 $this->userRepo->update($user);
 
                 return redirect::route('user.filter', [$crit]);
@@ -161,7 +183,7 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->active = 1;
+                $user->active = true;
                 $this->userRepo->update($user);
 
                 return redirect::route('user.filter', [$crit]);
