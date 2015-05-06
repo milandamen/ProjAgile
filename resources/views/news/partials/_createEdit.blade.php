@@ -1,19 +1,29 @@
-<div class="form-group">
-	{!! Form::label('title', 'Titel') !!}
-	{!! Form::text('title', old('title'), ['placeholder' => 'Titel', 'class' => 'form-control']) !!}
-</div>
-<div class="form-group">
-	{!! Form::label('content', 'Content') !!}
-	{!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
+<div class="form-group col-md-12 no-padding">
+	<div class="col-md-12 no-padding">
+		{!! Form::label('title', 'Titel') !!}
+	</div>
+	<div class="col-md-9 no-padding">
+		{!! Form::text('title', old('title'), ['placeholder' => 'Titel', 'class' => 'form-control']) !!}
+	</div>
 </div>
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-12 no-padding">
-		{!! Form::label('districtSection', 'Sectie') !!}
+		{!! Form::label('content', 'Content') !!}
+	</div>
+	<div class="col-md-9 no-padding">
+		{!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
+	</div>
+</div>
+<div class="form-group col-md-12 no-padding">
+	<div class="col-md-12 no-padding">
+		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
+		<button id="newDistrictSection" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
+			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
 	</div>
 	<div class="col-md-3 no-padding">
-		{!! Form::select('districtSectionId', ['0' => 'Home'] + $districtSections, old('districtSectionId'), ['class' => 'form-control']) !!}
+		{!! Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) !!}
 	</div>
-	<div class="col-md-1"></div>
 </div>
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-3 no-padding">
@@ -38,15 +48,35 @@
 		</div>
 	</div>
 </div>
+<div class="form-group">
+	{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}<br/>
+	<table name="fileUpload">
+	@if(isset($files))
+		@foreach($files as $file)
+			{!! '<tr>
+				<td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width:500px;']) . '</td>' !!}
+				<td style="padding-top:5px;">
+					<button id="{!! $file->fileId !!}" style="margin-left: 10px" type="button" class="btn btn-danger" aria-label="Left Align">
+						<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+				</td>
+			</tr>
+		@endforeach
+	@endif
+		{!! '<tr>
+			<td style="padding-top:5px;">' . Form::file('file[0]') . '</td>' !!}
+		</tr>
+	</table>
+</div>
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-2 no-padding">
 		{!! Form::label('hidden', 'Verbergen?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
-				<input type="radio" name="hidden" value="true" {{ $newsItem->hidden ? 'checked=true' : '' }}>Ja
+				<input type="radio" name="hidden" value="true" {{ $newsItem->hidden ? 'checked="true"' : '' }}>Ja
 			</label>
 			<label class="btn btn-default {{ !$newsItem->hidden ? 'active' : '' }}">
-				<input type="radio" name="hidden" value="false" {{ !$newsItem->hidden ? 'checked=true' : '' }}>Nee
+				<input type="radio" name="hidden" value="false" {{ !$newsItem->hidden ? 'checked="true"' : '' }}>Nee
 			</label>
 		</div>
 	</div>
@@ -54,10 +84,10 @@
 		{!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
-				<input type="radio" name="commentable" value="true" {{ $newsItem->commentable ? 'checked=true' : '' }}>Ja
+				<input type="radio" name="commentable" value="true" {{ $newsItem->commentable ? 'checked="true"' : '' }}>Ja
 			</label>
 			<label class="btn btn-default {{ !$newsItem->commentable ? 'active' : '' }}">
-				<input type="radio" name="commentable" value="false" {{ !$newsItem->commentable ? 'checked=true' : '' }}>Nee
+				<input type="radio" name="commentable" value="false" {{ !$newsItem->commentable ? 'checked="true"' : '' }}>Nee
 			</label>
 		</div>
 	</div>
@@ -65,14 +95,16 @@
 		{!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
-				<input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked=true' : '' }}>Ja
+				<input type="radio" name="top" value="true" {{ $newsItem->top ? 'checked="true"' : '' }}>Ja
 			</label>
 			<label class="btn btn-default {{ !$newsItem->top ? 'active' : '' }}">
-				<input type="radio" name="top" value="false" {{ !$newsItem->top ? 'checked=true' : '' }}">Nee
+				<input type="radio" name="top" value="false" {{ !$newsItem->top ? 'checked="true"' : '' }}">Nee
 			</label>
 		</div>
 	</div>
 </div>
 <div class="form-group">
-	{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
+	<div class="col-md-12 no-padding">
+		{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
+	</div>
 </div>

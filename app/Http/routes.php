@@ -1,69 +1,70 @@
 <?php
-    // Admin controller routes
-    include('RoutePartials/_adminControllerRoutes.php');
+	/**
+	 * AdminController routes
+	 */
+	include('RoutePartials/_adminControllerRoutes.php');
 
 	/**
-    * Auth controller routes
-    */
+	 * AuthController routes
+	 */
 	include('RoutePartials/_authControllerRoutes.php');
 
 	/**
-    * File controller routes
-    */
+	 * AutocompleteController routes
+	 */
+	include('RoutePartials/_autocompleteControllerRoutes.php');
+
+	/**
+	 * CarouselController routes
+	 */
+	include('RoutePartials/_carouselControllerRoutes.php');
+
+	/**
+	 * DistrictSectionController routes
+	 */
+	include('RoutePartials/_districtSectionControllerRoutes.php');
+
+	/**
+	 * FileController routes
+	 */
 	include('RoutePartials/_fileControllerRoutes.php');
 
 	/**
-    * Home controller routes
-    */
+	 *  FooterController routes
+	 */
+	include('RoutePartials/_footerControllerRoutes.php');
+
+	/**
+	 * HomeController routes
+	 */
 	include('RoutePartials/_homeControllerRoutes.php');
 
 	/**
-	 * News controller routes
+	 * MenuController routes
+	 */ 
+	include ('RoutePartials/_menuControllerRoutes.php');
+
+	/**
+	 * NewOnSiteController routes
+	 */
+	include ('RoutePartials/_newOnSiteRoutes.php');
+
+	/**
+	 * NewsController routes
 	 */
 	include('RoutePartials/_newsControllerRoutes.php');
 
-    /**
-     * Sidebar controller routes
-     */
-    include('RoutePartials/_sidebarControllerRoutes.php');
-    /**
-     *  Footer controller routes
-     */
-    include('RoutePartials/_footerControllerRoutes.php');
+	/**
+	 * PageController routers
+	 */ 
+	include ('RoutePartials/_pageControllerRoutes.php');
 
-    /**
-     * Carousel controller routes
-     */
-    include('RoutePartials/_carouselControllerRoutes.php');
+	/**
+	 * SidebarController routes
+	 */
+	include('RoutePartials/_sidebarControllerRoutes.php');
 
-    /**
-     * Autocomplete Controller routes
-     */
-    include('RoutePartials/_autocompleteControllerRoutes.php');
-
-    /**
-     * Carousel controller routes
-     */
-    include('RoutePartials/_carouselControllerRoutes.php');
-
-    /**
-     * Menu controller routes
-     */ 
-    include ('RoutePartials/_menuControllerRoutes.php');
-
-     /**
-     * Page controller routers
-     */ 
-    include ('RoutePartials/_pageControllerRoutes.php');
-
-    /**
-     * User controller routers
-     */
-    include ('RoutePartials/_userControllerRoutes.php');
-
-    /**
-     * NewOnSite controller routes
-     */
-    include ('RoutePartials/_newOnSiteRoutes.php');
-
-
+	/**
+	 * UserController routers
+	 */
+	include ('RoutePartials/_userControllerRoutes.php');

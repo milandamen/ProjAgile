@@ -22,7 +22,7 @@
 		 */
 		public function rules()
 		{
-			return 
+			$rules = 
 			[
 				'title' => 'required',
 				'content' => 'required',
@@ -32,6 +32,13 @@
 				'publishEndDate' => 'required|date|after:publishStartDate',
 				'top' => 'required',
 			];
+
+			foreach ($this->request->get('districtSection') as $key => $value)
+			{
+				$rules['districtSection[' . $key . '].max'] = 'required';
+			}
+
+			return $rules;
 		}
 
 		/**
@@ -44,15 +51,19 @@
 			$input = $this->all();
 
 			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
-            $input['content'] = htmlspecialchars_decode($_POST['content']);
-			$input['districtSectionId'] = filter_var($input['districtSectionId'], FILTER_SANITIZE_STRING);
+			$input['content'] = htmlspecialchars_decode($_POST['content']);
 			$input['hidden'] = filter_var($input['hidden'], FILTER_SANITIZE_STRING);
 			$input['commentable'] = filter_var($input['commentable'], FILTER_SANITIZE_STRING);
 			$input['publishStartDate'] = filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
 			$input['publishEndDate'] = filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
 			$input['top'] = filter_var($input['top'], FILTER_SANITIZE_STRING);
 
-			$input['districtSectionId'] = parseSelectorField($input['districtSectionId']);
+			foreach ($this->request->get('districtSection') as $key => $value)
+			{
+				$rules['districtSection[' . $key . '].max'] = 'required';
+				$input = array_add($input, 'districtSection[' . $key . ']', parseSelectorField($value));
+			}
+			
 			$input['hidden'] = parseCheckboxOrRadioButton($input['hidden']);
 			$input['commentable'] = parseCheckboxOrRadioButton($input['commentable']);
 			$input['top'] = parseCheckboxOrRadioButton($input['top']);
