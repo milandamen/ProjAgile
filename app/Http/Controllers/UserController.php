@@ -85,20 +85,7 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator')
             {
-                //$data = $userRequest->input();
-                $data = $userRequest->only
-                (
-                    'username',
-                    'firstName',
-                    'surname',
-                    'email',
-                    'password',
-                    'postal',
-                    'houseNumber',
-                    'userGroupId'
-                );
-
-                //return $userRequest->get('userGroupId');
+                $data = $userRequest->input();
                 $this->userRepo->create($data);
                 return redirect::route('user.index');
             }
@@ -115,7 +102,11 @@ class UserController extends Controller
             {
                 $user = $this->userRepo->get($id);
                 $userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
-                $postal = $this->postalRepo->getById($user->postalId)->code;
+                $postal = '';
+                if ($user->postalId !== null)
+                {
+                    $postal = $this->postalRepo->getById($user->postalId)->code;
+                }
                 return view('user.edit', compact('user', 'userGroups', 'postal'));
             }
             return view('errors.403');
@@ -144,14 +135,22 @@ class UserController extends Controller
                 $user->fill($data);
 
                 //only change password when given. If the field is emtpy the password need not be changed.
-                if ( $userRequest->get('password') !== '')
+                if ($userRequest->get('password') !== '')
                 {
                     $user->password =  Hash::make($userRequest->get('password'));
                 }
 
-                $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-                $user->districtSectionId = $postal->districtSectionId;
-                $user->postalId = $postal->postalId;
+                if ($userRequest->get('postal') !== '')
+                {
+                    $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+                    $user->districtSectionId = $postal->districtSectionId;
+                    $user->postalId = $postal->postalId;
+                }
+                else
+                {
+                    $user->districtSectionId = null;
+                    $user->postalId = null;
+                }
 
                 $this->userRepo->update($user);
 

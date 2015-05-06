@@ -46,6 +46,11 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('password_confirmation', 'Herhaal Wachtwoord') !!}
+                {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::label('postal', 'Postcode') !!}
                 {!! Form::text('postal', $postal, ['class' => 'form-control']) !!}
             </div>
