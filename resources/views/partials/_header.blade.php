@@ -3,15 +3,15 @@
     <div class="container">
         <div class="navbar-header">
             <a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>
-
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse navHeaderCollapse">
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>

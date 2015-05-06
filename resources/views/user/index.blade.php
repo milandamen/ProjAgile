@@ -4,13 +4,22 @@
 
     <div class="container">
 
+        <!-- breadcrumbs, show search criteria if given -->
         <div class="row">
             @if(isset($criteria))
-                {!! Breadcrumbs::render('filter', (object)['criteria' => $criteria]) !!}
+                {!! Breadcrumbs::render('userfilter', (object)['criteria' => $criteria]) !!}
             @else
+                {!! $criteria = null; !!}
                 {!! Breadcrumbs::render('user') !!}
             @endif
         </div>
+
+        <!-- notify if no search results are found -->
+        @if (isset($count) && $count === 0)
+            <div class="row">
+                <h2>{!! "Helaas, er zijn geen zoekresultaten" !!}</h2>
+            </div>
+        @else
 
         <div class="row">
             <div class="col-md-12">
@@ -48,6 +57,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -60,17 +72,22 @@
                                     <td> {!! $admin->surname !!} </td>
                                     <td> {!! $admin->email !!} </td>
                                     <td>
+                                        <a href="{{ route('user.index', [$admin->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
                                         <a class="right" href="{{ route('user.edit', [$admin->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </a>
                                     </td>
                                     <td>
                                         @if($admin->active == 1)
-                                            <a href="{{ route('user.deactivate', [$admin->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($admin->active == 0)
-                                            <a href="{{ route('user.activate', [$admin->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -100,6 +117,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -112,17 +132,22 @@
                                     <td> {!! $contentmanager->surname !!} </td>
                                     <td> {!! $contentmanager->email !!} </td>
                                     <td>
+                                        <a href="{{ route('user.index', [$contentmanager->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
                                         <a class="right" href="{{ route('user.edit', [$contentmanager->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </a>
                                     </td>
                                     <td>
                                         @if($contentmanager->active == 1)
-                                            <a href="{{ route('user.deactivate', [$contentmanager->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($contentmanager->active == 0)
-                                            <a href="{{ route('user.activate', [$contentmanager->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -150,6 +175,9 @@
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -162,17 +190,22 @@
                                     <td> {!! $resident->surname !!} </td>
                                     <td> {!! $resident->email !!} </td>
                                     <td>
+                                        <a href="{{ route('user.index', [$resident->userId]) }}">
+                                            <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
                                         <a class="right" href="{{ route('user.edit', [$resident->userId]) }}">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </a>
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -185,6 +218,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
     </div>
 

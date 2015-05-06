@@ -83,7 +83,8 @@
          */
         public function filterAllByUserGroup($userGroupId, $criteria)
         {
-            $users = User::where('username', 'LIKE', "%$criteria%")->get();
+            $users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->get();
+
             return $users->where('userGroupId', $userGroupId);
         }
 
@@ -117,6 +118,7 @@
          */
         public function update($model)
         {
+            $model['password'] = Hash::make($model['password']);
             $model->save();
         }
 

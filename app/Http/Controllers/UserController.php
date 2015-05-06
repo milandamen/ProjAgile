@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Robin
- * Date: 26-4-2015
- * Time: 21:04
- */
 
 namespace App\Http\Controllers;
 
@@ -20,29 +14,47 @@ use View;
 class UserController extends Controller
 {
     private $userRepo;
+    const ADMIN_GROUP_ID = 1;
+    const CONTENT_GROUP_ID = 2;
+    const RESIDENT_GROUP_ID = 3;
 
     public function __construct(IUserRepository $userRepo)
     {
         $this->userRepo = $userRepo;
     }
 
-    public function index()
+    public function index($crit = null)
     {
-        if (Request::get('search') === null || Request::get('search') === '')
+        if (Auth::check())
         {
-            $admins = $this->userRepo->getAllByUserGroup(1);
-            $contentmanagers = $this->userRepo->getAllByUserGroup(2);
-            $residents = $this->userRepo->getAllByUserGroup(3);
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
+                if ((Request::get('search') === null || Request::get('search') === '') && $crit === null)
+                {
+                    $admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
+                    $contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
+                    $residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
+                }
+                else
+                {
+                    if ($crit !== null)
+                    {
+                        $criteria = $crit;
+                    }
+                    else
+                    {
+                        $criteria = Request::get('search');
+                    }
+                    $admins = $this->userRepo->filterAllByUserGroup(self::ADMIN_GROUP_ID, $criteria);
+                    $contentmanagers = $this->userRepo->filterAllByUserGroup(self::CONTENT_GROUP_ID, $criteria);
+                    $residents = $this->userRepo->filterAllByUserGroup(self::RESIDENT_GROUP_ID, $criteria);
+                    $count = count($admins) + count($contentmanagers) + count($residents);
+                }
+                return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
+            }
+            return view('errors.403');
         }
-        else
-        {
-            $criteria = Request::get('search');
-            $admins = $this->userRepo->filterAllByUserGroup(1, $criteria);
-            $contentmanagers = $this->userRepo->filterAllByUserGroup(2, $criteria);
-            $residents = $this->userRepo->filterAllByUserGroup(3, $criteria);
-        }
-
-        return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria'));
+        return view('errors.401');
     }
 
     public function create()
@@ -133,7 +145,7 @@ class UserController extends Controller
                 {
                     $user->password = Request::get('password');
                 }
-                //$user->fill(Request::input());
+
                 $this->userRepo->update($user);
 
                 return redirect::route('user.index');
@@ -145,7 +157,7 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function deactivate($id)
+    public function deactivate($id, $crit = null)
     {
         if (Auth::check())
         {
@@ -154,7 +166,7 @@ class UserController extends Controller
                 $user->active = 0;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index');
+                return redirect::route('user.index', [$crit]);
             }
 
             return view('errors.403');
@@ -163,7 +175,7 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function activate($id)
+    public function activate($id, $crit = null)
     {
         if (Auth::check())
         {
@@ -172,7 +184,7 @@ class UserController extends Controller
                 $user->active = 1;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index');
+                return redirect::route('user.index', [$crit]);
             }
 
             return view('errors.403');

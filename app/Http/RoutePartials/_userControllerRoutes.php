@@ -1,6 +1,6 @@
 <?php
 
-    Route::get('gebruikers',
+    Route::get('gebruikers/{crit?}',
     [
         'as' => 'user.index',
         'uses' => 'UserController@index'
@@ -24,7 +24,7 @@
         'uses' => 'UserController@create'
     ]);
 
-    Route::put('gebruikers/aanmaken',
+    Route::post('gebruikers/aanmaken',
     [
         'as' => 'user.store',
         'uses' => 'UserController@store'
@@ -36,13 +36,13 @@
         'uses' => 'UserController@index'
     ]);
 
-    Route::get('gebruikers/{id}/deactiveer',
+    Route::get('gebruikers/{id}/deactiveer/{crit?}',
     [
         'as' => 'user.deactivate',
         'uses' => 'UserController@deactivate'
     ]);
 
-    Route::get('gebruikers/{id}/activeer',
+    Route::get('gebruikers/{id}/activeer/{crit?}',
     [
         'as' => 'user.activate',
         'uses' => 'UserController@activate'

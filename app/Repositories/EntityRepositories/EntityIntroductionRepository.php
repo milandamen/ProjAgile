@@ -77,4 +77,5 @@
 		{
 			return Introduction::where('pageId', '=', $pageId)->first();
 		}
+
 	}
