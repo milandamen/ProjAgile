@@ -35,6 +35,14 @@
 				</div>
 			</div>
 
+
+			 <div class="row col-md-8">
+				<div class="form-group">
+				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				</div>
+			</div>
+
 			<div class="row col-md-8">
 				<div class="form-group">
 					{!! Form::label('content', 'Content', ['class' => 'label-form']) !!}

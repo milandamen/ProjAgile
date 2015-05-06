@@ -18,20 +18,12 @@
             {!! Form:: open() !!}
             <div class="row col-md-5">
             	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
-				<div class="form-group col-md-8">
+				<div class="form-group col-md-12">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
 				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
 				</div>
 			</div>
- 			 <div class="row col-md-5">
-            	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
-				<div class="form-group col-md-8">
-				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
-				</div>
-			</div>
-
-			<div class="row col-md-7">
+ 			<div class="row col-md-7">
 				<div class="col-md-8 form-group">
 					{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} <br/>
 					{!!  Form:: button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
@@ -55,6 +47,13 @@
 
 				</div>
 
+			</div>
+
+			 <div class="row col-md-5">
+				<div class="form-group col-md-12">
+				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				</div>
 			</div>
 
 			 <div class="row col-md-12">
