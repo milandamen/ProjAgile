@@ -24,6 +24,7 @@
          */
         public function compose(View $view)
         {
+
         	$sidebar = $this->sidebarRepo->getByPage($this->homePageNumber);
     		$view->with('sidebar', $sidebar); 
         }
