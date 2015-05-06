@@ -47,8 +47,7 @@ class UpdateUserRequest extends Request {
             ];
         }
 
-        if ($this->get('password') !== '' ||
-            $this->get('password_confirmation') !== '')
+        if ($this->get('password') !== '' || $this->get('password_confirmation') !== '')
         {
             $rules +=
             [
