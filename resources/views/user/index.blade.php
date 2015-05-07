@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+    <meta name="csrf-token" content="{{ Session::token() }}">
     <div class="container">
 
         <!-- breadcrumbs, show search criteria if given -->
@@ -82,11 +83,11 @@
                                     </td>
                                     <td>
                                         @if($admin->active == 1)
-                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($admin->active == 0)
-                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -200,11 +201,11 @@
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="jpost">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success jpost">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -220,11 +221,10 @@
         @endif
     </div>
     <script>
-        var autocompleteURL = "{!! route('autocomplete.userAutocomplete', '') !!}";
+        //var autocompleteURL = "{!! route('autocomplete.userAutocomplete', '') !!}";
     </script>
 @stop
 
 @section('additional_scripts')
-    {!! HTML::script('custom/js/autocomplete.js') !!}
     {!! HTML::script('custom/js/filterUserTables.js') !!}
 @endsection
