@@ -141,6 +141,7 @@
         public function edit($id)
         {
             if($this->redirectHome($id)){
+            	Flash::error('U kunt de homepage niet op deze manier wijzigen.');
         		return Redirect::route('home.index');
         	}
 
@@ -216,7 +217,7 @@
         {
 
         	if($this->redirectHome($id)){
-        		Flash::success('U kunt de homepagina niet verwijderen');
+        		Flash::error('U kunt de homepagina niet verwijderen');
         		return Redirect::route('home.index');
         	}
 
