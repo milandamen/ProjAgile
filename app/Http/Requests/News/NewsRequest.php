@@ -35,15 +35,33 @@
 
 			foreach ($this->request->get('districtSection') as $key => $value)
 			{
-				$rules = array_add($rules, 'districtSection[' . $key . ']', 'exists:DistrictSection,name');
+				$rules['districtSection.' . $key ] = 'exists:DistrictSection,districtSectionId';
 			}
 
 			foreach ($this->request->get('file') as $key => $value)
 			{
-				$rules = array_add($rules, 'file[' . $key . ']', 'mimes:jpeg,png,pdf');
+				$rules['file.' . $key] = 'mimes:jpeg,png,pdf';
 			}
 
 			return $rules;
+		}
+
+		public function messages()
+		{
+			$messages = [];
+
+			foreach ($this->request->get('districtSection') as $key => $value)
+			{
+				$messages['districtSection.' . $key . '.exists'] = "Eén van de deelwijken is geen bestaande deelwijk.";
+			}
+
+
+			foreach ($this->request->get('file') as $key => $value)
+			{
+				$messages['file.' . $key . '.mimes'] = "Eén van de bestanden is niet van het bestandstype :values.";
+			}
+
+			return $messages;
 		}
 
 		/**
@@ -65,8 +83,7 @@
 
 			foreach ($this->request->get('districtSection') as $key => $value)
 			{
-				$input['districtSection[' . $key . ']'] = filter_var($value, FILTER_SANITIZE_STRING);
-				$input = array_add($input, 'districtSection[' . $key . ']', parseSelectorField($value));
+				$input['districtSection.' . $key] = parseSelectorField(filter_var($value, FILTER_SANITIZE_STRING));
 			}
 			
 			$input['hidden'] = parseCheckboxOrRadioButton($input['hidden']);
