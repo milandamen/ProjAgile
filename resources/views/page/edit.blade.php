@@ -5,7 +5,6 @@
     	<div class="row">
 				{!! Breadcrumbs::render('editpagetitle', (object)['id' => $page->pageId, 'title' => $page->introduction->title]) !!}
 			</div>
-
         <div class="row">
             <div class="col-md-12">
                 <h1>Pagina wijzigen</h1>
@@ -45,6 +44,13 @@
 							</label>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			 <div class="row col-md-5">
+				<div class="form-group col-md-12">
+				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+				{!! Form::text('subtitle', $page->introduction->subtitle , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
 				</div>
 			</div>
 

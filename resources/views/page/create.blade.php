@@ -20,7 +20,7 @@
             	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
 				<div class="form-group col-md-12">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
-				{!! Form::text('title', old('title') , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
+				{!! Form::text('title', null , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
 				</div>
 			</div>
  			<div class="row col-md-7">
@@ -52,14 +52,14 @@
 			 <div class="row col-md-5">
 				<div class="form-group col-md-12">
 				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				{!! Form::text('subtitle', null , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
 				</div>
 			</div>
 
 			 <div class="row col-md-12">
 				<div class="form-group col-md-12">
 				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-				{!! Form::textarea('content', old('content'), ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
+				{!! Form::textarea('content', null, ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
 			</div>
 
 

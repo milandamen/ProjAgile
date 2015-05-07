@@ -29,7 +29,7 @@
 						<thead> 
 							<tr>
 								<th> Titel </th>
-								<th> Inhoud </th>
+								<th class="col-md-7"> Subtitel </th>
 								<th></th>
 								<th colspan="3" class="col-md-1"> Acties </th>								
 							</tr>
@@ -39,8 +39,12 @@
 						@foreach($pages as $page)
 							<tr class="">
 								<td> {!! $page->introduction->title	!!}</td>
-								{{--*/ $phrase = trunc($page->introduction->text, 30); /*--}}
-								<td colspan="2"> {!! $phrase !!}	</td>
+								<td> {!! $page->introduction->subtitle !!} </td>
+								@if($page->sidebar)
+									<td>
+										<a href="{{ route('sidebar.edit', [$page->pageId]) }}" onclick="">wijzig sidebar</a>
+									</td>
+								@endif
 								<td>
 									<a href="{{ route('page.show', [$page->pageId]) }}">
 										<i class="fa fa-external-link fa-lg"></i></a>
@@ -53,7 +57,8 @@
 								<td>
 									<a href="{{ route('page.del', [$page->pageId]) }}" onclick="verify()">
 										<i class="fa fa-times fa-lg text-danger"></i></a>
-								</td>						
+								</td>
+														
 							</tr>
 						@endforeach
 					</tbody>

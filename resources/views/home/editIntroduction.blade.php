@@ -22,11 +22,11 @@
 			{!! Form:: open() !!}
             <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
             <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
-			<input type="hidden" name="pageId" value="{!! $introduction->pageId !!}" >
+			<input type="hidden" name="pageId" value="1" >
 
 			@include('errors.partials._list')
 			{!! Form::model($introduction, ['method' => 'POST'])!!}
-				{!! Form::hidden('pageId', $introduction->pageId) !!}
+				{!! Form::hidden('pageId', 1) !!}
 
 			<div class="row col-md-8">
 				<div class="form-group">
@@ -39,7 +39,7 @@
 			 <div class="row col-md-8">
 				<div class="form-group">
 				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-				{!! Form::text('subtitle', old('subtitle') , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				{!! Form::text('subtitle', $introduction->subtitle, ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
 				</div>
 			</div>
 
