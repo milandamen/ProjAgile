@@ -16,6 +16,11 @@
     include('BreadcrumbsPartials/_manageHomeBreadcrumbsPartial.php');
 
     /**
+    * Home > Manage > Page
+    */
+    include('BreadcrumbsPartials/_managePageBreadcrumbsPartial.php');
+
+    /**
     * Home > Error
     */
     include('BreadcrumbsPartials/_errorBreadcrumbsPartial.php');

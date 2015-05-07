@@ -58,7 +58,7 @@ function addArticle(button) {
 				'<span>' + id + '</span>' +
 			'</td>' +
 			'<td>' +
-				'<span>' + title + '</span>' +
+				'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
@@ -108,9 +108,7 @@ function moveArticleDown(button) {
 	var dstRow = articlelist.rows[srcI];		// For some reason .rows does not count the header row, so no need for +1.
 	if (dstRow != null) {
 		// Swap
-		var srcHtml = srcRow.innerHTML;
-		srcRow.innerHTML = dstRow.innerHTML;
-		dstRow.innerHTML = srcHtml;
+		articlelist.insertBefore(dstRow, srcRow);
 		
 		calculateIndexes();
 	}
@@ -130,9 +128,7 @@ function moveArticleUp(button) {
 		var dstRow = articlelist.rows[srcI - 2];		// For some reason .rows does not count the header row, so no need for +1.
 		
 		// Swap
-		var srcHtml = srcRow.innerHTML;
-		srcRow.innerHTML = dstRow.innerHTML;
-		dstRow.innerHTML = srcHtml;
+		articlelist.insertBefore(srcRow, dstRow);
 		
 		calculateIndexes();
 	}
@@ -151,8 +147,14 @@ function calculateIndexes() {
 		[].forEach.call(inputs, function (input) {
 			if (input.type == 'file') {
 				input.name = 'file[' + i + ']';
-			} else {
+			} 
+			else if (input.name.contains('artikel')) {
 				input.name = 'artikel[' + i + ']';
+			} 
+			else if (input.name.contains('beschrijving')) {
+				input.name = 'beschrijving[' + i + ']';
+			} else {
+				input.name = 'deletefile[' + i + ']';
 			}
 		});
 		
