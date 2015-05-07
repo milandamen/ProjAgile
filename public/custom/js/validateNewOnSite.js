@@ -7,7 +7,7 @@ function validate()
         message = prompt("Maximaal aantal karakters is 30. Verkort uw bericht.", message)
     }
 
-    if(message != null)
+    if(message != null && message != '')
     {
         document.getElementById("newOnSiteCheck").value = "TRUE";
         document.getElementById("newOnSiteMessage").value = message;
@@ -15,3 +15,15 @@ function validate()
 
     return true;
 }
+
+//$( "#dialog" ).dialog({
+//    dialogClass: "no-close",
+//    buttons: [
+//        {
+//            text: "OK",
+//            click: function() {
+//                $( this ).dialog( "close" );
+//            }
+//        }
+//    ]
+//});
