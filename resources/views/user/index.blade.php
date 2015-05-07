@@ -33,7 +33,7 @@
         <div class="col-md-12">
             {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
-            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control autocomplete', 'placeholder' => 'filter']) !!}
+            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'filter', 'autocomplete' => 'off']) !!}
             </div>
             {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
