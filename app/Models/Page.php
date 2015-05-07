@@ -62,7 +62,7 @@
 
 		public function introduction()
 		{
-	        return $this->hasOne('App\Models\Introduction', 'introductionId');
+	        return $this->hasOne('App\Models\Introduction', 'introductionId', 'introduction_introductionId');
 		}
 
 

@@ -37,9 +37,11 @@
 				@foreach($page->panels as $panel)					{{-- Loop all panels --}}
 					<div class="col-md-{!! $panel->panel->size !!}">
 						<div class="panel panel-default">
+							@if($panel->title != '')
 							<div class="panel-heading">
 								{!! $panel->title !!}
 							</div>
+							@endif
 							<div class="panel-body">
 								{!! nl2br($panel->text) !!}
 							</div>
