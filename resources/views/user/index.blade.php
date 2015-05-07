@@ -101,8 +101,6 @@
             </div>
         </div>
 
-
-
         <!-- Content Manager Table -->
         <div class="row">
             <div class="col-md-12">
@@ -201,11 +199,11 @@
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="jpost">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success jpost">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -222,6 +220,11 @@
     </div>
     <script>
         //var autocompleteURL = "{!! route('autocomplete.userAutocomplete', '') !!}";
+        var baseURL = "{!! route('user.deactivate') !!}/";
+        console.log(baseURL);
+
+        console.log(baseURL.indexOf("s/"));
+
     </script>
 @stop
 

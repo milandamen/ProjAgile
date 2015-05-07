@@ -1,3 +1,6 @@
+var deactivateClass = "black";
+var activateClass = "text-success";
+
 var rows = $('tr');
 $('#search').keyup(function() {
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
@@ -9,25 +12,34 @@ $('#search').keyup(function() {
 });
 
 $('.activate').click(function (event){
-    
+
+    var clickedElement = $(this);
+
     event.preventDefault();
-    //$.ajax({
-    //    url: $(this).attr('href')
-    //    ,success: function(response) {
-    //        alert(response)
-    //    }
-    //})
+
+    $.ajax({
+        url: $(this).attr('href')
+        ,success: function(response) {
+            clickedElement.removeClass(activateClass);
+            clickedElement.addClass(deactivateClass);
+        }
+    })
+
     return false; //for good measure
 });
 
 $('.deactivate').click(function (event){
 
+    var clickedElement = $(this);
+
     event.preventDefault();
-    //$.ajax({
-    //    url: $(this).attr('href')
-    //    ,success: function(response) {
-    //        alert(response)
-    //    }
-    //})
+
+    $.ajax({
+        url: $(this).attr('href')
+        ,success: function(response) {
+            clickedElement.removeClass(deactivateClass);
+            clickedElement.addClass(activateClass);
+        }
+    })
     return false; //for good measure
 });
