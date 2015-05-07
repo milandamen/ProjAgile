@@ -4,51 +4,132 @@ $(function()
 	{
 		addDistrictSection();
 	});
+
+	$('#newFile').click(function()
+	{
+		addFile();
+	});
+
+	$('[name="districtSections"]').on('click', '[name="deleteDistrictSection"]', function()
+	{
+		deleteDistrictSection(this);
+	});
+
+	$('[name="fileUpload"]').on('click', '[name="deleteFile"]', function()
+	{
+		deleteFile(this);
+	});
 });
 
 function addDistrictSection()
 {
 	var districtSections = document.querySelectorAll('#districtSection');
 	var adjacentElement = districtSections[districtSections.length - 1];
-	var newDiv = adjacentElement.parentNode.cloneNode(false);
+	var deleteButton = document.querySelector('button[name="deleteDistrictSection"]');
 
-	$.getJSON(getDistrictSectionsURL).done(function(data)
+	if (districtSections.length < adjacentElement.length)
 	{
-		[].forEach.call(data, function(item)
-		{
-
-		});
-
-		var dropdownElement = document.createElement('select');
-		dropdownElement.setAttribute('id', 'districtSection');
-		dropdownElement.setAttribute('class', 'form-control');
+		var dropdownElement = adjacentElement.cloneNode(true);
 		dropdownElement.setAttribute('name', 'districtSection[' + districtSections.length + ']');
 
-		var count = 0;
+		var newDeleteButton = deleteButton.cloneNode(true);
 
-		[].forEach.call(data, function(item)
-		{
-			var option = document.createElement('option');
-			option.setAttribute('value', item.districtSectionId);
-			option.text = item.name;
-			dropdownElement.appendChild(option);
+		var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
+		var tdDistrictSection = adjacentElement.parentNode.cloneNode(false);
+		var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
 
-			count++;
-		});
+		tr.appendChild(tdDistrictSection);
+		tr.appendChild(tdDeleteButton);
+		tdDistrictSection.appendChild(dropdownElement);
+		tdDeleteButton.appendChild(newDeleteButton);
 
-		if (districtSections.length < count)
-		{
-			newDiv.appendChild(dropdownElement);
+		adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
+	}
+}
 
-			var spacer = document.createElement('div');
-			spacer.setAttribute('class', 'col-md-1');
-			
-			adjacentElement.parentNode.parentNode.appendChild(spacer);
-			adjacentElement.parentNode.parentNode.appendChild(newDiv);
-		}
-	}).fail(function(jqxhr, textStatus, error) 
+function addFile()
+{
+	var files = document.querySelectorAll('#file');
+	var adjacentElement = files[files.length - 1];
+	var deleteButton = document.querySelector('button[name="deleteFile"]');
+
+	var fileElement = adjacentElement.cloneNode(false);
+	fileElement.setAttribute('name', 'file[' + files.length + ']');
+
+	var newDeleteButton = deleteButton.cloneNode(true);
+
+	var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
+	var tdFile = adjacentElement.parentNode.cloneNode(false);
+	var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
+
+	tr.appendChild(tdFile);
+	tr.appendChild(tdDeleteButton);
+	tdFile.appendChild(fileElement);
+	tdDeleteButton.appendChild(newDeleteButton);
+
+	adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
+}
+
+function deleteDistrictSection(button) 
+{
+	var row = button.parentNode.parentNode;
+	var districtSections = document.querySelectorAll('#districtSection');
+
+	if (districtSections.length > 1)
 	{
-		var err = textStatus + ', ' + error;
-		console.log('Request failed: ' + err);
+		row.parentNode.removeChild(row);
+		calculateDistrictSectionsIndexes();
+	}
+	else
+	{
+		row.innerHTML = row.innerHTML;
+	}
+}
+
+function deleteFile(button) 
+{
+	var row = button.parentNode.parentNode;
+	var files = document.querySelectorAll('#file');
+
+	if (files.length > 1)
+	{
+		row.parentNode.removeChild(row);
+		calculateFileIndexes();
+	}
+	else
+	{
+		row.innerHTML = row.innerHTML;
+	}
+}
+
+function calculateDistrictSectionsIndexes() 
+{
+	var i = 0;
+	var districtSectionList = document.querySelector('table[name="districtSections"]');
+	
+	[].forEach.call(districtSectionList.children, function (row) 
+	{
+		var districtSections = districtSectionList.querySelectorAll('#districtSection');
+		[].forEach.call(districtSections, function(districtSection)
+		{
+			districtSection.setAttribute('name', 'districtSection[' + i + ']');
+			i++;
+		});
+	});
+}
+
+function calculateFileIndexes() 
+{
+	var i = 0;
+	var fileList = document.querySelector('table[name="fileUpload"]');
+	
+	[].forEach.call(fileList.children, function (row) 
+	{
+		var files = fileList.querySelectorAll('#file');
+		[].forEach.call(files, function(file)
+		{
+			file.setAttribute('name', 'file[' + i + ']');
+			i++;
+		});
 	});
 }

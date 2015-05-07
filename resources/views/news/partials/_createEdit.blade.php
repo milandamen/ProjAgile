@@ -21,8 +21,20 @@
 			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>
-	<div class="col-md-3 no-padding">
-		{!! Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) !!}
+	<div class="col-md-4 no-padding">
+		<table name="districtSections" class="table">
+			@if(isset($districtectionss))
+			@else
+				{!! '<tr>
+					<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
+					<td>
+						<button name="deleteDistrictSection" type="button" class="btn btn-danger" aria-label="Left Align">
+							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+			@endif
+		</table>
 	</div>
 </div>
 <div class="form-group col-md-12 no-padding">
@@ -49,24 +61,37 @@
 	</div>
 </div>
 <div class="form-group">
-	{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}<br/>
-	<table name="fileUpload">
-	@if(isset($files))
-		@foreach($files as $file)
-			{!! '<tr>
-				<td style="padding-top:5px;">' . Form::text($file->fileId, $file->path, ['style' => 'width:500px;']) . '</td>' !!}
-				<td style="padding-top:5px;">
-					<button id="{!! $file->fileId !!}" style="margin-left: 10px" type="button" class="btn btn-danger" aria-label="Left Align">
-						<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-				</td>
-			</tr>
-		@endforeach
-	@endif
-		{!! '<tr>
-			<td style="padding-top:5px;">' . Form::file('file[0]') . '</td>' !!}
-		</tr>
-	</table>
+	<div class="col-md-12 no-padding">
+		{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
+		<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
+			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+	</div>
+	<div class="col-md-4 no-padding">
+		<table name="fileUpload" class="table">
+			@if(isset($files))
+				@foreach($files as $file)
+					{!! '<tr>
+						<td>' . Form::file($file->fileId, ['id' => 'file']) . '</td>' !!}
+						<td>
+							<button name="deleteFile" type="button" class="btn btn-danger" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+						</td>
+					</tr>
+				@endforeach
+			@else
+				{!! '<tr>
+					<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
+					<td>
+						<button name="deleteFile" type="button" class="btn btn-danger" aria-label="Left Align">
+							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+		@endif
+		</table>
+	</div>
 </div>
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-2 no-padding">
