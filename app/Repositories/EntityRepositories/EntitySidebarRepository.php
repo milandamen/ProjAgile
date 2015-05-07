@@ -25,7 +25,7 @@
          */
 
         public function getSideRow($pageId, $rowId){
-        	return Sidebar::where('rowNr', '=', $rowId)->where('pageNr', '=', $pageId)->get()->first();
+        	return Sidebar::where('rowNr', '=', $rowId)->where('page_pageId', '=', $pageId)->get()->first();
         }
 
 
@@ -81,7 +81,7 @@
          */ 
         public function getByPage($pageNr)
         {
-            return Sidebar::where('pageNr', '=', $pageNr)->get();
+            return Sidebar::where('page_pageId', '=', $pageNr)->get();
         }
 
         /**
@@ -93,6 +93,6 @@
          */ 
         public function deleteAllFromPage($pageNr)
         {
-        	Sidebar::where('pageNr', '=', $pageNr)->delete();
+        	Sidebar::where('page_pageId', '=', $pageNr)->delete();
         }
     }

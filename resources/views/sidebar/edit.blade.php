@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
     	<div class="row">
-				{!! Breadcrumbs::render('sidebarpage', (object)['id' => $sidebarList[0]->pageNr, 'title' => $sidebarList[0]->title]) !!}
+				{!! Breadcrumbs::render('sidebarpage', (object)['id' => $sidebarList[0]->page_pageId, 'title' => $sidebarList[0]->title]) !!}
 			</div>
 
         <div class="row">
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!--- Start Form of updating the sidebar -->
-                <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->pageNr]) !!}">
+                <form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->page_pageId]) !!}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput" />
                     <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">

@@ -53,3 +53,9 @@
         'as' => 'user.activate',
         'uses' => 'UserController@activate'
     ]);
+
+    Route::get('gebruiker/{id}',
+    [
+        'as' => 'user.show',
+        'uses' => 'UserController@show'
+    ]);

@@ -38,8 +38,6 @@
 					$menuList = $this->menuRepo->getAll();
 					return View('sidebar.edit', compact('sidebarList', 'menuList'));
 				} else {
-					// Totdat er een error page is.
-					//return Redirect::route('home.index');
 					return view('errors.404');
 				}
 			} else {
@@ -53,10 +51,10 @@
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 				$maxrowindex = $_POST['maxRowIndex'];
 				$i=0;
-				$pageNr = $id;
+				$pageId = $id;
 
 				// first delete all old items, to prevent double items and or not deleting rows.
-				$this->sidebarRepo->deleteAllFromPage($pageNr);
+				$this->sidebarRepo->deleteAllFromPage($pageId);
 			
 
 				for($rows =0; $rows <= $maxrowindex; $rows++)
@@ -71,8 +69,6 @@
 
 								if(isset($rowItems['text'][$row])){
 									$text = filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING);
-									$link =  $rowItems['pagename'][$row];
-									$extern = false;
 
 									if($rowItems['radio1'] == 'Extern'){
 										$extern = true;
@@ -83,7 +79,7 @@
 									}
 
 									$newSidebarRow = new Sidebar();
-									$newSidebarRow->pageNr = $pageNr;
+									$newSidebarRow->page_pageId = $pageId;
 									$newSidebarRow->rowNr = $i;
 									$newSidebarRow->title= $title;
 									$newSidebarRow->text = $text;
