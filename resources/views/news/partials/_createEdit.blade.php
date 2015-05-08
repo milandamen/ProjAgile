@@ -73,7 +73,7 @@
             </label>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         {!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
         <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
@@ -86,5 +86,6 @@
 	</div>
 </div>
 <div class="form-group">
-	{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
+	{!! Form::submit($submitButton, ['class' => 'btn btn-success']) !!}
+	{!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
 </div>
