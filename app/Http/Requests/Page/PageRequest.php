@@ -40,6 +40,7 @@
 			$input = $this->all();
 
 			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
+			$input['subtitle'] = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
             $input['content'] = htmlspecialchars_decode($input['content']);
             $input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
 

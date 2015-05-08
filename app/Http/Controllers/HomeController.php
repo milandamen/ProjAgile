@@ -5,6 +5,7 @@
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
     use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
     use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
     use App\Http\Requests\Home\IntroductionRequest;
@@ -22,7 +23,7 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo,
+		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, IPageRepository $pageRepo,
                                     INewsRepository $newsRepo, ICarouselRepository $carouselRepo, INewOnSiteRepository $newOnSiteRepository)
 		{
 			$this->homeLayoutRepo = $homeLayoutRepo;
@@ -30,6 +31,7 @@
 			$this->newsRepo = $newsRepo;
 			$this->carouselRepo = $carouselRepo;
             $this->newOnSiteRepository = $newOnSiteRepository;
+            $this->pageRepo = $pageRepo;
 		}
 
 		/**
@@ -40,7 +42,8 @@
 		public function index()
         {
             $news = $this->getNews();
-            $introduction = $this->introRepo->getPageBar('1');
+           // $introduction = $this->introRepo->getPageBar('1');
+            $introduction = $this->pageRepo->get(1)->introduction;
             htmlspecialchars($introduction);
             $layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAll();
@@ -58,7 +61,8 @@
         {
 			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
 				$news = $this->getNews();
-				$introduction = $this->introRepo->getPageBar('1');
+				//$introduction = $this->introRepo->getPageBar('1');
+				$introduction = $this->pageRepo->get(1)->introduction;
 				$layoutModules = $this->homeLayoutRepo->getAll();
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
@@ -103,7 +107,7 @@
         public function editIntroduction()
         {
 			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
-				$introduction = $this->introRepo->getPageBar('1');
+				$introduction = $this->pageRepo->get(1)->introduction;
 				return view('home.editIntroduction', compact('introduction'));
 			} else {
 				return view('errors.403');
@@ -119,9 +123,9 @@
         {
 			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 
-				$intro = $this->introRepo->getPageBar($request->pageId);
-				$intro->pageId = $request->pageId;
+				$intro = $this->pageRepo->get($request->pageId)->introduction;
 				$intro->title = $request->title;
+				$intro->subtitle = $request->subtitle;
 				$intro->text = $request->content;
 
 				$this->introRepo->update($intro);

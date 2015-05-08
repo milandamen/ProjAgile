@@ -12,7 +12,7 @@
 	
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
-	
+	use Flash;
 	use Auth;
 	use Redirect;
 	use Request;
@@ -65,8 +65,8 @@
         public function store(PageRequest $request)
         {
             $introduction = $this->introrepo->create([
-            	'pageId' => 2,
             	'title' => $request->title, 
+            	'subtitle' => $request->subtitle,
             	'text' => $request->content,
             	]);
 
@@ -94,7 +94,6 @@
 
             if($request->sidebar){
             	$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $request->title,
@@ -115,6 +114,11 @@
          */
         public function show($id)
         {
+            
+        	if($this->redirectHome($id)){
+        		return Redirect::route('home.index');
+        	} 
+
             $page = $this->pagerepo->get($id);
            	if(isset($page)){
 	            if($page->sidebar){
@@ -125,7 +129,7 @@
 	            }
 	        }else {
 	        	return view('errors.404');
-	        }
+	        } 
         }
 
         /**
@@ -136,6 +140,11 @@
          */
         public function edit($id)
         {
+            if($this->redirectHome($id)){
+            	Flash::error('U kunt de homepage niet op deze manier wijzigen.');
+        		return Redirect::route('home.index');
+        	}
+
             $page = $this->pagerepo->get($id);
             if(isset($page)){
             	return View('page.edit', compact('page'));
@@ -153,13 +162,17 @@
          */
         public function update($id, PageRequest $request)
         {
-            
+           if($this->redirectHome($id)){
+        		return Redirect::route('home.index');
+        	}
+
         	$old = $this->pagerepo->get($id)->sidebar;
         	$new = $request->sidebar;
 
         	// update introduction
         	$introduction = $this->introrepo->get($request->intro_id);
         	$introduction->title = $request->title;	
+        	$introduction->subtitle = $request->subtitle;
         	$introduction->text = $request->content;
 
         	$this->introrepo->update($introduction);
@@ -202,7 +215,23 @@
          */
         public function destroy($id)
         {
-            //
+
+        	if($this->redirectHome($id)){
+        		Flash::error('U kunt de homepagina niet verwijderen');
+        		return Redirect::route('home.index');
+        	}
+
+        	$page = $this->pagerepo->get($id);
+            if($page->sidebar){
+  				$this->sidebarrepo->deleteAllFromPage($id);
+        	}
+
+            $this->pagepanelrepo->deleteAllFromPage($id);
+            $this->pagerepo->destroy($id);
+            $this->introrepo->destroy($page->introduction->introductionId);
+
+
+            return Redirect::route('page.index');
         }
 
         /**
@@ -216,7 +245,6 @@
         	} else{   
         		if($new){
         			$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $title,
@@ -230,4 +258,21 @@
 
         	}
         }
+
+        /* 
+         * redirectHome will redirect if the page is the homepage.
+         * The homepage has different edit functions and a different pageview.
+         * 
+         */
+
+
+        private function redirectHome($id){
+			if($id === '1'){
+				Flash::success('U bent succesvol naar de homepagina begeleid.');
+				return true;
+        	} else {
+        		return false;
+        	}
+        }
+
     }

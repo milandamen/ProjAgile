@@ -155,7 +155,7 @@ function validate()
 
 	[].forEach.call(districtSections, function(districtSection)
 	{
-		if (districtSection.length <= 0)
+		if (districtSection.value === "")
 		{
 			event.preventDefault();
 			alert('Selecteer alstublieft een deelwijk.');
@@ -164,18 +164,37 @@ function validate()
 		}
 	});
 
-	if (document.querySelector('#publishStartDate').value === "")
+	var publishStartDate = new Date(document.querySelector('#publishStartDate').value);
+	var publishEndDate = new Date(document.querySelector('#publishEndDate').value);
+
+	if (isNaN(publishStartDate))
 	{
 		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de PublicatieDatum.');
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
 
 		return false;
 	}
 
-	if (document.querySelector('#publishEndDate').value === "")
+	if (isNaN(publishEndDate))
 	{
 		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde PublicatieDatum.');
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+	if (publishStartDate > publishEndDate)
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+	if (publishEndDate < publishStartDate)
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een einddatum en een tijdstip na de Publicatiedatum.');
 
 		return false;
 	}
@@ -190,17 +209,20 @@ function validate()
 
 	[].forEach.call(files, function(file)
 	{
-		if (allowedMimeTypes.indexOf(file.type) < 0)
+		if (file.value !== "")
 		{
-			event.preventDefault();
-			alert('Eén van de bestanden is niet van het juiste bestandstype. ' + 
-				  '\nU mag alleen bestanden uploaden van het bestandstype jpeg, png en pdf.');
+			if (allowedMimeTypes.indexOf(file.type) < 0)
+			{
+				event.preventDefault();
+				alert('Eén van de bestanden is niet van het juiste bestandstype. ' + 
+					  '\nU mag alleen bestanden uploaden van het bestandstype jpeg, png en pdf.');
 
-			return false;
+				return false;
+			}
 		}
 	});
 
-	if (document.querySelector('input[name="hidden"]').value === "")
+	if ($('input[name="hidden"]:checked').val() === "")
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een optie om te verbergen of niet.');
@@ -208,15 +230,15 @@ function validate()
 		return false;
 	}
 
-	if (document.querySelector('input[name="commentable"]').value === "")
+	if ($('input[name="commentable"]:checked').val() === "")
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een optie om commentaar toe te staan of niet.');
-
+		
 		return false;
 	}
 
-	if (document.querySelector('input[name="top"]').value === "")
+	if ($('input[name="top"]:checked').val() === "")
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een optie om dit artikel bovenaan de pagina te vertonen of niet.');

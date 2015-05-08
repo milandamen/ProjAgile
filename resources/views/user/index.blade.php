@@ -32,7 +32,7 @@
         <!-- search -->
         <div class="row">
         <div class="col-md-12">
-            {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
+            {!! Form::open(['url' => route('user.filter'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
             {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'zoek']) !!}
             </div>
