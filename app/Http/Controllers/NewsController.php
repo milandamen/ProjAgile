@@ -343,7 +343,7 @@
 						
 						$file->newsId = $newsId;
 						$file->path = $file->fileId . '_' . $filename;
-						$file->save();
+						$this->fileRepo->update($file)
 					}
 				}
 			}

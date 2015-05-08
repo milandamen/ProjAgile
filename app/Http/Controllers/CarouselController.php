@@ -65,13 +65,13 @@
 							}
 							$item->description = $description;
 							
-							$item->save();
+							$carouselRepo->update($item);
 							
 							$this->saveImage($item, $i, $oldItems);
 							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
 								$item->imagePath = 'blank.jpg';
 							}
-							$item->save();
+							$carouselRepo->update($item);
 						}
 					}
 					
@@ -111,7 +111,7 @@
 			{
 				$target = public_path() . '/uploads/img/carousel/';
 				
-				$allowed = ['png' , 'jpg', 'jpeg'];
+				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];
 				
 				$filename = $_FILES['file']['name'][$count];
 				$ext = pathinfo($filename, PATHINFO_EXTENSION);
