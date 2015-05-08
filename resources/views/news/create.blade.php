@@ -20,17 +20,16 @@
 		</div>
 		<div class="col-lg-12">
 			@include('errors.partials._list')
-			{!! Form::model($newsItem, ['method' => 'PUT', 'files' => true]) !!}
+			{!! Form::model($newsItem, ['method' => 'PUT', 'files' => true, 'onsubmit' => 'validate()']) !!}
 				@include('news.partials._createEdit', ['submitButton' => 'Nieuwsbericht Aanmaken'])
 			{!! Form::close() !!}
 		</div>
 	</div>
-	<script>
-		var getDistrictSectionsURL = "{!! route('districtSection.getDistrictSections', []) !!}";
-	</script>
 @stop
 
 @section('additional_scripts')
+	{!! HTML::script('custom/js/news.js') !!}
+
 	{!! HTML::script('summernote/js/summernote.js') !!}
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 
@@ -38,6 +37,4 @@
 	{!! HTML::script('moment/locale/nl.js') !!}
 	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
 	{!! HTML::script('custom/js/datepicker.js') !!}
-
-	{!! HTML::script('custom/js/news.js') !!}
 @stop

@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+    Placeholder News Create Title
+@stop
+
+@section('description')
+    Placeholder News Create Description
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -12,7 +20,7 @@
         </div>
         <div class="col-lg-12">
             @include('errors.partials._list')
-            {!! Form::model($newsItem, ['method' => 'PATCH', 'files' => true]) !!}
+            {!! Form::model($newsItem, ['method' => 'PATCH', 'files' => true, 'onsubmit' => 'validate()']) !!}
                 @include('news.partials._createEdit', ['submitButton' => 'Nieuwsbericht Wijzigen'])
             {!! Form::close() !!}
         </div>
@@ -20,6 +28,8 @@
 @stop
 
 @section('additional_scripts')
+    {!! HTML::script('custom/js/news.js') !!}
+
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
 
