@@ -171,7 +171,10 @@
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
-                    $newsItem = $this->newsRepo->get($id);
+					var_dump($request->file);
+					die();
+					
+					$newsItem = $this->newsRepo->get($id);
 
                     $newsItem->districtSectionId = $request->districtSectionId;
                     $newsItem->title = $request->title;
@@ -183,21 +186,17 @@
                     $newsItem->top = $request->top;
 
                     $news = $this->newsRepo->update($newsItem);
-                    $oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
-
+                    
                     for($i = 0; $i < count($request->file); $i++)
                     {
-                        $file = new File();
-                        $file->newsId = $news->newsId;
-                        $file->path = "temp";
-                        $file->save();
+						if (isset($request->file[$i])) {
+							$file = new File();
+							$file->newsId = $news->newsId;
+							$file->path = "temp";
+							$file->save();
 
-                        $this->saveFile($file, $i, $oldFiles);
-                    }
-
-                    foreach ($oldFiles as $oldFile)
-                    {
-                        $this->fileRepo->destroy($oldFile);
+							$this->saveFile($file, $i, $oldFiles);
+						}
                     }
 
                     return Redirect::route('news.show', [$id]);
@@ -336,58 +335,17 @@
 		  return view('errors.401');
 		}
 
-        private function saveFile($item, $count, $oldItems) 
+        private function saveFile($item, $requestFile) 
         {
-            $oldItem = null;
+			/*
+			$target = public_path() . '/uploads/img/news/';
+			$allowed = ['png', 'jpg'];
+			$filename = $_FILES['file']['name'][$count];
+			$ext = pathinfo($filename, PATHINFO_EXTENSION);
+			*/
+			
             $newsId = $item->newsId;
-
-            foreach ($oldItems as $oI) 
-            {
-                if ($oI->newsId == $newsId) 
-                {
-                    $oldItem = $oI;
-                    break;
-                }
-            }
-            
-            if (isset($_FILES) && isset($_FILES['file'])) 
-            {
-                $target = public_path() . '/uploads/img/news/';
-                $allowed = ['png', 'jpg'];
-                $filename = $_FILES['file']['name'][$count];
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                
-                //dd($_FILES);
-
-                // If there are no files selected you will get an empty '' string therefore the !empty check.
-                if (!empty($filename) && in_array($ext, $allowed)) 
-                {
-                    $tmp = $_FILES['file']['tmp_name'][$count];
-                    
-                    $newFileName = $item->fileId . '.' . $ext;
-                    $target = $target . $newFileName;
-                    
-                    move_uploaded_file($tmp, $target);
-                    
-                    $item->path = $newFileName;
-                } 
-                elseif ($oldItem != null) 
-                {
-                    $item->path = $oldItem->path;
-                } 
-                else 
-                {
-                    $item->path = 'blank.jpg';
-                }
-            } 
-            elseif ($oldItem != null) 
-            {
-                $item->path = $oldItem->path;
-            } 
-            else 
-            {
-                $item->path = 'blank.jpg';
-            }
+			
             $item->save();
         }
     }
