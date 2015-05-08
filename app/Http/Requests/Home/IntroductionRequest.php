@@ -40,6 +40,7 @@
 			$input = $this->all();
 
 			$input['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+			$input['subtitle'] = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
             $input['content'] = htmlspecialchars_decode($_POST['content']);
 
             $this->replace($input);
