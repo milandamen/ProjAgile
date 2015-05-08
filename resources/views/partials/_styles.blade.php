@@ -14,7 +14,9 @@
 {!! HTML::style('custom/css/news.css') !!}
 {!! HTML::style('custom/css/footer.css') !!}
 {!! HTML::style('custom/css/sidebar.css') !!}
+
 {!! HTML::style('custom/css/carousel_update.css') !!}
+{!! HTML::style('custom/css/showUser.css') !!}
 {!! HTML::style('custom/css/home_carousel.css') !!}
 
 <!-- Multi level menu -->

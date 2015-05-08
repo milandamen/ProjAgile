@@ -14,12 +14,12 @@
 				<tbody>
 					<tr>
 						<td>
-							<span>{{ $item->news->title }}</span>
+							<span class="textBold">{{ $item->news->title }}</span>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span>{{ $item->news->content }}</span>
+							<span>{{ $item->description }}</span>
 						</td>
 					</tr>
 				</tbody>
