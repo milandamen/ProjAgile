@@ -15,3 +15,15 @@ function execActionOnElementsInArray(array, tagname, func_action) {
 		}
 	});
 }
+
+
+function confirmDelete(){
+
+	bool = confirm('Weet u zeker dat u wilt verwijderen?');
+	
+	if(!bool){
+		event.preventDefault();
+	}	
+
+	return bool;
+}

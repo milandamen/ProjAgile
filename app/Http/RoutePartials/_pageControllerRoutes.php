@@ -35,6 +35,12 @@ Route::post('pagina/{id}/wijzigen',
 	'middleware' => 'admin'
 ]);
 
+Route::get('pagina/del/{id}', [
+	'as' => 'page.del',
+	'uses' => 'PageController@destroy',
+	'middelware' => 'admin'
+]);
+
 Route::get('pagina/{id}',
 [
 	'as' => 'page.show',

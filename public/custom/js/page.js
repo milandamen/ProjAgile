@@ -6,12 +6,11 @@ var pagePanelsDiv = document.getElementById('newPanels');
 function newPanel(size){
 
 	var newPanelDiv = document.createElement("div");
-	var label= '<h4 >Nieuw vak met grootte ' + size + '<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>';
+	var label= '<h4 >Nieuw vak met grootte ' + size + '<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a><a onclick="up(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-up"></i></a> &nbsp; <a onclick="down(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-down"></i></a></h4>';
 
-	var inputtitle = '<input type="text" class="form-control" placeholder="Titel" name="panel['+panelIndex+'][title]"/><br/>';
+	var inputtitle = '<input type="text" class="form-control titlevalue" placeholder="Titel" name="panel['+panelIndex+'][title]"/><br/>';
 	var inputcontent = '<textarea class="summernote" name="panel['+panelIndex+'][content]" placeholder="Inhoud"> </textarea>';
 	var hiddenfield = '<input type="number" name="panel['+panelIndex+'][size]"  value="'+size+'" hidden/>';
-
 	newPanelDiv.innerHTML = label + inputtitle + inputcontent + hiddenfield;
 	pagePanelsDiv.appendChild(newPanelDiv);
 
@@ -20,7 +19,6 @@ function newPanel(size){
 }
 
 function removePanel(link){
-	
 	oldPanelDiv = link.parentNode.parentNode;
 	pagePanelsDiv.removeChild(oldPanelDiv);
 }
@@ -34,6 +32,52 @@ function validate(){
     }
 
 	validateSummer();
+}
 
+function up(panel){
+	panelDiv = panel.parentNode.parentNode;
+	var children = pagePanelsDiv.children;
+	var index =0;
+	
+	for(i = 0;  i<children.length; i++){
+		if(children[i] == panelDiv ){
+			index = i;
+		}	
+	}
+
+	if(children[index-1] != null){
+		switchPanels(children[index-1], children[index]);
+	}
+}
+
+function down(panel){
+	panelDiv = panel.parentNode.parentNode;
+	var children = pagePanelsDiv.children;
+	var index =0;
+	
+	for(i = 0;  i<children.length; i++){
+		if(children[i] == panelDiv ){
+			index = i;
+		}	
+	}
+
+	if(children[index+1] != null){
+		switchPanels(children[index+1], children[index]);
+	}
+}
+
+
+function switchPanels(old, current){
+	var temp = old.innerHTML;
+	var oldValue = old.getElementsByClassName("titlevalue")[0].value;
+	var newValue = current.getElementsByClassName("titlevalue")[0].value;
+	
+	old.innerHTML = current.innerHTML;
+	old.getElementsByClassName("titlevalue")[0].value = newValue;
+	current.innerHTML = temp;
+	current.getElementsByClassName("titlevalue")[0].value = oldValue;
 
 }
+
+
+

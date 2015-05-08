@@ -8,16 +8,16 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<h2 class="page-header">{!! $page->title !!}</h2>
+				<h2 class="page-header">@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
+				<a href="{{ route('page.edit', [$page->pageId])}}" class="right"><i class="fa fa-pencil-square-o"></i></a>
+				@endif{!! $page->introduction->title !!}</h2>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-8">
-			<h4>	@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
-				<a href="{{ route('page.edit', [$page->pageId])}}"><i class="fa fa-pencil-square-o"></i></a>
-				@endif
-			 {!! $page->introduction->title  !!} </h4>
+			<h4>	
+			 {!! $page->introduction->subtitle  !!} </h4>
 			</div>
 			<div class="panel-body col-md-8">
 				{!! nl2br($page->introduction->text) !!}
@@ -37,9 +37,11 @@
 				@foreach($page->panels as $panel)					{{-- Loop all panels --}}
 					<div class="col-md-{!! $panel->panel->size !!}">
 						<div class="panel panel-default">
+							@if($panel->title != '')
 							<div class="panel-heading">
 								{!! $panel->title !!}
 							</div>
+							@endif
 							<div class="panel-body">
 								{!! nl2br($panel->text) !!}
 							</div>

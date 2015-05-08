@@ -3,5 +3,5 @@
 
     interface IIntroductionRepository extends IBaseRepository
     {
-        public function getPageBar($pageId);
+       
     }

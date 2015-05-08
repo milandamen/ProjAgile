@@ -28,7 +28,7 @@ class EntityNewOnSiteRepository implements INewOnSiteRepository
      */
     public function getAll()
     {
-        return NewOnSite::all();
+        return NewOnSite::orderBy('created_at', 'desc')->get();
     }
 
     public function getAllOrdered()
