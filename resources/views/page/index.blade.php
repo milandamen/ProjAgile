@@ -55,10 +55,9 @@
 									</a>
 								</td>
 								<td>
-									<a href="{{ route('page.del', [$page->pageId]) }}" onclick="verify()">
+									<a href="{{ route('page.del', [$page->pageId]) }}" onclick="confirmDelete()">
 										<i class="fa fa-times fa-lg text-danger"></i></a>
-								</td>
-														
+								</td>					
 							</tr>
 						@endforeach
 					</tbody>
@@ -69,6 +68,4 @@
 
 @endsection
 
-@section('additional_scripts')
-   {!! HTML::script('custom/js/main.js') !!}
-@endsection
+
