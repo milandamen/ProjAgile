@@ -65,7 +65,7 @@
 
                             <tbody>
                             @foreach($admins as $admin)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $admin->userId !!} </td>
                                     <td> {!! $admin->username !!} </td>
                                     <td> {!! $admin->firstName !!} </td>
@@ -123,7 +123,7 @@
 
                             <tbody>
                             @foreach($contentmanagers as $contentmanager)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $contentmanager->userId !!} </td>
                                     <td> {!! $contentmanager->username !!} </td>
                                     <td> {!! $contentmanager->firstName !!} </td>
@@ -141,11 +141,11 @@
                                     </td>
                                     <td>
                                         @if($contentmanager->active == 1)
-                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($contentmanager->active == 0)
-                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -181,7 +181,7 @@
 
                             <tbody>
                             @foreach($residents as $resident)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $resident->userId !!} </td>
                                     <td> {!! $resident->username !!} </td>
                                     <td> {!! $resident->firstName !!} </td>
@@ -199,11 +199,11 @@
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -224,6 +224,7 @@
         console.log(baseURL);
 
         console.log(baseURL.indexOf("s/"));
+        console.log(baseURL.sub(baseURL.indexOf("s/") + 3, baseURL.length));
 
     </script>
 @stop

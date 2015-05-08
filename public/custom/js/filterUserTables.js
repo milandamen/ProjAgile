@@ -1,7 +1,9 @@
 var deactivateClass = "black";
 var activateClass = "text-success";
 
-var rows = $('tr');
+//do not select the tr tag else the header is not visible
+var rows = $('.normalRow');
+
 $('#search').keyup(function() {
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 
@@ -29,6 +31,9 @@ function deactivate()
                 //unbind this deactivate function
                 clickedElement.unbind('click');
 
+                //change icon
+                clickedElement.children().removeClass('fa-unlock-alt').addClass('fa-lock');
+
                 //change the classes
                 clickedElement.removeClass(activateClass);
                 clickedElement.removeClass('activate');
@@ -37,6 +42,12 @@ function deactivate()
 
                 //bind to the activate function
                 clickedElement.bind('click', activate());
+
+                var href = clickedElement.attr('href');
+
+                var newHref = href.substr(0, (href.indexOf('s/') + 4)) + 'deactiveer';
+
+                clickedElement.attr('href', newHref);
             }
         })
 
@@ -59,6 +70,9 @@ function activate()
                 //unbind this activate function
                 clickedElement.unbind('click');
 
+                //change icon
+                clickedElement.children().removeClass('fa-lock').addClass('fa-unlock-alt');
+
                 //change the classes
                 clickedElement.removeClass(deactivateClass);
                 clickedElement.removeClass('deactivate');
@@ -67,13 +81,19 @@ function activate()
 
                 //bind to the deactivate function
                 clickedElement.bind('click', deactivate());
+
+                var href = clickedElement.attr('href');
+
+                var newHref = href.substr(0, (href.indexOf('s/') + 4)) + 'activeer';
+
+                clickedElement.attr('href', newHref);
             }
         })
         return false; //block the href
     });
 }
 
-//when this file loads for the first time, the functions must be called so it will bind to the hrefs
+//when this file loads for the first time, the functions must be called so it will bind to the elements
 deactivate();
 activate();
 
