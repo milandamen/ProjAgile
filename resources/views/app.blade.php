@@ -7,15 +7,14 @@
         <meta name="author" content="">
         <meta name="description" content="@yield('description')">
         <title>@yield('title')</title>
+		
+		@include('partials._styles')
     </head>
-    @include('partials._styles')
 
     <body>
         @include('partials._header')
 
         @yield('content')
-
-     	@yield('sidebar')
 
         @include('partials._footer')
 

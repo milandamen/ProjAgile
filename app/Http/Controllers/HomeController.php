@@ -3,8 +3,14 @@
 
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
-	use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+    use App\Repositories\RepositoryInterfaces\INewsRepository;
+    use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
     use Illuminate\Support\Facades\Redirect;
+    use App\Http\Requests\Home\IntroductionRequest;
+	use Auth;
+	use Request;
 
 	class HomeController extends Controller 
 	{
@@ -17,11 +23,15 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, INewsRepository $newsRepo)
+		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, IPageRepository $pageRepo,
+                                    INewsRepository $newsRepo, ICarouselRepository $carouselRepo, INewOnSiteRepository $newOnSiteRepository)
 		{
 			$this->homeLayoutRepo = $homeLayoutRepo;
 			$this->introRepo = $introRepo;
 			$this->newsRepo = $newsRepo;
+			$this->carouselRepo = $carouselRepo;
+            $this->newOnSiteRepository = $newOnSiteRepository;
+            $this->pageRepo = $pageRepo;
 		}
 
 		/**
@@ -31,12 +41,15 @@
 		 */
 		public function index()
         {
-
-            $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getPageBar('1');
+            $news = $this->getNews();
+           // $introduction = $this->introRepo->getPageBar('1');
+            $introduction = $this->pageRepo->get(1)->introduction;
+            htmlspecialchars($introduction);
             $layoutModules = $this->homeLayoutRepo->getAll();
+			$carousel = $this->carouselRepo->getAll();
+            $newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-            return view('home.index', compact('news', 'introduction', 'layoutModules'));
+            return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
         }
 
         /**
@@ -46,11 +59,17 @@
          */
         public function editLayout()
         {
-            $news = $this->newsRepo->getAll();
-            $introduction = $this->introRepo->getPageBar('1');
-            $layoutModules = $this->homeLayoutRepo->getAll();
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				$news = $this->getNews();
+				//$introduction = $this->introRepo->getPageBar('1');
+				$introduction = $this->pageRepo->get(1)->introduction;
+				$layoutModules = $this->homeLayoutRepo->getAll();
+				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-            return view('home.editLayout', compact('news', 'introduction', 'layoutModules'));
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+			} else {
+				return view('errors.403');
+			}
         }
 
         /**
@@ -60,29 +79,24 @@
          */
         public function updateLayout()
         {
-            if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
-            {
-                #intro
-                $moduleIntro = $this->homeLayoutRepo->get('module-introduction');
-                $moduleIntro->orderNumber = $_POST['module-introduction'];
-                $this->homeLayoutRepo->update($moduleIntro);
+			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') {
+				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
+				{
+					$modules = $this->homeLayoutRepo->getAll();
+					foreach ($modules as $module) {
+						$module->orderNumber = $_POST[$module->moduleName];
+						$module->save();
+					}
 
-                #news
-                $moduleNews = $this->homeLayoutRepo->get('module-news');
-                $moduleNews->orderNumber = $_POST['module-news'];
-                $this->homeLayoutRepo->update($moduleNews);
-
-                #sidebar
-                $moduleSidebar = $this->homeLayoutRepo->get('module-sidebar');
-                $moduleSidebar->orderNumber = $_POST['module-sidebar'];
-                $this->homeLayoutRepo->update($moduleSidebar);
-
-                return Redirect::route('home.index');
-            }
-            else
-            {
-                return Redirect::route('home.editLayout');
-            }
+					return Redirect::route('home.index');
+				}
+				else
+				{
+					return Redirect::route('home.editLayout');
+				}
+			} else {
+				return view('errors.403');
+			}
         }
 
         /**
@@ -92,8 +106,12 @@
          */
         public function editIntroduction()
         {
-            $introduction = $this->introRepo->getPageBar('1');
-            return view('home.editIntroduction', compact('introduction'));
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
+				$introduction = $this->pageRepo->get(1)->introduction;
+				return view('home.editIntroduction', compact('introduction'));
+			} else {
+				return view('errors.403');
+			}
         }
 
         /**
@@ -101,20 +119,64 @@
          *
          * @return Response
          */
-        public function updateIntroduction()
+        public function updateIntroduction(IntroductionRequest $request)
         {
-            $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            // nl2br is needed and used to save line breaks in the submitted text.  
-            $content = nl2br(htmlentities($_POST['content'], ENT_QUOTES, 'UTF-8'));
-            $pageId = $_POST['pageId'];
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 
-            $intro = $this->introRepo->getPageBar($pageId);
-            $intro->pageId = $pageId;
-            $intro->title = $title;
-            $intro->text = $content;
+				$intro = $this->pageRepo->get($request->pageId)->introduction;
+				$intro->title = $request->title;
+				$intro->subtitle = $request->subtitle;
+				$intro->text = $request->content;
 
-            $intro->save();
+				$this->introRepo->update($intro);
 
-            return Redirect::route('home.index');
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
+
+				return Redirect::route('home.index');
+			} else {
+				return view('errrors/403');
+			}
+        }
+		
+		/**
+         * Show the results of the search query.
+         *
+         * @return Response
+         */
+		public function search(Request $request) {
+			
+			// TODO search results.
+			return view('errors/404');
+		}
+		
+
+        private function getNews(){
+        	$news = $this->newsRepo->getAll();
+        	$newsList = array();
+
+        	foreach($news as $newsItem){
+        		if($newsItem->top){
+        			$newsList[] = $newsItem;
+        		}
+        	}
+
+        	foreach($news as $newsItem){
+        		if(!$newsItem->top){
+        			$newsList[] = $newsItem;
+        		}
+        	}
+
+        	$modulenews = array_slice($newsList, 0, 5);
+        	
+        	return $modulenews;
+
         }
     }

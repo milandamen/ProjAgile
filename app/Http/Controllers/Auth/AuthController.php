@@ -69,7 +69,8 @@
         public function postLogin(LoginRequest $request)
         {
             $credentials = $request->only('username', 'password');
-            
+            $credentials['active'] = true;
+
             if (!$this->auth->attempt($credentials, $request['remember']))
             {
                 return Redirect::route('auth.login')->withErrors

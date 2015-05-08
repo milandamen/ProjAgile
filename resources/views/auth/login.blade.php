@@ -3,6 +3,10 @@
 @section('content')
 	<div class="container">
 		<div class="row">
+		{!! Breadcrumbs::render('login') !!}
+		</div>
+
+		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<h2 class="page-header">Inloggen</h2>
 				<div class="panel panel-default">
@@ -27,7 +31,7 @@
 	                        <div class="form-group">
 	                            <div class="col-md-6 col-md-offset-4">
 	                            	<label>
-                            			<input type="checkbox" name="remember"></input> Onthoudt mij
+                            			<input type="checkbox" name="remember"></input> Onthoud mij
 	                            	</label>
 	                            </div>
 	                        </div>

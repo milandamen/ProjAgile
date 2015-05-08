@@ -72,6 +72,43 @@
          */ 
         public function getAllPublic()
         {
-            return Menu::where('publish', '=', '1')->get();
+            return Menu::where('publish', '=', 1)->get();
+        }
+
+        public function getMenu()
+        {
+            $mainMenuItems = Menu::where('parentId', null)->where('publish', 1)->orderBy('menuOrder')->get();
+            $allMenuItems  = $this->orderMenu($mainMenuItems);
+
+            return ($allMenuItems);
+        }
+
+        public function getAllMenuItems()
+        {
+            $mainMenuItems = Menu::where('parentId', null)->orderBy('menuOrder')->get();
+            $allMenuItems  = $this->orderMenu($mainMenuItems);
+
+            return ($allMenuItems);
+        }
+
+        private function orderMenu($categories)
+        {
+            $allCategories = [];
+
+            foreach ($categories as $category)
+            {
+                $subArr = [];
+                $subArr['main'] = $category;
+                $subCategories = Menu::where('parentId', '=', $category->menuId)->where('publish', '=', 1)->get();
+
+                if (!$subCategories->isEmpty())
+                {
+                    $result = $this->orderMenu($subCategories);
+                    $subArr['sub'] = $result;
+                }
+                $allCategories[] = $subArr;
+            }
+
+            return $allCategories;
         }
     }

@@ -1,3 +1,53 @@
 .hiddenInput {
 	display: none;
 }
+
+.addmargin {
+	margin-bottom: 20px;
+}
+
+.addright {
+	margin-right: 10px;
+}
+
+.pos-relative {
+	position: relative;
+}
+
+.black {
+	color: #000;
+}
+
+.white {
+	color: #FFF;
+	float: right;
+}
+
+.table-shade-selected {
+	background-color: #EEF;
+}
+
+.showMore {
+    float: right;
+}
+
+.floatLeft {
+	float: left;
+}
+
+.floatRight {
+	float: right;
+}
+
+.showMore a {
+    text-decoration: none;
+    color: dimgray;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+.textBold {
+	font-weight: bold;
+}

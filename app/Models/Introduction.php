@@ -33,8 +33,8 @@
          */
         protected $fillable = 
         [
-        	'pageId', 
-        	'title', 
+           	'title',
+        	'subtitle', 
         	'text'
         ];
 
@@ -47,4 +47,10 @@
         [
         	'introductionId'
         ];
+
+
+        public function page()
+		{
+	        return $this->belongsTo('App\Models\Page', 'introduction_introductionId');
+		}
     }

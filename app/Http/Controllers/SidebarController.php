@@ -2,116 +2,114 @@
     namespace App\Http\Controllers;
 
     use App\Models\Sidebar;
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
     use App\Repositories\RepositoryInterfaces\ISidebarRepository;
+    use App\Repositories\RepositoryInterfaces\IMenuRepository;
     use Illuminate\Support\Facades\Redirect;
+	use Auth;
 
     class SidebarController extends Controller
     {
-        private $sidebarRepo;
+	
+		private $sidebarRepo;
 
-        /**
-         * Create a new SidebarController instance.
-         *
-         * @parm ISidebarRepository $sidebarRepo
-         *
-         * @return void
-         */
-        public function __construct(ISidebarRepository $sidebarRepo)
-        {
-            $this->sidebarRepo = $sidebarRepo;
-        }
+		/**
+		* Create a new SidebarController instance.
+		*
+		* @parm ISidebarRepository $sidebarRepo
+		*
+		* @return void
+		*/
+		public function __construct(ISidebarRepository $sidebarRepo, IMenuRepository $menuRepo, INewOnSiteRepository $newOnSiteRepository)
+		{
+			$this->sidebarRepo = $sidebarRepo;
+			$this->menuRepo = $menuRepo;
+            $this->newOnSiteRepository = $newOnSiteRepository;
+		}
 
-        public function edit($id)
-        {
-            if($this->sidebarRepo->getByPage($id) != null)
-            {
-                $sidebar = $this->sidebarRepo->getByPage($id);
+		public function edit($id)
+		{
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
 
-                 return View('sidebar.edit', compact('sidebar'));
-            }
-            else
-            {
-                // Totdat er een error page is.
-                return Redirect::route('home.index');
-            }
-        }
+				$sidebar = $this->sidebarRepo->getByPage($id);
+				if(count($sidebar) > 0)
+				{
+					$sidebarList = $this->sidebarRepo->getByPage($id);
+					$menuList = $this->menuRepo->getAll();
+					return View('sidebar.edit', compact('sidebarList', 'menuList'));
+				} else {
+					return view('errors.404');
+				}
+			} else {
+				return view('errors.403');
+			}
+		}
 
-        public function update($id)
-        {
-            $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-            $maxrowindex = $_POST['maxRowIndex'];
-            $i=0;
-            $pageNr = $id;
+		public function update($id)
+		{
+			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) {
+				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+				$maxrowindex = $_POST['maxRowIndex'];
+				$i=0;
+				$pageId = $id;
 
-            for($rows =0; $rows <= $maxrowindex; $rows++)
-            {
-                echo $rows;
+				// first delete all old items, to prevent double items and or not deleting rows.
+				$this->sidebarRepo->deleteAllFromPage($pageId);
+			
 
-                if(isset($_POST['sidebar'][$rows]))
+				for($rows =0; $rows <= $maxrowindex; $rows++)
+				{
+					if(isset($_POST['sidebar'][$rows]))
+					{
+						$rowItems = $_POST['sidebar'][$rows];
+						for($row = 0; $row < $maxrowindex; $row++)
+						{
+							if(isset($rowItems['text'][$row])){
+								echo $rowItems['text'][$row];
+
+								if(isset($rowItems['text'][$row])){
+									$text = filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING);
+
+									if($rowItems['radio1'] == 'Extern'){
+										$extern = true;
+										$link = $rowItems['pagename'][$row];
+									} else {
+										$extern = false;
+                                        $link = $rowItems['pagename'][$row];
+									}
+
+									$newSidebarRow = new Sidebar();
+									$newSidebarRow->page_pageId = $pageId;
+									$newSidebarRow->rowNr = $i;
+									$newSidebarRow->title= $title;
+									$newSidebarRow->text = $text;
+									$newSidebarRow->link= $link;
+									$newSidebarRow->extern= $extern;
+									$newSidebarRow->save();
+									
+									$i++;
+								} else {
+									echo "Vul a.u.b. alle verplichte velden in";
+									return;
+								}
+							}
+						}
+					}             
+				}
+
+                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
                 {
-                    $rowItems = $_POST['sidebar'][$rows];
-                    for($row = 0; $row < count($rowItems['text']); $row++)
-                    {
-                        if($rowItems['text'][$row] != null)
-                        {
-                            $link =  $rowItems['link'][$row];
-                            $extern = false;
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
 
-                            if($rowItems['radio1'] == 'Extern')
-                            {
-                                $extern = true;
-                                $link = $rowItems['link'][$row];
-                            } else
-                            {
-                                if($rowItems['pagename'][$row] != '')
-                                {
-                                    $link = $rowItems['pagename'][$row];
-                                }
-                                else
-                                {
-                                    $link = $rowItems['link'][$row];
-                                }
-                                $extern = false;
-                            }
-                            $text = filter_var($rowItems['text'][$row], FILTER_SANITIZE_STRING);
-
-                            if(isset($rowItems['rowId']))
-                            {
-                                $rowId = $rowItems['rowId'];
-                                $sideRow = $this->sidebarRepo->get($rowId);
-
-                                if($sideRow != null)
-                                {
-                                    $sideRow->pageNr = $pageNr;
-                                    $sideRow->rowNr = $i;
-                                    $sideRow->title= $title;
-                                    $sideRow->text = $text;
-                                    $sideRow->link= $link;
-                                    $sideRow->extern= $extern;
-                                    $sideRow->save();
-                                }
-                            }
-                            else
-                            {
-                                $newSidebarRow = new Sidebar();
-                                $newSidebarRow->pageNr = $pageNr;
-                                $newSidebarRow->rowNr = $i;
-                                $newSidebarRow->title= $title;
-                                $newSidebarRow->text = $text;
-                                $newSidebarRow->link= $link;
-                                $newSidebarRow->extern= $extern;
-                                $newSidebarRow->save();
-                            }
-                            $i++;
-                        }
-                        else
-                        {
-                            echo "Vul a.u.b. alle verplichte velden in";
-                            return;
-                        }
-                    }
+                    $this->newOnSiteRepository->create($attributes);
                 }
-            }
-            return Redirect::route('home.index');
-        }
+
+				return Redirect::route('home.index');
+			} else {
+				return view('errors.403');
+			}
+		}
     }
