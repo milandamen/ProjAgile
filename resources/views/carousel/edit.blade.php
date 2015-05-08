@@ -16,6 +16,8 @@
 				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					
+					{{-- */ $curDate = date('Y-m-d H:i:s',time()); $someRed = false; /* --}}
+					
 					<table id="articlelisttable" class="table">
 						<thead>
 							<tr>
@@ -41,7 +43,14 @@
 						</thead>
 						<tbody id="articlelist">
 							@foreach ($carousel as $article)
-								<tr>
+								
+								@if ($article->news->hidden === 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
+									<tr class="slightlyRed">
+									{{-- */ $someRed = true; /* --}}
+								@else
+									<tr>
+								@endif
+								
 									<td>
 										
 									</td>
@@ -74,6 +83,10 @@
 							@endforeach
 						</tbody>
 					</table>
+					
+					@if ($someRed)
+						<p class="redText">De publicatiedatum van één of meerdere nieuws artikelen is verlopen.</p>
+					@endif
 					
 					<button type="submit" class="btn btn-success">Opslaan</button>
 					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>

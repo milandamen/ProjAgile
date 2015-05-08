@@ -171,9 +171,6 @@
             {
                 if (Auth::user()->usergroup->name === 'Administrator')
                 {
-					var_dump($request->file);
-					die();
-					
 					$newsItem = $this->newsRepo->get($id);
 
                     $newsItem->districtSectionId = $request->districtSectionId;
@@ -187,17 +184,7 @@
 
                     $news = $this->newsRepo->update($newsItem);
                     
-                    for($i = 0; $i < count($request->file); $i++)
-                    {
-						if (isset($request->file[$i])) {
-							$file = new File();
-							$file->newsId = $news->newsId;
-							$file->path = "temp";
-							$file->save();
-
-							$this->saveFile($file, $i, $oldFiles);
-						}
-                    }
+                    $this->saveFiles($request->file, $id);
 
                     return Redirect::route('news.show', [$id]);
                 }
@@ -335,17 +322,30 @@
 		  return view('errors.401');
 		}
 
-        private function saveFile($item, $requestFile) 
+        private function saveFiles($requestFiles, $newsId) 
         {
-			/*
-			$target = public_path() . '/uploads/img/news/';
-			$allowed = ['png', 'jpg'];
-			$filename = $_FILES['file']['name'][$count];
-			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			*/
+			$target = public_path() . '/uploads/file/news/';
+			$allowed = ['png', 'jpg', 'gif', 'jpeg', 
+						'pdf', 'xps',
+						'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 
+						'txt', 'rtf', 'xml',
+						'odt', 'dotx', 'odp', 'ods', 'odi'];
 			
-            $newsId = $item->newsId;
-			
-            $item->save();
+			for($i = 0; $i < count($requestFiles); $i++) {
+				$rfile = $requestFiles[$i];
+				if (isset($rfile)) {
+					$filename = $rfile->getClientOriginalName();
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+					
+					if (!empty($filename) && in_array($ext, $allowed)) {
+						$file = $this->fileRepo->create(['newsId' => $newsId]);
+						$rfile->move($target, $file->fileId . '_' . $filename);
+						
+						$file->newsId = $newsId;
+						$file->path = $file->fileId . '_' . $filename;
+						$file->save();
+					}
+				}
+			}
         }
     }
