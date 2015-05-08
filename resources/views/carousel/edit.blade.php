@@ -44,7 +44,7 @@
 						<tbody id="articlelist">
 							@foreach ($carousel as $article)
 								
-								@if ($article->news->hidden === 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
+								@if ($article->news->hidden == 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
 									<tr class="slightlyRed">
 									{{-- */ $someRed = true; /* --}}
 								@else
