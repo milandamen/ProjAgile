@@ -32,8 +32,10 @@
                         </a>
                         <ul class="dropdown-menu" style="padding:12px;">
                             <li><a href="#">Wijzig profiel</a></li>
+                            @if(Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+                                <li><a href="{{ route('admin.index') }}">Beheer</a></li>
+                            @endif
                             <li><a href="{{ route('auth.logout') }}">Uitloggen</a></li>
-                            <li><a href="#">etc.</a></li>
                         </ul>
                     </li>
                 @endif
