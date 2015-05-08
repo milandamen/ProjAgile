@@ -183,18 +183,11 @@ function validate()
 		return false;
 	}
 
-	if (publishStartDate > publishEndDate)
+	if (publishStartDate > publishEndDate || 
+		publishStartDate.getTime() === publishEndDate.getTime())
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
-
-		return false;
-	}
-
-	if (publishEndDate < publishStartDate)
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een einddatum en een tijdstip na de Publicatiedatum.');
 
 		return false;
 	}
@@ -245,4 +238,7 @@ function validate()
 
 		return false;
 	}
+
+			event.preventDefault();
+		return false;
 }

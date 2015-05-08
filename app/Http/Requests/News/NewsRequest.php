@@ -29,7 +29,7 @@
 				'hidden' => 'required',
 				'commentable' => 'required',
 				'publishStartDate' => 'required|date|before:publishEndDate',
-				'publishEndDate' => 'required|date|after:publishStartDate',
+				'publishEndDate' => 'required|date',
 				'top' => 'required',
 			];
 
