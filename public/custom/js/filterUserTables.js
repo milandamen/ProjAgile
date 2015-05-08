@@ -13,83 +13,67 @@ $('#search').keyup(function() {
 
 //CHANGE HREF AND ICON CLASS
 
-$('.activate').click(function (event){
+//deactivate when click on activate class
+function deactivate()
+{
+    $('.activate').click(function (event){
 
-    var clickedElement = $(this);
+        //save the clicked element to use later on when the class has been changed
+        var clickedElement = $(this);
+        event.preventDefault();
 
-    event.preventDefault();
+        $.ajax({
+            url: $(this).attr('href')
+            ,success: function(response) {
 
-    $.ajax({
-        url: $(this).attr('href')
-        ,success: function(response) {
-            console.log('succ 1');
-            clickedElement.removeClass(activateClass);
-            clickedElement.removeClass('activate');
-            clickedElement.addClass(deactivateClass);
-            clickedElement.addClass('deactivate');
+                //unbind this deactivate function
+                clickedElement.unbind('click');
 
-            $('.deactivate').click(function (event){
+                //change the classes
+                clickedElement.removeClass(activateClass);
+                clickedElement.removeClass('activate');
+                clickedElement.addClass(deactivateClass);
+                clickedElement.addClass('deactivate');
 
-                var clickedElement = $(this);
+                //bind to the activate function
+                clickedElement.bind('click', activate());
+            }
+        })
 
-                event.preventDefault();
+        return false; //block the href
+    });
+}
 
-                $.ajax({
-                    url: $(this).attr('href')
-                    ,success: function(response) {
-                        console.log('succ 2');
-                        clickedElement.removeClass(deactivateClass);
-                        clickedElement.removeClass('deactivate');
-                        clickedElement.addClass(activateClass);
-                        clickedElement.addClass('activate');
+//activate when clicked on deactivate class
+function activate()
+{
+    $('.deactivate').click(function (event){
+        //save the clicked element to use later on when the class has been changed
+        var clickedElement = $(this);
+        event.preventDefault();
 
+        $.ajax({
+            url: $(this).attr('href')
+            ,success: function(response) {
 
-                    }
-                })
-                return false; //for good measure
-            });
-        }
-    })
+                //unbind this activate function
+                clickedElement.unbind('click');
 
-    return false; //for good measure
-});
+                //change the classes
+                clickedElement.removeClass(deactivateClass);
+                clickedElement.removeClass('deactivate');
+                clickedElement.addClass(activateClass);
+                clickedElement.addClass('activate');
 
-$('.deactivate').click(function (event){
+                //bind to the deactivate function
+                clickedElement.bind('click', deactivate());
+            }
+        })
+        return false; //block the href
+    });
+}
 
-    var clickedElement = $(this);
-
-    event.preventDefault();
-
-    $.ajax({
-        url: $(this).attr('href')
-        ,success: function(response) {
-            console.log('succ 2');
-            clickedElement.removeClass(deactivateClass);
-            clickedElement.removeClass('deactivate');
-            clickedElement.addClass(activateClass);
-            clickedElement.addClass('activate');
-
-            $('.activate').click(function (event){
-
-                var clickedElement = $(this);
-
-                event.preventDefault();
-
-                $.ajax({
-                    url: $(this).attr('href')
-                    ,success: function(response) {
-                        console.log('succ 1');
-                        clickedElement.removeClass(activateClass);
-                        clickedElement.removeClass('activate');
-                        clickedElement.addClass(deactivateClass);
-                        clickedElement.addClass('deactivate');
-                    }
-                })
-
-                return false; //for good measure
-            });
-        }
-    })
-    return false; //for good measure
-});
+//when this file loads for the first time, the functions must be called so it will bind to the hrefs
+deactivate();
+activate();
 
