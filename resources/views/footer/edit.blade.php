@@ -16,9 +16,9 @@
                 <hr/>
                 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
                 <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
-                <div id="footer-tables" class="footer-tables">
+                <div id="footer-tables" class="col-sm-8">
                     @for($c = 0; $c < count($footer); $c++)
-                        <table name="{{$c}}" class="col-sm-4">
+                        <table name="{{$c}}" class="col-sm-7 form-group">
                             <tr>
                                 <td>
                                     <button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button>
@@ -32,9 +32,18 @@
                             <tr>
                                 <td>
                                     Tekst: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" maxlength="22 " required>
-                                    <button type="button" onclick="removeRow(this)" class="btn btn-primary btn-xs">X</button>
-                                    <br/> Link: &nbsp; <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
                                 </td>
+                                <td>
+    								Link: &nbsp; <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
+                                </td>
+                                <td>
+                                	@if($r >= 1)
+                                    <button type="button" onclick="removeRow(this)" class="btn btn-danger btn-xs">X</button>
+                                    @else 
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+                                    @endif
+                                </td>
+
                             </tr>
                         @endfor
                         </table>
