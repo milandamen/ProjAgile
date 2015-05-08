@@ -44,6 +44,9 @@
 									<td>
 										<a href="{{ route('sidebar.edit', [$page->pageId]) }}" onclick="">wijzig sidebar</a>
 									</td>
+								@else 
+									<td>
+									</td>
 								@endif
 								<td>
 									<a href="{{ route('page.show', [$page->pageId]) }}">
