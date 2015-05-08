@@ -66,16 +66,5 @@
             $model->delete();
         }
 		
-        /**
-         * Returns a Introduction Collection depending on the page id provided.
-         * 
-         * @param  int $pageId
-         * 
-         * @return Collection -> Introduction
-         */ 
-		public function getPageBar($pageId)
-		{
-			return Introduction::where('pageId', '=', $pageId)->first();
-		}
 
 	}

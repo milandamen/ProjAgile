@@ -10,7 +10,7 @@
         @include('flash::message')
         <div class="row">
             <div class="col-md-12">
-                <h2 class="page-header">De Bunders</h2>
+                <h2 class="page-header"> {!! $introduction->title !!}</h2>
             </div>
         </div>
 

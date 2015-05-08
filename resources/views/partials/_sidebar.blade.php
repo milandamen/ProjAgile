@@ -8,7 +8,7 @@
 			<h4>
 				{!! $sidebar[0]->title !!}
 				@if(Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder'))
-					 <a class="right" href="{{ route('sidebar.edit', [$sidebar[0]->pageNr]) }}"><i class="fa fa-pencil-square-o"></i></a>
+					 <a class="right" href="{{ route('sidebar.edit', [$sidebar[0]->page_pageId]) }}"><i class="fa fa-pencil-square-o"></i></a>
 				@endif
 			</h4>
 		</div>
