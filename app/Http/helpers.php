@@ -1,4 +1,5 @@
 <?php
+
 	/**
 	 * This trunc function will word limit a provided phrase 
 	 * depending on the max word count.
@@ -54,4 +55,24 @@
         }
         
         return $value;
+    }
+
+    /**
+     * Returns the name of the Administrator role as described in the database.
+     *
+     * @return 	String
+     */
+    function getAdministratorName()
+    {
+        return "Administrator";
+    }
+
+    /**
+     * Returns the name of the Content Manager role as described in the database.
+     *
+     * @return 	String
+     */
+    function getContentManagerName()
+    {
+        return "Content Beheerder";
     }
