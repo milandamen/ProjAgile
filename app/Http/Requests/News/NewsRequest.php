@@ -40,7 +40,7 @@
 
 			foreach ($this->request->get('file') as $key => $value)
 			{
-				$rules['file.' . $key] = 'mimes:jpeg,png,pdf';
+				$rules['file.' . $key] = 'mimes:jpeg,png,gif,pdf';
 			}
 
 			return $rules;

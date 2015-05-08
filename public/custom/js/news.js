@@ -197,6 +197,7 @@ function validate()
 	[
 		'image/jpeg',
 		'image/png',
+		'image/gif',
 		'application/pdf'
 	];
 
@@ -208,7 +209,7 @@ function validate()
 			{
 				event.preventDefault();
 				alert('Eén van de bestanden is niet van het juiste bestandstype. ' + 
-					  '\nU mag alleen bestanden uploaden van het bestandstype jpeg, png en pdf.');
+					  '\nU mag alleen bestanden uploaden van het bestandstype jpeg, png, gif en pdf.');
 
 				return false;
 			}
