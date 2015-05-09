@@ -70,6 +70,7 @@
 	<div class="col-md-4 no-padding">
 		<table name="fileUpload" class="table">
 			@if(isset($files))
+				@foreach($files as $file)
 					{!! '<tr>
 						<td>' . Form::file($file->fileId, ['id' => 'file']) . '</td>' !!}
 						<td>
