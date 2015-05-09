@@ -9,7 +9,7 @@ function newPanel(size){
 	var label= '<h4 >Nieuw vak met grootte ' + size + '<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a><a onclick="up(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-up"></i></a> &nbsp; <a onclick="down(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-down"></i></a></h4>';
 
 	var inputtitle = '<input type="text" class="form-control titlevalue" placeholder="Titel" name="panel['+panelIndex+'][title]"/><br/>';
-	var inputcontent = '<textarea class="summer" name="panel['+panelIndex+'][content]" placeholder="Inhoud" rows="6"> </textarea>';
+	var inputcontent = '<textarea class="summer form-control" name="panel['+panelIndex+'][content]" placeholder="Inhoud" rows="6"> </textarea>';
 	var hiddenfield = '<input type="number" name="panel['+panelIndex+'][size]"  value="'+size+'" hidden/>';
 	newPanelDiv.innerHTML = label + inputtitle + inputcontent + hiddenfield;
 	pagePanelsDiv.appendChild(newPanelDiv);
@@ -39,7 +39,7 @@ function validate(){
         	return false;
 		}	
 	}
-	
+
 	validateSummer();
 }
 
