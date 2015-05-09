@@ -36,7 +36,7 @@
 			
 			$carousel = [];
 			foreach ($allcarousel as $c) {
-				if ($c->news->hidden === 0 && $c->news->publishStartDate <= $curDate && $c->news->publishEndDate >= $curDate) {
+				if ($c->news->hidden == 0 && $c->news->publishStartDate <= $curDate && $c->news->publishEndDate >= $curDate) {
 					$carousel[] = $c;
 				}
 			}

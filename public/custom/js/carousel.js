@@ -66,6 +66,7 @@ if (carousel_count !== 0) {
 		carouselIntervalId = setInterval('carouselTransition(-1)', carousel_transition_interval);
 	}
 } else {
+	console.log('ERROR: carousel_count = 0; hiding caorusel..')
 	carousel.style.display = 'none';				// Hide the whole carousel if there are no items to display.
 }
 

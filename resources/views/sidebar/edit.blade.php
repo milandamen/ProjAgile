@@ -63,9 +63,15 @@
                             </td>
 
                             <!-- Row removal button -->
+                            @if($i >= 1)
                             <td>
                                 <button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button>
                             </td>
+                            @else
+                            <td>
+
+                            </td>
+                            @endif
                         </tr>
                         {{--*/ $i++;	/*--}}
                         @endforeach
