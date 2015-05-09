@@ -218,15 +218,6 @@
         </div>
         @endif
     </div>
-    <script>
-        //var autocompleteURL = "{!! route('autocomplete.userAutocomplete', '') !!}";
-        var baseURL = "{!! route('user.deactivate') !!}/";
-        console.log(baseURL);
-
-        console.log(baseURL.indexOf("s/"));
-        console.log(baseURL.sub(baseURL.indexOf("s/") + 3, baseURL.length));
-
-    </script>
 @stop
 
 @section('additional_scripts')
