@@ -16,6 +16,8 @@
 	            {!! Form::model($page, ['method' => 'POST']) !!}
 	            <div class="row col-md-5">
 	            	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
+	            	 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 	            	<input type="text" name="intro_id" id="intro_id" value="{!! $page->introduction->introductionId !!}" class="hiddenInput" />
 					<div class="form-group col-md-8">
 					{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
@@ -68,7 +70,7 @@
 						<div>
 							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a><a onclick="up(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-up"></i></a>  <a onclick="down(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-down"></i></a></h4>
 							<input type="text" class="form-control titlevalue"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
-							<textarea class="summernote" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
+							<textarea class="summer form-control" name="panel[{!!$i!!}][content]" placeholder="Inhoud" rows="6">{!! $panel->text !!} </textarea>
 							<input type="number" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
 							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
 						</div>
@@ -98,4 +100,5 @@
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
     {!! HTML::script('custom/js/page.js') !!}
+      {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection

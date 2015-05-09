@@ -65,13 +65,13 @@
 							}
 							$item->description = $description;
 							
-							$carouselRepo->update($item);
+							$this->carouselRepo->update($item);
 							
 							$this->saveImage($item, $i, $oldItems);
 							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
 								$item->imagePath = 'blank.jpg';
 							}
-							$carouselRepo->update($item);
+							$this->carouselRepo->update($item);
 						}
 					}
 					
