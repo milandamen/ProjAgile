@@ -44,12 +44,14 @@
             $input['content'] = htmlspecialchars_decode($input['content']);
             $input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
 
-            if(isset($input['panel'])){
-	            foreach($input['panel'] as $panel){
-	            	$panel['title'] = filter_var($panel['title'], FILTER_SANITIZE_STRING);
-	            	$panel['content'] = htmlspecialchars_decode($panel['content']);
-	            }
+        	if(isset($input['panel'])){
+        		for($i = 0; $i<count($input['panel']); $i++){
+        			$input['panel'][$i]['title'] = filter_var($input['panel'][$i]['title'], FILTER_SANITIZE_STRING);
+        			$input['panel'][$i]['content'] = filter_var($input['panel'][$i]['content'], FILTER_SANITIZE_STRING);
+        		}
+
         	}
+
 
             $this->replace($input);
 

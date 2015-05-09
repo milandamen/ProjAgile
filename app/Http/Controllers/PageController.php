@@ -9,6 +9,8 @@
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
+
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
@@ -22,7 +24,7 @@
     class PageController extends Controller
     {
 
-    	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo, 
+    	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo,  INewOnSiteRepository $newOnSiteRepository,
     								IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo, ISidebarRepository $sidebarrepo){
     		
     		$this->introrepo = $introrepo;
@@ -30,6 +32,7 @@
     		$this->panelrepo = $panelrepo;
     		$this->pagepanelrepo = $pagepanelrepo;
     		$this->sidebarrepo = $sidebarrepo;
+    		$this->newOnSiteRepository = $newOnSiteRepository;
     	}
 
 
@@ -102,6 +105,17 @@
             		'link' => '/'
             		]);
             }
+
+
+              $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
 
            return Redirect::route('page.show', [$page->pageId]);
         }
@@ -202,6 +216,17 @@
         	$pageid = $page->pageId;
         	$title = $request->title;
         	$this->updateSidebar($old, $new, $pageid, $title);
+
+        	 $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
+        	
 
         	return Redirect::route('page.show', [$page->pageId]);
 

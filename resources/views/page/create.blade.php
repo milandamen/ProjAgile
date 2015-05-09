@@ -18,6 +18,8 @@
             {!! Form:: open() !!}
             <div class="row col-md-5">
             	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
+            	 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 				<div class="form-group col-md-12">
 				{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
 				{!! Form::text('title', null , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
@@ -71,8 +73,6 @@
 			</div>
 
 
-			
-
 			<div class="row col-md-8">
 				<div class="form-group">
 					{!! HTML::linkRoute('admin.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
@@ -94,4 +94,5 @@
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
     {!! HTML::script('custom/js/page.js') !!}
+      {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection
