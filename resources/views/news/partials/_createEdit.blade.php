@@ -23,7 +23,15 @@
 	</div>
 	<div class="col-md-4 no-padding">
 		<table name="districtSections" class="table">
-			@if(isset($districtectionss))
+			@if(isset($newsItem->districtSectionId))
+				{!! '<tr>
+					<td>' . Form::select('districtSection[0]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
+					<td>
+						<button name="deleteDistrictSection" type="button" class="btn btn-danger" aria-label="Left Align">
+							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
 			@else
 				{!! '<tr>
 					<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
