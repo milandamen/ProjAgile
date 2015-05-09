@@ -115,18 +115,7 @@
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
 					$news = $this->newsRepo->create($request->all());
-					$oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
-
-					for($i = 0; $i < count($request->file); $i++)
-					{
-						dd($request->file);
-						$this->saveFiles($news, $i, $oldFiles);
-					}
-
-					foreach ($oldFiles as $oldItem)
-					{
-						$this->fileRepo->destroy($oldItem);
-					}
+					$this->saveFiles($request->file, $news->newsId);
 
 					return Redirect::route('news.show', [$news->newsId]);
 				}
