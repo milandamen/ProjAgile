@@ -316,7 +316,7 @@
 
 			$allowed = 
 			[
-				'docx',
+				'doc',
 				'pdf',
 				'xls',
 				'ppt',

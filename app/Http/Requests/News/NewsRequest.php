@@ -45,7 +45,7 @@
 			{
 				foreach ($this->request->get('file') as $key => $value)
 				{
-					$rules['file.' . $key] = 'mimes:docx,pdf,xls,ppt,xps,odi,odp,ods,odt,pptx,xlsx,docx,dotx,xml,gif,jpeg,png,plain,rtf';
+					$rules['file.' . $key] = 'mimes:doc,pdf,xls,ppt,xps,odi,odp,ods,odt,pptx,xlsx,docx,dotx,xml,gif,jpeg,png,plain,rtf';
 				}
 			}
 

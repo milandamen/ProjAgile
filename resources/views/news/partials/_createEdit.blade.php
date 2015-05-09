@@ -78,16 +78,19 @@
 	<div class="col-md-4 no-padding">
 		<table name="fileUpload" class="table">
 			@if(isset($files))
-				@foreach($files as $file)
-					{!! '<tr>
-						<td>' . Form::file($file->fileId, ['id' => 'file']) . '</td>' !!}
-						<td>
-							<button name="deleteFile" type="button" class="btn btn-danger" aria-label="Left Align">
-								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</td>
+				@for ($i = 0; $i < count($files); $i++)
+					<tr>
+						<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
 					</tr>
-				@endforeach
+				@endfor
+				{!! '<tr>
+					<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
+					<td>
+						<button name="deleteFile" type="button" class="btn btn-danger" aria-label="Left Align">
+							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
 			@else
 				{!! '<tr>
 					<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
@@ -97,7 +100,7 @@
 						</button>
 					</td>
 				</tr>
-		@endif
+			@endif
 		</table>
 	</div>
 </div>
