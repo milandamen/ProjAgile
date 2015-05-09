@@ -1,4 +1,4 @@
-<?php
+<?php 
 	namespace App\Http\Controllers;
 
 	use App\Models\File;
@@ -13,6 +13,7 @@
 	use Auth;
 	use Redirect;
 	use Request;
+	use View;
 
 	class NewsController extends Controller
 	{
@@ -25,18 +26,16 @@
 		/**
 		 * Creates a new NewsController instance.
 		 *
-		 * @param IDistrictSectionRepository    $districtSectionRepo
-		 * @param IFileRepository               $fileRepo
-		 * @param INewsCommentRepository 		$newsCommentRepo
-		 * @param INewsRepository 				$newsRepo
-		 * @param ISidebarRepository			$sidebarRepo
-		 * @param IUserRepository				$userRepo
+		 * @param IFileRepository        $fileRepo
+		 * @param INewsCommentRepository $newsCommentRepo
+		 * @param INewsRepository        $newsRepo
+		 * @param IUserRepository        $userRepo
 		 *
 		 * @return void
 		 */
 		public function __construct(IDistrictSectionRepository $districtSectionRepo, IFileRepository $fileRepo, 
 									INewsCommentRepository $newsCommentRepo, INewsRepository $newsRepo, 
-									ISidebarRepository $sidebarRepo, IUserRepository $userRepo)
+									IUserRepository $userRepo, ISidebarRepository $sidebarRepo)
 		{
 			$this->districtSectionRepo = $districtSectionRepo;
 			$this->fileRepo = $fileRepo;
@@ -72,6 +71,7 @@
 			if($news != null)
 			{
 				htmlspecialchars($news->content);
+
 				return view('news.show', compact('news'));
 			}
 
@@ -119,7 +119,8 @@
 
 					for($i = 0; $i < count($request->file); $i++)
 					{
-						$this->saveFile($news, $i, $oldFiles);
+						dd($request->file);
+						$this->saveFiles($news, $i, $oldFiles);
 					}
 
 					foreach ($oldFiles as $oldItem)
@@ -174,8 +175,7 @@
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
 					$newsItem = $this->newsRepo->get($id);
-
-					$newsItem->districtSectionId = $request->districtSectionId;
+					$newsItem->districtSectionId = $request->districtSection[0];
 					$newsItem->title = $request->title;
 					$newsItem->content = $request->content;
 					$newsItem->hidden = $request->hidden;
@@ -183,24 +183,9 @@
 					$newsItem->publishStartDate = $request->publishStartDate;
 					$newsItem->publishEndDate = $request->publishEndDate;
 					$newsItem->top = $request->top;
-
 					$news = $this->newsRepo->update($newsItem);
-					$oldFiles = $this->fileRepo->getAllByNewsId($news->newsId);
-
-					for($i = 0; $i < count($request->file); $i++)
-					{
-						$file = new File();
-						$file->newsId = $news->newsId;
-						$file->path = "temp";
-						$file->save();
-
-						$this->saveFile($file, $i, $oldFiles);
-					}
-
-					foreach ($oldFiles as $oldFile)
-					{
-						$this->fileRepo->destroy($oldFile);
-					}
+					
+					$this->saveFiles($request->file, $id);
 
 					return Redirect::route('news.show', [$id]);
 				}
@@ -246,11 +231,9 @@
 			{
 				$comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
 				$newsId = filter_var($_POST['newsId'], FILTER_VALIDATE_INT);
-
 				$attributes['newsId'] = $newsId;
 				$attributes['userId'] = Auth::user()->userId;
 				$attributes['message'] = $comment;
-
 				$this->newsCommentRepo->create($attributes);
 
 				return Redirect::route('news.show', [$newsId]);
@@ -335,61 +318,55 @@
 				return view('errors.403');
 			}
 
-		  return view('errors.401');
+			return view('errors.401');
 		}
 
-		private function saveFile($item, $count, $oldItems) 
+		private function saveFiles($requestFiles, $newsId) 
 		{
-			$oldItem = null;
-			$newsId = $item->newsId;
+			$target = public_path() . '/uploads/file/news/';
 
-			foreach ($oldItems as $oI) 
-			{
-				if ($oI->newsId == $newsId) 
-				{
-					$oldItem = $oI;
-					break;
-				}
-			}
+			$allowed = 
+			[
+				'docx',
+				'pdf',
+				'xls',
+				'ppt',
+				'xps',
+				'odi',
+				'odp',
+				'ods',
+				'odt',
+				'pptx',
+				'xlsx',
+				'docx',
+				'dotx',
+				'xml',
+				'gif',
+				'jpeg',
+				'png',
+				'plain',
+				'rtf'
+			];
 			
-			if (isset($_FILES) && isset($_FILES['file'])) 
+			for($i = 0; $i < count($requestFiles); $i++) 
 			{
-				$target = public_path() . '/uploads/img/news/';
-				$allowed = ['png', 'jpg'];
-				$filename = $_FILES['file']['name'][$count];
-				$ext = pathinfo($filename, PATHINFO_EXTENSION);
-				
-				//dd($_FILES);
+				$rfile = $requestFiles[$i];
 
-				// If there are no files selected you will get an empty '' string therefore the !empty check.
-				if (!empty($filename) && in_array($ext, $allowed)) 
+				if (isset($rfile)) 
 				{
-					$tmp = $_FILES['file']['tmp_name'][$count];
+					$filename = $rfile->getClientOriginalName();
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
 					
-					$newFileName = $item->fileId . '.' . $ext;
-					$target = $target . $newFileName;
-					
-					move_uploaded_file($tmp, $target);
-					
-					$item->path = $newFileName;
-				} 
-				elseif ($oldItem != null) 
-				{
-					$item->path = $oldItem->path;
-				} 
-				else 
-				{
-					$item->path = 'blank.jpg';
+					if (!empty($filename) && in_array($ext, $allowed)) 
+					{
+						$file = $this->fileRepo->create(['newsId' => $newsId]);
+						$rfile->move($target, $file->fileId . '_' . $filename);
+						
+						$file->newsId = $newsId;
+						$file->path = $file->fileId . '_' . $filename;
+						$this->fileRepo->update($file);
+					}
 				}
-			} 
-			elseif ($oldItem != null) 
-			{
-				$item->path = $oldItem->path;
-			} 
-			else 
-			{
-				$item->path = 'blank.jpg';
 			}
-			$item->save();
 		}
 	}

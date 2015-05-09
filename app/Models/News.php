@@ -34,7 +34,7 @@
 		 */
 		protected $fillable = 
 		[
-			'districtsectionId', 
+			'districtSectionId', 
 			'userId', 
 			'title', 
 			'content', 
@@ -62,12 +62,13 @@
 			{
 				$value = Carbon::now('Europe/Amsterdam');
 			}
-			return Carbon::parse($value)->format('d-m-Y H:i');
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
 		}
 
 		public function setPublishStartDateAttribute($value)
 		{
-			$this->attributes['publishStartDate'] = Carbon::createFromFormat('d-m-Y H:i', $value)->toDateString();
+			$this->attributes['publishStartDate'] = Carbon::parse($value)->format('Y-m-d H:i');
 		}
 
 		/**
@@ -81,7 +82,8 @@
 			{
 				$value = Carbon::now('Europe/Amsterdam');
 			}
-			return Carbon::parse($value)->format('d-m-Y H:i');
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
 		}
 
 		/**
@@ -91,7 +93,7 @@
 		 */
 		public function setPublishEndDateAttribute($value)
 		{
-			$this->attributes['publishEndDate'] = Carbon::createFromFormat('d-m-Y H:i', $value)->toDateString();
+			$this->attributes['publishEndDate'] = Carbon::parse($value)->format('Y-m-d H:i');
 		}
 
 		/**

@@ -51,25 +51,28 @@
 				{
 					$oldItems = $this->carouselRepo->getAll();
 					
-					for ($i = 0; $i < count($_POST['artikel']); $i++) 
-					{
-						$newsId = $_POST['artikel'][$i];
-						$description = 'Nog geen beschrijving';
-						$item = $this->carouselRepo->create(compact('newsId', 'description'));
+					if (isset($_POST['artikel']) && isset($_POST['beschrijving'])) {
 						
-						$description = $_POST['beschrijving'][$i];
-						if (!isset($description) || empty($description)) {
+						for ($i = 0; $i < count($_POST['artikel']); $i++) 
+						{
+							$newsId = $_POST['artikel'][$i];
 							$description = 'Nog geen beschrijving';
+							$item = $this->carouselRepo->create(compact('newsId', 'description'));
+							
+							$description = $_POST['beschrijving'][$i];
+							if (!isset($description) || empty($description)) {
+								$description = 'Nog geen beschrijving';
+							}
+							$item->description = $description;
+							
+							$carouselRepo->update($item);
+							
+							$this->saveImage($item, $i, $oldItems);
+							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
+								$item->imagePath = 'blank.jpg';
+							}
+							$carouselRepo->update($item);
 						}
-						$item->description = $description;
-						
-						$item->save();
-						
-						$this->saveImage($item, $i, $oldItems);
-						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
-							$item->imagePath = 'blank.jpg';
-						}
-						$item->save();
 					}
 					
 					foreach ($oldItems as $oldItem) 
@@ -108,7 +111,7 @@
 			{
 				$target = public_path() . '/uploads/img/carousel/';
 				
-				$allowed = ['png' , 'jpg'];
+				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];
 				
 				$filename = $_FILES['file']['name'][$count];
 				$ext = pathinfo($filename, PATHINFO_EXTENSION);

@@ -192,27 +192,76 @@ function validate()
 		return false;
 	}
 
-	var files = document.querySelectorAll('#file');
+	var fileFields = document.querySelectorAll('#file');
 	var allowedMimeTypes = 
 	[
-		'image/jpeg',
-		'image/png',
-		'image/gif',
-		'application/pdf'
+		'application/msword', //doc
+		'application/pdf', //pdf
+		'application/vnd.ms-excel', //xls
+		'application/vnd.ms-powerpoint', //ppt
+		'application/vnd.ms-xpsdocument', //xps
+		'application/vnd.oasis.opendocument.image', //odi
+		'application/vnd.oasis.opendocument.presentation', //odp
+		'application/vnd.oasis.opendocument.spreadsheet', //ods
+		'application/vnd.oasis.opendocument.text', //odt
+		'application/vnd.openxmlformats-officedocument.presentationml.presentation', //pptx
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', //xslx
+		'application/vnd.openxmlformats-oficedocument.wordprocessingml.document', //docx
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.template', //dotx
+		'application/xml', //xml
+		'image/gif', //gif
+		'image/jpeg', //jpeg
+		'image/png', //png
+		'text/plain', //txt
+		'text/rtf', //rtf
+	];
+	var allowedMimeTypesAliases =
+	[
+		'docx',
+		'pdf',
+		'xls',
+		'ppt',
+		'xps',
+		'odi',
+		'odp',
+		'ods',
+		'odt',
+		'pptx',
+		'xlsx',
+		'docx',
+		'dotx',
+		'xml',
+		'gif',
+		'jpeg',
+		'png',
+		'plain',
+		'rtf'
 	];
 
-	[].forEach.call(files, function(file)
+	[].forEach.call(fileFields, function(fileField)
 	{
-		if (file.value !== "")
+		if (fileField.value !== "")
 		{
-			if (allowedMimeTypes.indexOf(file.type) < 0)
+			[].forEach.call(fileField.files, function(file)
 			{
-				event.preventDefault();
-				alert('Eén van de bestanden is niet van het juiste bestandstype. ' + 
-					  '\nU mag alleen bestanden uploaden van het bestandstype jpeg, png, gif en pdf.');
+				if (allowedMimeTypes.indexOf(file.type) < 0)
+				{
+					event.preventDefault();
 
-				return false;
-			}
+					var feedback = "Eén van de bestanden is niet van het juiste bestandstype. " + 
+								   "\nU mag alleen bestanden uploaden van het bestandstype ";
+
+					[].forEach.call(allowedMimeTypesAliases, function(allowedMimeTypeAlias)
+					{
+						feedback += allowedMimeTypeAlias + ", ";
+					});
+					feedback += ".";
+
+					alert(feedback);
+
+					return false;
+				}
+			});
 		}
 	});
 
@@ -239,7 +288,4 @@ function validate()
 
 		return false;
 	}
-
-			event.preventDefault();
-		return false;
 }

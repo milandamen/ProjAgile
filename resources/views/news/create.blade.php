@@ -21,7 +21,7 @@
 		<div class="col-lg-12">
 			@include('errors.partials._list')
 			{!! Form::model($newsItem, ['method' => 'PUT', 'files' => true, 'onsubmit' => 'validate()']) !!}
-				@include('news.partials._createEdit', ['submitButton' => 'Nieuwsbericht Aanmaken'])
+				@include('news.partials._createEdit', ['submitButton' => 'Opslaan'])
 			{!! Form::close() !!}
 		</div>
 	</div>

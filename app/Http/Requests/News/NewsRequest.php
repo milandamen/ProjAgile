@@ -33,14 +33,20 @@
 				'top' => 'required',
 			];
 
-			foreach ($this->request->get('districtSection') as $key => $value)
+			if ($this->request->has('districtSection'))
 			{
-				$rules['districtSection.' . $key ] = 'exists:DistrictSection,districtSectionId';
+				foreach ($this->request->get('districtSection') as $key => $value)
+				{
+					$rules['districtSection.' . $key ] = 'exists:DistrictSection,districtSectionId';
+				}
 			}
 
-			foreach ($this->request->get('file') as $key => $value)
+			if ($this->request->has('file'))
 			{
-				$rules['file.' . $key] = 'mimes:jpeg,png,gif,pdf';
+				foreach ($this->request->get('file') as $key => $value)
+				{
+					$rules['file.' . $key] = 'mimes:docx,pdf,xls,ppt,xps,odi,odp,ods,odt,pptx,xlsx,docx,dotx,xml,gif,jpeg,png,plain,rtf';
+				}
 			}
 
 			return $rules;
@@ -50,15 +56,20 @@
 		{
 			$messages = [];
 
-			foreach ($this->request->get('districtSection') as $key => $value)
+			if ($this->request->has('districtSection'))
 			{
-				$messages['districtSection.' . $key . '.exists'] = "Eén van de deelwijken is geen bestaande deelwijk.";
+				foreach ($this->request->get('districtSection') as $key => $value)
+				{
+					$messages['districtSection.' . $key . '.exists'] = "Eén van de deelwijken is geen bestaande deelwijk.";
+				}
 			}
 
-
-			foreach ($this->request->get('file') as $key => $value)
+			if ($this->request->has('file'))
 			{
-				$messages['file.' . $key . '.mimes'] = "Eén van de bestanden is niet van het bestandstype :values.";
+				foreach ($this->request->get('file') as $key => $value)
+				{
+					$messages['file.' . $key . '.mimes'] = "Eén van de bestanden is niet van het bestandstype :values.";
+				}
 			}
 
 			return $messages;

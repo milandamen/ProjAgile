@@ -131,5 +131,6 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding">
 		{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
+        {!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
 	</div>
 </div>
