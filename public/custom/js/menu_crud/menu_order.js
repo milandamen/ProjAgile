@@ -22,7 +22,6 @@ function handleListItem(liItem, parentOrder){
             if (element.className == "menuGroupItem") {
                 element.value = parentOrder + '.' + order;
                 order++;
-                console.log(order);
             }
             if(element.tagName == "UL" && element.children.length > 0)
             {
