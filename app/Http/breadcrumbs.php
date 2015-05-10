@@ -34,3 +34,9 @@
      * Home > NewOnSite
      */
     include('BreadcrumbsPartials/_newOnSiteBreadcrumbsPartial.php');
+
+
+    /**
+     * Home > Menu
+     */
+    include('BreadcrumbsPartials/_menuBreadcrumbsPartial.php');
