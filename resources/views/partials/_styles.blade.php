@@ -22,6 +22,9 @@
 <!-- Multi level menu -->
 {!! HTML::style('custom/css/multilevel_menu.css') !!}
 
+<!-- Menu crud  -->
+{!! HTML::style('custom/css/menu_crud/design.css') !!}
+
 <!-- Fonts -->
 {!! HTML::style('font-awesome/css/font-awesome.min.css') !!}
 

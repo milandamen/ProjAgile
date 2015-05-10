@@ -71,7 +71,7 @@
 								</li>
                             @else
                                 <li>
-									<a href="{{ url($subMenu['main']->relativeUrl) }}">{{ $subMenu['main']->name }}</a>
+									<a href="{{ url($subMenu['main']->link) }}">{{ $subMenu['main']->name }}</a>
 								</li>
                             @endif
                         @endforeach
