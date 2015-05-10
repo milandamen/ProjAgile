@@ -167,27 +167,14 @@ function validateNews()
 	var publishStartDate = new Date(document.querySelector('#publishStartDate').value);
 	var publishEndDate = new Date(document.querySelector('#publishEndDate').value);
 
-	if (isNaN(publishStartDate))
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
-
-		return false;
-	}
-
-	if (isNaN(publishEndDate))
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
-
-		return false;
-	}
-
-	if (publishStartDate.getTime() > publishEndDate.getTime() || 
+	if (publishStartDate > publishEndDate || 
 		publishStartDate.getTime() === publishEndDate.getTime())
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+
+		console.log(publishStartDate);
+		console.log(publishEndDate);
 
 		return false;
 	}
