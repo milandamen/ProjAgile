@@ -164,11 +164,26 @@ function validateNews()
 		}
 	});
 
-	var publishStartDate = new Date(document.querySelector('#publishStartDate').value);
-	var publishEndDate = new Date(document.querySelector('#publishEndDate').value);
+	if (!moment([document.querySelector('#publishStartDate').value, 'nl', true]).isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
 
-	if (publishStartDate > publishEndDate || 
-		publishStartDate.getTime() === publishEndDate.getTime())
+		return false;
+	}
+	var publishStartDate = moment([document.querySelector('#publishStartDate').value]);
+
+	if (!moment([document.querySelector('#publishEndDate').value, 'nl', true]).isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+	var publishEndDate = moment([document.querySelector('#publishEndDate').value]);
+
+	if (publishStartDate.isAfter(publishEndDate) || 
+		publishStartDate.isSame(publishEndDate))
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
