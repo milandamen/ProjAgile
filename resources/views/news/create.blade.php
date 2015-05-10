@@ -20,7 +20,7 @@
 		</div>
 		<div class="col-lg-12">
 			@include('errors.partials._list')
-			{!! Form::model($newsItem, ['method' => 'PUT', 'files' => true, 'onsubmit' => 'validate()']) !!}
+			{!! Form::model($newsItem, ['method' => 'PUT', 'files' => true, 'onsubmit' => 'validateNews()']) !!}
 				@include('news.partials._createEdit', ['submitButton' => 'Opslaan'])
 			{!! Form::close() !!}
 		</div>

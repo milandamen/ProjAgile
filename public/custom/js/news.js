@@ -134,7 +134,7 @@ function calculateFileIndexes()
 	});
 }
 
-function validate()
+function validateNews()
 {
 	if (document.querySelector('input[name="title"]').value === "")
 	{
@@ -183,7 +183,7 @@ function validate()
 		return false;
 	}
 
-	if (publishStartDate > publishEndDate || 
+	if (publishStartDate.getTime() > publishEndDate.getTime() || 
 		publishStartDate.getTime() === publishEndDate.getTime())
 	{
 		event.preventDefault();
