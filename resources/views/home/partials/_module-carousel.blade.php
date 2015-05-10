@@ -3,7 +3,7 @@
 	<div id="mod-carousel-images" class="mod-carousel-images">
 		@foreach ($carousel as $item)
 			<a href="{{ route('news.show', $item->news->newsId) }}">
-				<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="..." />
+				<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="De afbeelding kan niet geladen worden.." />
 				<h3>{{ $item->news->title }}</h3>
 			</a>
 		@endforeach
