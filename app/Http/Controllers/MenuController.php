@@ -24,8 +24,8 @@
 
         public function index()
         {
-            $allMenuItems = $this->menuRepo->getAllMenuItems();
-            return view('menu.index', compact('allMenuItems'));
+            $allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+            return view('menu.index', compact('allMenuItemsEdit'));
         }
 
         /**
@@ -86,8 +86,7 @@
            $item->publish = $request->publish;
            $this->menuRepo->update($item);
 
-            $allMenuItems = $this->menuRepo->getAllMenuItems();
-           return view('menu.index', compact('allMenuItems'));
+            return Redirect::route ('menu.index');
         }
 
         /**

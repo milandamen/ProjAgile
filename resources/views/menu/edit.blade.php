@@ -36,7 +36,7 @@
                 @endif
 
                 </p>
-                {!! Form::submit('Opslaan', ['class' => 'btn btn-default']) !!}
+                {!! Form::submit('Opslaan', ['class' => 'btn btn-success white pull-left']) !!}
 
                 {!! Form::close() !!}
             </div>
