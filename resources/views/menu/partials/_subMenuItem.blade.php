@@ -9,7 +9,7 @@
                 @else
                     <i class="fa fa-eye"></i>
                 @endif
-                <i class="fa fa-pencil-square-o"></i>
+                {!! link_to_route('menu.edit', '', [e($item['main']->menuId)], ['class' => 'fa fa-pencil-square-o']) !!}
                 <a onclick="removeItem(this)"><i class="fa fa-times"></i></a>
             </div>
         </h3>

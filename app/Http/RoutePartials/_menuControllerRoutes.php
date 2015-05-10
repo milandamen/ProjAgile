@@ -22,7 +22,22 @@
 
     Route::put('menuitemaanmaken',
     [
-        'as' => 'menu.create',
+        'as' => 'menu.store',
         'uses' => 'MenuController@store',
+        'middleware' => 'admin'
+    ]);
+
+
+    Route::get('menuitemwijzigen/{id}',
+    [
+        'as' => 'menu.edit',
+        'uses' => 'MenuController@edit',
+        'middleware' => 'admin'
+    ]);
+
+    Route::patch('menuitemwijzigen/{id}',
+    [
+        'as' => 'menu.update',
+        'uses' => 'MenuController@update',
         'middleware' => 'admin'
     ]);

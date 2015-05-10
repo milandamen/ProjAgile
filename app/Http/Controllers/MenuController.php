@@ -68,7 +68,8 @@
          */
         public function edit($id)
         {
-            //
+            $MenuItem = $this->menuRepo->get($id);
+            return view('menu.edit', compact('MenuItem'));
         }
 
         /**
@@ -77,9 +78,16 @@
          * @param  int  $id
          * @return Response
          */
-        public function update($id)
+        public function update(MenuRequest $request)
         {
-            //
+           $item = $this->menuRepo->get($request->id);
+           $item->name = $request->name;
+           $item->link = $request->link;
+           $item->publish = $request->publish;
+           $this->menuRepo->update($item);
+
+            $allMenuItems = $this->menuRepo->getAllMenuItems();
+           return view('menu.index', compact('allMenuItems'));
         }
 
         /**
