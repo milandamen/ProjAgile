@@ -10,7 +10,7 @@ Breadcrumbs::register('newMenuItem', function($breadcrumbs)
 Breadcrumbs::register('editMenuItem', function($breadcrumbs)
 {
     $breadcrumbs->parent('editmenu');
-    $breadcrumbs->push('Menu Item  Wijzigen', route('menu.create'));
+    $breadcrumbs->push('Menu Item  Wijzigen', route('menu.edit'));
 });
 
 
