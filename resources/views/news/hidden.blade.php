@@ -40,15 +40,15 @@
 						@foreach($news as $newsItem)
 							<tr>
 								{{--*/ $date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
-								$curDate = date('Y-m-d H:i:s',time());; /*--}}
+								$curDate = date('Y-m-d H:i:s', time()); /*--}}
 								<td>
 									@if(($newsItem->hidden == 1) && !($newsItem->publishEndDate < $date))
-										<i class="fa fa-eye-slash"></i> 
+										<i class="fa fa-eye-slash fa-lg"></i> 
 									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden == 1))
-										<i class="fa fa-archive"></i>
+										<i class="fa fa-archive fa-lg"></i>
 									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden == 1))
 										<i class="fa fa-archive fa-lg"></i> 
-										<i class="fa fa-eye-slash"></i> 
+										<i class="fa fa-eye-slash fa-lg"></i> 
 									@elseif($newsItem->publishStartDate > $curDate)
 										<i class="fa fa-repeat fa-lg"></i>
 									@endif
@@ -71,17 +71,17 @@
 								</td>
 								<td> 
 									<a class="right" href="{{ route('news.edit', [$newsItem->newsId]) }}">
-										<i class="fa fa-pencil-square-o"></i>
+										<i class="fa fa-pencil-square-o fa-lg"></i>
 									</a>
 								</td>
 								<td> 
 									@if($newsItem->hidden == 0)
 										<a href="{{ route('news.hide', [$newsItem->newsId]) }}" class="black">
-											<i class="fa fa-eye-slash"></i>
+											<i class="fa fa-eye-slash fa-lg"></i>
 										</a> 
 									@elseif($newsItem->hidden == 1)
 										<a href="{{ route('news.unhide', [$newsItem->newsId]) }}" class="text-success">
-											<i class="fa fa-eye"></i>
+											<i class="fa fa-eye fa-lg"></i>
 										</a>
 									@endif
 								</td>
