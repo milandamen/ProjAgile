@@ -9,10 +9,12 @@
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
+
+    use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
-	
+	use Flash;
 	use Auth;
 	use Redirect;
 	use Request;
@@ -22,7 +24,7 @@
     class PageController extends Controller
     {
 
-    	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo, 
+    	public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo,  INewOnSiteRepository $newOnSiteRepository,
     								IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo, ISidebarRepository $sidebarrepo){
     		
     		$this->introrepo = $introrepo;
@@ -30,6 +32,7 @@
     		$this->panelrepo = $panelrepo;
     		$this->pagepanelrepo = $pagepanelrepo;
     		$this->sidebarrepo = $sidebarrepo;
+    		$this->newOnSiteRepository = $newOnSiteRepository;
     	}
 
 
@@ -65,8 +68,8 @@
         public function store(PageRequest $request)
         {
             $introduction = $this->introrepo->create([
-            	'pageId' => 2,
             	'title' => $request->title, 
+            	'subtitle' => $request->subtitle,
             	'text' => $request->content,
             	]);
 
@@ -94,7 +97,6 @@
 
             if($request->sidebar){
             	$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $request->title,
@@ -103,6 +105,17 @@
             		'link' => '/'
             		]);
             }
+
+
+              $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
 
            return Redirect::route('page.show', [$page->pageId]);
         }
@@ -115,6 +128,11 @@
          */
         public function show($id)
         {
+            
+        	if($this->redirectHome($id)){
+        		return Redirect::route('home.index');
+        	} 
+
             $page = $this->pagerepo->get($id);
            	if(isset($page)){
 	            if($page->sidebar){
@@ -125,7 +143,7 @@
 	            }
 	        }else {
 	        	return view('errors.404');
-	        }
+	        } 
         }
 
         /**
@@ -136,6 +154,11 @@
          */
         public function edit($id)
         {
+            if($this->redirectHome($id)){
+            	Flash::error('U kunt de homepage niet op deze manier wijzigen.');
+        		return Redirect::route('home.index');
+        	}
+
             $page = $this->pagerepo->get($id);
             if(isset($page)){
             	return View('page.edit', compact('page'));
@@ -153,13 +176,17 @@
          */
         public function update($id, PageRequest $request)
         {
-            
+           if($this->redirectHome($id)){
+        		return Redirect::route('home.index');
+        	}
+
         	$old = $this->pagerepo->get($id)->sidebar;
         	$new = $request->sidebar;
 
         	// update introduction
         	$introduction = $this->introrepo->get($request->intro_id);
         	$introduction->title = $request->title;	
+        	$introduction->subtitle = $request->subtitle;
         	$introduction->text = $request->content;
 
         	$this->introrepo->update($introduction);
@@ -190,6 +217,17 @@
         	$title = $request->title;
         	$this->updateSidebar($old, $new, $pageid, $title);
 
+        	 $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+                if($newOnSite === true)
+                {
+                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['created_at'] = new \DateTime('now');
+
+                    $this->newOnSiteRepository->create($attributes);
+                }
+        	
+
         	return Redirect::route('page.show', [$page->pageId]);
 
         }
@@ -202,7 +240,23 @@
          */
         public function destroy($id)
         {
-            //
+
+        	if($this->redirectHome($id)){
+        		Flash::error('U kunt de homepagina niet verwijderen');
+        		return Redirect::route('home.index');
+        	}
+
+        	$page = $this->pagerepo->get($id);
+            if($page->sidebar){
+  				$this->sidebarrepo->deleteAllFromPage($id);
+        	}
+
+            $this->pagepanelrepo->deleteAllFromPage($id);
+            $this->pagerepo->destroy($id);
+            $this->introrepo->destroy($page->introduction->introductionId);
+
+
+            return Redirect::route('page.index');
         }
 
         /**
@@ -216,7 +270,6 @@
         	} else{   
         		if($new){
         			$sidebar = $this->sidebarrepo->create([
-            		'pageNr' => $pageid,
             		'page_pageId' => $pageid,
             		'rowNr' => 0,
             		'title' => $title,
@@ -230,4 +283,21 @@
 
         	}
         }
+
+        /* 
+         * redirectHome will redirect if the page is the homepage.
+         * The homepage has different edit functions and a different pageview.
+         * 
+         */
+
+
+        private function redirectHome($id){
+			if($id === '1'){
+				Flash::success('U bent succesvol naar de homepagina begeleid.');
+				return true;
+        	} else {
+        		return false;
+        	}
+        }
+
     }

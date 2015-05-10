@@ -24,43 +24,72 @@
 		
 		public function edit()
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::check())
 			{
-				$carousel = $this->carouselRepo->getAll();
+				if (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder') 
+				{
+					$carousel = $this->carouselRepo->getAll();
 
-				return view('carousel.edit', compact('carousel', 'publicpathh'));
-			} 
-			else 
+					return view('carousel.edit', compact('carousel'));
+				} 
+				else 
+				{
+					return view('errors.403');
+				}
+			}
+			else
 			{
-				return view('errors.403');
+				return view('errors.401');
 			}
 		}
 
 		public function update()
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::check())
 			{
-				$oldItems = $this->carouselRepo->getAll();
-				
-				for ($i = 0; $i < count($_POST['artikel']); $i++) 
+				if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
 				{
-					$newsId = $_POST['artikel'][$i];
-					$item = $this->carouselRepo->create(compact('newsId'));
-					$item->save();
+					$oldItems = $this->carouselRepo->getAll();
 					
-					$this->saveImage($item, $i, $oldItems);
-				}
-				
-				foreach ($oldItems as $oldItem) 
+					if (isset($_POST['artikel']) && isset($_POST['beschrijving'])) {
+						
+						for ($i = 0; $i < count($_POST['artikel']); $i++) 
+						{
+							$newsId = $_POST['artikel'][$i];
+							$description = 'Nog geen beschrijving';
+							$item = $this->carouselRepo->create(compact('newsId', 'description'));
+							
+							$description = $_POST['beschrijving'][$i];
+							if (!isset($description) || empty($description)) {
+								$description = 'Nog geen beschrijving';
+							}
+							$item->description = $description;
+							
+							$this->carouselRepo->update($item);
+							
+							$this->saveImage($item, $i, $oldItems);
+							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
+								$item->imagePath = 'blank.jpg';
+							}
+							$this->carouselRepo->update($item);
+						}
+					}
+					
+					foreach ($oldItems as $oldItem) 
+					{
+						$oldItem->delete();
+					}
+					
+					return Redirect::route('home.index');
+				} 
+				else 
 				{
-					$oldItem->delete();
+					return view('errors.403');
 				}
-				
-				return Redirect::route('home.index');
-			} 
-			else 
+			}
+			else
 			{
-				return view('errors.403');
+				return view('errors.401');
 			}
 		}
 		
@@ -82,7 +111,7 @@
 			{
 				$target = public_path() . '/uploads/img/carousel/';
 				
-				$allowed = ['png' , 'jpg'];
+				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];
 				
 				$filename = $_FILES['file']['name'][$count];
 				$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -116,6 +145,5 @@
 			{
 				$item->imagepath = 'blank.jpg';
 			}
-			$item->save();
 		}
 	}

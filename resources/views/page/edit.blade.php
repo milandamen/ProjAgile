@@ -5,7 +5,6 @@
     	<div class="row">
 				{!! Breadcrumbs::render('editpagetitle', (object)['id' => $page->pageId, 'title' => $page->introduction->title]) !!}
 			</div>
-
         <div class="row">
             <div class="col-md-12">
                 <h1>Pagina wijzigen</h1>
@@ -17,6 +16,8 @@
 	            {!! Form::model($page, ['method' => 'POST']) !!}
 	            <div class="row col-md-5">
 	            	<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
+	            	 <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
+                    <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 	            	<input type="text" name="intro_id" id="intro_id" value="{!! $page->introduction->introductionId !!}" class="hiddenInput" />
 					<div class="form-group col-md-8">
 					{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
@@ -48,10 +49,17 @@
 				</div>
 			</div>
 
+			 <div class="row col-md-5">
+				<div class="form-group col-md-12">
+				{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+				{!! Form::text('subtitle', $page->introduction->subtitle , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+				</div>
+			</div>
+
 			 <div class="row col-md-12">
 				<div class="form-group col-md-12">
 				{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-				{!! Form::textarea('content', $page->introduction->text , ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
+				{!! Form::textarea('content', $page->introduction->text , ['placeholder' => 'Inhoud', 'class' => 'form-control introductie', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
 			</div>
 
 			<!-- div for new panels -->
@@ -60,9 +68,9 @@
 					{{--*/ $i = 0; /*--}}
 					@foreach($page->panels as $panel)	{{-- Loop all panels --}}
 						<div>
-							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a></h4>
-							<input type="text" class="form-control"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
-							<textarea class="summernote" name="panel[{!!$i!!}][content]" placeholder="Inhoud">{!! $panel->text !!} </textarea>
+							<h4>Vak met grootte {!! $panel->panel->size  !!} <a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a><a onclick="up(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-up"></i></a>  <a onclick="down(this)" class="btn btn-primary white btn-xs addright"><i class="fa fa-arrow-down"></i></a></h4>
+							<input type="text" class="form-control titlevalue"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/><br/>
+							<textarea class="summer form-control" name="panel[{!!$i!!}][content]" placeholder="Inhoud" rows="6">{!! $panel->text !!} </textarea>
 							<input type="number" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
 							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
 						</div>
@@ -92,4 +100,5 @@
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
     {!! HTML::script('custom/js/page.js') !!}
+      {!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @endsection

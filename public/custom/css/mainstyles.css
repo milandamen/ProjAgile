@@ -6,6 +6,10 @@
 	margin-bottom: 20px;
 }
 
+.addright {
+	margin-right: 10px;
+}
+
 .pos-relative {
 	position: relative;
 }
@@ -27,7 +31,31 @@
     float: right;
 }
 
+.floatLeft {
+	float: left;
+}
+
+.floatRight {
+	float: right;
+}
+
 .showMore a {
     text-decoration: none;
     color: dimgray;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+.textBold {
+	font-weight: bold;
+}
+
+.slightlyRed {
+	background-color: rgba(200,0,0,0.2);
+}
+
+.redText {
+	color: #D00;
 }

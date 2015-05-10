@@ -50,7 +50,7 @@
                     @endif
 
                     @foreach($news->files as $file)
-                        <a href="{{ asset('uploads/img/news/' . $file->path) }}">{{ $file->path }}</a>
+                        <a href="{{ asset('uploads/file/news/' . $file->path) }}">{{ $file->path }}</a>
                         <br>
                     @endforeach
 

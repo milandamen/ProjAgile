@@ -98,11 +98,19 @@
          */
         public function create($attributes)
         {
-            $postal = $this->postalRepo->getByCode($attributes['postal']);
+            //userGroupId is not set when registering
+            if (!isset($attributes['userGroupId']))
+            {
+                $attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
+            }
+            //check if postal code is given. This attribute is only required for residents
+            if ($attributes['postal'] !== '')
+            {
+                $postal = $this->postalRepo->getByCode($attributes['postal']);
+                $attributes['districtSectionId'] = $postal->districtSectionId;
+                $attributes['postalId'] = $postal->postalId;
+            }
 
-            $attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
-            $attributes['districtSectionId'] = $postal->districtSectionId;
-            $attributes['postalId'] = $postal->postalId;
             $attributes['password'] = Hash::make($attributes['password']);
             $attributes['active'] = true;
 
@@ -118,7 +126,6 @@
          */
         public function update($model)
         {
-            $model['password'] = Hash::make($model['password']);
             $model->save();
         }
 

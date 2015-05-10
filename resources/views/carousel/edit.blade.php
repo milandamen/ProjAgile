@@ -16,6 +16,8 @@
 				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					
+					{{-- */ $curDate = date('Y-m-d H:i:s',time()); $someRed = false; /* --}}
+					
 					<table id="articlelisttable" class="table">
 						<thead>
 							<tr>
@@ -25,8 +27,8 @@
 								<th class="cu-smallcol">		<!-- Article ID -->
 									ID
 								</th>
-								<th style="width: 100%";>		<!-- Article title -->
-									Nieuws artikel
+								<th class="fullwidth">		<!-- Article title -->
+									Beschrijving
 								</th>
 								<th>
 									Image
@@ -41,7 +43,14 @@
 						</thead>
 						<tbody id="articlelist">
 							@foreach ($carousel as $article)
-								<tr>
+								
+								@if ($article->news->hidden == 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
+									<tr class="slightlyRed">
+									{{-- */ $someRed = true; /* --}}
+								@else
+									<tr>
+								@endif
+								
 									<td>
 										
 									</td>
@@ -50,11 +59,14 @@
 										<span>{{ $article->news->newsId }}</span>
 									</td>
 									<td>
-										<span>{{ $article->news->title }}</span>
+										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}" />
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
 											<a href="{{ asset('uploads/img/carousel/' . $article->imagePath) }}" target="_blank">Bekijk huidig</a>
+											<div class="floatRight">
+												<input type="checkbox" name="deletefile[0]" value="true" /> Verwijder huidig
+											</div>
 										@endif
 										<input type="file" name="file[0]" />
 									</td>
@@ -71,6 +83,10 @@
 							@endforeach
 						</tbody>
 					</table>
+					
+					@if ($someRed)
+						<p class="redText">De publicatiedatum van één of meerdere nieuws artikelen is verlopen.</p>
+					@endif
 					
 					<button type="submit" class="btn btn-success">Opslaan</button>
 					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>

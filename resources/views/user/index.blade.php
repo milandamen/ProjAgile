@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-
+    <meta name="csrf-token" content="{{ Session::token() }}">
     <div class="container">
 
         <!-- breadcrumbs, show search criteria if given -->
@@ -32,9 +32,9 @@
         <!-- search -->
         <div class="row">
         <div class="col-md-12">
-            {!! Form::open(['url' => route('user.index'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
+            {!! Form::open(['url' => route('user.filter'), 'method' => 'POST', 'class' => 'navbar-form navbar-right']) !!}
             <div class="form-group">
-            {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'zoek']) !!}
+            {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'filter', 'autocomplete' => 'off']) !!}
             </div>
             {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
@@ -65,7 +65,7 @@
 
                             <tbody>
                             @foreach($admins as $admin)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $admin->userId !!} </td>
                                     <td> {!! $admin->username !!} </td>
                                     <td> {!! $admin->firstName !!} </td>
@@ -83,11 +83,11 @@
                                     </td>
                                     <td>
                                         @if($admin->active == 1)
-                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$admin->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($admin->active == 0)
-                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$admin->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -101,8 +101,6 @@
             </div>
         </div>
 
-
-
         <!-- Content Manager Table -->
         <div class="row">
             <div class="col-md-12">
@@ -113,7 +111,7 @@
                             <thead>
                             <tr>
                                 <th> Id </th>
-                                <th> Gebruikersnaam </th>
+                                <th class="username"> Gebruikersnaam </th>
                                 <th> Voornaam </th>
                                 <th> Achternaam </th>
                                 <th> Email </th>
@@ -125,7 +123,7 @@
 
                             <tbody>
                             @foreach($contentmanagers as $contentmanager)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $contentmanager->userId !!} </td>
                                     <td> {!! $contentmanager->username !!} </td>
                                     <td> {!! $contentmanager->firstName !!} </td>
@@ -143,11 +141,11 @@
                                     </td>
                                     <td>
                                         @if($contentmanager->active == 1)
-                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$contentmanager->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($contentmanager->active == 0)
-                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$contentmanager->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -183,7 +181,7 @@
 
                             <tbody>
                             @foreach($residents as $resident)
-                                <tr>
+                                <tr class="normalRow">
                                     <td> {!! $resident->userId !!} </td>
                                     <td> {!! $resident->username !!} </td>
                                     <td> {!! $resident->firstName !!} </td>
@@ -201,11 +199,11 @@
                                     </td>
                                     <td>
                                         @if($resident->active === 1)
-                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black">
+                                            <a href="{{ route('user.deactivate', [$resident->userId, $criteria]) }}" class="black deactivate">
                                                 <i class="fa fa-lock fa-lg"></i>
                                             </a>
                                         @elseif($resident->active === 0)
-                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success">
+                                            <a href="{{ route('user.activate', [$resident->userId, $criteria]) }}" class="text-success activate">
                                                 <i class="fa fa-unlock-alt fa-lg"></i>
                                             </a>
                                         @endif
@@ -219,7 +217,9 @@
             </div>
         </div>
         @endif
-
     </div>
-
 @stop
+
+@section('additional_scripts')
+    {!! HTML::script('custom/js/filterUserTables.js') !!}
+@endsection

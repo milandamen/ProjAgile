@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+use App\Repositories\RepositoryInterfaces\IPostalRepository;
 use App\Repositories\RepositoryInterfaces\IUserRepository;
-use App\Repositories\RepositoryInterfaces\ISidebarRepository;
+use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
 use Auth;
 use Redirect;
 use Request;
 use View;
+use Hash;
 
 class UserController extends Controller
 {
     private $userRepo;
+    private $userGroupRepo;
+    private $postalRepo;
     const ADMIN_GROUP_ID = 1;
     const CONTENT_GROUP_ID = 2;
     const RESIDENT_GROUP_ID = 3;
 
-    public function __construct(IUserRepository $userRepo)
+    public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo)
     {
         $this->userRepo = $userRepo;
+        $this->userGroupRepo = $userGroupRepo;
+        $this->postalRepo = $postalRepo;
     }
 
     public function index($crit = null)
@@ -64,21 +71,22 @@ class UserController extends Controller
             if (Auth::user()->usergroup->name === 'Administrator')
             {
                 $user = new User();
-                return view('user.create', compact('user'));
+                $userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+                return view('user.create', compact('user', 'userGroups'));
             }
             return view('errors.403');
         }
         return view('errors.401');
     }
 
-    public function store()
+    public function store(CreateUserRequest $userRequest)
     {
         if (Auth::check())
         {
             if (Auth::user()->usergroup->name === 'Administrator')
             {
-                $data = Request::input();
-                $user = $this->userRepo->create($data);
+                $data = $userRequest->input();
+                $this->userRepo->create($data);
                 return redirect::route('user.index');
             }
             return view('errors.403');
@@ -93,27 +101,85 @@ class UserController extends Controller
             if (Auth::user()->usergroup->name === 'Administrator')
             {
                 $user = $this->userRepo->get($id);
-                return view('user.edit', compact('user'));
+                $userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+                $postal = '';
+                if ($user->postalId !== null)
+                {
+                    $postal = $this->postalRepo->getById($user->postalId)->code;
+                }
+                return view('user.edit', compact('user', 'userGroups', 'postal'));
             }
             return view('errors.403');
         }
         return view('errors.401');
     }
 
-    public function update($id)
+    public function show($id)
+    {
+        if(Auth::check())
+        {
+            if(Auth::user()->usergroup->name === 'Administrator')
+            {
+                $user = $this->userRepo->get($id);
+
+                if($user != null)
+                {
+                    return view('user.show', compact('user'));
+                }
+                else
+                {
+                    return view('errors.404');
+                }
+            }
+            else
+            {
+                return view('errors.403');
+            }
+        }
+        else
+        {
+            return view('errors.401');
+        }
+
+
+    }
+
+    public function update($id, UpdateUserRequest $userRequest)
     {
         if (Auth::check())
         {
-            if (Auth::user()->usergroup->name === 'Administrator') {
+            if (Auth::user()->usergroup->name === 'Administrator')
+            {
                 $user = $this->userRepo->get($id);
-                $user->username = Request::get('username');
-                $user->firstName = Request::get('firstName');
-                $user->surname = Request::get('surname');
-                $user->email = Request::get('email');
+                $data = $userRequest->only
+                (
+                    'username',
+                    'firstName',
+                    'surname',
+                    'email',
+                    'postal',
+                    'houseNumber',
+                    'userGroupId'
+                );
 
-                if (Request::get('password') != '')
+                $user->fill($data);
+
+                //only change password when given. If the field is emtpy the password need not be changed.
+                if ($userRequest->get('password') !== '')
                 {
-                    $user->password = Request::get('password');
+                    $user->password =  Hash::make($userRequest->get('password'));
+                }
+
+                if ($userRequest->get('postal') !== '')
+                {
+                    $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+                    $user->districtSectionId = $postal->districtSectionId;
+                    $user->postalId = $postal->postalId;
+                }
+                else
+                {
+                    $user->districtSectionId = null;
+                    $user->postalId = null;
                 }
 
                 $this->userRepo->update($user);
@@ -133,10 +199,10 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->active = 0;
+                $user->active = false;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index', [$crit]);
+                return redirect::route('user.filter', [$crit]);
             }
 
             return view('errors.403');
@@ -151,10 +217,10 @@ class UserController extends Controller
         {
             if (Auth::user()->usergroup->name === 'Administrator') {
                 $user = $this->userRepo->get($id);
-                $user->active = 1;
+                $user->active = true;
                 $this->userRepo->update($user);
 
-                return redirect::route('user.index', [$crit]);
+                return redirect::route('user.filter', [$crit]);
             }
 
             return view('errors.403');
