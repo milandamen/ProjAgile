@@ -114,7 +114,6 @@
 			{
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
-					dd($request);
 					$news = $this->newsRepo->create($request->all());
 					$this->saveFiles($request->file, $news->newsId);
 
@@ -332,6 +331,7 @@
 				'dotx',
 				'xml',
 				'gif',
+				'jpeg',
 				'jpg',
 				'png',
 				'plain',
@@ -355,10 +355,6 @@
 						$file->newsId = $newsId;
 						$file->path = $file->fileId . '_' . $filename;
 						$this->fileRepo->update($file);
-					}
-					else
-					{
-						dd($ext);
 					}
 				}
 			}
