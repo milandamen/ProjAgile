@@ -7,11 +7,10 @@
         </div>
             <div class="col-lg-12">
                 <h2 class="page-header">Menu Wijzigen</h2>
-                <a class="btn btn-success white pull-left" href="{{ route('menu.create') }}" role="button">Nieuw Menu Item Aanmaken </a>
-                <br>
-                <br>
+                <a class="btn btn-success white pull-left" href="{{ route('menu.create') }}" role="button">Nieuw menu item aanmaken </a>
+                
                 {!! Form::open (['id' => 'menuForm','method' => 'PATCH']) !!}
-                <a class="btn btn-default pull-right" onclick="submitForm()">Menu Opslaan </a>
+                <a class="btn btn-success pull-right" onclick="submitForm()">Menu opslaan </a>
                 <ul class='space first-space' id='fullMenuList'>
                     @foreach($allMenuItemsEdit as $subMenu)
                         <li class='route'>
