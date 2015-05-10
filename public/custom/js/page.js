@@ -23,7 +23,7 @@ function removePanel(link){
 	pagePanelsDiv.removeChild(oldPanelDiv);
 }
 
-function validate(){
+function validatePage(){
 
 	if (document.getElementById("title").value == "") {
         alert("Vul a.u.b. een titel in.");
@@ -41,6 +41,7 @@ function validate(){
 	}
 
 	validateSummer();
+	validate();
 }
 
 function up(panel){
