@@ -1,5 +1,5 @@
 <?php
-	Route::get('controlPanel',
+	Route::get('beheer',
 	[
 		'as' => 'admin.index',
 		'uses' => 'AdminController@index',

@@ -4,7 +4,7 @@
     Breadcrumbs::register('manage', function($breadcrumbs)
     {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push('Manage', route('admin.index'));
+        $breadcrumbs->push('Beheer', route('admin.index'));
     });
 
     //!!!!! LET OP GEEN ROUTE!
