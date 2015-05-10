@@ -116,5 +116,7 @@
             'content'               => 'Content',
             'publishStartDate'      => 'Publicatiedatum',
             'publishEndDate'        => 'Einde Publicatiedatum',
+            'link'                  => 'Link',
+            'name'                  => 'Naam',
         ],
     ];
