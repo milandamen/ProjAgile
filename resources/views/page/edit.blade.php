@@ -82,7 +82,7 @@
 			<div class="row col-md-8">
 				<div class="form-group">
 					{!! HTML::linkRoute('admin.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
-					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validate()'])!!}
+					{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
 				</div>
 			</div>
 

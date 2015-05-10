@@ -8,7 +8,7 @@ function searchArticle() {
 
 	$.getJSON(getArticlesByTitleURL + '/' + searchterm)
 		.done(function (dataresult) {
-			console.log(dataresult);
+	//		console.log(dataresult);
 			
 			var resulthtml = '';
 			[].forEach.call(dataresult, function (item) {

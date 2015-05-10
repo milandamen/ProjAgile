@@ -151,7 +151,6 @@ function makeH3Invisible(array) {
 }
 
 function goToSlide(tableItem) {
-	console.log(goToSlide);
 	
 	var found = false;
 	var i = 0;
