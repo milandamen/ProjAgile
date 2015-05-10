@@ -67,10 +67,20 @@
 							
 							$this->carouselRepo->update($item);
 							
-							$this->saveImage($item, $i, $oldItems);
+							$oldItem = null;
+							foreach ($oldItems as $oI) {
+								if ($oI->newsId == $newsId) 
+								{
+									$oldItem = $oI;
+									break;
+								}
+							}
+							
 							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
 								$item->imagePath = 'blank.jpg';
+								$oldItem->imagePath = 'blank.jpg';
 							}
+							$this->saveImage($item, $i, $oldItem);
 							$this->carouselRepo->update($item);
 						}
 					}
@@ -93,28 +103,16 @@
 			}
 		}
 		
-		private function saveImage($item, $count, $oldItems) 
+		private function saveImage($item, $count, $oldItem) 
 		{
-			$oldItem = null;
-			$newsId = $item->newsId;
-
-			foreach ($oldItems as $oI) 
-			{
-				if ($oI->newsId == $newsId) 
-				{
-					$oldItem = $oI;
-					break;
-				}
-			}
-			
 			if (isset($_FILES) && isset($_FILES['file'])) 
 			{
 				$target = public_path() . '/uploads/img/carousel/';
 				
-				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];
+				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];			// Specify only lowercase.
 				
 				$filename = $_FILES['file']['name'][$count];
-				$ext = pathinfo($filename, PATHINFO_EXTENSION);
+				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 				
 				// If there are no files selected you will get an empty '' string therefore the !empty check.
 				if (!empty($filename) && in_array($ext, $allowed)) 
