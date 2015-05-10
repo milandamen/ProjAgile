@@ -25,9 +25,12 @@ function removePanel(link){
 
 function validatePage(){
 
+	var success = true;
+
 	if (document.getElementById("title").value == "") {
         alert("Vul a.u.b. een titel in.");
         event.preventDefault();
+        success = false;
         return false;
     }
 
@@ -36,12 +39,18 @@ function validatePage(){
 		if(children[i].getElementsByClassName("summer")[0].value == ""){
 			alert("Niet alle inhoudsvelden zijn ingevuld.");
         	event.preventDefault();
+        	success = false;
         	return false;
-		}	
+        }
 	}
 
-	validateSummer();
-	validate();
+	if(!validateSummer()){
+		success = false;
+	}
+
+	if(success){
+		validate();
+	}
 }
 
 function up(panel){
