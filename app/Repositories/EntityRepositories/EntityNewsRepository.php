@@ -43,6 +43,7 @@
 		{
             $attributes['userId'] = Auth::user()->userId;
             $attributes['date'] = Carbon::now();
+            $attributes['districtSectionId'] = $attributes['districtSection.0'];
 
 			return News::create($attributes);
 		}

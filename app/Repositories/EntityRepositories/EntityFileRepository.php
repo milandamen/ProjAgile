@@ -72,7 +72,7 @@
          */
         public function getAllByNewsId($newsId)
         {
-            return File::where('newsId', '=', 'newsId')->get();
+            return File::where('newsId', '=', $newsId)->get();
         }
 
         /**
@@ -84,6 +84,6 @@
          */
         public function deleteAllByNewsId($newsId)
         {
-            File::where('newsId', '=', 'newsId')->delete();
+            File::where('newsId', '=', $newsId)->delete();
         }
     }

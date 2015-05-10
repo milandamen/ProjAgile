@@ -2,6 +2,7 @@
 	namespace App\Models;
 
 	use Illuminate\Database\Eloquent\Model;
+	use Carbon\Carbon;
 
 	class News extends Model 
 	{
@@ -33,7 +34,7 @@
 		 */
 		protected $fillable = 
 		[
-			'districtsectionId', 
+			'districtSectionId', 
 			'userId', 
 			'title', 
 			'content', 
@@ -54,6 +55,46 @@
 		[
 			'newsId'
 		];
+
+		public function getPublishStartDateAttribute($value)
+		{
+			if (!isset($value) || empty($value))
+			{
+				$value = Carbon::now('Europe/Amsterdam');
+			}
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
+		}
+
+		public function setPublishStartDateAttribute($value)
+		{
+			$this->attributes['publishStartDate'] = Carbon::parse($value)->format('Y-m-d H:i');
+		}
+
+		/**
+		 * Set the date of this news item, in a d-m-Y H:i format.
+		 *
+		 * @return void
+		 */
+		public function getPublishEndDateAttribute($value)
+		{
+			if (!isset($value) || empty($value))
+			{
+				$value = Carbon::now('Europe/Amsterdam');
+			}
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
+		}
+
+		/**
+		 * Set the date of this news item, in a d-m-Y H:i format.
+		 *
+		 * @return void
+		 */
+		public function setPublishEndDateAttribute($value)
+		{
+			$this->attributes['publishEndDate'] = Carbon::parse($value)->format('Y-m-d H:i');
+		}
 
 		/**
 		 * Get the date of this news item, in a d-m-Y format (so without the time).
