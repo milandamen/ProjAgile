@@ -10,7 +10,7 @@
     Breadcrumbs::register('newsmanage', function($breadcrumbs) 
     {
         $breadcrumbs->parent('news');
-        $breadcrumbs->push('Manage', route('news.manage'));
+        $breadcrumbs->push('Beheer', route('news.manage'));
     });
 
     // Home > Nieuws > [artikel]
@@ -20,14 +20,14 @@
         $breadcrumbs->push($article->title, route('news.show', [$article->id]));
     });
 
-    // Home > Nieuws > Nieuw bericht
+    // Home > Nieuws > Nieuw Artikel
     Breadcrumbs::register('addnews', function($breadcrumbs)
     {
         $breadcrumbs->parent('news');
-        $breadcrumbs->push('Nieuw bericht', route('news.create'));
+        $breadcrumbs->push('Nieuw Artikel', route('news.create'));
     });
 
-    // Home > Nieuws > Wijzigen > [ bericht ] 
+    // Home > Nieuws > Wijzigen > [ Artikel ] 
     Breadcrumbs::register('editnewsarticle', function($breadcrumbs, $article)
     {
         $breadcrumbs->parent('newsmanage');
