@@ -344,7 +344,7 @@
 				if (isset($rfile)) 
 				{
 					$filename = $rfile->getClientOriginalName();
-					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+					$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 					
 					if (!empty($filename) && in_array($ext, $allowed)) 
 					{
