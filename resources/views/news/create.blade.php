@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('title')
-	Placeholder News Create Title
+	De Bunders - Nieuws Aanmaken
 @stop
 
 @section('description')
-	Placeholder News Create Description
+	De is de beveiligde nieuws aanmaak pagina van De Bunders.
 @stop
 
 @section('content')
