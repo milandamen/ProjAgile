@@ -6,16 +6,9 @@
     use Illuminate\Support\Facades\Redirect;
     use App\Http\Requests\Menu\MenuRequest;
 
-    class MenuController extends Controller {
-
-        /**
-         * Display a listing of the resource.
-         *
-         * @return Response
-         */
-
+    class MenuController extends Controller 
+    {
         private $menuRepo;
-
 
         public function __construct(IMenuRepository $menuRepo)
         {
@@ -25,6 +18,7 @@
         public function index()
         {
             $allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+
             return view('menu.index', compact('allMenuItemsEdit'));
         }
 
@@ -46,36 +40,29 @@
         public function store(MenuRequest $request)
         {
             $this->menuRepo->create($request->all());
-            return Redirect::route ('menu.index');
-        }
 
-        /**
-         * Display the specified resource.
-         *
-         * @param  int  $id
-         * @return Response
-         */
-        public function show($id)
-        {
-            //
+            return Redirect::route ('menu.index');
         }
 
         /**
          * Show the form for editing the specified resource.
          *
          * @param  int  $id
+         * 
          * @return Response
          */
         public function edit($id)
         {
-            $MenuItem = $this->menuRepo->get($id);
-            return view('menu.edit', compact('MenuItem'));
+            $menuItem = $this->menuRepo->get($id);
+
+            return view('menu.edit', compact('menuItem'));
         }
 
         /**
          * Update the specified resource in storage.
          *
          * @param  int  $id
+         * 
          * @return Response
          */
         public function update(MenuRequest $request)
@@ -89,53 +76,39 @@
             return Redirect::route ('menu.index');
         }
 
-        /**
-         * Remove the specified resource from storage.
-         *
-         * @param  int  $id
-         * @return Response
-         */
-        public function destroy($id)
-        {
-            //
-        }
-
         public function updateMenuOrder(Request $request)
         {
-            $parentId = NULL;
+            $parentId = null;
             $array = [];
             $allMenuItems = $this->menuRepo->getAll();
 
             foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
             {
-                if (! is_string ( $key )){
-
-
-                        foreach($allMenuItems as $oldIndex => $oldItem)
+                if (! is_string( $key ))
+                {
+                    foreach($allMenuItems as $oldIndex => $oldItem)
+                    {
+                        if ($oldItem->menuId == $key)
                         {
-                            if ($oldItem->menuId == $key)
-                            {
-                                unset($allMenuItems[$oldIndex]);
-                                break;
-                            }
+                            unset($allMenuItems[$oldIndex]);
+                            break;
                         }
+                    }
+                    $requestItemPart = explode(".", $requestItem);
 
-
-                        $requestItemPart = explode(".", $requestItem);
-                        if ($requestItemPart[0] == 0)
+                    if ($requestItemPart[0] == 0)
+                    {
+                        $array = [];
+                        $this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL );
+                    }
+                    else
+                    {
+                        if(isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]]))
                         {
-                            $array = [];
-                            $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1], NULL );
+                            $array = array_add($array, $requestItemPart[0], $parentId);
                         }
-                        else
-                        {
-                            if(isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]]))
-                            {
-                                $array = array_add($array, $requestItemPart[0], $parentId);
-                            }
-
-                            $this->menuRepo->updateMenuItemOrder($key,$requestItemPart[1],$array[$requestItemPart[0]] );
-                        }
+                        $this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
+                    }
                     $parentId = $key;
                 }
             }

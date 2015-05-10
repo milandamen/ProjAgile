@@ -17,28 +17,28 @@
 <div class="form-group col-md-12 no-padding">
 	<div class="col-md-12 no-padding">
 		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
-		<button id="newDistrictSection" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
+		<!-- <button id="newDistrictSection" style="margin-left: 10px" type="button" class="btn btn-success" aria-label="Left Align">
 			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
+		</button> -->
 	</div>
 	<div class="col-md-4 no-padding">
 		<table name="districtSections" class="table">
 			@if(isset($newsItem->districtSectionId))
 				{!! '<tr>
 					<td>' . Form::select('districtSection[0]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
-					<td>
+					<!-- <td>
 						<button name="deleteDistrictSection" type="button" class="btn btn-danger" aria-label="Left Align">
 							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
-					</td>
+					</td> -->
 				</tr>
 			@else
 				{!! '<tr>
 					<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
 					<td>
-						<button name="deleteDistrictSection" type="button" class="btn btn-danger" aria-label="Left Align">
+						<!-- <button name="deleteDistrictSection" type="button" class="btn btn-danger" aria-label="Left Align">
 							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
+						</button> -->
 					</td>
 				</tr>
 			@endif
