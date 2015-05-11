@@ -81,18 +81,18 @@
 <div class="form-group">
 	
 	<div class="col-md-12 no-padding addmargin">
-		<div class="col-md-5 no-padding">
+		<div class="col-md-9 no-padding">
 
 	{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
 	<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
 		<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
 	</button>
-	<table name="fileUpload" class="table">
+	<table name="fileUpload" class="table col-md-12">
 				@if(isset($files))
 					@for ($i = 0; $i < count($files); $i++)
 						<tr>
 							<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
-							<td></td>
+							<td> </td>
 						</tr>
 					@endfor
 					{!! '<tr>
@@ -106,8 +106,8 @@
 				@else
 					{!! '<tr>
 						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td>
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs" aria-label="Left Align">
+						<td style="width: 22px">
+							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
 								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button>
 						</td>
@@ -122,7 +122,7 @@
 
 
 <div class="form-group col-md-12 no-padding addmargin">
-	<div class="col-md-2 no-padding">
+	<div class="col-md-4 no-padding">
 		{!! Form::label('hidden', 'Verbergen?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->hidden ? 'active' : '' }}">
@@ -133,7 +133,7 @@
 			</label>
 		</div>
 	</div>
-	<div class="col-md-2 no-padding addmargin">
+	<div class="col-md-4 no-padding addmargin">
 		{!! Form::label('commentable', 'Reacties Toestaan?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->commentable ? 'active' : '' }}">
@@ -144,7 +144,7 @@
 			</label>
 		</div>
 	</div>
-	<div class="col-md-2 no-padding addmargin">
+	<div class="col-md-3 no-padding addmargin">
 		{!! Form::label('onTop', 'Bovenaan de Pagina?') !!}<br/>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-default {{ $newsItem->top ? 'active' : '' }}">
