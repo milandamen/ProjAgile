@@ -10,19 +10,19 @@
                 @include('errors.partials._list')
                 <div class="col-md-4 col-xs-offset-4">
                 {!! Form::open (['id' => 'menuItemForm','method' => 'PATCH']) !!}
-                {!! Form::hidden('id', $MenuItem->menuId, ['class' => 'menuGroupItem' ]) !!}
+                {!! Form::hidden('id', $menuItem->menuId, ['class' => 'menuGroupItem' ]) !!}
                 <p>
 					{!! Form::label('itemname', 'Naam', ['class' => 'label-form'])!!}
-					{!! Form::text('name', $MenuItem->name, ['placeholder' => 'Naam', 'class' => 'form-control']) !!}
+					{!! Form::text('name', $menuItem->name, ['placeholder' => 'Naam', 'class' => 'form-control']) !!}
 				</p>
                 <p>
 					{!! Form::label('itemlink', 'Link', ['class' => 'label-form'])!!}
-					{!! Form::text('link', $MenuItem->link, ['placeholder' => 'Link', 'class' => 'form-control autocomplete']) !!}
+					{!! Form::text('link', $menuItem->link, ['placeholder' => 'Link', 'class' => 'form-control autocomplete']) !!}
 				</p>
                 <p>
 					{!! Form::label('itemvisible', 'Zichtbaar', ['class' => 'label-form'])!!}
 					
-					@if($MenuItem->publish == 1)
+					@if($menuItem->publish == 1)
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default active">
 								<input type="radio" name="publish" value="true" checked=true>Ja

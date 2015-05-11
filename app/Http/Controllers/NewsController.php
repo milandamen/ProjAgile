@@ -332,9 +332,10 @@
 				'xml',
 				'gif',
 				'jpeg',
+				'jpg',
 				'png',
 				'plain',
-				'rtf'
+				'rtf',
 			];
 			
 			for($i = 0; $i < count($requestFiles); $i++) 

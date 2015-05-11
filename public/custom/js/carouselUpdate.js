@@ -148,10 +148,10 @@ function calculateIndexes() {
 			if (input.type == 'file') {
 				input.name = 'file[' + i + ']';
 			} 
-			else if (input.name.contains('artikel')) {
+			else if (input.name.indexOf('artikel') !== -1) {
 				input.name = 'artikel[' + i + ']';
 			} 
-			else if (input.name.contains('beschrijving')) {
+			else if (input.name.indexOf('beschrijving') !== -1) {
 				input.name = 'beschrijving[' + i + ']';
 			} else {
 				input.name = 'deletefile[' + i + ']';

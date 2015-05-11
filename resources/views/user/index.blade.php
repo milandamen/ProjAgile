@@ -36,7 +36,6 @@
             <div class="form-group">
             {!! Form::text('search', null, ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'filter', 'autocomplete' => 'off']) !!}
             </div>
-            {!! Form::submit('Zoek', ['class' => 'btn btn-default']) !!}
             {!! Form::close() !!}
         </div>
         </div>
