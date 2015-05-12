@@ -20,21 +20,21 @@
 		$breadcrumbs->push('Nieuws', route('news.manage'));
 	});
 
-	// Home > Beheer > Nieuws > Artikel Aanmaken
+	// Home > Beheer > Nieuws > Nieuws Aanmaken
 	Breadcrumbs::register('news.create', function($breadcrumbs)
 	{
 		$breadcrumbs->parent('news.manage');
 		$breadcrumbs->push('Nieuws Aanmaken', route('news.create'));
 	});
 
-	// Home > Beheer > Nieuws > Artikel Wijzigen 
+	// Home > Beheer > Nieuws > Nieuws Wijzigen
 	Breadcrumbs::register('news.edit.prefix', function($breadcrumbs)
 	{
 		$breadcrumbs->parent('news.manage');
 		$breadcrumbs->push('Nieuws Wijzigen');
 	});
 
-	// Home > Beheer > Nieuws > Artikel Wijzigen > [ Artikel ] 
+	// Home > Beheer > Nieuws > Nieuws Wijzigen > [ Artikel ] 
 	Breadcrumbs::register('news.edit', function($breadcrumbs, $article)
 	{
 		$breadcrumbs->parent('news.edit.prefix');
