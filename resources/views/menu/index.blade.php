@@ -9,7 +9,8 @@
 				<h2 class="page-header">Menu Wijzigen</h2>
 				<a class="btn btn-success white pull-left" href="{{ route('menu.create') }}" role="button">Nieuw menu item aanmaken </a>
 				{!! Form::open (['id' => 'menuForm','method' => 'PATCH']) !!}
-				<a class="btn btn-success pull-right" onclick="submitForm()">Menu opslaan </a>
+				<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
+				<a class="btn btn-danger pull-right" onclick="location.href='{{ route('admin.index') }}'">Annuleren</a>
 				<ul class='space first-space' id='fullMenuList'>
 					@foreach($allMenuItemsEdit as $subMenu)
 						<li class='route'>
@@ -23,20 +24,23 @@
 										<i class="fa fa-eye"></i>
 									@endif
 									{!! link_to_route('menu.edit', '', [e($subMenu['main']->menuId)], ['class' => 'fa fa-pencil-square-o']) !!}
-									<a onclick="removeItem(this)" href="javascript:void(0)"><i class="fa fa-times text-danger"></i></a>
+									<a onclick="removeItem(this)" href="javascript:void(0)">
+										<i class="fa fa-times text-danger"></i>
+									</a>
 								</div>
 							</h3>
 							{!! Form::hidden($subMenu['main']->menuId, $subMenu['main']->menuOrder, ['class' => 'menuGroupItem' ]) !!}
 							<ul class='space'>
 								@if(isset($subMenu['sub']))
-									@include('menu.partials._subMenuItem', ['items' => $subMenu['sub'],'main' =>$subMenu])
+									@include('menu.partials._subMenuItem', ['items' => $subMenu['sub'], 'main' => $subMenu])
 								@endif
 							</ul>
 						</li>
 					@endforeach
 				</ul>
 			</div>
-		<a class="btn btn-success pull-right" onclick="submitForm()">Menu Opslaan </a>
+		<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
+		<a class="btn btn-danger pull-right" onclick="location.href='{{ route('admin.index') }}'">Annuleren</a>
 		{!! Form::close() !!}
 	</div>
 @stop

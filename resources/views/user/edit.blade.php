@@ -58,8 +58,8 @@
 				</div>
 				<div class="col-lg-12">
 					<div class="form-group">
-						<a href="{{route('user.index')}}" class="btn btn-danger">Annuleer</a>
-						{!! Form::submit('Gebruiker Wijzigen', ['class' => 'btn btn-success']) !!}
+						<a href="{{ route('user.index') }}" class="btn btn-danger">Annuleren</a>
+						{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
 					</div>
 				</div>
 			{!! Form::close() !!}

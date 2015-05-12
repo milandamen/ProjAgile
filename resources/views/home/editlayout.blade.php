@@ -29,8 +29,8 @@
 			</div>
 		</form>
 		<div>
+			<a class="btn btn-danger" onclick="location.href='{{ route('admin.index') }}'">Annuleren</a>
 			<a class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
-			<a class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleer</a>
 		</div>
 	</div>
 @stop

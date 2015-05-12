@@ -49,7 +49,7 @@
 					</div>
 					<div id="success" class="col-lg-12">
 						<br/>
-						<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
+						<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleren</button>
 						<button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
 					</div>
 				{!! Form::close() !!}

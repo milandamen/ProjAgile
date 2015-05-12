@@ -53,13 +53,19 @@
 										<input type="file" name="file[0]" />
 									</td>
 									<td>
-										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)"><i class="fa fa-arrow-up"></i></a>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">
+											<i class="fa fa-arrow-up"></i>
+										</a>
 									</td>
 									<td>
-										<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)"><i class="fa fa-arrow-down"></i></a>
+										<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">
+											<i class="fa fa-arrow-down"></i>
+										</a>
 									</td>
 									<td>
-										<a class="btn btn-danger btn-xs" onclick="removeArticle(this)"><i class="fa fa-times"></i></a>
+										<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">
+											<i class="fa fa-times"></i>
+										</a>
 									</td>
 								</tr>
 							@endforeach
@@ -68,8 +74,8 @@
 					@if ($someRed)
 						<p class="redText">De publicatiedatum van één of meerdere nieuws artikelen is verlopen.</p>
 					@endif
+					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleren</button>
 					<button type="submit" class="btn btn-success">Opslaan</button>
-					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleer</button>
 				</form>
 			</div>
 		</div>

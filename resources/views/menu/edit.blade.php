@@ -41,6 +41,7 @@
 							</div>
 						@endif
 					</p>
+					{!! HTML::linkRoute('menu.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 					{!! Form::submit('Opslaan', ['class' => 'btn btn-success white pull-left']) !!}
 				{!! Form::close() !!}
 			</div>

@@ -15,6 +15,6 @@
 		{
 			$items = $this->newOnSiteRepository->getAll();
 
-			return view('newOnSite.ndex', compact('items'));
+			return view('newOnSite.index', compact('items'));
 		}
 	}

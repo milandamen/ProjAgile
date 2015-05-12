@@ -22,7 +22,9 @@
 							<tr>
 								<td>{{$item->created_at}}</td>
 								@if($item->link != null)
-									<td><a href="{!! url($item->link) !!}">{{$item->message}}</a></td>
+									<td>
+										<a href="{!! url($item->link) !!}">{{$item->message}}</a>
+									</td>
 								@else
 									<td>{{$item->message}}</td>
 								@endif

@@ -13,6 +13,8 @@
                 @endif
             @endforeach
 		</ul>
-        <p class="showMore"><a href="{{ route('newOnSite.index') }}">Toon alles</a></p>
+        <p class="showMore">
+        	<a href="{{ route('newOnSite.index') }}">Toon alles</a>
+    	</p>
 	</div>
 </div>

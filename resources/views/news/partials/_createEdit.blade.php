@@ -144,7 +144,7 @@
 </div>
 <div class="form-group">
 	<div class="col-md-12 no-padding">
-		{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
-		{!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
+	{!! HTML::linkRoute('news.manage', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+		{!! Form::submit('Opslaan', ['class' => 'btn btn-default']) !!}
 	</div>
 </div>
