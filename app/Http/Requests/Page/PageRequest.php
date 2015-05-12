@@ -41,19 +41,18 @@
 
 			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
 			$input['subtitle'] = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
-            $input['content'] = htmlspecialchars_decode($input['content']);
-            $input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
+			$input['content'] = htmlspecialchars_decode($input['content']);
+			$input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
 
-        	if(isset($input['panel'])){
-        		for($i = 0; $i<count($input['panel']); $i++){
-        			$input['panel'][$i]['title'] = filter_var($input['panel'][$i]['title'], FILTER_SANITIZE_STRING);
-        			$input['panel'][$i]['content'] = filter_var($input['panel'][$i]['content'], FILTER_SANITIZE_STRING);
-        		}
-
-        	}
-
-
-            $this->replace($input);
+			if(isset($input['panel']))
+			{
+				for($i = 0; $i<count($input['panel']); $i++)
+				{
+					$input['panel'][$i]['title'] = filter_var($input['panel'][$i]['title'], FILTER_SANITIZE_STRING);
+					$input['panel'][$i]['content'] = filter_var($input['panel'][$i]['content'], FILTER_SANITIZE_STRING);
+				}
+			}
+			$this->replace($input);
 
 			return $input;
 		}

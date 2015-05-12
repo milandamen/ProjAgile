@@ -12,7 +12,6 @@
 							{{ session('status') }}
 						</div>
 					@endif
-
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -23,7 +22,6 @@
 							</ul>
 						</div>
 					@endif
-
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -33,7 +31,6 @@
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
-
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
@@ -47,4 +44,4 @@
 		</div>
 	</div>
 </div>
-@endsection
+@stop

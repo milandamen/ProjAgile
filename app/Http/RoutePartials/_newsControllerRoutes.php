@@ -1,4 +1,4 @@
-<?php		
+<?php
 	Route::get('nieuws', 
 	[
 		'as' => 'news.index',
@@ -23,29 +23,29 @@
 		'uses' => 'NewsController@showHidden'
 	]);
 
-    Route::post('nieuws/comment',
-    [
-        'as' => 'news.postComment',
-        'uses' => 'NewsController@postComment'
-    ]);
+	Route::post('nieuws/comment',
+	[
+		'as' => 'news.postComment',
+		'uses' => 'NewsController@postComment'
+	]);
 
 	Route::get('nieuws/{id}',
-    [
-        'as' => 'news.show',
-        'uses' => 'NewsController@show'
-    ]);
+	[
+		'as' => 'news.show',
+		'uses' => 'NewsController@show'
+	]);
 
-    Route::get('nieuws/{id}/wijzigen',
-    [
-        'as' => 'news.edit',
-        'uses' => 'NewsController@edit'
-    ]);
+	Route::get('nieuws/{id}/wijzigen',
+	[
+		'as' => 'news.edit',
+		'uses' => 'NewsController@edit'
+	]);
 
-   	Route::patch('nieuws/{id}/wijzigen',
-    [
-    	'as' => 'news.update',
-    	'uses' => 'NewsController@update'
-    ]);
+	Route::patch('nieuws/{id}/wijzigen',
+	[
+		'as' => 'news.update',
+		'uses' => 'NewsController@update'
+	]);
 	
 	Route::get('nieuws/getArticlesByTitle/{term}',
 	[

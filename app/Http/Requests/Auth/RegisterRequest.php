@@ -24,14 +24,14 @@
 		{
 			return 
 			[
-                'username' => 'required|max:30|unique:User,username',
-                'password' => 'required|confirmed|min:8',
-                'password_confirmation' => 'required',
-                'firstName' => 'required|max:50',
-                'surname' => 'required|max:80',
-                'houseNumber' => 'required|integer|digits_between:1,8',
-                'postal' => 'required|min:6|max:7|exists:Postal,code',
-                'email' => 'required|max:60|email|unique:User,email',
+				'username' => 'required|max:30|unique:User,username',
+				'password' => 'required|confirmed|min:8',
+				'password_confirmation' => 'required',
+				'firstName' => 'required|max:50',
+				'surname' => 'required|max:80',
+				'houseNumber' => 'required|integer|digits_between:1,8',
+				'postal' => 'required|min:6|max:7|exists:Postal,code',
+				'email' => 'required|max:60|email|unique:User,email',
 			];
 		}
 

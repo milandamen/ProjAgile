@@ -20,11 +20,6 @@
 	include('RoutePartials/_carouselControllerRoutes.php');
 
 	/**
-	 * DistrictSectionController routes
-	 */
-	include('RoutePartials/_districtSectionControllerRoutes.php');
-
-	/**
 	 * FileController routes
 	 */
 	include('RoutePartials/_fileControllerRoutes.php');

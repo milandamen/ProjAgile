@@ -11,7 +11,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			{!! Breadcrumbs::render('addnews') !!}
+			{!! Breadcrumbs::render('news.create') !!}
 		</div>
 		<div class="row">
 			<div class="col-lg-12">

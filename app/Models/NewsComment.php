@@ -50,7 +50,6 @@
             'newsCommentId'
         ];
 
-
         /**
          * Get the News model that is referenced in this NewsComment model.
          * 

@@ -1,4 +1,3 @@
-
 <div class="form-group col-md-12 no-padding">
 		<h4> Algemene instellingen </h4>
 	<div class="col-md-3 no-padding">
@@ -23,8 +22,6 @@
 		</div>
 	</div>
 </div>
-
-
 <div class="form-group col-md-12 no-padding addmargin">
 	<div class="col-md-12 no-padding">
 		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
@@ -56,9 +53,6 @@
 		</table>
 	</div>
 </div>
-
-
-
 <div class="form-group col-md-12 no-padding">
 	<h4> Nieuws bericht </h4>
 	<div class="col-md-12 no-padding">
@@ -76,18 +70,14 @@
 		{!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
 	</div>
 </div>
-
-
 <div class="form-group">
-	
 	<div class="col-md-12 no-padding addmargin">
 		<div class="col-md-9 no-padding">
-
-	{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
-	<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
-		<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-	</button>
-	<table name="fileUpload" class="table col-md-12">
+			{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
+			<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+				<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button>
+			<table name="fileUpload" class="table col-md-12">
 				@if(isset($files))
 					@for ($i = 0; $i < count($files); $i++)
 						<tr>
@@ -114,13 +104,9 @@
 					</tr>
 				@endif
 			</table>
+		</div>
 	</div>
 </div>
-</div>
-
-
-
-
 <div class="form-group col-md-12 no-padding addmargin">
 	<div class="col-md-4 no-padding">
 		{!! Form::label('hidden', 'Verbergen?') !!}<br/>
@@ -156,10 +142,9 @@
 		</div>
 	</div>
 </div>
-
 <div class="form-group">
 	<div class="col-md-12 no-padding">
 		{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
-        {!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
+		{!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
 	</div>
 </div>

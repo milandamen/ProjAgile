@@ -3,7 +3,7 @@
 	<div class="panel-heading">
 		<h4> 
 			Nieuws
-			@if(Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder'))
+			@if(Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
 				<a href="{{ route('news.create') }}" class="right"><i class="fa fa-plus"></i></a> 
 			@endif
 		</h4>
@@ -18,7 +18,8 @@
 				</br>
 			@endif
 		@endforeach
-
-		<p class="goback"><a href="{{ route('news.index') }}">Toon alles</a> </p>
+		<p class="goback">
+			<a href="{{ route('news.index') }}">Toon alles</a> 
+		</p>
 	</div>
 </div>
