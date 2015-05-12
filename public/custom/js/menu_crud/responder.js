@@ -1,14 +1,17 @@
-$(document).ready(function(){
-
-	$('.space').sortable({
+$(function()
+{
+	$('.space').sortable(
+	{
 		connectWith:'.space',
-        tolerance:'intersect',
-		over:function(event,ui){
+		tolerance:'intersect',
+		over:function(event,ui)
+		{
+
 		},
-		receive:function(event, ui){
+		receive:function(event, ui)
+		{
 
 		},
 	});
 	$('.space').disableSelection();
 });
-

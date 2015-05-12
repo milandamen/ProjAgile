@@ -11,10 +11,10 @@
 /****************************/
 /****  Element dragging  ****/
 /****************************/
-
 var dragSrcEl = null;
 
-function handleDragStart(e) {
+function handleDragStart(e) 
+{
 	// this / e.target is the source node.
 	this.style.opacity = '0.4';
 	
@@ -24,36 +24,41 @@ function handleDragStart(e) {
 	e.dataTransfer.setData('text/html', this.innerHTML);
 }
 
-function handleDragOver(e) {
+function handleDragOver(e) 
+{
 	if (e.preventDefault) {
 		e.preventDefault(); // Necessary. Allows us to drop.
 	}
-	
 	e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
 	
 	return false;
 }
 
-function handleDragEnter(e) {
+function handleDragEnter(e) 
+{
 	// this / e.target is the current hover target.
 	this.classList.add('dragborder');
 }
 
-function handleDragLeave(e) {
+function handleDragLeave(e) 
+{
 	// this / e.target is previous target element.
 	this.classList.remove('dragborder');
 }
 
-function handleDrop(e) {
+function handleDrop(e) 
+{
 	// this / e.target is current target element.
 	
-	if (e.stopPropagation) {
+	if (e.stopPropagation) 
+	{
 		e.stopPropagation(); // stops the browser from redirecting.
 	}
-	
 	// Don't do anything if dropping the same dragdiv we're dragging.
 	dragSrcEl.style.opacity = '1';
-	if (dragSrcEl != this) {
+
+	if (dragSrcEl != this)
+	{
 		// Swap the HTML of the elements
 		dragSrcEl.innerHTML = this.innerHTML;
 		this.innerHTML = e.dataTransfer.getData('text/html');
@@ -62,17 +67,18 @@ function handleDrop(e) {
 		swapClassList(dragSrcEl, this);
 		
 		// Swap the names of the elements
-		
 	}
 	
 	return false;
 }
 
-function handleDragEnd(e) {
+function handleDragEnd(e) 
+{
 	// this / e.target is the source node.
 	dragSrcEl.style.opacity = '1';
 	
-	[].forEach.call(dragdivs, function (dragdiv) {
+	[].forEach.call(dragdivs, function (dragdiv) 
+	{
 		dragdiv.classList.remove('dragborder');
 	});
 }
@@ -82,7 +88,9 @@ function handleDragEnd(e) {
 	Apply 'draggable' property to the draggable divs
 */
 var dragdivs = document.querySelectorAll('#draggabledivs .dragdiv');
-[].forEach.call(dragdivs, function(dragdiv) {
+
+[].forEach.call(dragdivs, function(dragdiv) 
+{
 	dragdiv.addEventListener('dragstart', handleDragStart, false);
 	dragdiv.addEventListener('dragenter', handleDragEnter, false)
 	dragdiv.addEventListener('dragover', handleDragOver, false);
@@ -100,7 +108,8 @@ var dragdivs = document.querySelectorAll('#draggabledivs .dragdiv');
 /**
 	Swaps the class lists of two elements.
 */
-function swapClassList(el1, el2) {
+function swapClassList(el1, el2) 
+{
 	var el1ClassListArray = classListToArray(el1.classList);
 	var el2ClassListArray = classListToArray(el2.classList);
 	
@@ -114,7 +123,8 @@ function swapClassList(el1, el2) {
 /**
 	Creates a copy of type Array of the specified list.
 */
-function classListToArray(list) {
+function classListToArray(list) 
+{
 	var ar = [];
 	[].forEach.call(list, function (item) {
 		ar.push(item);
@@ -126,7 +136,8 @@ function classListToArray(list) {
 /**
 	Removes the in 'listArray' specified classes from the element.
 */
-function clearClassList(el, listArray) {
+function clearClassList(el, listArray) 
+{
 	[].forEach.call(listArray, function (item) {
 		el.classList.remove(item);
 	});
@@ -135,7 +146,8 @@ function clearClassList(el, listArray) {
 /**
 	Adds the in 'listArray' specified classes to the element.
 */
-function fillClassList(el, listArray) {
+function fillClassList(el, listArray) 
+{
 	[].forEach.call(listArray, function (item) {
 		el.classList.add(item);
 	});
@@ -148,7 +160,8 @@ function fillClassList(el, listArray) {
 /**
 	Submits the data form.
 */
-function submitLayoutForm() {
+function submitLayoutForm() 
+{
 	var form = document.forms['dataform'];
 	calculateElementOrderValues(form);
 	form.submit();
@@ -157,7 +170,8 @@ function submitLayoutForm() {
 /**
 	Calculates and applies to the elements the order in which they are placed.
 */
-function calculateElementOrderValues(form) {
+function calculateElementOrderValues(form) 
+{
 	var i = 0;
 	
 	[].forEach.call(form.elements, function (item) {													// Get all elements in the form
