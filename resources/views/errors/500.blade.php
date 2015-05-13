@@ -1,21 +1,19 @@
-@extends('app')
-
 @section('title')
-	De Bunders - 404
+	De Bunders - 500
 @stop
 
 @section('description')
-	Dit is de 404 foutmelding pagina van De Bunders.
+	Dit is de 500 foutmelding pagina van De Bunders.
 @stop
 
 @section('content')
 	<div class="container">
 		<div class="content">
-			{!! Breadcrumbs::render('error', '404') !!}
+			{!! Breadcrumbs::render('error', 'Fatale Fout') !!}
 			<div class="title">
 				<h1>Sorry!</h1>
 			</div>
-			<p>De pagina die u probeerde te bereiken is helaas niet gevonden!</p>
+			<p>Er heeft zich een fatale fout plaatsgevonden.</p>
 			<p>{!! link_to_route('home.index', 'Ga naar home', [], ['class' => 'btn btn-primary']) !!}</p>
 		</div>
 	</div>

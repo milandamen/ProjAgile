@@ -2,7 +2,7 @@
 	// Home > Beheer > Pagina's 
 	Breadcrumbs::register('page.index', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Pagina\'s', route('page.index'));
 	});
 

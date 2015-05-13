@@ -2,7 +2,7 @@
 	// Home > Beheer > Menu
 	Breadcrumbs::register('menu.index', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Menu', route('menu.index'));
 	});
 

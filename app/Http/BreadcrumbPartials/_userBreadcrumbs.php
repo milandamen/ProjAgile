@@ -2,7 +2,7 @@
 	// Home > Beheer > Gebruikers
 	Breadcrumbs::register('user.index', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Gebruikers', route('user.index'));
 	});
 

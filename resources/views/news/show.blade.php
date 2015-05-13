@@ -74,8 +74,8 @@
 			<div class="row">
 				<div class="col-lg-6">
 					@if(Auth::check())
-						@if($news->commentable === 1 || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
-							@if($news->districtSection != null)
+						@if($news->commentable || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
+							@if(isset($news->districtSection))
 								@if(Auth::user()->districtSection->name === $news->districtSection->name || 
 									(Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
 									{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}

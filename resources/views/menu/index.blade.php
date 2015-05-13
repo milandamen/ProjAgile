@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Menu Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde menu wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -40,7 +48,7 @@
 				</ul>
 			</div>
 		<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
-		<a class="btn btn-danger pull-right" onclick="location.href='{{ route('admin.index') }}'">Annuleren</a>
+		<a class="btn btn-danger pull-right" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
 		{!! Form::close() !!}
 	</div>
 @stop

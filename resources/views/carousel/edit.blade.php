@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Carousel Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde carousel wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -74,7 +82,7 @@
 					@if ($someRed)
 						<p class="redText">De publicatiedatum van één of meerdere nieuws artikelen is verlopen.</p>
 					@endif
-					<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleren</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
 					<button type="submit" class="btn btn-success">Opslaan</button>
 				</form>
 			</div>

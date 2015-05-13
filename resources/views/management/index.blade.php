@@ -1,9 +1,17 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Beheer Paneel
+@stop
+
+@section('description')
+	Dit is de beveiligde beheer paneel van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
-			{!! Breadcrumbs::render('admin.index') !!}
+			{!! Breadcrumbs::render('management.index') !!}
 		</div>
 		<div class="row">
 			<div class="col-lg-12">

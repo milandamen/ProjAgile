@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Inloggen
+@stop
+
+@section('description')
+	Dit is de inlog pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">

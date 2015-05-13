@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Footer Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde footer wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -49,7 +57,7 @@
 					</div>
 					<div id="success" class="col-lg-12">
 						<br/>
-						<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleren</button>
+						<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
 						<button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
 					</div>
 				{!! Form::close() !!}

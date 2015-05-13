@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Home Introductie Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde home introductie wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -43,7 +51,7 @@
 						</div>
 						<div class="row col-md-8">
 							<div class="form-group">
-								{!! HTML::linkRoute('admin.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+								{!! HTML::linkRoute('management.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 								{!! Form::submit('Opslaan', ['class' => 'btn btn-success'])!!}
 							</div>
 						</div>

@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Gebruiker Beheer
+@stop
+
+@section('description')
+	Dit is de beveiligde gebruiker beheer pagina van De Bunders.
+@stop
+
 @section('content')
 	<meta name="csrf-token" content="{{ Session::token() }}">
 	<div class="container">

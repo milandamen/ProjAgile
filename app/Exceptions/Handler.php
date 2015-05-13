@@ -39,6 +39,21 @@
 		 */
 		public function render($request, Exception $e)
 		{
+			if (!config('app.debug') && !$this->isHttpException($e)) 
+			{
+				if ($e instanceof \PDOException)
+				{
+					return response()->view('errors.database');
+				}
+
+				if ($e instanceof \TokenMismatchException)
+				{
+					return response()->view('errors.csrf');
+				}
+
+				return response()->view('errors.500');
+			}
+			
 			return parent::render($request, $e);
 		}
 	}

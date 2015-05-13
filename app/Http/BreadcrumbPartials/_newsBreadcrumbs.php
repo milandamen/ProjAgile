@@ -16,7 +16,7 @@
 	// Home > Beheer > Nieuws
 	Breadcrumbs::register('news.manage', function($breadcrumbs) 
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Nieuws', route('news.manage'));
 	});
 

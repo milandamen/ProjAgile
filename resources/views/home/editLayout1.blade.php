@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Home Layout Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde home layout wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -29,7 +37,7 @@
 			</div>
 		</form>
 		<div>
-			<a class="btn btn-danger" onclick="location.href='{{ route('admin.index') }}'">Annuleren</a>
+			<a class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
 			<a class="btn btn-success" onclick="submitLayoutForm()">Opslaan</a>
 		</div>
 	</div>

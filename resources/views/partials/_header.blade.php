@@ -43,7 +43,7 @@
 							</li>
 							@if(Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 								<li>
-									<a href="{{ route('admin.index') }}">Beheer</a>
+									<a href="{{ route('management.index') }}">Beheer</a>
 								</li>
 							@endif
 							<li>

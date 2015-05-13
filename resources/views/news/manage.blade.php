@@ -9,7 +9,7 @@
 			<div class="col-md-12">
 				<h2 class="page-header">Nieuws Beheer</h2>
 			</div>
-		</div>
+		</div>`
 		<div class="row">
 			<div class="col-md-12">
 				<p class="col-md-8"> 
@@ -42,11 +42,11 @@
 								{{--*/ $date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
 								$curDate = date('Y-m-d H:i:s', time()); /*--}}
 								<td>
-									@if(($newsItem->hidden == 1) && !($newsItem->publishEndDate < $date))
+									@if(($newsItem->hidden) && !($newsItem->publishEndDate < $date))
 										<i class="fa fa-eye-slash fa-lg"></i> 
-									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden == 1))
+									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden))
 										<i class="fa fa-archive fa-lg"></i>
-									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden == 1))
+									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden))
 										<i class="fa fa-archive fa-lg"></i> 
 										<i class="fa fa-eye-slash fa-lg"></i> 
 									@elseif($newsItem->publishStartDate > $curDate)
@@ -54,16 +54,16 @@
 									@endif
 								</td>	
 								<td> 
-									@if($newsItem->districtSection != null)
+									@if(isset($newsItem->districtSection))
 										{!! $newsItem->districtSection->name !!}
 									@else
 										Algemeen
 									@endif 
 								</td>
-								<td> {!! $newsItem->normalDate() !!} tot  {!! $newsItem->endDate() !!}  </td>
-								<td> {!! $newsItem->user->username !!}</td>
-								<td> {!! $newsItem->title !!} </td>
-								<td> {!! count($newsItem->newsComments) !!} </td>
+								<td>{!! $newsItem->normalDate() !!} tot  {!! $newsItem->endDate() !!}</td>
+								<td>{!! $newsItem->user->username !!}</td>
+								<td>{!! $newsItem->title !!}</td>
+								<td>{!! count($newsItem->newsComments) !!}</td>
 								<td> 
 									<a href="{{ route('news.show', [$newsItem->newsId]) }}"> 
 										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
@@ -75,11 +75,11 @@
 									</a>
 								</td>
 								<td> 
-									@if($newsItem->hidden == 0)
+									@if(!$newsItem->hidden)
 										<a href="{{ route('news.hide', [$newsItem->newsId]) }}" class="black">
 											<i class="fa fa-eye-slash fa-lg"></i>
 										</a> 
-									@elseif($newsItem->hidden == 1)
+									@elseif($newsItem->hidden)
 										<a href="{{ route('news.unhide', [$newsItem->newsId]) }}" class="text-success">
 											<i class="fa fa-eye fa-lg"></i>
 										</a>
@@ -92,4 +92,4 @@
 			</div>
 		</div>
 	</div>
-@endsection
+@stop

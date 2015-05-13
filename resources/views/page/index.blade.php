@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Pagina's Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde pagina's overzicht pagina van De Bunders.
+@stop
+
 @section('content')
 	 <div class="container">
 		<div class="row">
@@ -36,7 +44,7 @@
 								<td>{!! $page->introduction->subtitle !!} </td>
 								@if($page->sidebar)
 									<td>
-										<a href="{{ route('sidebar.edit', [$page->pageId]) }}" onclick="">wijzig sidebar</a>
+										<a href="{{ route('sidebar.edit', [$page->pageId]) }}" onclick="">Wijzig Sidebar</a>
 									</td>
 								@else 
 									<td>
@@ -53,7 +61,7 @@
 									</a>
 								</td>
 								<td>
-									<a href="{{ route('page.del', [$page->pageId]) }}" onclick="confirmDelete()">
+									<a href="{{ route('page.destroy', [$page->pageId]) }}" onclick="confirmDelete()">
 										<i class="fa fa-times fa-lg text-danger"></i>
 									</a>
 								</td>					

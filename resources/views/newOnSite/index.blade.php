@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Nieuw op de Website
+@stop
+
+@section('description')
+	Dit is de nieuw op de website pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		{!! Breadcrumbs::render('newOnSite.index') !!}

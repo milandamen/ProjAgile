@@ -20,7 +20,7 @@
 	Route::get('nieuws/manage', 
 	[
 		'as' => 'news.manage',
-		'uses' => 'NewsController@showHidden'
+		'uses' => 'NewsController@manage'
 	]);
 
 	Route::post('nieuws/comment',

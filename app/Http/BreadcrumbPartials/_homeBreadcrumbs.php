@@ -8,7 +8,7 @@
 	// Home > Beheer > Home
 	Breadcrumbs::register('home.prefix', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Home');
 	});
 

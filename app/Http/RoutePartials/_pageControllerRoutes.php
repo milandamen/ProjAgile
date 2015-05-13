@@ -20,6 +20,12 @@
 		'middleware' => 'admin'
 	]);
 
+	Route::get('pagina/{id}',
+	[
+		'as' => 'page.show',
+		'uses' => 'PageController@show',
+	]);
+
 	Route::get('pagina/{id}/wijzigen',
 	[
 		'as' => 'page.edit',
@@ -34,14 +40,9 @@
 		'middleware' => 'admin'
 	]);
 
-	Route::get('pagina/del/{id}', [
-		'as' => 'page.del',
+	Route::get('pagina/{id}/verwijderen', 
+	[
+		'as' => 'page.destroy',
 		'uses' => 'PageController@destroy',
 		'middelware' => 'admin'
-	]);
-
-	Route::get('pagina/{id}',
-	[
-		'as' => 'page.show',
-		'uses' => 'PageController@show',
 	]);

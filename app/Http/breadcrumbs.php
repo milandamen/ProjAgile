@@ -1,10 +1,5 @@
 <?php
 	/**
-	 * AdminController breadcrumbs.
-	 */
-	include('BreadcrumbPartials/_adminBreadcrumbs.php');
-
-	/**
 	 * AuthController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_authBreadcrumbs.php');
@@ -28,6 +23,11 @@
 	 * HomeController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_homeBreadcrumbs.php');
+
+	/**
+	 * ManagementController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_managementBreadcrumbs.php');
 
 	/**
 	 * MenuController breadcrumbs.

@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - {{ $page->introduction->title }} Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde {{ $page->introduction->title }} wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -66,7 +74,7 @@
 							@foreach($page->panels as $panel)	
 								{{-- Loop all panels --}}
 								<div>
-									<h4>Vak met grootte {!! $panel->panel->size  !!} 
+									<h4>Vak met grootte {!! $panel->panel->size !!} 
 										<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a>
 										<a onclick="up(this)" class="btn btn-primary white btn-xs addright">
 											<i class="fa fa-arrow-up"></i>

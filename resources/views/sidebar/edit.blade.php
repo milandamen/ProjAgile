@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Sidebar Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde sidebar wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -73,7 +81,7 @@
 						@endforeach
 					</table>
 					<div id="success">
-						<button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index')}}'">Annuleren</button>
+						<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
 						<button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
 					</div>
 				</form>

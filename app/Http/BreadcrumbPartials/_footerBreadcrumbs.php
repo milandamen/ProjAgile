@@ -2,7 +2,7 @@
 	// Home > Beheer > Footer
 	Breadcrumbs::register('footer.prefix', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Footer');
 	});
 

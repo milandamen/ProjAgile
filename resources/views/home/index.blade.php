@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Home
+@stop
+
+@section('description')
+	Dit is de home pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">

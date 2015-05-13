@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - {{ $page->introduction->title }}
+@stop
+
+@section('description')
+	Dit is de {{ $page->introduction->title }} pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -7,9 +15,14 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h2 class="page-header">@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
-				<a href="{{ route('page.edit', [$page->pageId])}}" class="right"><i class="fa fa-pencil-square-o"></i></a>
-				@endif{!! $page->introduction->title !!}</h2>
+				<h2 class="page-header">
+					@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')	
+						<a href="{{ route('page.edit', [$page->pageId])}}" class="right">
+							<i class="fa fa-pencil-square-o"></i>
+						</a>
+					@endif
+					{!! $page->introduction->title !!}
+				</h2>
 			</div>
 		</div>
 		<div class="row">

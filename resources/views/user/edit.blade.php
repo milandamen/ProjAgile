@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Gebruiker Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde gebruiker wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">

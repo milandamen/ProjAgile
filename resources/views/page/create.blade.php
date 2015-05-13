@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Pagina Aanmaken
+@stop
+
+@section('description')
+	Dit is de beveiligde pagina aanmaak pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -13,7 +21,7 @@
 		<div class="row">
 			<div class="col-md-12">
 			@include('errors.partials._list')
-			{!! Form:: open() !!}
+			{!! Form::open() !!}
 				<div class="row col-md-5">
 					<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput"/>
 					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
@@ -26,10 +34,10 @@
 				<div class="row col-md-7">
 					<div class="col-md-8 form-group">
 						{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} <br/>
-						{!! Form:: button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
-						{!! Form:: button('Klein vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(4)']) !!}
-						{!! Form:: button('Medium vak',['class' => 'btn btn-default', 'onclick' => 'newPanel(8)']) !!}
-						{!! Form:: button('Groot vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(12)']) !!}
+						{!! Form::button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
+						{!! Form::button('Klein vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(4)']) !!}
+						{!! Form::button('Medium vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(8)']) !!}
+						{!! Form::button('Groot vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(12)']) !!}
 					</div>
 					<div class="col-md-4 form-group">
 						<div class="col-md-12 form-group">
@@ -47,7 +55,7 @@
 				</div>
 				<div class="row col-md-5">
 					<div class="form-group col-md-12">
-					{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+					{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form']) !!}
 					{!! Form::text('subtitle', null , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
 					</div>
 				</div>
@@ -63,10 +71,10 @@
 				<div class="row col-md-8">
 					<div class="form-group">
 						{!! HTML::linkRoute('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-						{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
+						{!! Form::submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()']) !!}
 					</div>
 				</div>
-			{!! Form:: close() !!}
+			{!! Form::close() !!}
 			</div>
 		</div>
 	</div>

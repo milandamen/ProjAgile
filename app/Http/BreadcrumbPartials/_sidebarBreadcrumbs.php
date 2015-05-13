@@ -2,7 +2,7 @@
 	// Home > Beheer > Sidebar Wijzigen
 	Breadcrumbs::register('sidebar.edit.prefix', function($breadcrumbs)
 	{
-		$breadcrumbs->parent('admin.index');
+		$breadcrumbs->parent('management.index');
 		$breadcrumbs->push('Sidebar Wijzigen');
 	});
 

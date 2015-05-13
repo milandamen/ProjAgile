@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Gebruiker Aanmaken
+@stop
+
+@section('description')
+	Dit is de beveiligde gebruiker aanmaak pagina van De Bunders.
+@stop
+
 @section('content')
 	<div class="container">
 		<div class="row">
