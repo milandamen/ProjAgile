@@ -3,14 +3,14 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Comment extends Model 
+	class TopicComment extends Model 
 	{
 		/**
 		 * Table name.
 		 * 
 		 * @var string
 		 */
-		protected $table = 'topicComment';
+		protected $table = 'topiccomment';
 
 		/**
 		 * PrimaryKey name.
