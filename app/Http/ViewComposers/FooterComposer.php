@@ -5,7 +5,6 @@ use App\Repositories\RepositoryInterfaces\IFooterRepository;
 
 class FooterComposer
 {
-
     private $footerRepo;
 
     public function __construct(IFooterRepository $footerRepo)
@@ -22,8 +21,6 @@ class FooterComposer
      */
     public function compose(View $view)
     {
-        $footerItems = $this->footerRepo->getAll();
-
-        $view->with('footer', $footerItems);
+        $view->with('footer', $this->footerRepo->getAll());
     }
 }

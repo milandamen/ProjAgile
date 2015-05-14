@@ -9,10 +9,10 @@
                 </ul>
             </div>
         @endfor
-<div class="footer-edit-link">
-@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-        <a href="{{route('footer.edit')}}"><i class="fa fa-pencil-square-o"></i></a>
-@endif
-</div>
-</div>
+        <div class="footer-edit-link">
+            @if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
+                    <a href="{{route('footer.edit')}}"><i class="fa fa-pencil-square-o"></i></a>
+            @endif
+        </div>
+    </div>
 </div>

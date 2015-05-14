@@ -36,10 +36,6 @@
 @endsection
 
 @section('additional_scripts')
-    <!-- JavaScript that enables adding and removing columns and rows -->
-    {{--{!! HTML::script('custom/js/footerUpdate.js') !!}--}}
-    {{--{!! HTML::script('custom/js/autocomplete.js') !!}--}}
-
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
 
