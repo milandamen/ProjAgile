@@ -19,7 +19,8 @@
 
                 @for($c = 0; $c < count($footer); $c++)
                 <div class="col-md-4">
-                    {!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control summernote']) !!}
+                    <h2>Kolom {{$c + 1}}</h2>
+                    {!! Form::textarea('column', $footer[$c]->text, ['placeholder' => 'Tekst', 'class' => 'form-control summernote']) !!}
                 </div>
                 @endfor
 
