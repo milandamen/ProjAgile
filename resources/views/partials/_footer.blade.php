@@ -3,29 +3,9 @@
     <hr>
     <div class="col-md-12 footer panel panel-default">
         @for($c = 0; $c < count($footer); $c++)
-             <div class="footerlist-container">
-                 <ul class="col-sm-4">
-
-            @for($r = 0; $r < count($footer[$c]); $r++)
-                @if($footer[$c][$r]->link != null)
-                    {{--*/ $link = $footer[$c][$r]->link; /*--}}
-
-                     @if($r === 0)
-                         <li><a href="{!! url($link) !!}"><h3>{{$footer[$c][$r]->text}}</h3></a></li>
-                     @else
-                         <li><a href="{!! url($link) !!}">{{$footer[$c][$r]->text}}</a></li>
-                     @endif
-
-                @else
-
-                     @if($r === 0)
-                         <li><a href="#"><h3>{{$footer[$c][$r]->text}}</h3></a></li>
-                     @else
-                         <li><a href="#">{{$footer[$c][$r]->text}}</a></li>
-                     @endif
-
-                @endif
-            @endfor
+            <div class="footerlist-container">
+                <ul class="col-sm-4">
+                    {!!$footer[$c]->text!!}
                 </ul>
             </div>
         @endfor
