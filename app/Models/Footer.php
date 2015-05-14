@@ -32,10 +32,7 @@ class Footer extends Model
      */
     protected $fillable =
     [
-        'col',
-        'row',
-        'text',
-        'link'
+        'text'
     ];
 
     /**
