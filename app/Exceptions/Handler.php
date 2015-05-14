@@ -2,7 +2,11 @@
 	namespace App\Exceptions;
 
 	use Exception;
+	use Flash;
 	use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+	use Illuminate\Session\TokenMismatchException;
+	use Redirect;
+	use Session;
 
 	class Handler extends ExceptionHandler 
 	{
@@ -46,12 +50,13 @@
 					return response()->view('errors.database');
 				}
 
-				if ($e instanceof \TokenMismatchException)
-				{
-					return response()->view('errors.csrf');
-				}
-
 				return response()->view('errors.500');
+			}
+
+			if ($e instanceof TokenMismatchException)
+			{
+				Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.');
+				return Redirect::route('home.index')->withErrors(['Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.']);
 			}
 			
 			return parent::render($request, $e);

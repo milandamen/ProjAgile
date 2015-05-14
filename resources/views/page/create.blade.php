@@ -70,7 +70,7 @@
 				</div>
 				<div class="row col-md-8">
 					<div class="form-group">
-						{!! HTML::linkRoute('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+						{!! link_to_route('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 						{!! Form::submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()']) !!}
 					</div>
 				</div>

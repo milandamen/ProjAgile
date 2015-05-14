@@ -36,20 +36,20 @@
 						<div class="col-md-8 form-group">
 							{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} 
 							<br/>
-							{!! Form:: button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
-							{!! Form:: button('Klein vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(4)']) !!}
-							{!! Form:: button('Medium vak',['class' => 'btn btn-default', 'onclick' => 'newPanel(8)']) !!}
-							{!! Form:: button('Groot vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(12)']) !!}
+							{!! Form::button('Mini vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(2)']) !!}
+							{!! Form::button('Klein vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(4)']) !!}
+							{!! Form::button('Medium vak',['class' => 'btn btn-default', 'onclick' => 'newPanel(8)']) !!}
+							{!! Form::button('Groot vak', ['class' => 'btn btn-default', 'onclick' => 'newPanel(12)']) !!}
 						</div>
 						<div class="col-md-4 form-group">
 							<div class="col-md-12 form-group">
 								{!! Form::label('sidebar', 'Sidebar toevoegen') !!}<br/>
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-default {{ $page->sidebar ? 'active' : '' }}">
-									<input type="radio" name="sidebar" value="true" {!! $page->sidebar ? 'checked=true' : '' !!}>Ja
+										<input type="radio" name="sidebar" value="true" {!! $page->sidebar ? 'checked=true' : '' !!}>Ja
 									</label>
 									<label class="btn btn-default {{ !$page->sidebar ? 'active' : '' }}">
-									<input type="radio" name="sidebar" value="false" {!! !$page->sidebar ? 'checked=true' : '' !!}>Nee
+										<input type="radio" name="sidebar" value="false" {!! !$page->sidebar ? 'checked=true' : '' !!}>Nee
 									</label>
 								</div>
 							</div>
@@ -95,8 +95,8 @@
 					</div>
 					<div class="row col-md-8">
 						<div class="form-group">
-							{!! HTML::linkRoute('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-							{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
+							{!! link_to_route('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+							{!! Form::submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
 						</div>
 					</div>
 				{!! Form:: close() !!}

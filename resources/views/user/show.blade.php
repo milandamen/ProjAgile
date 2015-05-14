@@ -64,6 +64,6 @@
 				</table>
 			</div>
 		</div>
-		<a href="{{ route('user.index') }}" class="btn btn-danger">Terug</a>
+		{!! link_to_route('user.index', 'Terug naar Gebruiker Beheer', [], ['class' => 'btn btn-danger']) !!}
 	</div>
 @stop

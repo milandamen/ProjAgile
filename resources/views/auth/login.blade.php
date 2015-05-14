@@ -41,7 +41,6 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-4">
-									{!! HTML::linkRoute('menu.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 									{!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
 									{!! link_to_route('auth.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
 								</div>

@@ -56,7 +56,7 @@
 						$residents = $this->userRepo->filterAllByUserGroup(self::RESIDENT_GROUP_ID, $criteria);
 						$count = count($admins) + count($contentmanagers) + count($residents);
 					}
-					
+
 					return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
 				}
 

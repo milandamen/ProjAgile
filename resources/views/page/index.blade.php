@@ -26,7 +26,9 @@
 					Deze pagina is enkel zichtbaar voor de administrator en toont 
 					alle pagina's. 
 				</p>
-				{!! link_to_route('page.create', 'Nieuwe pagina', [], array('class' => 'btn btn-success white')) !!}
+				{!! link_to_route('page.create', 'Nieuwe pagina', [], ['class' => 'btn btn-success white']) !!}
+				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white']) !!}
+			</div>
 			<div class="col-md-10 addmargin">
 				<table class="table borderless">
 					<thead> 
@@ -39,12 +41,12 @@
 					</thead>
 					<tbody>
 						@foreach($pages as $page)
-							<tr class="">
+							<tr>
 								<td>{!! $page->introduction->title	!!}</td>
 								<td>{!! $page->introduction->subtitle !!} </td>
 								@if($page->sidebar)
 									<td>
-										<a href="{{ route('sidebar.edit', [$page->pageId]) }}" onclick="">Wijzig Sidebar</a>
+										<a href="{{ route('sidebar.edit', [$page->pageId]) }}">Wijzig Sidebar</a>
 									</td>
 								@else 
 									<td>

@@ -29,7 +29,7 @@
 					</p>
 					<p>
 						{!! Form::label('itemvisible', 'Zichtbaar', ['class' => 'label-form'])!!}
-						@if($menuItem->publish == 1)
+						@if($menuItem->publish)
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-default active">
 									<input type="radio" name="publish" value="true" checked=true>Ja
