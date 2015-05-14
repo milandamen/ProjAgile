@@ -19,6 +19,9 @@
 				{!! Breadcrumbs::render('user.index') !!}
 			@endif
 		</div>
+        <div class="row">
+            @include('flash::message')
+        </div>
 		@if(isset($count) && $count === 0)
 			<div class="row">
 				<h3>Sorry! Uw vraag heeft geen zoekresultaten opgeleverd.</h3>
@@ -56,4 +59,5 @@
 
 @section('additional_scripts')
 	{!! HTML::script('custom/js/filterUserTables.js') !!}
+    {!! HTML::script('custom/js/flash_message.js') !!}
 @stop
