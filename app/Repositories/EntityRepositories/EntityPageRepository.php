@@ -65,5 +65,16 @@
             $model = Page::findOrFail($id);
             $model->delete();
         }
+
+           /**
+         * Returns all the Page models from the database and 
+         * converts it to a list. This is for select box use only.
+         * 
+         * @return List -> Page
+         */
+        public function getAllToList()
+        {
+            return Page::all()->lists('introduction_introductionId', 'pageId');
+        }
 		
 	}

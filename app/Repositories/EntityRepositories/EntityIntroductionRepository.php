@@ -65,6 +65,11 @@
             $model = Introduction::findOrFail($id);
             $model->delete();
         }
+
+         public function getAllToList()
+        {
+            return Introduction::all()->lists('title', 'introductionId');
+        }
 		
 
 	}

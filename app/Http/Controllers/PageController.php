@@ -56,8 +56,8 @@
          */
         public function create()
         {
-            // 
-            return view('page.create');
+            $pages = $this->introrepo->getAllToList();
+            return view('page.create', compact('pages'));
         }
 
         /**
