@@ -3,14 +3,14 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Districtsection extends Model 
+	class DistrictSection extends Model 
 	{
 	    /**
 	     * Table name.
 	     * 
 	     * @var string
 	     */
-		protected $table = 'districtSection';
+		protected $table = 'districtsection';
 
         /**
          * PrimaryKey name.
