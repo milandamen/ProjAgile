@@ -55,8 +55,7 @@
 
 			if ($e instanceof TokenMismatchException)
 			{
-				Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.');
-				return Redirect::route('home.index')->withErrors(['Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.']);
+				return Redirect::back()->withErrors(['Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.']);
 			}
 			
 			return parent::render($request, $e);

@@ -19,9 +19,6 @@
 				{!! Breadcrumbs::render('user.index') !!}
 			@endif
 		</div>
-		<div clss="row">
-			@include('errors.partials._list')
-		</div>
 		@if(isset($count) && $count === 0)
 			<div class="row">
 				<h3>Sorry! Uw vraag heeft geen zoekresultaten opgeleverd.</h3>
