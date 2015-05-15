@@ -24,29 +24,7 @@ class FooterController extends Controller
         {
             if(Auth::user()->usergroup->name === 'Administrator')
             {
-                $footer = $this->footerRepository->getAll();
-
-                $numColumns = 0;
-                foreach($footer as $item)
-                {
-                    if($item->col >= $numColumns)
-                    {
-                        $numColumns = $item->col + 1;
-                    }
-                }
-
-                $footerColumns = [];
-
-                for($i = 0; $i < $numColumns; $i++)
-                {
-                    $footerColumns[] = [];
-                }
-                foreach($footer as $item)
-                {
-                    $footerColumns[$item->col][$item->row] = $item;
-                }
-
-                return view('footer/edit', array('footer' => $footerColumns));
+                return view('footer/edit', array('footer' => $this->footerRepository->getAll()));
             }
             else
             {
@@ -57,7 +35,6 @@ class FooterController extends Controller
         {
             return view('errors.401');
         }
-
     }
 
     public function postEdit()
