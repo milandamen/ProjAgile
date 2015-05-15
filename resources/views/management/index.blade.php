@@ -24,54 +24,13 @@
 				  </div>
 				<div class="col-md-12">
 					@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-						<div class="col-md-3">
-							<h3>Algemeen</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('page.index') }}" role="button">Pagina Beheer</a>
-								<a class="btn btn-default" href="{{ route('menu.index') }}" role="button">Menu Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('footer.edit') }}" role="button">Footer Wijzigen</a>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h3>Homepage</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('home.editLayout') }}" role="button">Home Layout Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('carousel.edit') }}" role="button">Home Carrousel Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('sidebar.edit', 1) }}" role="button">Home Sidebar Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Home Introductie Wijzigen</a>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h3>Nieuws</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('news.index') }}" role="button">Nieuws Overzicht</a>
-								<a class="btn btn-default" href="{{ route('news.manage')}}" role="button">Nieuws Beheer</a>
-								<a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws Toevoegen</a>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h3>Gebruikers beheer</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('user.index') }}" role="button">Gebruiker Overzicht</a>
-								<a class="btn btn-default" href="{{ route('user.create') }}" role="button">Gebruiker Toevoegen</a>
-							</div>
-						</div>
+						@include('management.partials._managementGeneral')
+						@include('management.partials._managementHome')
+						@include('management.partials._managementNews')
+						@include('management.partials._managementUsers')
 					@elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
-						<div class="col-md-3">
-							<h3>Homepage</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('carousel.edit') }}" role="button">Home Carrousel Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('sidebar.edit', 1) }}" role="button">Home Sidebar Wijzigen</a>
-								<a class="btn btn-default" href="{{ route('home.editIntroduction')}}" role="button">Home Introductie Wijzigen</a>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h3>Nieuws</h3>
-							<div class="btn-group-vertical">
-								<a class="btn btn-default" href="{{ route('news.index') }}" role="button">Nieuws Overzicht</a>
-								<a class="btn btn-default" href="{{ route('news.create') }}" role="button">Nieuws Toevoegen</a>
-							</div>
-						</div>
+						@include('management.partials._managementHome')
+						@include('management.partials._managementNews')
 					@endif
 				</div>
 			</div>

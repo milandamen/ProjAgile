@@ -144,7 +144,7 @@
 </div>
 <div class="form-group">
 	<div class="col-md-12 no-padding">
-	{!! HTML::linkRoute('news.manage', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+	{	{!! link_to_route('news.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 		{!! Form::submit('Opslaan', ['class' => 'btn btn-default']) !!}
 	</div>
 </div>

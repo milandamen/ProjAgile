@@ -1,5 +1,5 @@
 <div class="panel panel-default dragdiv">								<!-- The dragdiv class is used in /Home/editlayout -->
-	<input class="hiddenInput" type="text" name="module-sidebar" />		<!-- This input gets sent in /Home/editlayout -->
+	<input class="hiddenInput" type="text" name="module-sidebar"/>		<!-- This input gets sent in /Home/editlayout -->
 	<div class="panel-heading sidebar">
 		<h4>
 			{!! $sidebar[0]->title !!}
@@ -15,12 +15,15 @@
 			@foreach($sidebar as $sidebarItem)
 				@if(!$sidebarItem->extern)
 					<li class="sidebar">
-						<a href="{!! url($sidebarItem->link) !!}" class="">
-						&gt; {!! $sidebarItem->text !!}</a>
+						<a href="{!! url($sidebarItem->link) !!}">
+							&gt; 
+							{!! $sidebarItem->text !!}
+						</a>
 					</li>
 				@else
 					<li class="sidebar">
-						<a href=" {!! url($sidebarItem->link) !!}" target="_blank" class="">&gt;
+						<a href=" {!! url($sidebarItem->link) !!}" target="_blank">
+						&gt;
 						{!! $sidebarItem->text!!} </a>
 					</li>
 				@endif
