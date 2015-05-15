@@ -59,3 +59,11 @@
 .redText {
 	color: #D00;
 }
+
+.cursorHand {
+	cursor: pointer;
+}
+
+.cursorDefualt {
+	cursor: default;
+}

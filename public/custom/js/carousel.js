@@ -23,12 +23,15 @@ try {
 
 var carousel = document.getElementById('mod-carousel');
 var carousel_imagelist_div = document.getElementById('mod-carousel-images');
+var carousel_descriptionlist_div = document.getElementById('mod-carousel-description');
 var carousel_linklist_div = document.getElementById('mod-carousel-linklist');
 var carousel_imagelist = [];
+var carousel_descriptionlist = [];
 var carousel_linklist = [];
 var carousel_selected_i = 0;
 var carousel_selected_i_old = 0;
 var carousel_selected_img = null;
+var carousel_selected_description = null;
 var carousel_selected_link = null;
 var carousel_special_transition = false;
 var carouselIntervalId = 0;
@@ -39,7 +42,9 @@ execActionOnElementsInArray(carousel_imagelist_div.children, 'a', function (item
 makeImagesInvisible(carousel_imagelist);
 makeH3Invisible(carousel_imagelist);
 
-execActionOnElementsInArray(carousel_linklist_div.children, 'table', function (item) {
+// TODO FILL carousel_descriptionlist
+
+execActionOnElementsInArray(carousel_linklist_div.children, 'div', function (item) {
 	carousel_linklist.push(item);
 	item.classList.remove('table-shade-selected');
 });
@@ -86,9 +91,9 @@ function carouselTransition(new_sel_i) {
 	}
 	
 	var carousel_selected_img_old = carousel_selected_img;					// tag a
-	var carousel_selected_link_old = carousel_selected_link;				// tag table
+	var carousel_selected_link_old = carousel_selected_link;				// tag div
 	carousel_selected_img = carousel_imagelist[carousel_selected_i];		// tag a
-	carousel_selected_link = carousel_linklist[carousel_selected_i];		// tag table
+	carousel_selected_link = carousel_linklist[carousel_selected_i];		// tag div
 	
 	var c_sel_img_img = null;												// tag img
 	var c_sel_img_text = null;												// tag h3
@@ -113,6 +118,9 @@ function carouselTransition(new_sel_i) {
 	$(c_sel_img_old_img).fadeOut(carousel_transition_duration);
 	$(c_sel_img_text).fadeIn(carousel_transition_duration);
 	$(c_sel_img_old_text).fadeOut(carousel_transition_duration);
+	
+	// Description side
+	
 	
 	// Linklist side
 	$(carousel_selected_link_old).delay(carousel_transition_duration/2).removeClass('table-shade-selected');
@@ -154,7 +162,7 @@ function goToSlide(tableItem) {
 	
 	var found = false;
 	var i = 0;
-	execActionOnElementsInArray(carousel_linklist, 'table', function (item) {
+	execActionOnElementsInArray(carousel_linklist, 'div', function (item) {
 		if (!found) {
 			if (tableItem === item) {
 				found = true;
@@ -171,3 +179,10 @@ function goToSlide(tableItem) {
 	
 }
 
+function evenlySpaceLinklistDivs() {
+	var newHeight = 100 / carousel_linklist.length;			// in percentages
+	[].forEach.call(carousel_linklist, function(item) {
+		item.style.height = '' + newHeight + '%';
+	});
+}
+evenlySpaceLinklistDivs();
