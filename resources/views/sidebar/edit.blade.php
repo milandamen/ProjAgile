@@ -23,28 +23,28 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<!--- Start Form of updating the sidebar -->
+				{{-- Start Form of updating the sidebar --}}
 				<form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->page_pageId]) !!}">
 					<input type="hidden" name="_token" value="{!! csrf_token() !!}">
 					<input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput"/>
-					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
-					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
+					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
 					<hr>
 					Koptekst:
 					<input type="text" name="title" id="sidebarTitle" value="{!! $sidebarList[0]->title!!} " required> 
 					<br/>
 					<br/>
-					<!-- Add new row-button -->
+					{{-- Add new row-button --}}
 					<table name="X" id="sidebarTable" class="col-md-12">
 						<tr>
 							<td>
 								<button type="button" onclick="addSideRow(this)" class="btn btn-primary">Voeg rij toe</button>
 							</td>
 						</tr>
-						<!-- Loop through all fields and make editable. 	-->
+						{{-- Loop through all fields and make editable. --}} 
 						{{--*/ $i = 0; /*--}}
 						@foreach($sidebarList as $sidebarRow)
-							<!-- Check if link goes out or stays in. -->
+							{{-- Check if link goes out or stays in. --}}
 							<tr>
 								<td class="hidden form-control"><input type="number" name="sidebar[{!!$i!!}][rowId][]" id="rownumber" class="hiddenInput" value="{!!$sidebarRow->id!!}"/></td>
 								<td class="td-tekst">
@@ -57,7 +57,7 @@
 									<input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" id="sidebarLink" value="{!!$sidebarRow->link!!}" type="text"/>
 								</td>
 
-								<!--- Make decision for intern or extern link -->
+								 Make decision for intern or extern link -->
 								<td class="td-radio1">
 									@if(!$sidebarRow->extern)
 										<div class="radio">
@@ -71,7 +71,7 @@
 										</div>
 									@endif
 								</td>
-								<!-- Row removal button -->
+								{{-- Row removal button --}}
 								@if($i >= 1)
 									<td>
 										<button type="text" onclick="removeSideRow(this)" class="btn btn-danger btn-xs">X</button>
@@ -80,7 +80,7 @@
 									<td></td>
 								@endif
 							</tr>
-							{{--*/ $i++;	/*--}}
+							{{--*/ $i++; /*--}}
 						@endforeach
 					</table>
 					<div id="success">
@@ -97,7 +97,6 @@
 @stop
 
 @section('additional_scripts')
-	<!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/sidebar.js') !!}
 	{!! HTML::script('custom/js/autocomplete.js') !!}
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}

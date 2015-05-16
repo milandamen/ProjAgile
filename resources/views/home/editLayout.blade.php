@@ -47,7 +47,6 @@
 @stop
 
 @section('additional_scripts')
-	<!-- JavaScript that enables dragging and dropping and sends form -->
 	{!! HTML::script('custom/js/editlayout.js') !!}
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

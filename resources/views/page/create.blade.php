@@ -27,8 +27,8 @@
 			{!! Form::open() !!}
 				<div class="row col-md-5">
 					<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput"/>
-					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
-					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
+					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
 					<div class="form-group col-md-12">
 						{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
 						{!! Form::text('title', null , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
@@ -67,7 +67,7 @@
 					{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
 					{!! Form::textarea('content', null, ['placeholder' => 'Inhoud', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}	</div>
 				</div>
-				<!-- div for new panels -->
+				{{-- div for new panels --}}
 				<div class="row col-md-8">
 					<div class="col-md-12 form-group" id="newPanels"></div>
 				</div>
@@ -84,7 +84,6 @@
 @stop
 
 @section('additional_scripts')
-	<!-- include summernote js-->
 	{!! HTML::script('summernote/js/summernote.js') !!}
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/page.js') !!}

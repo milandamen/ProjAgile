@@ -54,7 +54,6 @@
 @stop
 
 @section('additional_scripts')
-	<!-- JavaScript that enables adding and removing rows -->
 	{!! HTML::script('custom/js/menu_crud/responder.js') !!}
 	{!! HTML::script('custom/js/menu_crud/menu_order.js') !!}
 @stop
