@@ -15,7 +15,7 @@
                 <table class="table credentials-table">
                     <tr><td class="table-left">Gebruikersroep:</td><td>{{$user->usergroup->name}}</td></tr>
                     <tr><td class="table-left">Deelwijk:</td><td>
-                    @if (isset($user->districtsection->name))
+                    @if (isset($user->districtsection))
                         {{$user->districtsection->name}}
                     @endif
                     </td></tr>
