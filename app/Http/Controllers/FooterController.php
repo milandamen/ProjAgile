@@ -11,6 +11,7 @@
 
 	class FooterController extends Controller
 	{
+
 		public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository, INewOnSiteRepository $newOnSiteRepository)
 		{
 			$this->footerRepository = $footerRepository;
@@ -25,37 +26,17 @@
 				if(Auth::user()->usergroup->name === 'Administrator')
 				{
 					$footer = $this->footerRepository->getAll();
-					$numColumns = 0;
 
-					foreach($footer as $item)
-					{
-						if($item->col >= $numColumns)
-						{
-							$numColumns = $item->col + 1;
-						}
-					}
-					$footerColumns = [];
-
-					for($i = 0; $i < $numColumns; $i++)
-					{
-						$footerColumns[] = [];
-					}
-
-					foreach($footer as $item)
-					{
-						$footerColumns[$item->col][$item->row] = $item;
-					}
-
-					return view('footer.edit', ['footer' => $footerColumns]);
+					return view('footer.edit', compact('footer'));
 				}
-				
+
 				return view('errors.403');
 			}
-			
+
 			return view('errors.401');
 		}
 
-		public function postEdit()
+		public function update()
 		{
 			if(Auth::check())
 			{
@@ -71,8 +52,8 @@
 
 						for($colN = 0; $colN < $maxCols; $colN++)
 						{
-							if(isset($_POST['footer'][$colN])) {
-
+							if(isset($_POST['footer'][$colN])) 
+							{
 								$column = $_POST['footer'][$colN];
 
 								for ($rowN = 0; $rowN < count($column['text']); $rowN++) 
@@ -94,7 +75,6 @@
 										return;
 									}
 								}
-
 							}
 						}
 
@@ -126,13 +106,13 @@
 								//create
 								$this->footerRepository->update($entry);
 							}
+
 						}
 
 						//delete removed items
 						foreach($footer as $item)
 						{
 							$canDelete = 1;
-
 							foreach($newFooter as $entry)
 							{
 								//if the item from the db matches the item in new footer do not delete it
@@ -160,7 +140,7 @@
 					}
 					$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-					if($newOnSite)
+					if($newOnSite === true)
 					{
 						$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 						$attributes['created_at'] = new \DateTime('now');
@@ -168,12 +148,12 @@
 						$this->newOnSiteRepository->create($attributes);
 					}
 
-					return Redirect::route('carousel.edit');
+					return Redirect::route('footer.edit');
 				}
-				
+
 				return view('errors.403');
 			}
-			
+
 			return view('errors.401');
 		}
 	}

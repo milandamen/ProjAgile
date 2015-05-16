@@ -33,10 +33,7 @@
 		 */
 		protected $fillable =
 		[
-			'col',
-			'row',
-			'text',
-			'link'
+			'text'
 		];
 
 		/**

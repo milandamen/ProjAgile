@@ -22,29 +22,6 @@
 		 */
 		public function compose(View $view)
 		{
-			$footerItems = $this->footerRepo->getAll();
-
-			$numberOfColumns = 0;
-
-			foreach($footerItems as $item)
-			{
-				if($item->col >= $numberOfColumns)
-				{
-					$numberOfColumns = $item->col + 1;
-				}
-			}
-			$footerColumns = [];
-
-			for($i = 0; $i < $numberOfColumns; $i++)
-			{
-				$footerColumns[] = [];
-			}
-
-			foreach($footerItems as $item)
-			{
-				$footerColumns[$item->col][$item->row] = $item;
-			}
-
-			$view->with('footer', $footerColumns);
+			$view->with('footer', $this->footerRepo->getAll());
 		}
 	}

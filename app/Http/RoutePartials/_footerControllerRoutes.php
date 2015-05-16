@@ -5,8 +5,8 @@
 		'uses' => 'FooterController@edit'
 	]);
 
-	Route::post('footer/postWijziging',
+	Route::post('footer/wijzigen',
 	[
-		'as' => 'footer.postEdit',
-		'uses' => 'FooterController@postEdit'
+		'as' => 'footer.update',
+		'uses' => 'FooterController@update'
 	]);
