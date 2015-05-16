@@ -1,8 +1,9 @@
 <div class="container">
     <!-- Footer -->
     <hr>
-    <div class="col-md-12 footer panel panel-default">
-        @for($c = 0; $c < count($footer); $c++)
+    <div style="background-color: {{$footer[3]->text}}" class="col-md-12 footer panel panel-default">
+        <!---1, because id 4 is for the color-->
+        @for($c = 0; $c < count($footer) - 1; $c++)
             <div class="footerlist-container">
                 <ul class="col-sm-4">
                     {!!$footer[$c]->text!!}

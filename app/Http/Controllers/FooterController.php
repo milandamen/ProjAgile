@@ -11,6 +11,8 @@ use Auth;
 class FooterController extends Controller
 {
 
+    private $colorId = 4;
+
     public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository, INewOnSiteRepository $newOnSiteRepository)
     {
         $this->footerRepository = $footerRepository;
@@ -59,6 +61,16 @@ class FooterController extends Controller
 
                         $counter++;
                     }
+
+                    if(isset($_POST['footerColor']))
+                    {
+                        $footerColor = $this->footerRepository->get($this->colorId);
+
+                        $footerColor->text = filter_var($_POST['footerColor'], FILTER_SANITIZE_STRING);
+
+                        $this->footerRepository->update($footerColor);
+                    }
+
                 }
 
                 $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
