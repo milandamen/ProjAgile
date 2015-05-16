@@ -54,10 +54,10 @@
 					<tr>
 						<td class="table-left">Actief:</td>
 						<td>
-							@if(!$user->active)
-								Nee
-							@else
+							@if($user->active)
 								Ja
+							@else
+								Nee
 							@endif
 						</td>
 					</tr>
