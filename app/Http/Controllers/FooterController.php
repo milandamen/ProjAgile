@@ -62,7 +62,7 @@ class FooterController extends Controller
                         $counter++;
                     }
 
-                    if(isset($_POST['footerColor']))
+                    if(isset($_POST['footerColor']) && $_POST['footerColor'] != '')
                     {
                         $footerColor = $this->footerRepository->get($this->colorId);
 
@@ -73,15 +73,25 @@ class FooterController extends Controller
 
                 }
 
-                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+//                $newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+//
+//                if($newOnSite === true)
+//                {
+//                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+//                    $attributes['created_at'] = new \DateTime('now');
+//
+//                    $this->newOnSiteRepository->create($attributes);
+//                }
+
+                $newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
                 if($newOnSite === true)
                 {
-                    $attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+                    $attributes['message'] = "test bericht";
                     $attributes['created_at'] = new \DateTime('now');
-
                     $this->newOnSiteRepository->create($attributes);
                 }
+
 
                 return Redirect::action('FooterController@edit');
             }

@@ -24,11 +24,27 @@
             </div>
             @endfor
 
-            <div class="form-group col-sm-4">
-                <br/>
-                <label class="control-label col-sm-2">Kleur:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="footerColor" placeholder="#FFF">
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <br/>
+                    <label class="control-label col-sm-2">Kleur:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="footerColor" placeholder="#FFF">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label>Tonen op nieuw op de site?</label><br/>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="newOnSite" value="true">Ja
+                        </label>
+                        <label class="btn btn-default active">
+                            <input type="radio" name="newOnSite" value="false" checked="true">Nee
+                        </label>
+                    </div>
                 </div>
             </div>
 
