@@ -18,6 +18,7 @@
 					berichten waarvan de publicatiedatum is verlopen.
 				</p>
 				{!! link_to_route('news.create', 'Nieuw Bericht', [], array('class' => 'btn btn-success white')) !!}
+				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white']) !!}
 			</div>
 			<div class="col-md-12 addmargin">
 				<table class="table">

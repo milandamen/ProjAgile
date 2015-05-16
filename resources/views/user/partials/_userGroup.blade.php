@@ -10,9 +10,7 @@
 							<th>Voornaam</th>
 							<th>Achternaam</th>
 							<th>Email</th>
-							<th></th>
-							<th></th>
-							<th></th>
+							<th colspan="3">Acties</th>
 						</tr>
 					</thead>
 					<tbody>
