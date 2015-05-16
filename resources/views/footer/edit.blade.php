@@ -20,7 +20,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				{!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
+				{!! Form::open(['route' => 'footer.update', 'method' => 'POST']) !!}
 					<hr/>
 					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
 					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
@@ -32,7 +32,7 @@
 					@endfor
 					<div id="success" class="col-lg-12">
 						<br/>
-						<button type="button" class="btn btn-danger" onclick="location.href='{{ route('admin.index') }}'">Annuleren</button>
+						<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
 						<button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
 					</div>
 				{!! Form::close() !!}
