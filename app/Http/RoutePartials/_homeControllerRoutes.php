@@ -29,7 +29,7 @@
 		'uses' => 'HomeController@updateIntroduction'
 	]);
 	
-	Route::post('home/zoek',
+	Route::post('home/zoeken',
 	[
 		'as' => 'home.search',
 		'uses' => 'HomeController@search'

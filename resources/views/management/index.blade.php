@@ -24,13 +24,13 @@
 				  </div>
 				<div class="col-md-12">
 					@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
-						@include('management.partials._managementGeneral')
-						@include('management.partials._managementHome')
-						@include('management.partials._managementNews')
-						@include('management.partials._managementUsers')
+						@include('management.partials._manageGeneral')
+						@include('management.partials._manageHome')
+						@include('management.partials._manageNews')
+						@include('management.partials._manageUsers')
 					@elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
-						@include('management.partials._managementHome')
-						@include('management.partials._managementNews')
+						@include('management.partials._manageHome')
+						@include('management.partials._manageNews')
 					@endif
 				</div>
 			</div>

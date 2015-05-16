@@ -13,29 +13,28 @@
 		'middleware' => 'admin'
 	]);
 
-	Route::get('menuitemaanmaken',
+	Route::get('menuItemAanmaken',
 	[
 		'as' => 'menu.create',
 		'uses' => 'MenuController@create',
 		'middleware' => 'admin'
 	]);
 
-	Route::put('menuitemaanmaken',
+	Route::put('menuItemAanmaken',
 	[
 		'as' => 'menu.store',
 		'uses' => 'MenuController@store',
 		'middleware' => 'admin'
 	]);
 
-
-	Route::get('menuitemwijzigen/{id}',
+	Route::get('menuItemWijzigen/{id}',
 	[
 		'as' => 'menu.edit',
 		'uses' => 'MenuController@edit',
 		'middleware' => 'admin'
 	]);
 
-	Route::patch('menuitemwijzigen/{id}',
+	Route::patch('menuItemWijzigen/{id}',
 	[
 		'as' => 'menu.update',
 		'uses' => 'MenuController@update',

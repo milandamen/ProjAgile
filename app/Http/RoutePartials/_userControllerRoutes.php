@@ -5,12 +5,6 @@
 		'uses' => 'UserController@index'
 	]);
 
-	Route::get('gebruiker/{id}',
-	[
-		'as' => 'user.show',
-		'uses' => 'UserController@show'
-	]);
-
 	Route::get('gebruikers/aanmaken',
 	[
 		'as' => 'user.create',
@@ -21,6 +15,12 @@
 	[
 		'as' => 'user.store',
 		'uses' => 'UserController@store'
+	]);
+
+	Route::get('gebruiker/{id}',
+	[
+		'as' => 'user.show',
+		'uses' => 'UserController@show'
 	]);
 
 	Route::get('gebruikers/{id}/wijzigen',

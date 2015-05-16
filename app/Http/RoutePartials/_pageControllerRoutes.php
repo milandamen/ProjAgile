@@ -6,14 +6,14 @@
 		'middleware' => 'admin'
 	]);
 
-	Route::get('pagina/nieuw',
+	Route::get('pagina/aanmaken',
 	[
 		'as' => 'page.create',
 		'uses' => 'PageController@create',
 		'middleware' => 'admin'
 	]);
 
-	Route::post('pagina/nieuw',
+	Route::post('pagina/aanmaken',
 	[
 		'as' => 'page.store',
 		'uses' => 'PageController@store',
