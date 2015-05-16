@@ -29,35 +29,17 @@
 			$this->postalRepo = $postalRepo;
 		}
 
-		public function index($crit = null)
+		public function index()
 		{
 			if (Auth::check())
 			{
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
-					if ((Request::get('search') === null || Request::get('search') === '') && $crit === null)
-					{
-						$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
-						$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
-						$residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
-					}
-					else
-					{
-						if ($crit !== null)
-						{
-							$criteria = $crit;
-						}
-						else
-						{
-							$criteria = Request::get('search');
-						}
-						$admins = $this->userRepo->filterAllByUserGroup(self::ADMIN_GROUP_ID, $criteria);
-						$contentmanagers = $this->userRepo->filterAllByUserGroup(self::CONTENT_GROUP_ID, $criteria);
-						$residents = $this->userRepo->filterAllByUserGroup(self::RESIDENT_GROUP_ID, $criteria);
-						$count = count($admins) + count($contentmanagers) + count($residents);
-					}
+					$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
+					$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
+					$residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
 
-					return view('user.index', compact('admins', 'contentmanagers', 'residents', 'criteria', 'count'));
+					return view('user.index', compact('admins', 'contentmanagers', 'residents'));
 				}
 
 				return view('errors.403');
@@ -195,7 +177,7 @@
 			return view('errors.401');
 		}
 
-		public function deactivate($id, $crit = null)
+		public function deactivate($id)
 		{
 			if (Auth::check())
 			{
@@ -205,7 +187,7 @@
 					$user->active = false;
 					$this->userRepo->update($user);
 
-					return redirect::route('user.filter', [$crit]);
+					return redirect::route('user.index');
 				}
 
 				return view('errors.403');
@@ -214,7 +196,7 @@
 			return view('errors.401');
 		}
 
-		public function activate($id, $crit = null)
+		public function activate($id)
 		{
 			if (Auth::check())
 			{
@@ -224,7 +206,7 @@
 					$user->active = true;
 					$this->userRepo->update($user);
 
-					return redirect::route('user.filter', [$crit]);
+					return redirect::route('user.index');
 				}
 
 				return view('errors.403');

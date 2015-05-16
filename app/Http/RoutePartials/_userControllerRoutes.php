@@ -17,7 +17,7 @@
 		'uses' => 'UserController@store'
 	]);
 
-	Route::get('gebruiker/{id}',
+	Route::get('gebruikers/{id}',
 	[
 		'as' => 'user.show',
 		'uses' => 'UserController@show'
@@ -35,25 +35,13 @@
 		'uses' => 'UserController@update'
 	]);
 
-	Route::get('gebruikers/{crit?}',
-	[
-		'as' => 'user.filter',
-		'uses' => 'UserController@index'
-	]);
-
-	Route::post('gebruikers/{crit?}',
-	[
-		'as' => 'user.filter',
-		'uses' => 'UserController@index'
-	]);
-
-	Route::get('gebruikers/{id}/deactiveer/{crit?}',
+	Route::get('gebruikers/{id}/deactiveer',
 	[
 		'as' => 'user.deactivate',
 		'uses' => 'UserController@deactivate'
 	]);
 
-	Route::get('gebruikers/{id}/activeer/{crit?}',
+	Route::get('gebruikers/{id}/activeer',
 	[
 		'as' => 'user.activate',
 		'uses' => 'UserController@activate'

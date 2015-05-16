@@ -56,7 +56,7 @@
 			{
 				Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.')->important();
 
-				return Redirect::back();
+				return Redirect::back()->withInput();
 			}
 			
 			return parent::render($request, $e);

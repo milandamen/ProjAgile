@@ -34,11 +34,11 @@
 								</td>
 								<td>
 									@if($userType->active)
-										<a href="{{ route('user.deactivate', [$userType->userId, $criteria]) }}" class="black deactivate">
+										<a href="{{ route('user.deactivate', [$userType->userId]) }}" class="black deactivate">
 											<i class="fa fa-lock fa-lg"></i>
 										</a>
 									@elseif(!$userType->active)
-										<a href="{{ route('user.activate', [$userType->userId, $criteria]) }}" class="text-success activate">
+										<a href="{{ route('user.activate', [$userType->userId]) }}" class="text-success activate">
 											<i class="fa fa-unlock-alt fa-lg"></i>
 										</a>
 									@endif
