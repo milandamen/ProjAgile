@@ -18,6 +18,9 @@
 				<h1 class="page-header">Gebruiker Wijzigen</h1>
 			</div>
 		</div>
+		<div class="row">
+			@include('flash::message')
+		</div>
 		<div class="col-lg-12">
 			@include('errors.partials._list')
 			{!! Form::model($user, ['route' => ['user.update', $user->userId], 'method' => 'PATCH']) !!}
@@ -26,4 +29,8 @@
 			{!! Form::close() !!}
 		</div>
 	</div>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

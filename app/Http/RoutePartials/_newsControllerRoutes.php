@@ -17,6 +17,24 @@
 		'uses' => 'NewsController@store'
 	]);
 
+	Route::get('nieuws/beheer', 
+	[
+		'as' => 'news.manage',
+		'uses' => 'NewsController@manage'
+	]);
+
+	Route::post('nieuws/comment',
+	[
+		'as' => 'news.postComment',
+		'uses' => 'NewsController@postComment'
+	]);
+	
+	Route::get('nieuws/getArticlesByTitle/{term}',
+	[
+		'as' => 'news.getArticlesByTitle',
+		'uses' => 'NewsController@getArticlesByTitle'
+	]);
+
 	Route::get('nieuws/{id}',
 	[
 		'as' => 'news.show',
@@ -33,24 +51,6 @@
 	[
 		'as' => 'news.update',
 		'uses' => 'NewsController@update'
-	]);
-
-	Route::get('nieuws/manage', 
-	[
-		'as' => 'news.manage',
-		'uses' => 'NewsController@manage'
-	]);
-
-	Route::post('nieuws/comment',
-	[
-		'as' => 'news.postComment',
-		'uses' => 'NewsController@postComment'
-	]);
-	
-	Route::get('nieuws/getArticlesByTitle/{term}',
-	[
-		'as' => 'news.getArticlesByTitle',
-		'uses' => 'NewsController@getArticlesByTitle'
 	]);
 
 	Route::get('nieuws/{id}/hide',

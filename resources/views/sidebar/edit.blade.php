@@ -19,6 +19,9 @@
 			</div>
 		</div>
 		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				<!--- Start Form of updating the sidebar -->
 				<form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->page_pageId]) !!}">
@@ -98,4 +101,5 @@
 	{!! HTML::script('custom/js/sidebar.js') !!}
 	{!! HTML::script('custom/js/autocomplete.js') !!}
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

@@ -26,10 +26,10 @@
 		{
 			$rules =
 			[
-				'username' => 'required|max:30|unique:User,username,'.$this->get('userId').',userId',
+				'username' => 'required|max:30|unique:user,username,'.$this->get('userId').',userId',
 				'firstName' => 'required|max:50',
 				'surname' => 'required|max:80',
-				'email' => 'required|max:60|email|unique:User,email,'.$this->get('userId').',userId',
+				'email' => 'required|max:60|email|unique:user,email,'.$this->get('userId').',userId',
 			];
 			
 			if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
@@ -37,7 +37,7 @@
 				$rules +=
 				[
 					'houseNumber' => 'required|integer|digits_between:1,8',
-					'postal' => 'required|min:6|max:7|exists:Postal,code',
+					'postal' => 'required|min:6|max:7|exists:postal,code',
 				];
 			}
 			else
@@ -45,7 +45,7 @@
 				$rules +=
 				[
 					'houseNumber' => 'integer|digits_between:1,8',
-					'postal' => 'min:6|max:7|exists:Postal,code',
+					'postal' => 'min:6|max:7|exists:postal,code',
 				];
 			}
 

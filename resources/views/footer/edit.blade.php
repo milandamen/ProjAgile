@@ -15,8 +15,11 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				<h1>Wijzig Footer</h1>
+				<h1>Footer Wijzigen</h1>
 			</div>
+		</div>
+		<div class="row">
+			@include('flash::message')
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
@@ -48,4 +51,5 @@
 	{!! HTML::script('summernote/js/summernote.js') !!}
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

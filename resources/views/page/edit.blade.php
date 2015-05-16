@@ -19,6 +19,9 @@
 			</div>
 		</div>
 		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				@include('errors.partials._list')
 				{!! Form::model($page, ['method' => 'POST']) !!}
@@ -110,5 +113,5 @@
 	{!! HTML::script('summernote/js/summernote.js') !!}
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/page.js') !!}
-	  {!! HTML::script('custom/js/validateNewOnSite.js') !!}
+  	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
 @stop

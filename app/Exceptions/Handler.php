@@ -6,7 +6,6 @@
 	use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 	use Illuminate\Session\TokenMismatchException;
 	use Redirect;
-	use Session;
 
 	class Handler extends ExceptionHandler 
 	{
@@ -54,10 +53,10 @@
 			}
 
 			if ($e instanceof TokenMismatchException)
-            {
-                Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.')->important();
+			{
+				Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.')->important();
 
-                return Redirect::back();
+				return Redirect::back();
 			}
 			
 			return parent::render($request, $e);

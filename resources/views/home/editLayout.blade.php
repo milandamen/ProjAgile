@@ -18,6 +18,9 @@
 				<h1>Home Layouyt Wijzigen</h1>
 			</div>
 		</div>
+		<div class="row">
+			@include('flash::message')
+		</div>
 		<form id="dataform" method="post">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div id="draggabledivs" class="row">
@@ -46,4 +49,5 @@
 @section('additional_scripts')
 	<!-- JavaScript that enables dragging and dropping and sends form -->
 	{!! HTML::script('custom/js/editlayout.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

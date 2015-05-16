@@ -19,6 +19,9 @@
 			</div>
 		</div>
 		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -45,17 +48,17 @@
 								@endif
 									<td></td>
 									<td>
-										<input type="text" name="artikel[0]" value="{{ $article->news->newsId }}" class="hiddenInput" />
+										<input type="text" name="artikel[0]" value="{{ $article->news->newsId }}" class="hiddenInput"/>
 										<span>{{ $article->news->newsId }}</span>
 									</td>
 									<td>
-										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}" />
+										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
 											<a href="{{ asset('uploads/img/carousel/' . $article->imagePath) }}" target="_blank">Bekijk huidig</a>
 											<div class="floatRight">
-												<input type="checkbox" name="deletefile[0]" value="true" /> Verwijder huidig
+												<input type="checkbox" name="deletefile[0]" value="true"/> Verwijder huidig
 											</div>
 										@endif
 										<input type="file" name="file[0]" />
@@ -116,4 +119,5 @@
 @section('additional_scripts')
 	<!-- JavaScript file that handles removing and adding of rows and posting of the data form -->
 	{!! HTML::script('custom/js/carouselUpdate.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

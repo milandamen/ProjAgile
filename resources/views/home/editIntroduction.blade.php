@@ -15,7 +15,6 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8">
-			
 				<h1>Home Introductie Wijzigen</h1>
 				<p > 
 					Op deze pagina kan de tekst van de introductie aangepast worden. De introductie is voornamelijk gericht op de home-pagina maar kan eventueel ook ingezet worden op andere pagina's. Hieronder ziet u de huidige introductie, die u kunt wijzigen naar wat u wilt. 
@@ -23,11 +22,14 @@
 			</div>
 		</div>
 		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				{!! Form::open() !!}
-					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
-					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
-					<input type="hidden" name="pageId" value="1" >
+					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
+					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
+					<input type="hidden" name="pageId" value="1">
 					@include('errors.partials._list')
 					{!! Form::model($introduction, ['method' => 'POST'])!!}
 						{!! Form::hidden('pageId', 1) !!}
@@ -62,8 +64,8 @@
 @stop
 
 @section('additional_scripts')
-	<!-- include summernote js-->
 	{!! HTML::script('summernote/js/summernote.js') !!}
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

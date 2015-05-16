@@ -13,7 +13,7 @@
 
 	Route::post('home/layout/wijzigen',
 	[
-		'as' => 'home.editLayout',
+		'as' => 'home.updateLayout',
 		'uses' => 'HomeController@updateLayout'
 	]);
 

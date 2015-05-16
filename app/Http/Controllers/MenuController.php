@@ -1,6 +1,7 @@
 <?php
 	namespace App\Http\Controllers;
 
+	use App\Models\Menu;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Redirect;
@@ -29,7 +30,9 @@
 		 */
 		public function create()
 		{
-			return view('menu.create');
+			$menuItem = new Menu();
+
+			return view('menu.create', compact('menuItem'));
 		}
 
 		/**
