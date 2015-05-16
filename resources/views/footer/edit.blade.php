@@ -35,14 +35,14 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" id="newOnSiteGroup">
                     <label>Tonen op nieuw op de site?</label><br/>
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-default">
-                            <input type="radio" name="newOnSite" value="true">Ja
+                            <input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
                         </label>
                         <label class="btn btn-default active">
-                            <input type="radio" name="newOnSite" value="false" checked="true">Nee
+                            <input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
                         </label>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
             <div id="success" class="col-lg-12">
                 <br/>
                 <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
-                <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
+                <button type="submit" class="btn btn-success">Opslaan</button>
             </div>
             {!! Form::close() !!}
         </div>
