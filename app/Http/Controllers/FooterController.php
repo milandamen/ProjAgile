@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-use App\Models\Footer;
 use App\Repositories\RepositoryInterfaces\IMenuRepository;
 use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 use Illuminate\Support\Facades\Redirect;
@@ -10,7 +9,6 @@ use Auth;
 
 class FooterController extends Controller
 {
-
     private $colorId = 4;
 
     public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository, INewOnSiteRepository $newOnSiteRepository)
@@ -70,7 +68,6 @@ class FooterController extends Controller
 
                         $this->footerRepository->update($footerColor);
                     }
-
                 }
 
                 $newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);

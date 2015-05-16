@@ -1,4 +1,3 @@
-
 //nog in gebruik in andere onderdelen (o.a. sidebar en intro)
 function validate()
 {
@@ -18,8 +17,6 @@ function validate()
     }
 
     return true;
-
-
 }
 
 $('input[type=radio][name=newOnSite]').change(function() {
