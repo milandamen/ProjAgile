@@ -26,7 +26,7 @@ $('input[type=radio][name=newOnSite]').change(function() {
         '<br/>'+
         '<label class="control-label col-sm-2">Bericht:</label>'+
         '<div class="col-sm-10">'+
-        '<input type="text" class="form-control" name="newOnSiteMessage" maxlength="30">'+
+        '<input type="text" class="form-control" id="message" name="newOnSiteMessage" maxlength="30">'+
         '</div>'+
         '</div>'+
         '</div>');
@@ -35,3 +35,13 @@ $('input[type=radio][name=newOnSite]').change(function() {
         $('.newOnSiteMessage').remove();
     }
 });
+
+
+function newOnSiteValidate()
+{
+    if($('#message').val() == ''){
+        alert('Nieuw op de site bericht mag niet leeg gelaten worden!');
+        return false;
+    }
+}
+

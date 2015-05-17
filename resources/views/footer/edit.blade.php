@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
+            {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST', 'onsubmit' => 'newOnSiteValidate();']) !!}
             <hr/>
 
             @if(count($footer) < 4)
@@ -54,7 +54,7 @@
                 <div id="success" class="col-lg-12">
                     <br/>
                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
-                    <button type="submit" class="btn btn-success">Opslaan</button>
+                    {!! Form::submit("Opslaan", ['class' => 'btn btn-success']) !!}
                 </div>
             @endif
             {!! Form::close() !!}
