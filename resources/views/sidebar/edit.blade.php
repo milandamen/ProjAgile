@@ -57,7 +57,7 @@
 									<input id="page_name" class="autocomplete" name="sidebar[{!!$i!!}][pagename][]" id="sidebarLink" value="{!!$sidebarRow->link!!}" type="text"/>
 								</td>
 
-								 Make decision for intern or extern link -->
+								{{-- Make decision for internal or external link --}}
 								<td class="td-radio1">
 									@if(!$sidebarRow->extern)
 										<div class="radio">
