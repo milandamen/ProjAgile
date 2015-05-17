@@ -215,10 +215,12 @@ class UserController extends Controller
     //personal profile functions
     public function showProfile()
     {
-            //$user = $this->userRepo->get(Auth::user()->userId);
-            $user = $this->userRepo->get(1);
-            return view('user.show', compact('user'));
-
+        if (Auth::check())
+        {
+            $user = $this->userRepo->get(Auth::user()->userId);
+            return view('user.showProfile', compact('user'));
+        }
+        return view('errors.401');
     }
 
 }

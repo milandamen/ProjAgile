@@ -30,6 +30,12 @@
         'uses' => 'UserController@store'
     ]);
 
+    Route::get('gebruikers/profiel',
+    [
+        'as' => 'user.profile',
+        'uses' => 'UserController@showProfile'
+    ]);
+
     Route::get('gebruikers/{id}/deactiveer',
     [
         'as' => 'user.deactivate',
@@ -48,9 +54,3 @@
         'uses' => 'UserController@show'
     ]);
 
-    //user profile routes
-    Route::get('gebruikers/profiel',
-    [
-        'as' => 'user.showProfile',
-        'uses' => 'UserController@showProfile'
-    ]);
