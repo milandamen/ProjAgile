@@ -1,48 +1,49 @@
-
 /**
 	Grab list of articles using the input field as search term, then display articles in 2nd table.
 */
-function searchArticle() {
+function searchArticle() 
+{
 	var searchterm = document.getElementById('artikeltitel').value;
 	var searchresultsbody = document.getElementById('searchresults');
 
-	$.getJSON(getArticlesByTitleURL + '/' + searchterm)
-		.done(function (dataresult) {
-	//		console.log(dataresult);
-			
-			var resulthtml = '';
-			[].forEach.call(dataresult, function (item) {
-				resulthtml +=
-					'<tr>' +
-						'<td>' + 
-							item.newsId + 
-						'</td>' +
-						'<td>' + 
-							item.title + 
-						'</td>' +
-						'<td>' + 
-							'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' + 
-								'<i class="fa fa-plus"></i>' + 
-							'</a>' + 
-						'</td>' +
-					'</tr>';
-			});
-			
-			searchresultsbody.innerHTML = resulthtml;
-		})
-		.fail(function (jqxhr, textStatus, error) {
-			//Fails if no articles can be found with the given term or if the syntax is wrong.
-			var err = textStatus + ', ' + error;
-			console.log('Request failed: ' + err);
-			
-			searchresultsbody.innerHTML = ''
+	$.getJSON(getArticlesByTitleURL + '/' + searchterm).done(function(dataresult) 
+	{		
+		var resulthtml = '';
+		[].forEach.call(dataresult, function (item) 
+		{
+			resulthtml +=
+				'<tr>' +
+					'<td>' + 
+						item.newsId + 
+					'</td>' +
+					'<td>' + 
+						item.title + 
+					'</td>' +
+					'<td>' + 
+						'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' + 
+							'<i class="fa fa-plus"></i>' + 
+						'</a>' + 
+					'</td>' +
+				'</tr>';
 		});
+		
+		searchresultsbody.innerHTML = resulthtml;
+	})
+	.fail(function(jqxhr, textStatus, error) 
+	{
+		//Fails if no articles can be found with the given term or if the syntax is wrong.
+		var err = textStatus + ', ' + error;
+		console.log('Request failed: ' + err);
+		
+		searchresultsbody.innerHTML = ''
+	});
 }
 
 /**
 	Move the article from the 2nd table to the 1st table.
 */
-function addArticle(button) {
+function addArticle(button) 
+{
 	var row = button.parentNode.parentNode;
 	var id = row.children[0].textContent;
 	var title = row.children[1].textContent;
@@ -88,7 +89,8 @@ function addArticle(button) {
 /**
 	Remove the article from the 1st table
 */
-function removeArticle(button) {
+function removeArticle(button) 
+{
 	var row = button.parentNode.parentNode;
 	row.parentNode.removeChild(row);
 	
@@ -98,7 +100,8 @@ function removeArticle(button) {
 /**
 	Move the article one row down in the 1st table
 */
-function moveArticleDown(button) {
+function moveArticleDown(button) 
+{
 	var articlelist = document.getElementById('articlelist');
 	
 	// Because we have a header row, the first real table row starts at index 1.
@@ -106,7 +109,9 @@ function moveArticleDown(button) {
 	var srcRow = button.parentNode.parentNode;
 	var srcI = srcRow.rowIndex;
 	var dstRow = articlelist.rows[srcI];		// For some reason .rows does not count the header row, so no need for +1.
-	if (dstRow != null) {
+
+	if (dstRow != null) 
+	{
 		// Swap
 		articlelist.insertBefore(dstRow, srcRow);
 		
@@ -117,14 +122,17 @@ function moveArticleDown(button) {
 /**
 	Move the article one row up in the 1st table
 */
-function moveArticleUp(button) {
+function moveArticleUp(button) 
+{
 	var articlelist = document.getElementById('articlelist');
 	
 	// Because we have a header row, the first real table row starts at index 1.
 	
 	var srcRow = button.parentNode.parentNode;
 	var srcI = srcRow.rowIndex;
-	if (srcI > 1) {
+
+	if (srcI > 1)
+	{
 		var dstRow = articlelist.rows[srcI - 2];		// For some reason .rows does not count the header row, so no need for +1.
 		
 		// Swap
@@ -137,37 +145,47 @@ function moveArticleUp(button) {
 /**
 	Re-calculate the indexes of the rows and inputs
 */
-function calculateIndexes() {
+function calculateIndexes() 
+{
 	var i = 0;
 	var articlelist = document.getElementById('articlelist');
 	
-	[].forEach.call(articlelist.children, function (row) {
+	[].forEach.call(articlelist.children, function (row) 
+	{
 		row.children[0].textContent = i;
 		var inputs = row.getElementsByTagName('input');
-		[].forEach.call(inputs, function (input) {
-			if (input.type == 'file') {
+
+		[].forEach.call(inputs, function (input) 
+		{
+			if (input.type == 'file') 
+			{
 				input.name = 'file[' + i + ']';
 			} 
-			else if (input.name.indexOf('artikel') !== -1) {
+			else if (input.name.indexOf('artikel') !== -1) 
+			{
 				input.name = 'artikel[' + i + ']';
 			} 
-			else if (input.name.indexOf('beschrijving') !== -1) {
+			else if (input.name.indexOf('beschrijving') !== -1) 
+			{
 				input.name = 'beschrijving[' + i + ']';
-			} else {
+			} 
+			else 
+			{
 				input.name = 'deletefile[' + i + ']';
 			}
 		});
-		
 		i++;
 	});
 }
 
 calculateIndexes();
 
-function goBack() {
-    window.history.back()
+function goBack() 
+{
+	window.history.back()
 }
 
-$("#cancel").click(function(){
-    document.getElementById("upload").value = "";
+$("#cancel").click(function()
+{
+	document.getElementById("upload").value = "";
 });

@@ -40,7 +40,7 @@ class FooterController extends Controller
         }
     }
 
-    public function postEdit()
+    public function update()
     {
         if(Auth::check())
         {
@@ -95,3 +95,4 @@ class FooterController extends Controller
         }
     }
 }
+

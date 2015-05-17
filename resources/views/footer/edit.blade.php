@@ -1,18 +1,29 @@
 @extends('app')
 
+@section('title')
+    De Bunders - Footer Wijzigen
+@stop
+
+@section('description')
+    Dit is de beveiligde footer wijzig pagina van De Bunders.
+@stop
+
 @section('content')
 <div class="container">
     <div class="row">
-        {!! Breadcrumbs::render('editfooter') !!}
+        {!! Breadcrumbs::render('footer.edit') !!}
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <h1>Wijzig Footer</h1>
+            <h1>Footer Wijzigen</h1>
         </div>
     </div>
     <div class="row">
+        @include('flash::message')
+    </div>
+    <div class="row">
         <div class="col-lg-12">
-            {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST', 'onsubmit' => 'newOnSiteValidate();']) !!}
+            {!! Form::open(['route' => 'footer.update', 'method' => 'POST', 'onsubmit' => 'newOnSiteValidate();']) !!}
             <hr/>
 
             @if(count($footer) < 4)
@@ -53,7 +64,7 @@
 
                 <div id="success" class="col-lg-12">
                     <br/>
-                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('management.index', '')}}'">Annuleren</button>
                     {!! Form::submit("Opslaan", ['class' => 'btn btn-success']) !!}
                 </div>
             @endif
@@ -64,9 +75,8 @@
 @endsection
 
 @section('additional_scripts')
-    {!! HTML::script('summernote/js/summernote.js') !!}
-    {!! HTML::script('custom/js/summernoteFunctions.js') !!}
-    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
-@endsection
-
-
+	{!! HTML::script('summernote/js/summernote.js') !!}
+	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
+	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
+@stop

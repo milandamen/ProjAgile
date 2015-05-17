@@ -1,4 +1,3 @@
-<!-- Header Carousel --> 
 <div id="mod-carousel" class="mod-carousel">
 	<div id="mod-carousel-images" class="mod-carousel-images">
 		@foreach ($carousel as $item)

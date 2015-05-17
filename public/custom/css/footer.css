@@ -1,4 +1,5 @@
-.footer {
+.footer
+{
 	display: block;
 	width: 100%;
 	color: black;
@@ -6,8 +7,12 @@
 	border-radius: 20px;
 }
 
-
 .footer-edit-link{
     float: right;
+}
+
+.footer a 
+{
+	color: #F2F2F2;
 }
 
