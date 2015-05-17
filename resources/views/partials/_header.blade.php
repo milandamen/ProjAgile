@@ -31,7 +31,7 @@
 
                         </a>
                         <ul class="dropdown-menu" style="padding:12px;">
-                            <li><a href="{{ route('user.profile') }}">Mijn profiel</a></li>
+                            <li><a href="{{ route('user.showProfile') }}">Mijn profiel</a></li>
                             @if(Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
                                 <li><a href="{{ route('admin.index') }}">Beheer</a></li>
                             @endif

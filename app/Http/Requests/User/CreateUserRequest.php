@@ -39,7 +39,7 @@ class CreateUserRequest extends Request {
             $rules +=
                 [
                     'houseNumber' => 'required|integer|digits_between:1,8',
-                    'postal' => 'required|min:6|max:7|exists:Postal,code',
+                    'postal' => 'required|min:6|max:7|exists:postal,code',
                 ];
         }
         else
@@ -47,7 +47,7 @@ class CreateUserRequest extends Request {
             $rules +=
                 [
                     'houseNumber' => 'integer|digits_between:1,8',
-                    'postal' => 'min:6|max:7|exists:Postal,code',
+                    'postal' => 'min:6|max:7|exists:postal,code',
                 ];
         }
 

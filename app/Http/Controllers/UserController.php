@@ -97,36 +97,6 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function show($id)
-    {
-        if(Auth::check())
-        {
-            if(Auth::user()->usergroup->name === 'Administrator')
-            {
-                $user = $this->userRepo->get($id);
-
-                if($user != null)
-                {
-                    return view('user.show', compact('user'));
-                }
-                else
-                {
-                    return view('errors.404');
-                }
-            }
-            else
-            {
-                return view('errors.403');
-            }
-        }
-        else
-        {
-            return view('errors.401');
-        }
-
-
-    }
-
     public function update($id, UpdateUserRequest $userRequest)
     {
         if (Auth::check())
@@ -176,6 +146,39 @@ class UserController extends Controller
         return view('errors.401');
     }
 
+    public function show($id)
+    {
+        if(Auth::check())
+        {
+            if(Auth::user()->usergroup->name === 'Administrator')
+            {
+                $user = $this->userRepo->get($id);
+                $postal = '';
+                if ($user->postalId !== null)
+                {
+                    $postal = $this->postalRepo->getById($user->postalId)->code;
+                }
+
+                if($user != null)
+                {
+                    return view('user.show', compact('user', 'postal'));
+                }
+                else
+                {
+                    return view('errors.404');
+                }
+            }
+            else
+            {
+                return view('errors.403');
+            }
+        }
+        else
+        {
+            return view('errors.401');
+        }
+    }
+
     public function deactivate($id)
     {
         if (Auth::check())
@@ -218,7 +221,67 @@ class UserController extends Controller
         if (Auth::check())
         {
             $user = $this->userRepo->get(Auth::user()->userId);
-            return view('user.showProfile', compact('user'));
+            if ($user->postalId !== null)
+            {
+                $postal = $this->postalRepo->getById($user->postalId)->code;
+            }
+            return view('user.showProfile', compact('user', 'postal'));
+        }
+        return view('errors.401');
+    }
+
+    public function editProfile()
+    {
+        if (Auth::check())
+        {
+            $user = $this->userRepo->get(Auth::user()->userId);
+            $postal = '';
+            if ($user->postalId !== null)
+            {
+                $postal = $this->postalRepo->getById($user->postalId)->code;
+            }
+            return view('user.editProfile', compact('user', 'postal'));
+        }
+        return view('errors.401');
+    }
+
+    public function updateProfile(UpdateUserRequest $userRequest)
+    {
+        if (Auth::check())
+        {
+            $user = $this->userRepo->get(Auth::user()->userId);
+            $data = $userRequest->only
+            (
+                'firstName',
+                'surname',
+                'email',
+                'postal',
+                'houseNumber'
+            );
+
+            $user->fill($data);
+
+            //only change password when given. If the field is emtpy the password need not be changed.
+            if ($userRequest->get('password') !== '')
+            {
+                $user->password =  Hash::make($userRequest->get('password'));
+            }
+
+            if ($userRequest->get('postal') !== '')
+            {
+                $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+                $user->districtSectionId = $postal->districtSectionId;
+                $user->postalId = $postal->postalId;
+            }
+            else
+            {
+                $user->districtSectionId = null;
+                $user->postalId = null;
+            }
+
+            $this->userRepo->update($user);
+
+            return redirect::route('user.showProfile');
         }
         return view('errors.401');
     }

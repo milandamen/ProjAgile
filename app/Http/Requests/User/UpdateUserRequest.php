@@ -13,7 +13,7 @@ class UpdateUserRequest extends Request {
 	 */
 	public function authorize()
 	{
-        return Auth::user()->usergroup->name === 'Administrator';
+        return true;
 	}
 
 	/**
@@ -35,7 +35,7 @@ class UpdateUserRequest extends Request {
             $rules +=
             [
                 'houseNumber' => 'required|integer|digits_between:1,8',
-                'postal' => 'required|min:6|max:7|exists:Postal,code',
+                'postal' => 'required|min:6|max:7|exists:postal,code',
             ];
         }
         else
@@ -43,7 +43,7 @@ class UpdateUserRequest extends Request {
             $rules +=
             [
                 'houseNumber' => 'integer|digits_between:1,8',
-                'postal' => 'min:6|max:7|exists:Postal,code',
+                'postal' => 'min:6|max:7|exists:postal,code',
             ];
         }
 

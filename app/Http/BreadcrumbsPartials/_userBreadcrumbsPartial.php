@@ -33,3 +33,17 @@ Breadcrumbs::register('showuser', function($breadcrumbs, $user)
     $breadcrumbs->parent('user');
     $breadcrumbs->push($user->username, route('user.show', [$user->id]));
 });
+
+// Home > Profiel
+Breadcrumbs::register('showprofile', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Profiel', route('user.showProfile'));
+});
+
+// Home > Profiel > Wijzig
+Breadcrumbs::register('editprofile', function($breadcrumbs)
+{
+    $breadcrumbs->parent('showprofile');
+    $breadcrumbs->push('Wijzig', route('user.editProfile'));
+});

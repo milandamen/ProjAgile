@@ -30,11 +30,25 @@
         'uses' => 'UserController@store'
     ]);
 
-    Route::get('gebruikers/profiel',
+    //user profile routes
+    Route::get('profiel',
     [
-        'as' => 'user.profile',
+        'as' => 'user.showProfile',
         'uses' => 'UserController@showProfile'
     ]);
+
+    Route::get('profiel/wijzig',
+    [
+        'as' => 'user.editProfile',
+        'uses' => 'UserController@editProfile'
+    ]);
+
+    Route::patch('profiel/wijzig',
+    [
+        'as' => 'user.updateProfile',
+        'uses' => 'UserController@updateProfile'
+    ]);
+    //end user profile routes
 
     Route::get('gebruikers/{id}/deactiveer',
     [
