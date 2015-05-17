@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Footer;
 use App\Repositories\RepositoryInterfaces\IMenuRepository;
 use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +25,9 @@ class FooterController extends Controller
         {
             if(Auth::user()->usergroup->name === 'Administrator')
             {
-                return view('footer/edit', array('footer' => $this->footerRepository->getAll()));
+                $footer = $this->footerRepository->getAll();
+
+                return view('footer/edit', array('footer' => $footer));
             }
             else
             {

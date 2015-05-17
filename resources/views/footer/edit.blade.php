@@ -14,8 +14,11 @@
         <div class="col-lg-12">
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
             <hr/>
-            <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
-            <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
+
+            @if(count($footer) === 0)
+                <h3>De footer tabel in de database is leeg, voeg aub 4 lege velden toe met id 1 tot en met 4!</h3>
+            @endif
+
             <!---1, because id 4 is for the color-->
             @for($c = 0; $c < count($footer) - 1; $c++)
             <div class="col-md-4">
@@ -24,35 +27,37 @@
             </div>
             @endfor
 
-            <div class="row">
-                <div class="form-group col-sm-4">
+            @if(count($footer) > 0)
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <br/>
+                        <label class="control-label col-sm-2">Kleur:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="footerColor" placeholder="#FFF">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12" id="newOnSiteGroup">
+                        <label>Tonen op nieuw op de site?</label><br/>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default">
+                                <input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+                            </label>
+                            <label class="btn btn-default active">
+                                <input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="success" class="col-lg-12">
                     <br/>
-                    <label class="control-label col-sm-2">Kleur:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="footerColor" placeholder="#FFF">
-                    </div>
+                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
+                    <button type="submit" class="btn btn-success">Opslaan</button>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-12" id="newOnSiteGroup">
-                    <label>Tonen op nieuw op de site?</label><br/>
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-default">
-                            <input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
-                        </label>
-                        <label class="btn btn-default active">
-                            <input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="success" class="col-lg-12">
-                <br/>
-                <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
-                <button type="submit" class="btn btn-success">Opslaan</button>
-            </div>
+            @endif
             {!! Form::close() !!}
         </div>
     </div>
