@@ -37,7 +37,7 @@
 			{
 				foreach ($this->request->get('districtSection') as $key => $value)
 				{
-					$rules['districtSection.' . $key ] = 'exists:districtSection,districtSectionId';
+					$rules['districtSection.' . $key ] = 'exists:districtsection,districtSectionId';
 				}
 			}
 
