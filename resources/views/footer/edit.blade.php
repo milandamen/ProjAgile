@@ -15,19 +15,18 @@
             {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
             <hr/>
 
-            @if(count($footer) === 0)
-                <h3>De footer tabel in de database is leeg, voeg aub 4 lege velden toe met id 1 tot en met 4!</h3>
+            @if(count($footer) < 4)
+                <h3>Er is een probleem met de footer tabel in de database, er moeten 4 lege velden aanwezig zijn met id's 1 t/m 4!</h3>
             @endif
 
-            <!---1, because id 4 is for the color-->
-            @for($c = 0; $c < count($footer) - 1; $c++)
-            <div class="col-md-4">
-                <h2>Kolom {{$c + 1}}</h2>
-                {!! Form::textarea('column[]', $footer[$c]->text, ['placeholder' => 'Tekst', 'class' => 'form-control summernote']) !!}
-            </div>
-            @endfor
-
-            @if(count($footer) > 0)
+            @if(count($footer) > 3)
+                <!---1, because id 4 is for the color-->
+                @for($c = 0; $c < count($footer) - 1; $c++)
+                    <div class="col-md-4">
+                        <h2>Kolom {{$c + 1}}</h2>
+                        {!! Form::textarea('column[]', $footer[$c]->text, ['placeholder' => 'Tekst', 'class' => 'form-control summernote']) !!}
+                    </div>
+                @endfor
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <br/>

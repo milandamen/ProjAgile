@@ -1,4 +1,4 @@
-@if(count($footer) >2)
+@if(count($footer) > 3)
     <div class="container">
         <!-- Footer -->
         <hr>
