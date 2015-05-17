@@ -5,43 +5,43 @@
 
 	class File extends Model 
 	{
-	    /**
-	     * Table name.
-	     * 
-	     * @var string
-	     */
+		/**
+		 * Table name.
+		 * 
+		 * @var string
+		 */
 		protected $table = 'file';
 
-        /**
-         * PrimaryKey name.
-         * 
-         * @var string
-         */
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
 		protected $primaryKey = 'fileId';
 
-        /**
-         * Laravel's automatic timestamps convention.
-         * 
-         * @var bool
-         */
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var bool
+		 */
 		public $timestamps = false;
 
-        /**
-         * Attributes that can be changed and thus are mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $fillable = 
 		[
 			'newsId', 
 			'path'
 		];
 
-        /**
-         * Attributes that cannot be changed and thus are not mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $guarded = 
 		[
 			'fileId'

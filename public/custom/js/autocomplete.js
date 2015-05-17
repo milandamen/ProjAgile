@@ -1,6 +1,8 @@
-$(function() {
-    $(".autocomplete").autocomplete({
-        source: autocompleteURL,
-        minLength: 2
-    });
+$(function() 
+{
+	$(".autocomplete").autocomplete(
+	{
+		source: autocompleteURL,
+		minLength: 2
+	});
 });

@@ -1,7 +1,7 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IPageRepository extends IBaseRepository
-    {
+	interface IPageRepository extends IBaseRepository
+	{
 
-    }
+	}

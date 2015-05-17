@@ -40,8 +40,8 @@
 			$input = $this->all();
 
 			$input['name'] = filter_var($input['name'], FILTER_SANITIZE_STRING);
-            $input['link'] = filter_var($input['link'], FILTER_SANITIZE_STRING);
-    		$input['publish'] = parseCheckboxOrRadioButton($input['publish']);
+			$input['link'] = filter_var($input['link'], FILTER_SANITIZE_STRING);
+			$input['publish'] = parseCheckboxOrRadioButton($input['publish']);
 
 			$this->replace($input);
 

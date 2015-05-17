@@ -1,7 +1,7 @@
 <?php
-namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-interface INewOnSiteRepository extends IBaseRepository
-{
-    public function getAllOrdered();
-}
+	interface INewOnSiteRepository extends IBaseRepository
+	{
+		public function getAllOrdered();
+	}

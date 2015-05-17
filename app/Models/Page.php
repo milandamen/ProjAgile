@@ -3,53 +3,50 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-
 	class Page extends Model 
 	{
 		/**
-	     * Table name.
-	     * 
-	     * @var string
-	     */
+		 * Table name.
+		 * 
+		 * @var string
+		 */
 		protected $table = 'page';
 
-        /**
-         * PrimaryKey name.
-         * 
-         * @var string
-         */
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
 		protected $primaryKey = 'pageId';
 
-        /**
-         * Laravel's automatic timestamps convention.
-         * 
-         * @var bool
-         */
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var bool
+		 */
 		public $timestamps = false;
 
-        /**
-         * Attributes that can be changed and thus are mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $fillable = 
 		[
 			'sidebar',
 			'introduction_introductionId'
-
 		];
 
-        /**
-         * Attributes that cannot be changed and thus are not mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $guarded = 
 		[
 			'pageId'
 		];
 
-		
 		/** 
 		 * Get all PagePanel models that reference this Page model.
 		 * 
@@ -57,13 +54,11 @@
 		 */
 		public function panels()
 		{
-	        return $this->hasMany('App\Models\PagePanel', 'page_id');
+			return $this->hasMany('App\Models\PagePanel', 'page_id');
 		}	
 
 		public function introduction()
 		{
-	        return $this->hasOne('App\Models\Introduction', 'introductionId', 'introduction_introductionId');
+			return $this->hasOne('App\Models\Introduction', 'introductionId', 'introduction_introductionId');
 		}
-
-
 	}
