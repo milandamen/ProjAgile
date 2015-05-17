@@ -25,12 +25,12 @@ class CreateUserRequest extends Request {
 	{
         $rules =
             [
-                'username' => 'required|max:30|unique:User,username',
+                'username' => 'required|max:30|unique:user,username',
                 'password' => 'required|confirmed|min:8',
                 'password_confirmation' => 'required',
                 'firstName' => 'required|max:50',
                 'surname' => 'required|max:80',
-                'email' => 'required|max:60|email|unique:User,email',
+                'email' => 'required|max:60|email|unique:user,email',
             ];
         //return rules based on userGroup.
         //postal and houseNumber attributes are required only for residents.

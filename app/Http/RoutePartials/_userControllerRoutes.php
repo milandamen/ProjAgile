@@ -47,3 +47,10 @@
         'as' => 'user.show',
         'uses' => 'UserController@show'
     ]);
+
+    //user profile routes
+    Route::get('gebruikers/profiel',
+    [
+        'as' => 'user.showProfile',
+        'uses' => 'UserController@showProfile'
+    ]);
