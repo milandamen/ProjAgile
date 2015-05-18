@@ -1,41 +1,61 @@
 <?php
 
-    /**
-    * Home
-    */
-    include('BreadcrumbsPartials/_homeBreadcrumbsPartial.php');
+	/**
+	 * AuthController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_authBreadcrumbs.php');
 
-    /**
-    * Home > News
-    */
-    include('BreadcrumbsPartials/_newsBreadcrumbsPartial.php');
+	/**
+	 * CarouselController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_carouselBreadcrumbs.php');
 
-    /**
-    * Home > Manage
-    */
-    include('BreadcrumbsPartials/_manageHomeBreadcrumbsPartial.php');
+	/**
+	 * ErrorHandler breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_errorBreadcrumbs.php');
 
-    /**
-    * Home > Manage > Page
-    */
-    include('BreadcrumbsPartials/_managePageBreadcrumbsPartial.php');
+	/**
+	 * FooterController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_footerBreadcrumbs.php');
 
-    /**
-    * Home > Error
-    */
-    include('BreadcrumbsPartials/_errorBreadcrumbsPartial.php');
+	/**
+	 * HomeController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_homeBreadcrumbs.php');
 
-    /**
-     * Home > User
-     */
-    include('BreadcrumbsPartials/_userBreadcrumbsPartial.php');
+	/**
+	 * ManagementController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_managementBreadcrumbs.php');
 
-    /**
-     * Home > NewOnSite
-     */
-    include('BreadcrumbsPartials/_newOnSiteBreadcrumbsPartial.php');
+	/**
+	 * MenuController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_menuBreadcrumbs.php');
 
-    /**
-     * Home > Menu
-     */
-    include('BreadcrumbsPartials/_menuBreadcrumbsPartial.php');
+	/**
+	 * NewOnSiteController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_newOnSiteBreadcrumbs.php');
+
+	/**
+	 * NewsController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_newsBreadcrumbs.php');
+
+	/**
+	 * PageController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_pageBreadcrumbs.php');
+
+	/**
+	 * SidebarController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_sidebarBreadcrumbs.php');
+
+	/**
+	 * UserController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_userBreadcrumbs.php');

@@ -1,8 +1,8 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface ICarouselRepository extends IBaseRepository
-    {
-    	public function deleteAll();
+	interface ICarouselRepository extends IBaseRepository
+	{
+		public function deleteAll();
 		public function getAllFiltered();
-    }
+	}

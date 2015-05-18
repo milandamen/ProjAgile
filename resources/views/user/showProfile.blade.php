@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            {!! Breadcrumbs::render('showprofile') !!}
+            {!! Breadcrumbs::render('user.showProfile') !!}
         </div>
 
         <div class="row">

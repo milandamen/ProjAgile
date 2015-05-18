@@ -1,9 +1,17 @@
 @extends('app')
 
+@section('title')
+	De Bunders - {{ $user->username }}
+@stop
+
+@section('description')
+	Dit is de {{ $user->username }} overzicht pagina van De Bunders.
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
-            {!! Breadcrumbs::render('showuser', $user) !!}
+            {!! Breadcrumbs::render('user.show', $user) !!}
         </div>
         <div class="row">
             <div class="col-lg-1 addmargin">
@@ -38,5 +46,6 @@
                 </table>
             </div>
         </div>
+        {!! link_to_route('user.index', 'Terug naar Gebruiker Beheer', [], ['class' => 'btn btn-danger']) !!}
     </div>
-@endsection
+@stop

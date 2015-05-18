@@ -32,11 +32,11 @@ function validateSummer()
 		alert("Het veld 'inhoud' is niet ingevuld, vul deze alstublieft in.");
 		
 		return false;
-	} else {
-		// This true is needed for validating page correctly. (else it will return nothing and another var will stay false. )
-		return true;
-	}
+	} 
 	
+	// This true is needed for validating page correctly. (else it will return nothing and another var will stay false. )
+	return true;
+
 	/* Code kept for futher reference , checking multiple summernote fields with class 'summernote'
 	var code = $('.summernote').each(function()
 	{

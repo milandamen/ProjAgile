@@ -1,10 +1,5 @@
 <?php
 	/**
-	 * AdminController routes
-	 */
-	include('RoutePartials/_adminControllerRoutes.php');
-
-	/**
 	 * AuthController routes
 	 */
 	include('RoutePartials/_authControllerRoutes.php');
@@ -20,11 +15,6 @@
 	include('RoutePartials/_carouselControllerRoutes.php');
 
 	/**
-	 * DistrictSectionController routes
-	 */
-	include('RoutePartials/_districtSectionControllerRoutes.php');
-
-	/**
 	 * FileController routes
 	 */
 	include('RoutePartials/_fileControllerRoutes.php');
@@ -38,6 +28,11 @@
 	 * HomeController routes
 	 */
 	include('RoutePartials/_homeControllerRoutes.php');
+
+	/**
+	 * ManagementController routes
+	 */
+	include('RoutePartials/_managementControllerRoutes.php');
 
 	/**
 	 * MenuController routes

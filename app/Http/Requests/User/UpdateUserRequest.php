@@ -1,8 +1,10 @@
-<?php namespace App\Http\Requests\User;
+<?php 
+	namespace App\Http\Requests\User;
 
-use App\Http\Controllers\UserController;
-use App\Http\Requests\Request;
-use Auth;
+	use App\Http\Controllers\UserController;
+	use App\Http\Requests\Request;
+	use Auth;
+
 
 class UpdateUserRequest extends Request {
 
@@ -16,13 +18,13 @@ class UpdateUserRequest extends Request {
         return true;
 	}
 
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
-	public function rules()
-	{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
         $rules =
         [
             'username' => 'required|max:30|unique:user,username,'.$this->get('userId').',userId',
@@ -30,6 +32,7 @@ class UpdateUserRequest extends Request {
             'surname' => 'required|max:80',
             'email' => 'required|max:60|email|unique:user,email,'.$this->get('userId').',userId',
         ];
+
         if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
         {
             $rules +=
@@ -57,7 +60,7 @@ class UpdateUserRequest extends Request {
         }
 
         return $rules;
-	}
+    }
 
     /**
      * Sanitizes the provided input that will be used by the validator and controller.
@@ -103,5 +106,4 @@ class UpdateUserRequest extends Request {
 
         return $postal;
     }
-
 }

@@ -1,7 +1,6 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
-
-    interface IDistrictSectionRepository extends IBaseRepository
-    {
-    	public function getAllToList();
-    }
+namespace App\Repositories\RepositoryInterfaces;
+interface IDistrictSectionRepository extends IBaseRepository
+{
+    public function getAllToList();
+}

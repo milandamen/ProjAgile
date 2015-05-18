@@ -1,47 +1,37 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Menu Aanmaken
+@stop
+
+@section('description')
+	Dit is de beveiligde menu item aanmaak pagina van De Bunders.
+@stop
+
 @section('content')
-    <div class="container">
-        <div class="row">
-            {!! Breadcrumbs::render('newMenuItem') !!}
-        </div>
-        <div class="col-lg-12">
-            <h2 class="page-header">Menu Item Aanmaken</h2>
-            @include('errors.partials._list')
-            <div class="col-md-4 col-xs-offset-4">
-            {!! Form::open (['id' => 'menuItemForm','method' => 'PUT']) !!}
-            <p>
-				{!! Form::label('itemname', 'Naam', ['class' => 'label-form'])!!}
-				{!! Form::text('name', old('Naam'), ['placeholder' => 'Naam', 'class' => 'form-control']) !!}
-			</p>
-            <p>
-				{!! Form::label('itemlink', 'Link', ['class' => 'label-form'])!!}
-				{!! Form::text('link', old('Link'), ['placeholder' => 'Link', 'class' => 'form-control autocomplete']) !!}
-			</p>
-            <p>
-				{!! Form::label('itemvisible', 'Zichtbaar', ['class' => 'label-form'])!!}
-				
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default active">
-                        <input type="radio" name="publish" value="true" checked=true>Ja
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="publish" value="false">Nee
-                    </label>
-                </div>
-            </p>
-
-            {!! Form::submit('Opslaan', ['class' => 'btn btn-success white pull-left']) !!}
-
-            {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <script>
-        var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
-    </script>
+	<div class="container">
+		<div class="row">
+			{!! Breadcrumbs::render('menu.create') !!}
+		</div>
+		<div class="col-lg-12">
+			<h2 class="page-header">Menu Item Aanmaken</h2>
+			<div class="row">
+				@include('flash::message')
+			</div>
+			@include('errors.partials._list')
+			<div class="col-md-4 col-xs-offset-4">
+				{!! Form::model($menuItem, ['id' => 'menuItemForm', 'method' => 'PUT']) !!}
+					@include('menu.partials._createEdit')
+				{!! Form::close() !!}
+			</div>
+		</div>
+	</div>
+	<script>
+		var autocompleteURL = "{!! route('autocomplete.autocomplete') !!}";
+	</script>
 @stop
 
 @section('additional_scripts')
-    {!! HTML::script('custom/js/autocomplete.js') !!}
-@endsection
+	{!! HTML::script('custom/js/autocomplete.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
+@stop

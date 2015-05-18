@@ -67,4 +67,3 @@
         'as' => 'user.show',
         'uses' => 'UserController@show'
     ]);
-
