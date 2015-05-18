@@ -46,7 +46,7 @@
     Route::patch('profiel/wijzig',
     [
         'as' => 'user.updateProfile',
-        'uses' => 'UserController@updateProfile'
+        'uses' => 'UserController@update'
     ]);
     //end user profile routes
 

@@ -97,13 +97,13 @@ class UserController extends Controller
         return view('errors.401');
     }
 
-    public function update($id, UpdateUserRequest $userRequest)
+    public function update(UpdateUserRequest $userRequest, $id = null)
     {
         if (Auth::check())
         {
-            if (Auth::user()->usergroup->name === 'Administrator')
+            if (Auth::user()->usergroup->name === 'Administrator' || $id === null)
             {
-                $user = $this->userRepo->get($id);
+                $user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
                 $data = $userRequest->only
                 (
                     'username',
@@ -137,6 +137,10 @@ class UserController extends Controller
 
                 $this->userRepo->update($user);
 
+                if ($id === null)
+                {
+                    return redirect::route('user.showProfile');
+                }
                 return redirect::route('user.index');
             }
 
@@ -241,47 +245,6 @@ class UserController extends Controller
                 $postal = $this->postalRepo->getById($user->postalId)->code;
             }
             return view('user.editProfile', compact('user', 'postal'));
-        }
-        return view('errors.401');
-    }
-
-    public function updateProfile(UpdateUserRequest $userRequest)
-    {
-        if (Auth::check())
-        {
-            $user = $this->userRepo->get(Auth::user()->userId);
-            $data = $userRequest->only
-            (
-                'firstName',
-                'surname',
-                'email',
-                'postal',
-                'houseNumber'
-            );
-
-            $user->fill($data);
-
-            //only change password when given. If the field is emtpy the password need not be changed.
-            if ($userRequest->get('password') !== '')
-            {
-                $user->password =  Hash::make($userRequest->get('password'));
-            }
-
-            if ($userRequest->get('postal') !== '')
-            {
-                $postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-                $user->districtSectionId = $postal->districtSectionId;
-                $user->postalId = $postal->postalId;
-            }
-            else
-            {
-                $user->districtSectionId = null;
-                $user->postalId = null;
-            }
-
-            $this->userRepo->update($user);
-
-            return redirect::route('user.showProfile');
         }
         return view('errors.401');
     }
