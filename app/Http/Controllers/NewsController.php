@@ -187,11 +187,11 @@
 
 		/**
 		 * Show all news articles including the hidden ones. 
-		 * This is intented for administrators only.
+		 * This is intented for management only.
 		 *
 		 * @return Response
 		 */
-		public function showHidden()
+		public function manage()
 		{
 			if (Auth::check()) 
 			{
@@ -200,7 +200,7 @@
 					$news = $this->newsRepo->getAllHidden();
 					$sidebar = $this->sidebarRepo->getByPage('2');
 
-					return view('news.hidden', compact('news', 'sidebar'));
+					return view('news.manage', compact('news', 'sidebar'));
 				}
 
 				return view('errors.403');

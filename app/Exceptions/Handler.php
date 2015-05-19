@@ -2,7 +2,10 @@
 	namespace App\Exceptions;
 
 	use Exception;
+	use Flash;
 	use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+	use Illuminate\Session\TokenMismatchException;
+	use Redirect;
 
 	class Handler extends ExceptionHandler 
 	{
@@ -39,6 +42,23 @@
 		 */
 		public function render($request, Exception $e)
 		{
+			if (!config('app.debug') && !$this->isHttpException($e)) 
+			{
+				if ($e instanceof \PDOException)
+				{
+					return response()->view('errors.database');
+				}
+
+				return response()->view('errors.500');
+			}
+
+			if ($e instanceof TokenMismatchException)
+			{
+				Flash::error('Wegens beveiligingsredenen is uw formulier verlopen. Probeer het alstublieft opnieuw.')->important();
+
+				return Redirect::back()->withInput();
+			}
+			
 			return parent::render($request, $e);
 		}
 	}

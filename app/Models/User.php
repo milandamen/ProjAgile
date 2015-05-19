@@ -1,4 +1,5 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
 	use Illuminate\Auth\Authenticatable;
 	use Illuminate\Database\Eloquent\Model;
@@ -44,7 +45,7 @@
 			'username',
 			'firstName', 
 			'surname',
-            'password',
+			'password',
 			'houseNumber', 
 			'email', 
 			'active',
@@ -66,11 +67,11 @@
 		 * 
 		 * @var array
 		 */
-	    protected $hidden =
-	    [
-	        'password',
-	        'remember_Token'
-	    ];
+		protected $hidden =
+		[
+			'password',
+			'remember_Token'
+		];
 
 		/**
 		 * Get all Comment models that reference this User model.
@@ -79,7 +80,7 @@
 		 */
 		public function comments()
 		{
-	        return $this->hasMany('App\Models\Comment', 'userId');
+			return $this->hasMany('App\Models\Comment', 'userId');
 		}
 
 		/**
@@ -99,7 +100,7 @@
 		 */
 		public function news()
 		{
-	        return $this->hasMany('App\Models\News', 'userId');
+			return $this->hasMany('App\Models\News', 'userId');
 		}
 
 		/**
@@ -109,7 +110,7 @@
 		 */
 		public function newsComments()
 		{
-	        return $this->hasMany('App\Models\NewsComment', 'userId');
+			return $this->hasMany('App\Models\NewsComment', 'userId');
 		}
 
 		/**
@@ -129,7 +130,7 @@
 		 */
 		public function topics()
 		{
-	        return $this->hasMany('App\Models\Topic', 'userId');
+			return $this->hasMany('App\Models\Topic', 'userId');
 		}
 
 		/**

@@ -1,69 +1,86 @@
-.hiddenInput {
+.hiddenInput 
+{
 	display: none;
 }
 
-.addmargin {
+.addmargin 
+{
 	margin-bottom: 20px;
 }
 
-.addright {
+.addright
+{
 	margin-right: 10px;
 }
 
-.pos-relative {
+.pos-relative 
+{
 	position: relative;
 }
 
-.black {
+.black 
+{
 	color: #000;
 }
 
-.white {
+.white 
+{
 	color: #FFF;
 	float: right;
 }
 
-.table-shade-selected {
+.table-shade-selected 
+{
 	background-color: #EEF;
 }
 
-.showMore {
-    float: right;
-}
-
-.floatLeft {
-	float: left;
-}
-
-.floatRight {
+.showMore 
+{
 	float: right;
 }
 
-.showMore a {
-    text-decoration: none;
-    color: dimgray;
+.floatLeft 
+{
+	float: left;
 }
 
-.fullwidth {
+.floatRight 
+{
+	float: right;
+}
+
+.showMore a 
+{
+	text-decoration: none;
+	color: dimgray;
+}
+
+.fullwidth 
+{
 	width: 100%;
 }
 
-.textBold {
+.textBold 
+{
 	font-weight: bold;
 }
 
-.slightlyRed {
+.slightlyRed 
+{
 	background-color: rgba(200,0,0,0.2);
 }
 
-.redText {
+.redText 
+{
 	color: #D00;
 }
 
-.cursorHand {
+.cursorHand
+{
 	cursor: pointer;
 }
 
-.cursorDefualt {
+.cursorDefualt
+{
 	cursor: default;
 }

@@ -1,8 +1,7 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IPanelRepository extends IBaseRepository
-    {
-    	 public function getBySize($size);
-    	 
-    }	
+	interface IPanelRepository extends IBaseRepository
+	{
+		 public function getBySize($size);
+	}

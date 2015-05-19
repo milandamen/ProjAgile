@@ -36,10 +36,7 @@
 					'Content-Length: '. filesize($file_path)
 				]);
 			}
-			else
-			{
-				// If file does not exist, throw error
-				exit('Bestand niet gevonden');
-			}
+			// If file does not exist, throw error
+			exit('Bestand niet gevonden');
 		}
 	}
