@@ -17,33 +17,33 @@ function validate()
 		document.getElementById("newOnSiteMessage").value = message;
 	}
 
-    return true;
+	return true;
 }
 
 $('input[type=radio][name=newOnSite]').change(function() {
-    if (this.value == 'true') {
-        $('#newOnSiteGroup').append('<div class="row newOnSiteMessage">' +
-        '<div class="form-group col-sm-4">' +
-        '<br/>'+
-        '<label class="control-label col-sm-2">Bericht:</label>'+
-        '<div class="col-sm-10">'+
-        '<input type="text" class="form-control" id="message" name="newOnSiteMessage" maxlength="30">'+
-        '</div>'+
-        '</div>'+
-        '</div>');
-    }
-    else if (this.value == 'false') {
-        $('.newOnSiteMessage').remove();
-    }
+	if (this.value == 'true') {
+		$('#newOnSiteGroup').append('<div class="row newOnSiteMessage">' +
+		'<div class="form-group col-sm-4">' +
+		'<br/>'+
+		'<label class="control-label col-sm-2">Bericht:</label>'+
+		'<div class="col-sm-10">'+
+		'<input type="text" class="form-control" id="message" name="newOnSiteMessage" maxlength="30">'+
+		'</div>'+
+		'</div>'+
+		'</div>');
+	}
+	else if (this.value == 'false') {
+		$('.newOnSiteMessage').remove();
+	}
 });
 
 
 function newOnSiteValidate()
 {
-    if($('#message').val() == ''){
-        alert('Nieuw op de site bericht mag niet leeg gelaten worden!');
-        event.preventDefault();
-        return false;
-    }
+	if($('#message').val() == ''){
+		alert('Nieuw op de site bericht mag niet leeg gelaten worden!');
+		event.preventDefault();
+		return false;
+	}
 }
 
