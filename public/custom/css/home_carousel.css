@@ -76,6 +76,7 @@
 	height: 100%;
 	position: absolute;
 	overflow: auto;
+	padding: 2px;
 }
 
 #mod-carousel-linklist {

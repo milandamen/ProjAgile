@@ -37,7 +37,7 @@ var carousel_linklist = [];
 var carousel_selected_i = 0;
 var carousel_selected_i_old = 0;
 var carousel_selected_img = null;
-var carousel_selected_description = null;
+var carousel_selected_desc = null;
 var carousel_selected_link = null;
 var carousel_special_transition = false;
 var carouselIntervalId = 0;
@@ -49,7 +49,11 @@ execActionOnElementsInArray(carousel_imagelist_div.children, 'a', function (item
 makeImagesInvisible(carousel_imagelist);
 makeH3Invisible(carousel_imagelist);
 
-// TODO FILL carousel_descriptionlist
+execActionOnElementsInArray(carousel_descriptionlist_div.children, 'div', function (item)
+{
+	carousel_descriptionlist.push(item);
+});
+makeDescInvisible(carousel_descriptionlist);
 
 execActionOnElementsInArray(carousel_linklist_div.children, 'div', function (item)
 {
@@ -74,6 +78,7 @@ if (carousel_count !== 0)
 {
 	carousel_selected_i = 0;
 	carousel_selected_img = carousel_imagelist[0];
+	carousel_selected_desc = carousel_descriptionlist[0];
 	carousel_selected_link = carousel_linklist[0];
 	carousel_selected_link.classList.add('table-shade-selected');
 	
@@ -108,8 +113,10 @@ function carouselTransition(new_sel_i)
 		carousel_selected_i = 0;
 	}
 	var carousel_selected_img_old = carousel_selected_img;					// tag a
+	var carousel_selected_desc_old = carousel_selected_desc;				// tag div
 	var carousel_selected_link_old = carousel_selected_link;				// tag div
 	carousel_selected_img = carousel_imagelist[carousel_selected_i];		// tag a
+	carousel_selected_desc = carousel_descriptionlist[carousel_selected_i];	// tag div
 	carousel_selected_link = carousel_linklist[carousel_selected_i];		// tag div
 	
 	var c_sel_img_img = null;												// tag img
@@ -141,7 +148,8 @@ function carouselTransition(new_sel_i)
 	$(c_sel_img_old_text).fadeOut(carousel_transition_duration);
 	
 	// Description side
-	
+	$(carousel_selected_desc_old).delay(carousel_transition_duration/2).hide();
+	$(carousel_selected_desc).delay(carousel_transition_duration/2).show();
 	
 	// Linklist side
 	$(carousel_selected_link_old).delay(carousel_transition_duration/2).removeClass('table-shade-selected');
@@ -190,6 +198,23 @@ function makeH3Invisible(array)
 			{
 				$(item).fadeOut(0);
 			});
+		}
+	});
+}
+
+function makeDescInvisible(array) 
+{
+	var first = true;
+
+	[].forEach.call(array, function(a) 
+	{
+		if (first) 
+		{
+			first = false;
+		} 
+		else 
+		{
+			$(a).hide();
 		}
 	});
 }

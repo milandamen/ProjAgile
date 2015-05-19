@@ -11,7 +11,9 @@
 	<div id="mod-carousel-description">
 		@foreach ($carousel as $item)
 			<div>
-				<span>{{ $item->description }}</span>
+				<a href="{{ route('news.show', $item->news->newsId) }}">
+					<span>{{ $item->description }}</span>
+				</a>
 			</div>
 		@endforeach
 	</div>
