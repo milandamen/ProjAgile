@@ -50,7 +50,7 @@
 
 					<div class="row">
 						<div class="form-group col-md-12" id="newOnSiteGroup">
-							<label>Tonen op nieuw op de site?</label><br/>
+							{!! Form::label('newOnSite', 'Tonen op nieuw op de site?', ['class' => 'label-form']) !!}<br/>
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-default">
 									<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja

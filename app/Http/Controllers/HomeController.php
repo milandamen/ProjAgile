@@ -134,13 +134,12 @@
 
 				$this->introRepo->update($intro);
 
-				$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-				if($newOnSite)
+				if($newOnSite === true)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 					$attributes['created_at'] = new \DateTime('now');
-
 					$this->newOnSiteRepository->create($attributes);
 				}
 
