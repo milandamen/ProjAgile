@@ -40,6 +40,14 @@
 			return Page::create($attributes);
 		}
 
+		public function getAllLikeTerm($term)
+		{
+			return Page::whereHas('introduction', function($q) use ($term)
+			{
+				$q->where('title', 'LIKE' , '%' . $term . '%');
+			})->get();
+		}
+
 		/**
 		 * Updates a Page record in the database depending on 
 		 * the Page model provided.
