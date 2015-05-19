@@ -1,19 +1,19 @@
 <?php
-	Route::get('/',                                         		
+	Route::get('/',
 	[
-		'as' => 'home.index',                        	
+		'as' => 'home.index',
 		'uses' => 'HomeController@index'
 	]);
 
 	Route::get('home/layout/wijzigen',
 	[
-		'as' => 'home.editLayout',                 
+		'as' => 'home.editLayout',
 		'uses' => 'HomeController@editLayout'
 	]);
 
 	Route::post('home/layout/wijzigen',
 	[
-		'as' => 'home.editLayout',                 
+		'as' => 'home.updateLayout',
 		'uses' => 'HomeController@updateLayout'
 	]);
 
@@ -29,9 +29,8 @@
 		'uses' => 'HomeController@updateIntroduction'
 	]);
 	
-	Route::post('home/zoek',
+	Route::post('home/zoeken',
 	[
 		'as' => 'home.search',
 		'uses' => 'HomeController@search'
 	]);
-	

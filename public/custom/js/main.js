@@ -1,4 +1,3 @@
-
 /**
  * Author: Milan Damen (D'Arvit!)
  *
@@ -6,10 +5,17 @@
  * Useful for getting all elements with a certain tag.
  * For example: I want all 'input' elements in a div. (toplevel only)
  */
-function execActionOnElementsInArray(array, tagname, func_action) {
-	[].forEach.call(array, function (item) {										// Get all elements in the array
-		if (item.nodeType == 1) {													// Is element of type html-object/tag
-			if (item.tagName.toLowerCase() === tagname) {							// Is element of tag `tagname` and is hidden
+function execActionOnElementsInArray(array, tagname, func_action) 
+{
+	// Get all elements in the array
+	[].forEach.call(array, function (item) 
+	{			
+		// Is element of type html-object/tag											
+		if (item.nodeType == 1) 
+		{	
+			// Is element of tag `tagname` and is hidden												
+			if (item.tagName.toLowerCase() === tagname) 
+			{							
 				func_action(item);
 			}
 		}
@@ -17,11 +23,12 @@ function execActionOnElementsInArray(array, tagname, func_action) {
 }
 
 
-function confirmDelete(){
-
+function confirmDelete()
+{
 	bool = confirm('Weet u zeker dat u wilt verwijderen?');
 	
-	if(!bool){
+	if(!bool)
+	{
 		event.preventDefault();
 	}	
 

@@ -1,8 +1,8 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface ISidebarRepository extends IBaseRepository
-    {
-        public function getByPage($pageNr);
-        public function deleteAllFromPage($pageNr);
-    }
+	interface ISidebarRepository extends IBaseRepository
+	{
+		public function getByPage($pageNr);
+		public function deleteAllFromPage($pageNr);
+	}

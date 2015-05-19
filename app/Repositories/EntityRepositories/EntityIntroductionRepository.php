@@ -1,75 +1,75 @@
 <?php
-    namespace App\Repositories\EntityRepositories;
+	namespace App\Repositories\EntityRepositories;
 
 	use App\Models\Introduction;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 
 	class EntityIntroductionRepository implements IIntroductionRepository
 	{
-        /**
-         * Returns a Introduction model depending on the id provided.
-         * 
-         * @param  int $id
-         * 
-         * @return Introduction
-         */ 
+		/**
+		 * Returns a Introduction model depending on the id provided.
+		 * 
+		 * @param  int $id
+		 * 
+		 * @return Introduction
+		 */ 
 		public function get($id) 
 		{
 			return Introduction::find($id);
 		}
 
-        /**
-         * Returns all the Introduction models in the database.
-         * 
-         * @return Collection -> Introduction
-         */
-	    public function getAll() 
-	    {
+		/**
+		 * Returns all the Introduction models in the database.
+		 * 
+		 * @return Collection -> Introduction
+		 */
+		public function getAll() 
+		{
 			return Introduction::all();
 		}
 
-        /**
-         * Creates a Introduction record in the database.
-         * 
-         * @param  array() $attributes
-         * 
-         * @return Introduction
-         */
+		/**
+		 * Creates a Introduction record in the database.
+		 * 
+		 * @param  array() $attributes
+		 * 
+		 * @return Introduction
+		 */
 		public function create($attributes) 
 		{
 			return Introduction::create($attributes);
 		}
 
-        /**
-         * Updates a Introduction record in the database depending on 
-         * the Introduction model provided.
-         * 
-         * @param  Introduction $model
-         * 
-         * @return void
-         */
-        public function update($model)
-        {
-            $model->save();
-        }
 
-        /**
-         * Deletes a Introduction record depending on the id provided.
-         * 
-         * @param  int $id
-         * 
-         * @return void
-         */
-        public function destroy($id)
-        {
-            $model = Introduction::findOrFail($id);
-            $model->delete();
-        }
+		/**
+		 * Updates a Introduction record in the database depending on 
+		 * the Introduction model provided.
+		 * 
+		 * @param  Introduction $model
+		 * 
+		 * @return void
+		 */
+		public function update($model)
+		{
+			$model->save();
+		}
 
-         public function getAllToList()
-        {
-            return Introduction::all()->lists('title', 'introductionId');
-        }
+		/**
+		 * Deletes a Introduction record depending on the id provided.
+		 * 
+		 * @param  int $id
+		 * 
+		 * @return void
+		 */
+		public function destroy($id)
+		{
+			$model = Introduction::findOrFail($id);
+			$model->delete();
+		}
+
+		public function getAllToList()
+		{
+			return Introduction::all()->lists('title', 'introductionId');
+		}
 		
-
 	}

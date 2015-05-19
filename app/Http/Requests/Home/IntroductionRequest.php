@@ -33,6 +33,7 @@
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 * Content will not be sanitized due to use of Summernote.
+		 * 
 		 * @return array
 		 */
 		public function sanitize()
@@ -41,9 +42,9 @@
 
 			$input['title'] = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 			$input['subtitle'] = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
-            $input['content'] = htmlspecialchars_decode($_POST['content']);
+			$input['content'] = htmlspecialchars_decode($_POST['content']);
 
-            $this->replace($input);
+			$this->replace($input);
 
 			return $input;
 		}

@@ -26,33 +26,29 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder') 
+				if (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') 
 				{
 					$carousel = $this->carouselRepo->getAll();
 
 					return view('carousel.edit', compact('carousel'));
 				} 
-				else 
-				{
-					return view('errors.403');
-				}
+					
+				return view('errors.403');
 			}
-			else
-			{
-				return view('errors.401');
-			}
+				
+			return view('errors.401');
 		}
 
 		public function update()
 		{
 			if (Auth::check())
 			{
-				if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
+				if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')) 
 				{
 					$oldItems = $this->carouselRepo->getAll();
 					
-					if (isset($_POST['artikel']) && isset($_POST['beschrijving'])) {
-						
+					if (isset($_POST['artikel']) && isset($_POST['beschrijving'])) 
+					{
 						for ($i = 0; $i < count($_POST['artikel']); $i++) 
 						{
 							$newsId = $_POST['artikel'][$i];
@@ -60,15 +56,17 @@
 							$item = $this->carouselRepo->create(compact('newsId', 'description'));
 							
 							$description = $_POST['beschrijving'][$i];
-							if (!isset($description) || empty($description)) {
+
+							if (!isset($description) || empty($description)) 
+							{
 								$description = 'Nog geen beschrijving';
 							}
 							$item->description = $description;
-							
 							$this->carouselRepo->update($item);
-							
 							$oldItem = null;
-							foreach ($oldItems as $oI) {
+
+							foreach ($oldItems as $oI) 
+							{
 								if ($oI->newsId == $newsId) 
 								{
 									$oldItem = $oI;
@@ -76,7 +74,8 @@
 								}
 							}
 							
-							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') {
+							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') 
+							{
 								$item->imagePath = 'blank.jpg';
 								$oldItem->imagePath = 'blank.jpg';
 							}
@@ -92,15 +91,11 @@
 					
 					return Redirect::route('home.index');
 				} 
-				else 
-				{
-					return view('errors.403');
-				}
+
+				return view('errors.403');
 			}
-			else
-			{
-				return view('errors.401');
-			}
+			
+			return view('errors.401');
 		}
 		
 		private function saveImage($item, $count, $oldItem) 

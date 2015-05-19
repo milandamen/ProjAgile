@@ -1,8 +1,8 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IPagePanelRepository extends IBaseRepository
-    {
-    	public function getPagePanels($pageId);
-    	public function deleteAllFromPage($pageId);
-    }
+	interface IPagePanelRepository extends IBaseRepository
+	{
+		public function getPagePanels($pageId);
+		public function deleteAllFromPage($pageId);
+	}

@@ -3,34 +3,34 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Comment extends Model 
+	class TopicComment extends Model 
 	{
 		/**
-	     * Table name.
-	     * 
-	     * @var string
-	     */
-		protected $table = 'topicComment';
+		 * Table name.
+		 * 
+		 * @var string
+		 */
+		protected $table = 'topiccomment';
 
-        /**
-         * PrimaryKey name.
-         * 
-         * @var string
-         */
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
 		protected $primaryKey = 'topicCommentId';
 
-        /**
-         * Laravel's automatic timestamps convention.
-         * 
-         * @var bool
-         */
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var bool
+		 */
 		public $timestamps = false;
 
-        /**
-         * Attributes that can be changed and thus are mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $fillable = 
 		[
 			'topicId', 
@@ -40,11 +40,11 @@
 			'hidden'
 		];
 
-        /**
-         * Attributes that cannot be changed and thus are not mass assingable.
-         * 
-         * @var array
-         */
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array
+		 */
 		protected $guarded = 
 		[
 			'commentId'
