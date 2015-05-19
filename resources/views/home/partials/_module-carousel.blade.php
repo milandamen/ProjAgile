@@ -1,5 +1,6 @@
-<div id="mod-carousel" class="mod-carousel">
-	<div id="mod-carousel-images" class="mod-carousel-images">
+<!-- Header Carousel --> 
+<div id="mod-carousel">
+	<div id="mod-carousel-images">
 		@foreach ($carousel as $item)
 			<a href="{{ route('news.show', $item->news->newsId) }}">
 				<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="De afbeelding kan niet geladen worden.." />
@@ -7,22 +8,19 @@
 			</a>
 		@endforeach
 	</div>
-	<div id="mod-carousel-linklist" class="mod-carousel-linklist">
+	<div id="mod-carousel-description">
 		@foreach ($carousel as $item)
-			<table onclick="goToSlide(this)">
-				<tbody>
-					<tr>
-						<td>
-							<span class="textBold">{{ $item->news->title }}</span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span>{{ $item->description }}</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div>
+				<a href="{{ route('news.show', $item->news->newsId) }}">
+					<span>{{ $item->description }}</span>
+				</a>
+			</div>
+		@endforeach
+	</div>
+	<div id="mod-carousel-linklist">
+		@foreach ($carousel as $item)
+			<div onclick="goToSlide(this)">
+			</div>
 		@endforeach
 	</div>
 </div>
