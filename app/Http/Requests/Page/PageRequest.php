@@ -27,6 +27,9 @@
 				'title' 	=> 'required',
 				'content' 	=> 'required',
 				'sidebar'	=> 'required',
+				'publishStartDate' => 'required|date|before:publishEndDate',
+				'publishEndDate' => 'required|date',
+				'visible'	=> 'required',
 			];
 		}
 
@@ -43,6 +46,10 @@
 			$input['subtitle'] = filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING);
 			$input['content'] = htmlspecialchars_decode($input['content']);
 			$input['sidebar'] = parseCheckboxOrRadioButton($input['sidebar']);
+			$input['visible'] = parseCheckboxOrRadioButton($input['visible']);
+			$input['publishStartDate'] = filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
+			$input['publishEndDate'] = filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
+			
 
 			if(isset($input['panel']))
 			{
@@ -52,6 +59,7 @@
 					$input['panel'][$i]['content'] = filter_var($input['panel'][$i]['content'], FILTER_SANITIZE_STRING);
 				}
 			}
+			
 			$this->replace($input);
 
 			return $input;

@@ -2,6 +2,7 @@
 	namespace App\Models;
 
 	use Illuminate\Database\Eloquent\Model;
+	use Carbon\Carbon;
 
 	class Page extends Model 
 	{
@@ -34,7 +35,11 @@
 		protected $fillable = 
 		[
 			'sidebar',
-			'introduction_introductionId'
+			'introduction_introductionId',
+			'publishDate',
+			'publishEndDate',
+			'visible',
+			'parentId'
 		];
 
 		/**
@@ -46,6 +51,46 @@
 		[
 			'pageId'
 		];
+
+		public function getPublishDateAttribute($value)
+		{
+			if (!isset($value) || empty($value))
+			{
+				$value = Carbon::now('Europe/Amsterdam');
+			}
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
+		}
+
+		public function setPublishDateAttribute($value)
+		{
+			$this->attributes['publishDate'] = Carbon::parse($value)->format('Y-m-d H:i');
+		}
+
+		/**
+		 * Set the date of this news item, in a d-m-Y H:i format.
+		 *
+		 * @return void
+		 */
+		public function getPublishEndDateAttribute($value)
+		{
+			if (!isset($value) || empty($value))
+			{
+				$value = Carbon::now('Europe/Amsterdam');
+			}
+
+			return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i');
+		}
+
+		/**
+		 * Set the date of this news item, in a d-m-Y H:i format.
+		 *
+		 * @return void
+		 */
+		public function setPublishEndDateAttribute($value)
+		{
+			$this->attributes['publishEndDate'] = Carbon::parse($value)->format('Y-m-d H:i');
+		}
 
 		/** 
 		 * Get all PagePanel models that reference this Page model.

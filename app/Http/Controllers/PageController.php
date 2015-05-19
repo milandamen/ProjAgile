@@ -42,6 +42,7 @@
 		public function index()
 		{	
 			$pages = $this->pagerepo->getAll();
+
 			return view('page.index', compact('pages'));
 		}
 
@@ -53,7 +54,7 @@
 		public function create()
 		{
 			$pages = $this->introrepo->getAllToList();
-			return view('page.create', compact('pages'));
+			return view('page.createsub', compact('pages'));
 		}
 
 		/**
@@ -70,11 +71,18 @@
 				]);
 
 			$introId = $introduction->introductionId;
+			$parentId = 1;
 
 			$page = $this->pagerepo->create([
 				'introduction_introductionId' => $introId,
 				'sidebar' => $request->sidebar,
+				'publishDate' => $request->publishStartDate,
+				'publishEndDate' => $request->publishEndDate,
+				'visible' => $request->visible,
+				'parentId' => $parentId,
 				]);
+
+			dd($page);
 
 			if(count($request->panel) > 0){
 			foreach($request->panel as $pagepanel){
@@ -190,6 +198,9 @@
 
 			$page = $this->pagerepo->get($id);	
 			$page->sidebar = $request->sidebar;
+			$page->publishDate = $request->publishStartDate;
+			$page->publishEndDate = $request->publishEndDate;
+			$page->visible = $request->visible;
 			$this->pagerepo->update($page);
 
 			// delete all old panels 
@@ -213,6 +224,7 @@
 			}
 			$pageid = $page->pageId;
 			$title = $request->title;
+
 			$this->updateSidebar($old, $new, $pageid, $title);
 
 			$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
