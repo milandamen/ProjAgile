@@ -1,7 +1,6 @@
-<?php 
+<?php
 	namespace App\Http\Controllers;
 
-	use App\Models\Footer;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	use Illuminate\Support\Facades\Redirect;
@@ -11,6 +10,7 @@
 
 	class FooterController extends Controller
 	{
+		private $colorId = 4;
 
 		public function __construct(IFooterRepository $footerRepository, IMenuRepository $menuRepository, INewOnSiteRepository $newOnSiteRepository)
 		{
@@ -27,13 +27,17 @@
 				{
 					$footer = $this->footerRepository->getAll();
 
-					return view('footer.edit', compact('footer'));
+					return view('footer/edit', array('footer' => $footer));
 				}
-
-				return view('errors.403');
+				else
+				{
+					return view('errors.403');
+				}
 			}
-
-			return view('errors.401');
+			else
+			{
+				return view('errors.401');
+			}
 		}
 
 		public function update()
@@ -42,118 +46,53 @@
 			{
 				if(Auth::user()->usergroup->name === 'Administrator')
 				{
-					$footer = $this->footerRepository->getAll();
-					$maxCols = 3;
-
-					if(isset($_POST['footer']) && count($_POST['footer']) > 0)
+					if(isset($_POST['column']))
 					{
-						//create new footer array from $_POST
-						$newFooter = [];
+						$counter = 1;
 
-						for($colN = 0; $colN < $maxCols; $colN++)
+						foreach($_POST['column'] as $col)
 						{
-							if(isset($_POST['footer'][$colN])) 
-							{
-								$column = $_POST['footer'][$colN];
+							filter_var($col, FILTER_SANITIZE_STRING);
 
-								for ($rowN = 0; $rowN < count($column['text']); $rowN++) 
-								{
-									//check if text has been filled in
-									if ($column['text'][$rowN] != null) 
-									{
-										$newFooterItem = new Footer();
-										$newFooterItem->col = $colN;
-										$newFooterItem->row = $rowN;
-										$newFooterItem->text = filter_var($column['text'][$rowN], FILTER_SANITIZE_STRING);
-										$newFooterItem->link = filter_var($column['link'][$rowN], FILTER_SANITIZE_STRING);
-										$newFooter[] = $newFooterItem;
-									} 
-									else 
-									{
-										echo "Vul a.u.b. alle verplichte velden in";
+							$footerCol = $this->footerRepository->get($counter);
 
-										return;
-									}
-								}
-							}
+							$footerCol->text = $col;
+
+							$this->footerRepository->update($footerCol);
+
+							$counter++;
 						}
 
-						//loop through new entries, adding or updating them
-						foreach($newFooter as $entry)
+						if(isset($_POST['footerColor']) && $_POST['footerColor'] != null)
 						{
-							//loop through old footer
-							$isNew = 1;
+							$footerColor = $this->footerRepository->get($this->colorId);
 
-							foreach($footer as $item)
-							{
-								if($item->col == $entry->col && $item->row == $entry->row)
-								{
-									//check if text or link have changed, if not do nothing, else update item
-									if($item->text != $entry->text || $item->link != $entry->link)
-									{
-										$item->text = $entry->text;
-										$item->link = $entry->link;
-										$this->footerRepository->update($item);
-									}
-									$isNew = 0;
+							$footerColor->text = filter_var($_POST['footerColor'], FILTER_SANITIZE_STRING);
 
-									break;
-								}
-							}
-
-							if($isNew == 1)
-							{
-								//create
-								$this->footerRepository->update($entry);
-							}
-
-						}
-
-						//delete removed items
-						foreach($footer as $item)
-						{
-							$canDelete = 1;
-							foreach($newFooter as $entry)
-							{
-								//if the item from the db matches the item in new footer do not delete it
-								if($item->col == $entry->col && $item->row == $entry->row)
-								{
-									$canDelete = 0;
-
-									break;
-								}
-							}
-
-							if($canDelete == 1)
-							{
-								$this->footerRepository->destroy($item->footerId);
-							}
+							$this->footerRepository->update($footerColor);
 						}
 					}
-					else
-					{
-						//if footer is not set (everything is removed) delete all items
-						foreach($footer as $item)
-						{
-							$this->footerRepository->destroy($item->footerId);
-						}
-					}
-					$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+					$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
 					if($newOnSite === true)
 					{
 						$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 						$attributes['created_at'] = new \DateTime('now');
-
 						$this->newOnSiteRepository->create($attributes);
 					}
 
-					return Redirect::route('footer.edit');
+					return Redirect::action('FooterController@edit');
 				}
-
-				return view('errors.403');
+				else
+				{
+					return view('errors.403');
+				}
 			}
-
-			return view('errors.401');
+			else
+			{
+				return view('errors.401');
+			}
 		}
 	}
+
