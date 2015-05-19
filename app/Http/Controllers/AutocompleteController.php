@@ -2,12 +2,20 @@
 	namespace App\Http\Controllers;
 
 	use App\Models\Menu;
+	use App\Models\Page;
 	use App\Models\User;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use Illuminate\Routing\Controller;
 	use Input;
 
 	class AutocompleteController extends Controller
 	{
+
+		public function __construct(IPageRepository $pageRepository)
+		{
+			$this->pageRepository = $pageRepository;
+		}
+
 		public function autocomplete()
 		{
 			//prevent direct access (check if ajax request)
@@ -27,12 +35,12 @@
 			// replace multiple spaces with one
 			$term = preg_replace('/\s+/', ' ', $term);
 
-			$items = Menu::where('name', 'LIKE', '%' . $term . '%')->get();
+			$items = $this->pageRepository->getAllLikeTerm($term);
 
 			foreach($items as $item)
 			{
-				$a_json_row["label"] = $item->name;
-				$a_json_row["value"] = $item->link;
+				$a_json_row["label"] = $item->introduction->title;
+				$a_json_row["value"] = '/pagina/' . $item->pageId;
 				array_push($a_json, $a_json_row);
 			}
 

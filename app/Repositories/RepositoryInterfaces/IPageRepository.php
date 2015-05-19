@@ -3,5 +3,5 @@
 
 	interface IPageRepository extends IBaseRepository
 	{
-
+		public function getAllLikeTerm($term);
 	}

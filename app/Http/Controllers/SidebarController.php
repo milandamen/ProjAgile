@@ -105,13 +105,13 @@
 						}
 					}             
 				}
-				$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-				if($newOnSite)
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if($newOnSite === true)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 					$attributes['created_at'] = new \DateTime('now');
-
 					$this->newOnSiteRepository->create($attributes);
 				}
 
