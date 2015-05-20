@@ -82,7 +82,7 @@
 		 */
 		public function getAllToList()
 		{
-			return Page::all()->lists('introduction_introductionId', 'pageId');
+			return Page::join('introduction', 'introduction.introductionId', '=' ,'page.introduction_introductionId')->where('page.parentId', '=', '0')->lists('title', 'pageId');
 		}
 
 		

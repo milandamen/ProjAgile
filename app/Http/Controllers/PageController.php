@@ -53,8 +53,8 @@
 		 */
 		public function create()
 		{
-			$pages = $this->introrepo->getAllToList();
-			return view('page.createsub', compact('pages'));
+			$pages = $this->pagerepo->getAllToList();
+			return view('page.create', compact('pages'));
 		}
 
 		/**
@@ -71,7 +71,6 @@
 				]);
 
 			$introId = $introduction->introductionId;
-			$parentId = 1;
 
 			$page = $this->pagerepo->create([
 				'introduction_introductionId' => $introId,
@@ -79,10 +78,8 @@
 				'publishDate' => $request->publishStartDate,
 				'publishEndDate' => $request->publishEndDate,
 				'visible' => $request->visible,
-				'parentId' => $parentId,
+				'parentId' => $request->parent,
 				]);
-
-			dd($page);
 
 			if(count($request->panel) > 0){
 			foreach($request->panel as $pagepanel){
@@ -163,8 +160,9 @@
 			}
 
 			$page = $this->pagerepo->get($id);
+			$pages = $this->pagerepo->getAllToList();
 			if(isset($page)){
-				return View('page.edit', compact('page'));
+				return View('page.edit', compact('page', 'pages'));
 			} else {
 				return view('errors.404');
 			}
@@ -201,6 +199,7 @@
 			$page->publishDate = $request->publishStartDate;
 			$page->publishEndDate = $request->publishEndDate;
 			$page->visible = $request->visible;
+			$page->parentId = $request->parent;
 			$this->pagerepo->update($page);
 
 			// delete all old panels 
