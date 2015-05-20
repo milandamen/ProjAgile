@@ -1,3 +1,4 @@
+//nog in gebruik in andere onderdelen (o.a. sidebar en intro)
 function validate()
 {
 	var message = prompt('Wilt u de wijzigingen ook tonen in "Nieuw op de site" ? (max. 30 karakters)');
@@ -18,3 +19,31 @@ function validate()
 
 	return true;
 }
+
+$('input[type=radio][name=newOnSite]').change(function() {
+	if (this.value == 'true') {
+		$('#newOnSiteGroup').append('<div class="row newOnSiteMessage">' +
+		'<div class="form-group col-sm-4">' +
+		'<br/>'+
+		'<label class="control-label col-sm-2">Bericht:</label>'+
+		'<div class="col-sm-10">'+
+		'<input type="text" class="form-control" id="message" name="newOnSiteMessage" maxlength="30">'+
+		'</div>'+
+		'</div>'+
+		'</div>');
+	}
+	else if (this.value == 'false') {
+		$('.newOnSiteMessage').remove();
+	}
+});
+
+
+function newOnSiteValidate()
+{
+	if($('#message').val() == ''){
+		alert('Nieuw op de site bericht mag niet leeg gelaten worden!');
+		event.preventDefault();
+		return false;
+	}
+}
+

@@ -26,37 +26,48 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				{!! Form::open() !!}
-					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
-					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
-					<input type="hidden" name="pageId" value="1">
-					@include('errors.partials._list')
-					{!! Form::model($introduction, ['method' => 'POST'])!!}
-						{!! Form::hidden('pageId', 1) !!}
-						<div class="row col-md-8">
-							<div class="form-group">
-							{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
-							{!! Form::text('title', $introduction->title, ['class' => 'form-control', 'placeholder' => 'titel']) !!}
+				<input type="hidden" name="pageId" value="1">
+				@include('errors.partials._list')
+				{!! Form::model($introduction, ['method' => 'POST', 'onsubmit' => 'newOnSiteValidate();'])!!}
+					{!! Form::hidden('pageId', 1) !!}
+					<div class="row col-md-8">
+						<div class="form-group">
+						{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
+						{!! Form::text('title', $introduction->title, ['class' => 'form-control', 'placeholder' => 'titel']) !!}
+						</div>
+					</div>
+					<div class="row col-md-8">
+						<div class="form-group">
+							{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+							{!! Form::text('subtitle', $introduction->subtitle, ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+						</div>
+					</div>
+					<div class="row col-md-8">
+						<div class="form-group">
+							{!! Form::label('content', 'Content', ['class' => 'label-form']) !!}
+							{!! Form::textarea('content', $introduction->text, ['placeholder' => 'Introductie tekst', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}
+						</div>
+					</div>
+					<!--new on site-->
+					<div class="row">
+						<div class="form-group col-md-12" id="newOnSiteGroup">
+							{!! Form::label('newOnSite', 'Tonen op nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default">
+									<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+								</label>
+								<label class="btn btn-default active">
+									<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+								</label>
 							</div>
 						</div>
-						<div class="row col-md-8">
-							<div class="form-group">
-								{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-								{!! Form::text('subtitle', $introduction->subtitle, ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
-							</div>
+					</div>
+					<div class="row col-md-8">
+						<div class="form-group">
+							{!! HTML::linkRoute('management.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+							{!! Form::submit('Opslaan', ['class' => 'btn btn-success'])!!}
 						</div>
-						<div class="row col-md-8">
-							<div class="form-group">
-								{!! Form::label('content', 'Content', ['class' => 'label-form']) !!}
-								{!! Form::textarea('content', $introduction->text, ['placeholder' => 'Introductie tekst', 'class' => 'form-control', 'id' => 'summernote', 'rows' => '6']) !!}
-							</div>
-						</div>
-						<div class="row col-md-8">
-							<div class="form-group">
-								{!! HTML::linkRoute('management.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-								{!! Form::submit('Opslaan', ['class' => 'btn btn-success'])!!}
-							</div>
-						</div>
+					</div>
 				{!! Form::close() !!}
 			</div>
 		</div>
