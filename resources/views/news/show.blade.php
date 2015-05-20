@@ -76,6 +76,7 @@
 					@if(Auth::check())
 						@if($news->commentable || (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
 							@if(isset($news->districtSection))
+								@if(isset(Auth::user()->districtSection))
 								@if(Auth::user()->districtSection->name === $news->districtSection->name || 
 									(Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
 									{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
@@ -86,6 +87,7 @@
 										</div>
 										<button type="submit" class="btn btn-success" style="float: right;">Plaats reactie</button>
 									{!! Form::close() !!}
+								@endif
 								@endif
 							@else
 								{!! Form::open(['route' => 'news.postComment', 'method' => 'POST']) !!}
