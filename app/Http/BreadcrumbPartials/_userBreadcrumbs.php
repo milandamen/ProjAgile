@@ -41,16 +41,16 @@
 		$breadcrumbs->push($user->username, route('user.edit', [$user->id]));
 	});
 
-    // Home > Profiel
-    Breadcrumbs::register('user.showProfile', function($breadcrumbs)
-    {
-        $breadcrumbs->parent('home.index');
-        $breadcrumbs->push('Profiel', route('user.showProfile'));
-    });
+	// Home > Profiel
+	Breadcrumbs::register('user.showProfile', function($breadcrumbs)
+	{
+		$breadcrumbs->parent('home.index');
+		$breadcrumbs->push('Profiel', route('user.showProfile'));
+	});
 
-    // Home > Profiel > Wijzig
-    Breadcrumbs::register('user.editProfile', function($breadcrumbs)
-    {
-        $breadcrumbs->parent('user.showProfile');
-        $breadcrumbs->push('Wijzig', route('user.editProfile'));
-    });
+	// Home > Profiel > Wijzig
+	Breadcrumbs::register('user.editProfile', function($breadcrumbs)
+	{
+		$breadcrumbs->parent('user.showProfile');
+		$breadcrumbs->push('Wijzig', route('user.editProfile'));
+	});
