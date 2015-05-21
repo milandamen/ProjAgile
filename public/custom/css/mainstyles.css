@@ -13,6 +13,8 @@
 	margin-right: 10px;
 }
 
+
+
 .pos-relative 
 {
 	position: relative;
@@ -73,4 +75,14 @@
 .redText 
 {
 	color: #D00;
+}
+
+.cursorHand
+{
+	cursor: pointer;
+}
+
+.cursorDefualt
+{
+	cursor: default;
 }

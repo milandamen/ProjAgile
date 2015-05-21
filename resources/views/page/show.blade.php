@@ -25,6 +25,18 @@
 				</h2>
 			</div>
 		</div>
+		<div class="row col-md-12">
+			@if(count($children))
+				@foreach($children as $child)
+				<div class="subpage">
+					<a href="{{ route('page.show', [$child->pageId])}}" class="right">
+						{!! $child->introduction->title !!}  
+						</a>
+					</div>
+				@endforeach
+			@endif
+
+		</div>
 		<div class="row">
 			<div class="col-md-8">
 				<h4>	

@@ -25,16 +25,20 @@
 			<div class="col-md-12">
 				@include('errors.partials._list')
 				{!! Form::model($page, ['method' => 'POST']) !!}
-					<div class="row col-md-5">
+					
 						<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput"/>
 						<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
 						<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
 						<input type="text" name="intro_id" id="intro_id" value="{!! $page->introduction->introductionId !!}" class="hiddenInput"/>
-						<div class="form-group col-md-8">
-							{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
-							{!! Form::text('title', $page->introduction->title , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
+					
+					<div class="row col-md-5">
+						<div class="form-group col-md-12">
+						{!! Form::label('parent', 'Selecteer bovenliggende pagina', ['class' => 'label-form']) !!}
+						{!! Form::select('parent', ['Geen']+ $pages, $page->parentId, ['id' => 'parentname', 'class' => 'form-control']) !!}
 						</div>
 					</div>
+
+						
 					<div class="row col-md-7">
 						<div class="col-md-8 form-group">
 							{!! Form::label('extra', 'Extra opties', ['class' => 'label-form'])!!} 
@@ -58,12 +62,67 @@
 							</div>
 						</div>
 					</div>
-					<div class="row col-md-5">
+
+
+						<div class="row col-md-5">
+					<div class="form-group col-md-12">
+					{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
+					<div class="input-group date">
+						{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
+							. '<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>' 
+						!!}
+					</div>
+				</div>
+				</div>
+				
+				<div class="row col-md-7 no-padding">
+					<div class="col-md-8">
+						<div class="form-group col-md-11">
+					{!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
+					<div class="input-group date">
+						{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
+							. '<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>' 
+						!!}
+					</div>
+
+				</div>
+				</div>
+			
+					<div class=" col-md-4 form-group">
 						<div class="form-group col-md-12">
-							{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-							{!! Form::text('subtitle', $page->introduction->subtitle , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+						{!! Form::label('visible', 'Verborgen Pagina') !!}<br/>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default {{ !$page->visible ? 'active' : '' }}">
+								<input type="radio" name="visible" value="true" {{ !$page->visible ? 'checked="true"' : '' }}>Ja
+							</label>
+							<label class="btn btn-default {{ $page->visible ? 'active' : '' }}">
+								<input type="radio" name="visible" value="false" {{ $page->visible ? 'checked="true"' : '' }}>Nee
+							</label>
 						</div>
 					</div>
+				</div>
+			</div>
+
+
+			 <div class="row col-md-5">
+				<div class="form-group col-md-12">
+					{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
+					{!! Form::text('title', $page->introduction->title , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
+				</div>
+			</div>
+
+			 <div class="row col-md-7 no-padding">
+				<div class="col-md-8">
+					<div class="form-group col-md-11">
+					{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
+					{!! Form::text('subtitle', $page->introduction->title , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+					</div>
+				</div>
+			</div>
 					<div class="row col-md-12">
 						<div class="form-group col-md-12">
 							{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
@@ -113,4 +172,9 @@
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/page.js') !!}
   	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+  	    {!! HTML::script('moment/moment.js') !!}
+	{!! HTML::script('moment/locale/nl.js') !!}
+	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
+	{!! HTML::script('custom/js/datepicker.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

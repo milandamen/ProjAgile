@@ -27,8 +27,6 @@
 				<form name="sidebar" id="updateSidebar" method="post" enctype="multipart/form-data" action="{!! route('sidebar.update', [$sidebarList[0]->page_pageId]) !!}">
 					<input type="hidden" name="_token" value="{!! csrf_token() !!}">
 					<input type="text" name="maxRowIndex" id="maxRowIndex" class="hiddenInput"/>
-					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="false">
-					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage">
 					<hr>
 					Koptekst:
 					<input type="text" name="title" id="sidebarTitle" value="{!! $sidebarList[0]->title!!} " required> 
@@ -83,9 +81,25 @@
 							{{--*/ $i++; /*--}}
 						@endforeach
 					</table>
+
+					<!--new on site-->
+					<div class="row">
+						<div class="form-group col-md-12" id="newOnSiteGroup">
+							{!! Form::label('newOnSite', 'Tonen op nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default">
+									<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+								</label>
+								<label class="btn btn-default active">
+									<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+								</label>
+							</div>
+						</div>
+					</div>
+
 					<div id="success">
 						<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
-						<button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
+						<button type="submit" class="btn btn-success" onclick="newOnSiteValidate()">Opslaan</button>
 					</div>
 				</form>
 			</div>

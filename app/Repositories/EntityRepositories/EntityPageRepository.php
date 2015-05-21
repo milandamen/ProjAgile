@@ -40,6 +40,14 @@
 			return Page::create($attributes);
 		}
 
+		public function getAllLikeTerm($term)
+		{
+			return Page::whereHas('introduction', function($q) use ($term)
+			{
+				$q->where('title', 'LIKE' , '%' . $term . '%');
+			})->get();
+		}
+
 		/**
 		 * Updates a Page record in the database depending on 
 		 * the Page model provided.
@@ -65,4 +73,22 @@
 			$model = Page::findOrFail($id);
 			$model->delete();
 		}
+
+		/**
+		 * Returns all the Page models from the database and 
+		 * converts it to a list. This is for select box use only.
+		 * 
+		 * @return List -> Page
+		 */
+		public function getAllToList()
+		{
+			return Page::join('introduction', 'introduction.introductionId', '=' ,'page.introduction_introductionId')->where('page.parentId', '=', '0')->lists('title', 'pageId');
+		}
+
+		public function getAllChildren($id){
+			return Page::where('parentId', '=', $id)->get();
+		}
+
+		
+
 	}

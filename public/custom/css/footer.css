@@ -1,16 +1,14 @@
-.footerlist-container ul
-{
-	list-style: none;
-}
-
-.footer 
+.footer
 {
 	display: block;
 	width: 100%;
-	background-color: #1C1C1C;
 	color: black;
 	padding: 10px 20px 20px 150px;
 	border-radius: 20px;
+}
+
+.footer-edit-link{
+    float: right;
 }
 
 .footer a 
@@ -18,7 +16,3 @@
 	color: #F2F2F2;
 }
 
-.footer-edit-link
-{
-	float: right;
-}

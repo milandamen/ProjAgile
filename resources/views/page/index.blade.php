@@ -26,48 +26,95 @@
 					Deze pagina is enkel zichtbaar voor de administrator en toont 
 					alle pagina's. 
 				</p>
-				{!! link_to_route('page.create', 'Nieuwe Pagina', [], ['class' => 'btn btn-success white']) !!}
-				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white']) !!}
+				{!! link_to_route('page.create', 'Nieuwe Pagina', [], ['class' => 'btn btn-success white ']) !!}
+				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white addright addmargin']) !!}
 			</div>
 			<div class="col-md-10 addmargin">
 				<table class="table borderless">
 					<thead> 
 						<tr>
-							<th>Titel</th>
+							<th colspan="2">Titel</th>
 							<th class="col-md-7">Subtitel</th>
 							<th></th>
 							<th colspan="3" class="col-md-1">Acties</th>
 						</tr>
 					</thead>
 					<tbody>
+						
 						@foreach($pages as $page)
-							<tr>
-								<td>{!! $page->introduction->title !!}</td>
-								<td>{!! $page->introduction->subtitle !!} </td>
-								@if($page->sidebar)
+						{{--*/ $hasChildren = false; 
+							$parentItem = false; /*--}}
+							@if($page->parentId == 0)
+
+								<tr>
+										
+									<td colspan="2">{!!  $page->introduction->title !!}</td>
+									<td>{!! $page->introduction->subtitle !!} </td>
+									@if($page->sidebar)
+										<td>
+											<a href="{{ route('sidebar.edit', [$page->pageId]) }}">Wijzig Sidebar</a>
+										</td>
+									@else 
+										<td></td>
+									@endif
 									<td>
-										<a href="{{ route('sidebar.edit', [$page->pageId]) }}">Wijzig Sidebar</a>
+										<a href="{{ route('page.show', [$page->pageId]) }}">
+											<i class="fa fa-external-link fa-lg"></i>
+										</a>
 									</td>
-								@else 
 									<td>
+										<a href="{{ route('page.edit', [$page->pageId]) }}">
+											<i class="fa fa-pencil-square-o fa-lg"></i>
+										</a>
 									</td>
-								@endif
-								<td>
-									<a href="{{ route('page.show', [$page->pageId]) }}">
-										<i class="fa fa-external-link fa-lg"></i>
-									</a>
-								</td>
-								<td>
-									<a href="{{ route('page.edit', [$page->pageId]) }}">
-										<i class="fa fa-pencil-square-o fa-lg"></i>
-									</a>
-								</td>
-								<td>
-									<a href="{{ route('page.destroy', [$page->pageId]) }}" onclick="confirmDelete()">
-										<i class="fa fa-times fa-lg text-danger"></i>
-									</a>
-								</td>
-							</tr>
+									<td>
+										<!-- Check if page has childs or not. If page has childs delete button will not be shown  -->
+										@foreach($pages as $subpage)
+											@if($subpage->parentId == $page->pageId)
+												{{--*/ $hasChildren = true; /*--}}
+											@endif
+										@endforeach
+										@if(!$hasChildren)
+										<a href="{{ route('page.destroy', [$page->pageId]) }}" onclick="confirmDelete()">
+											<i class="fa fa-times fa-lg text-danger"></i>
+										</a>
+										@endif
+									</td>
+								</tr>
+
+								<!--  When parent is shown, check for subpages again but this time also show them -->
+								@foreach($pages as $subpage)
+									@if($subpage->parentId == $page->pageId)
+										<tr>
+											<td></td>	
+											<td>{!! $subpage->introduction->title !!}</td>
+											<td>{!! $subpage->introduction->subtitle !!} </td>
+											@if($subpage->sidebar)
+												<td>
+													<a href="{{ route('sidebar.edit', [$subpage->pageId]) }}">Wijzig Sidebar</a>
+												</td>
+											@else 
+												<td></td>
+											@endif
+											<td>
+												<a href="{{ route('page.show', [$subpage->pageId]) }}">
+													<i class="fa fa-external-link fa-lg"></i>
+												</a>
+											</td>
+											<td>
+												<a href="{{ route('page.edit', [$subpage->pageId]) }}">
+													<i class="fa fa-pencil-square-o fa-lg"></i>
+												</a>
+											</td>
+											<td>
+												<a href="{{ route('page.destroy', [$subpage->pageId]) }}" onclick="confirmDelete()">
+													<i class="fa fa-times fa-lg text-danger"></i>
+												</a>
+											</td>
+										</tr>
+									@endif
+								@endforeach
+							@endif
 						@endforeach
 					</tbody>
 				</table>
