@@ -5,7 +5,8 @@
 	use App\Http\Requests\Request;
 	use Auth;
 
-	class UpdateUserRequest extends Request {
+	class UpdateUserRequest extends Request
+	{
 
 		/**
 		 * Determine if the user is authorized to make this request.

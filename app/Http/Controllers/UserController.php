@@ -186,7 +186,8 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator') {
+				if (Auth::user()->usergroup->name === 'Administrator')
+				{
 					$user = $this->userRepo->get($id);
 					$user->active = false;
 					$this->userRepo->update($user);
@@ -204,7 +205,8 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator') {
+				if (Auth::user()->usergroup->name === 'Administrator')
+				{
 					$user = $this->userRepo->get($id);
 					$user->active = true;
 					$this->userRepo->update($user);
