@@ -36,13 +36,16 @@ class CreateUserRequest extends Request
 
 		//return rules based on userGroup.
 		//postal and houseNumber attributes are required only for residents.
-		if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID) {
+		if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
+		{
 			$rules +=
 				[
 					'houseNumber' => 'required|integer|digits_between:1,8',
 					'postal' => 'required|min:6|max:7|exists:postal,code',
 				];
-		} else {
+		}
+		else
+		{
 			$rules +=
 				[
 					'houseNumber' => 'integer|digits_between:1,8',
@@ -85,11 +88,13 @@ class CreateUserRequest extends Request
 	 */
 	private function fixPostal($postal)
 	{
-		if (strlen($postal) > 7) {
+		if (strlen($postal) > 7)
+		{
 			$postal = preg_replace('/\s+/', '', $postal);
 		}
 
-		if (strlen($postal) == 6) {
+		if (strlen($postal) == 6)
+		{
 			$postal = substr_replace($postal, ' ', 4, 0);
 		}
 		return $postal;
