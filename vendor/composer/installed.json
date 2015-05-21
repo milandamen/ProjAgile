@@ -3055,38 +3055,57 @@
         ]
     },
     {
-        "name": "summernote/summernote",
-        "version": "v0.6.1",
-        "version_normalized": "0.6.1.0",
+        "name": "greggilbert/recaptcha",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/prochor666/summernote.git",
-            "reference": "ab6772d07073683b2c463ff765085e5d0ad575a0"
+            "url": "https://github.com/greggilbert/recaptcha.git",
+            "reference": "cf51501c36bc66a5832346f732a126f125899217"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/prochor666/summernote/zipball/ab6772d07073683b2c463ff765085e5d0ad575a0",
-            "reference": "ab6772d07073683b2c463ff765085e5d0ad575a0",
+            "url": "https://api.github.com/repos/greggilbert/recaptcha/zipball/cf51501c36bc66a5832346f732a126f125899217",
+            "reference": "cf51501c36bc66a5832346f732a126f125899217",
             "shasum": ""
         },
-        "time": "2015-02-08 10:04:34",
+        "require": {
+            "illuminate/support": "5.0.*",
+            "php": ">=5.3.0"
+        },
+        "time": "2015-02-11 22:31:48",
         "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
         "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/migrations"
+            ],
+            "psr-4": {
+                "Greggilbert\\Recaptcha\\": "src/"
+            }
+        },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
         "authors": [
             {
-                "name": "Alan",
-                "email": "susukang98@gmail.com",
-                "role": "lead"
+                "name": "Greg Gilbert",
+                "email": "greg@greg-gilbert.com"
             }
         ],
-        "description": "Super Simple WYSIWYG Editor on Bootstrap(3.0 and 2.x).",
-        "homepage": "http://summernote.org/",
+        "description": "reCAPTCHA Validator for Laravel 5",
+        "homepage": "http://github.com/greggilbert/recaptcha",
         "keywords": [
-            "wysiwyg"
+            "captcha",
+            "laravel",
+            "laravel5",
+            "recaptcha"
         ]
     }
 ]

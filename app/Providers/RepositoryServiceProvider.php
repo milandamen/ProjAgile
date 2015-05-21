@@ -18,7 +18,7 @@
 
 		/**
 		 * Binds all the Entity repositories to their respective interfaces
-		 * This will allow us to inject interfaces instantiations in the controllers
+		 * This will allow us to inject interfaces instantiations
 		 * which will allow better testing capabilities.
 		 * 
 		 * @return void

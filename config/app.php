@@ -108,7 +108,7 @@
 		*/
 
 		'providers' =>
-	    [
+		[
 			/*
 			 * Laravel Framework Service Providers...
 			 */
@@ -145,17 +145,18 @@
 			'App\Providers\RouteServiceProvider',
 
 			/*
-	         * Custom Service Providers...
-	         */ 
+			 * Custom Service Providers...
+			 */ 
 			'App\Providers\ViewComposerServiceProvider',
 			'App\Providers\RepositoryServiceProvider',
 
-	        /*
-	         * External Service Providers...
-	         */
-	        'Illuminate\Html\HtmlServiceProvider',
-	        'Laracasts\Flash\FlashServiceProvider',
-	        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+			/*
+			 * External Service Providers...
+			 */
+			'Illuminate\Html\HtmlServiceProvider',
+			'Laracasts\Flash\FlashServiceProvider',
+			'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+			'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 		],
 
 		/*
@@ -170,10 +171,10 @@
 		*/
 
 		'aliases' =>
-	    [
-	        /*
-	         * Laravel Framework aliases...
-	         */
+		[
+			/*
+			 * Laravel Framework aliases...
+			 */
 			'App'       	=> 'Illuminate\Support\Facades\App',
 			'Artisan'   	=> 'Illuminate\Support\Facades\Artisan',
 			'Auth'      	=> 'Illuminate\Support\Facades\Auth',
@@ -207,12 +208,13 @@
 			'Validator' 	=> 'Illuminate\Support\Facades\Validator',
 			'View'      	=> 'Illuminate\Support\Facades\View',
 
-	        /*
-	         * External aliases...
-	         */
-	        'HTML'      	=> 'Illuminate\Html\HtmlFacade',
-	        'Form'      	=> 'Illuminate\Html\FormFacade',
-	        'Flash'       	=> 'Laracasts\Flash\Flash',
-	        'Breadcrumbs' 	=> 'DaveJamesMiller\Breadcrumbs\Facade',
+			/*
+			 * External aliases...
+			 */
+			'HTML'      	=> 'Illuminate\Html\HtmlFacade',
+			'Form'      	=> 'Illuminate\Html\FormFacade',
+			'Flash'       	=> 'Laracasts\Flash\Flash',
+			'Breadcrumbs' 	=> 'DaveJamesMiller\Breadcrumbs\Facade',
+			'Recaptcha'		=> 'Greggilbert\Recaptcha\Facades\Recaptcha',
 		],
 	];
