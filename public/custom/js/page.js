@@ -74,9 +74,6 @@ function validatePage()
 		event.preventDefault();
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
 
-		console.log(publishStartDate);
-		console.log(publishEndDate);
-
 		return false;
 	}
 

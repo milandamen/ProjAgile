@@ -29,7 +29,7 @@
 			@if(count($children))
 				@foreach($children as $child)
 				<div class="subpage">
-					<a href="{{ route('page.show', [$page->pageId])}}" class="right">
+					<a href="{{ route('page.show', [$child->pageId])}}" class="right">
 						{!! $child->introduction->title !!}  
 						</a>
 					</div>
