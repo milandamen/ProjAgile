@@ -20,19 +20,31 @@
 		 *
 		 * @return array
 		 */
-		public function rules()
+		public function rules(IPostalRepository $postalRepo, IUserRepository $userRepo)
 		{
-			return 
+			$rules = 
 			[
-				'username' => 'required|max:30|unique:User,username',
+				'username' => 'required|max:30|unique:user,username',
 				'password' => 'required|confirmed|min:8',
 				'password_confirmation' => 'required',
 				'firstName' => 'required|max:50',
 				'surname' => 'required|max:80',
 				'houseNumber' => 'required|integer|digits_between:1,8',
-				'postal' => 'required|min:6|max:7|exists:Postal,code',
-				'email' => 'required|max:60|email|unique:User,email',
+				'email' => 'required|max:60|email|unique:user,email',
 			];
+			$validator = Validation::make($this->all(), $rules);
+
+			$validator->required('postal', 'required|min:6|max:7|exists:postal,code', function($input)
+			{	
+				$postal = $postalRepo->getByCode($input['postal']);
+
+				if ($userRepo->getByPostal($postal->postalId) === null)
+				{
+					return false;
+				}
+			});
+
+			return $rules;
 		}
 
 		/**

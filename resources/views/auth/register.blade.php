@@ -45,6 +45,12 @@
 								</div>
 							</div>
 							<div class="form-group">
+								{!! Form::label('insertion', 'Tussenvoegsel:', ['class' => 'col-md-4 control-label']) !!}
+								<div class="col-md-6">
+									{!! Form::text('insertion', old('insertion'), ['class' => 'form-control']) !!}
+								</div>
+							</div>
+							<div class="form-group">
 								{!! Form::label('surname', 'Achternaam:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6">
 									{!! Form::text('surname', old('surname'), ['class' => 'form-control']) !!}
@@ -57,6 +63,12 @@
 								</div>
 							</div>
 							<div class="form-group">
+								{!! Form::label('suffix', 'Toevoeging', ['class' => 'col-md-4 control-label']) !!}
+								<div class="col-md-6">
+									{!! Form::text('suffix', old('suffix'), ['class' => 'form-control']) !!}
+								</div>
+							</div>
+							<div class="form-group">
 								{!! Form::label('postal', 'Postcode:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6">
 									{!! Form::text('postal', old('postal'), ['class' => 'form-control']) !!}
@@ -66,6 +78,12 @@
 								{!! Form::label('email', 'E-mailadres:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6">
 									{!! Form::text('email', old('email'), ['class' => 'form-control']) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								{!! Form::label('email_confirmation', 'Herhaal E-mailadres:', ['class' => 'col-md-4 control-label']) !!}
+								<div class="col-md-6">
+									{!! Form::text('email_confirmation', old('email_confirmation'), ['class' => 'form-control']) !!}
 								</div>
 							</div>
 							<div class="form-group">

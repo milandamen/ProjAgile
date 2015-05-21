@@ -176,4 +176,9 @@
 			
 			return false;
 		}
+
+		public function getByPostal($postalId)
+		{
+			return User::where('postalId', $postalId)->get();
+		}
 	}
