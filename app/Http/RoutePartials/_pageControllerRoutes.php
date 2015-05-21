@@ -26,6 +26,7 @@
 		'uses' => 'PageController@show',
 	]);
 
+
 	Route::get('pagina/{id}/wijzigen',
 	[
 		'as' => 'page.edit',

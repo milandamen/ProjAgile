@@ -50,6 +50,35 @@ function validatePage()
 		}
 	}
 
+	if (!moment([document.querySelector('#publishStartDate').value, 'nl', true]).isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+
+		return false;
+	}
+	var publishStartDate = moment([document.querySelector('#publishStartDate').value]);
+
+	if (!moment([document.querySelector('#publishEndDate').value, 'nl', true]).isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+	var publishEndDate = moment([document.querySelector('#publishEndDate').value]);
+
+	if (publishStartDate.isAfter(publishEndDate) || 
+		publishStartDate.isSame(publishEndDate))
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+	
+
 	if(!validateSummer())
 	{
 		success = false;

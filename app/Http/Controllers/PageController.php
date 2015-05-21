@@ -38,11 +38,12 @@
 		 * @return Response
 		 */
 
+
 		public function index()
 		{	
-		   $pages = $this->pagerepo->getAll();
+			$pages = $this->pagerepo->getAll();
 
-		   return view('page.index', compact('pages'));
+			return view('page.index', compact('pages'));
 		}
 
 		/**
@@ -52,7 +53,8 @@
 		 */
 		public function create()
 		{
-			return view('page.create');
+			$pages = $this->pagerepo->getAllToList();
+			return view('page.create', compact('pages'));
 		}
 
 		/**
@@ -62,89 +64,88 @@
 		 */
 		public function store(PageRequest $request)
 		{
-			$introduction = $this->introrepo->create(
-			[
+			$introduction = $this->introrepo->create([
 				'title' => $request->title, 
 				'subtitle' => $request->subtitle,
 				'text' => $request->content,
-			]);
+				]);
+
 			$introId = $introduction->introductionId;
-			$page = $this->pagerepo->create(
-			[
+
+			$page = $this->pagerepo->create([
 				'introduction_introductionId' => $introId,
 				'sidebar' => $request->sidebar,
-			]);
+				'publishDate' => $request->publishStartDate,
+				'publishEndDate' => $request->publishEndDate,
+				'visible' => $request->visible,
+				'parentId' => $request->parent,
+				]);
 
-			if(count($request->panel) > 0)
-			{
-				foreach($request->panel as $pagepanel)
-				{
-					$panel = $this->panelrepo->getBySize($pagepanel['size']);
+			if(count($request->panel) > 0){
+			foreach($request->panel as $pagepanel){
+				$panel = $this->panelrepo->getBySize($pagepanel['size']);
 
-					$this->pagepanelrepo->create(
-					[
-						'page_id' => $page->pageId,
-						'title' => $pagepanel['title'],
-						'text' => $pagepanel['content'],
-						'panel_id' => $panel->panelId
-					]);
-				}
-			}
-			$pageid = $page->pageId;
-
-			if($request->sidebar)
-			{
-				$sidebar = $this->sidebarrepo->create(
-				[
-					'page_pageId' => $pageid,
-					'rowNr' => 0,
-					'title' => $request->title,
-					'text' => 'Home',
-					'extern' => 'false',
-					'link' => '/'
+				$this->pagepanelrepo->create([
+					'page_id' => $page->pageId,
+					'title' => $pagepanel['title'],
+					'text' => $pagepanel['content'],
+					'panel_id' =>$panel->panelId
 				]);
 			}
+		}
+
+		    $pageid = $page->pageId;
+
+		    if($request->sidebar){
+		    	$sidebar = $this->sidebarrepo->create([
+		    		'page_pageId' => $pageid,
+		    		'rowNr' => 0,
+		    		'title' => $request->title,
+		    		'text' => 'Home',
+		    		'extern' => 'false',
+		    		'link' => '/'
+		    		]);
+		    }
+
+
 			$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-			if($newOnSite)
+			if($newOnSite === true)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 				$attributes['created_at'] = new \DateTime('now');
-
 				$this->newOnSiteRepository->create($attributes);
 			}
 
-		   return Redirect::route('page.show', [$page->pageId]);
+			return Redirect::route('page.show', [$page->pageId]);
 		}
 
 		/**
 		 * Display the specified resource.
 		 *
 		 * @param  int  $id
-		 * 
 		 * @return Response
 		 */
 		public function show($id)
 		{
-			if($this->redirectHome($id))
-			{
+		    
+			if($this->redirectHome($id)){
 				return Redirect::route('home.index');
 			} 
+
 			$page = $this->pagerepo->get($id);
+			$children = $this->pagerepo->getAllChildren($id);
 
-			if(isset($page))
-			{
-				if($page->sidebar)
-				{
+			if(isset($page)){
+				if($page->sidebar){
 					$sidebar = $this->sidebarrepo->getByPage($page->pageId);
-
-					return View('page.show', compact('page', 'sidebar'));
-				} 
-			 
-				return View('page.show', compact('page'));
-			}
-
-			return view('errors.404');
+					return View('page.show', compact('page', 'sidebar', 'children'));
+				} else {
+					return View('page.show', compact('page', 'children'));
+				}
+			} else {
+				return view('errors.404');
+			} 
 		}
 
 		/**
@@ -155,20 +156,19 @@
 		 */
 		public function edit($id)
 		{
-			if($this->redirectHome($id))
-			{
+			if($this->redirectHome($id)){
 				Flash::error('U kunt de homepage niet op deze manier wijzigen.');
-
 				return Redirect::route('home.index');
 			}
 
 			$page = $this->pagerepo->get($id);
-			if(isset($page))
-			{
-				return View('page.edit', compact('page'));
-			} 
-			
-			return view('errors.404');
+			$pages = $this->pagerepo->getAllToList();
+			if(isset($page)){
+				return View('page.edit', compact('page', 'pages'));
+			} else {
+				return view('errors.404');
+			}
+
 		}
 
 		/**
@@ -179,10 +179,10 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if($this->redirectHome($id))
-			{
-			   return Redirect::route('home.index');
+			if($this->redirectHome($id)){
+				return Redirect::route('home.index');
 			}
+
 			$old = $this->pagerepo->get($id)->sidebar;
 			$new = $request->sidebar;
 
@@ -195,8 +195,13 @@
 			$this->introrepo->update($introduction);
 
 			// update page
+
 			$page = $this->pagerepo->get($id);	
 			$page->sidebar = $request->sidebar;
+			$page->publishDate = $request->publishStartDate;
+			$page->publishEndDate = $request->publishEndDate;
+			$page->visible = $request->visible;
+			$page->parentId = $request->parent;
 			$this->pagerepo->update($page);
 
 			// delete all old panels 
@@ -220,6 +225,7 @@
 			}
 			$pageid = $page->pageId;
 			$title = $request->title;
+
 			$this->updateSidebar($old, $new, $pageid, $title);
 
 			$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
