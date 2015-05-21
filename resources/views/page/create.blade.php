@@ -1,5 +1,17 @@
 @extends('app')
 
+
+@section('title')
+	De Bunders - Pagina Aanmaken
+@stop
+
+@section('description')
+	Dit is de beveiligde pagina aanmaak pagina van De Bunders.
+@stop
+
+
+
+
 @section('content')
     <div class="container">
     	<div class="row">
@@ -147,8 +159,8 @@
     {!! HTML::script('summernote/js/summernote.js') !!}
     {!! HTML::script('custom/js/summernoteFunctions.js') !!}
     {!! HTML::script('custom/js/page.js') !!}
-      {!! HTML::script('custom/js/validateNewOnSite.js') !!}
-      	{!! HTML::script('moment/moment.js') !!}
+    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
+    {!! HTML::script('moment/moment.js') !!}
 	{!! HTML::script('moment/locale/nl.js') !!}
 	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
 	{!! HTML::script('custom/js/datepicker.js') !!}

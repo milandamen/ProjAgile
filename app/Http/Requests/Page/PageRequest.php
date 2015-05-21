@@ -50,6 +50,9 @@
 			$input['publishStartDate'] = filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
 			$input['publishEndDate'] = filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
 			
+			if($input->parent == 0){
+				$input->parent = null;
+			}
 
 			if(isset($input['panel']))
 			{

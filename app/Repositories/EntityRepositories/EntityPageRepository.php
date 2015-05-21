@@ -85,6 +85,10 @@
 			return Page::join('introduction', 'introduction.introductionId', '=' ,'page.introduction_introductionId')->where('page.parentId', '=', '0')->lists('title', 'pageId');
 		}
 
+		public function getAllChildren($id){
+			return Page::where('parentId', '=', $id)->get();
+		}
+
 		
 
 	}

@@ -134,12 +134,14 @@
 			} 
 
 			$page = $this->pagerepo->get($id);
+			$children = $this->pagerepo->getAllChildren($id);
+
 			if(isset($page)){
 				if($page->sidebar){
 					$sidebar = $this->sidebarrepo->getByPage($page->pageId);
-					return View('page.show', compact('page', 'sidebar'));
+					return View('page.show', compact('page', 'sidebar', 'children'));
 				} else {
-					return View('page.show', compact('page'));
+					return View('page.show', compact('page', 'children'));
 				}
 			} else {
 				return view('errors.404');
