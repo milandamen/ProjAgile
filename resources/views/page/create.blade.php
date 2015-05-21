@@ -11,8 +11,8 @@
 
 
 @section('content')
-    <div class="container">
-    	<div class="row">
+	<div class="container">
+		<div class="row">
 			{!! Breadcrumbs::render('page.create') !!}
 		</div>
 		<div class="row">
