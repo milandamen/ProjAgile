@@ -25,8 +25,8 @@
 			@include('flash::message')
 		</div>
 		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group navbar-right">
+			<div class="col-md-3 col-md-offset-9">
+				<div class="form-group">
 					{!! Form::text('search', old('search'), ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'filter', 'autocomplete' => 'off']) !!}
 				</div>
 			</div>
