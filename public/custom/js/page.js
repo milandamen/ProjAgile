@@ -68,16 +68,16 @@ function validatePage()
 	}
 	var publishEndDate = moment([document.querySelector('#publishEndDate').value]);
 
-	if (publishStartDate.isAfter(publishEndDate) || 
-		publishStartDate.isSame(publishEndDate))
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+	// Deze vergelijking werkt niet!!!
+	// if (publishStartDate.isAfter(publishEndDate) || 
+	// 	publishStartDate.isSame(publishEndDate))
+	// {
+	// 	event.preventDefault();
+	// 	alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
 
-		return false;
-	}
+	// 	return false;
+	// }
 
-	
 
 	if(!validateSummer())
 	{

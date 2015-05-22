@@ -52,6 +52,10 @@
 			'pageId'
 		];
 
+		public function now(){
+			return Carbon::now()->format('d-m-Y H:i');
+		}
+
 		public function getPublishDateAttribute($value)
 		{
 			if (!isset($value) || empty($value))
