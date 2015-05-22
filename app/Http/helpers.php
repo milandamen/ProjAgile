@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	 * This trunc function will word limit a provided phrase 
 	 * depending on the max word count.
@@ -15,7 +14,7 @@
 
 	   if(count($phrase_array) > $max_words && $max_words > 0)
 	   {
-	      $phrase = implode(' ', array_slice($phrase_array, 0, $max_words)) . '...';
+		  $phrase = implode(' ', array_slice($phrase_array, 0, $max_words)) . '...';
 	   }
 
 	   return $phrase;
@@ -29,15 +28,15 @@
 	 * 
 	 * @return 	bool
 	 */
-    function parseCheckboxOrRadioButton($value)
-    {
-        if($value === "on" || $value === "true")
-        {
-            return true;
-        }
+	function parseCheckboxOrRadioButton($value)
+	{
+		if($value === "on" || $value === "true")
+		{
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
 	/**
 	 * This parsers helps translating the html select (dropdown) box.
@@ -47,32 +46,32 @@
 	 * 
 	 * @return 	mixed
 	 */
-    function parseSelectorField($value)
-    {
-        if (empty($value))
-        {
-            return null;
-        }
-        
-        return $value;
-    }
+	function parseSelectorField($value)
+	{
+		if (empty($value))
+		{
+			return null;
+		}
+		
+		return $value;
+	}
 
-    /**
-     * Returns the name of the Administrator role as described in the database.
-     *
-     * @return 	String
-     */
-    function getAdministratorName()
-    {
-        return "Administrator";
-    }
+	/**
+	 * Returns the name of the Administrator role as described in the database.
+	 *
+	 * @return 	String
+	 */
+	function getAdministratorName()
+	{
+		return "Administrator";
+	}
 
-    /**
-     * Returns the name of the Content Manager role as described in the database.
-     *
-     * @return 	String
-     */
-    function getContentManagerName()
-    {
-        return "Content Beheerder";
-    }
+	/**
+	 * Returns the name of the Content Manager role as described in the database.
+	 *
+	 * @return 	String
+	 */
+	function getContentManagerName()
+	{
+		return "Content Beheerder";
+	}

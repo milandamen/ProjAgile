@@ -1,0 +1,10 @@
+.subpage {
+	position: relative;
+	float: right;
+	margin-left: 20px;
+
+}
+
+.subpage a{
+	text-decoration: underline;
+}

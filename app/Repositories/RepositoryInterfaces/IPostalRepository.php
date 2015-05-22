@@ -1,8 +1,8 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IPostalRepository extends IBaseRepository
-    {
-    	public function getByCode($code);
-        public function getById($postalId);
-    }
+	interface IPostalRepository extends IBaseRepository
+	{
+		public function getByCode($code);
+		public function getById($postalId);
+	}

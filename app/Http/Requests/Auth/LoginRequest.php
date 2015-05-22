@@ -24,8 +24,8 @@
 		{	
 			return 
 			[
-                'username' => 'required',
-                'password' => 'required',
+				'username' => 'required',
+				'password' => 'required',
 			];
 		}
 

@@ -1,9 +1,9 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IUserGroupRepository extends IBaseRepository
-    {
-    	public function getAdministratorUserGroup();
-    	public function getContentAdministratorUserGroup();
-    	public function getInhabitantUserGroup();
-    }
+	interface IUserGroupRepository extends IBaseRepository
+	{
+		public function getAdministratorUserGroup();
+		public function getContentAdministratorUserGroup();
+		public function getInhabitantUserGroup();
+	}

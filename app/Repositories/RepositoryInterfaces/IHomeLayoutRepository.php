@@ -1,7 +1,7 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IHomeLayoutRepository extends IBaseRepository
-    {
+	interface IHomeLayoutRepository extends IBaseRepository
+	{
 
-    }
+	}
