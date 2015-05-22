@@ -51,7 +51,7 @@ function addFile()
 {
 	var files = document.querySelectorAll('#file');
 	var adjacentElement = files[files.length - 1];
-	var deleteButton = document.querySelector('button[name="deleteFile"]');
+	var deleteButton = document.querySelector('a[name="deleteFile"]');
 
 	var fileElement = adjacentElement.cloneNode(false);
 	fileElement.setAttribute('name', 'file[' + files.length + ']');

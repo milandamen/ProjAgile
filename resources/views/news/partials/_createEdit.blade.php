@@ -73,36 +73,36 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding addmargin">
 		<div class="col-md-9 no-padding">
-			{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
-			<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
-				<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-			</button>
 			<table name="fileUpload" class="table col-md-12">
-				@if(isset($files))
-					@for ($i = 0; $i < count($files); $i++)
-						<tr>
-							<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
-							<td> </td>
-						</tr>
-					@endfor
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
+				<thead>
+					<tr>
+						<th>Bestanden Toevoegen</th>
+						<th>
+							<a id="newFile" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if(isset($files))
+						@for ($i = 0; $i < count($files); $i++)
+							<tr>
+								<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
+								<td></td>
+							</tr>
+						@endfor
+					@endif
+					
+					<tr>
+						<td>{!! Form::file('file[0]', ['id' => 'file']) !!}</td>
 						<td>
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
+							<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
 								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
+							</a>
 						</td>
 					</tr>
-				@else
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td style="width: 22px">
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</td>
-					</tr>
-				@endif
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -145,6 +145,6 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding">
 		{!! link_to_route('news.manage', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-		{!! Form::submit('Opslaan', ['class' => 'btn btn-default']) !!}
+		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
 	</div>
 </div>
