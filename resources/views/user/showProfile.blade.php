@@ -1,21 +1,23 @@
 @extends('app')
 
-@section('title')
-	De Bunders - {{ $user->username }}
-@stop
-
-@section('description')
-	Dit is de {{ $user->username }} overzicht pagina van De Bunders.
-@stop
-
 @section('content')
 	<div class="container">
 		<div class="row">
-			{!! Breadcrumbs::render('user.show', $user) !!}
+			{!! Breadcrumbs::render('user.showProfile') !!}
 		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="page-header">
+					<a href="{{ route('user.editProfile') }}"><i class="fa fa-pencil-square-o"></i></a>
+					Mijn profiel
+				</h2>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="col-lg-1 addmargin">
-				<h1>{{$user->username}}</h1>
+				<h2>{{$user->username}}</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -48,28 +50,17 @@
 					<tr>
 						<td class="table-left">Deelwijk:</td>
 						<td>
-						@if (isset($user->districtSectionId))
-							{{$user->districtsection->name}}
-						@endif
+							@if (isset($user->districtSectionId))
+								{{$user->districtsection->name}}
+							@endif
 						</td>
 					</tr>
 					<tr>
 						<td class="table-left">Gebruikersgroep:</td>
 						<td>{{$user->usergroup->name}}</td>
 					</tr>
-					<tr>
-						<td class="table-left">Actief:</td>
-						<td>
-							@if($user->active === 0)
-								Nee
-							@else
-								Ja
-							@endif
-						</td>
-					</tr>
 				</table>
 			</div>
 		</div>
-		{!! link_to_route('user.index', 'Terug naar Gebruiker Beheer', [], ['class' => 'btn btn-danger']) !!}
 	</div>
-@stop
+@endsection
