@@ -43,7 +43,11 @@
 							<br/>
 							<label class="control-label col-sm-2">Kleur:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="footerColor" placeholder="#FFF">
+								<input type="text" class="form-control" name="footerColor" placeholder="#FFF"
+										@if($footer[3] != null)
+											value="{{$footer[3]->text}}"
+										@endif
+								>
 							</div>
 						</div>
 					</div>
