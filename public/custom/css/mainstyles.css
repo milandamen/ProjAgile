@@ -13,7 +13,10 @@
 	margin-right: 10px;
 }
 
-
+.clear
+{
+    clear: both;
+}
 
 .pos-relative 
 {
