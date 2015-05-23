@@ -87,6 +87,9 @@
 								</div>
 							</div>
 							<div class="form-group">
+								{!! Recaptcha::render() !!}
+							</div>
+							<div class="form-group">
 								<div class="col-md-6 col-md-offset-4">
 									{!! Form::submit('Registreren', ['class' => 'btn btn-primary']) !!}
 								</div>

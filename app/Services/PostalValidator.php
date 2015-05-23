@@ -52,7 +52,7 @@
 		 * 
 		 * @return boolean
 		 */
-		protected function validatePostal($attribute, $value, IPostalRepository $postalRepo, IUserRepository $userRepo)
+		protected function isPostalInUse($attribute, $value, IPostalRepository $postalRepo, IUserRepository $userRepo)
 		{
 			$postal = $postalRepo->getByCode($value);
 			$user = $userRepo->getByPostal($postal->postalId);

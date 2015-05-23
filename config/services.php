@@ -1,7 +1,6 @@
 <?php
-	return 
+	return
 	[
-
 		/*
 		|--------------------------------------------------------------------------
 		| Third Party Services
@@ -13,7 +12,6 @@
 		| to have a conventional place to find your various credentials.
 		|
 		*/
-
 		'mailgun' => 
 		[
 			'domain' => '',

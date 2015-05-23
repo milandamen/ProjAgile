@@ -18,7 +18,7 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules(IPostalRepository $postalRepo, IUserRepository $userRepo)
 		{
@@ -28,21 +28,14 @@
 				'password' => 'required|confirmed|min:8',
 				'password_confirmation' => 'required',
 				'firstName' => 'required|max:50',
+				'insertion' => 'max:30',
 				'surname' => 'required|max:80',
 				'houseNumber' => 'required|integer|digits_between:1,8',
+				'suffix' => 'max:1',
+				'postal' => 'required|min:6|max:7|exists:postal,code|isPostalInUse',
 				'email' => 'required|max:60|email|unique:user,email',
+				'g-recaptcha-response' => 'required|recaptcha',
 			];
-			$validator = Validation::make($this->all(), $rules);
-
-			$validator->required('postal', 'required|min:6|max:7|exists:postal,code', function($input)
-			{	
-				$postal = $postalRepo->getByCode($input['postal']);
-
-				if ($userRepo->getByPostal($postal->postalId) === null)
-				{
-					return false;
-				}
-			});
 
 			return $rules;
 		}
@@ -50,7 +43,7 @@
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function sanitize()
 		{
