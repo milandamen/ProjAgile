@@ -31,7 +31,7 @@
 					<div class="row col-md-5">
 						<div class="form-group col-md-12">
 						{!! Form::label('parent', 'Selecteer bovenliggende pagina', ['class' => 'label-form']) !!}
-						{!! Form::select('parent', ['Geen']+ $pages, 0, ['id' => 'parentname', 'class' => 'form-control']) !!}
+						{!! Form::select('parent', [0 => 'Geen']+ $pages, 0, ['id' => 'parentname', 'class' => 'form-control']) !!}
 						</div>
 					</div>
 
@@ -63,7 +63,7 @@
 						<div class="form-group col-md-12">
 							{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 							<div class="input-group date">
-								{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
+								{!! Form::text('publishStartDate', old('publishDate'), ['class' => 'form-control']) 
 									. '<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>' 
@@ -91,10 +91,10 @@
 								{!! Form::label('visible', 'Verborgen Pagina') !!}<br/>
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-default">
-										<input type="radio" name="visible" value="true">Ja
+										<input type="radio" name="visible" value="false">Ja
 									</label>
 									<label class="btn btn-default active">
-										<input type="radio" name="visible" value="false" checked="true">Nee
+										<input type="radio" name="visible" value="true" checked="true">Nee
 									</label>
 								</div>
 							</div>

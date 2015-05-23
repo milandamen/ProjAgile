@@ -33,21 +33,32 @@
 				<table class="table borderless">
 					<thead> 
 						<tr>
+							<th></th>
 							<th colspan="2">Titel</th>
-							<th class="col-md-7">Subtitel</th>
+							<th>Subtitel</th>
 							<th></th>
 							<th colspan="3" class="col-md-1">Acties</th>
 						</tr>
 					</thead>
 					<tbody>
-						
+						{{--*/ $date = date('d-m-Y H:i',time()-(7*86400)); // 7 days ago
+								$curDate = date('d-m-Y H:i', time()); /*--}}
 						@foreach($pages as $page)
 						{{--*/ $hasChildren = false; 
 							$parentItem = false; /*--}}
 							@if($page->parentId == 0)
 
 								<tr>
-										
+									<td>
+										@if($page->publishEndDate < $date)
+											<i class="fa fa-archive fa-lg"></i>
+										@elseif($page->publishEndDate < $curDate) 
+											<i class="fa fa-ban fa-lg" alt=""></i>
+										@elseif($page->publishDate > $curDate)
+											<i class="fa fa-clock-o fa-lg" alt="scheduled" title="scheduled"></i>
+										@endif
+									</td>	
+									
 									<td colspan="2">{!!  $page->introduction->title !!}</td>
 									<td>{!! $page->introduction->subtitle !!} </td>
 									@if($page->sidebar)
@@ -68,6 +79,13 @@
 										</a>
 									</td>
 									<td>
+										@if($page->visible)
+											<i class="fa fa-eye fa-lg"></i>
+										@else
+											<i class="fa fa-eye-slash fa-lg"></i>
+										@endif
+									</td>
+									<td>
 										<!-- Check if page has childs or not. If page has childs delete button will not be shown  -->
 										@foreach($pages as $subpage)
 											@if($subpage->parentId == $page->pageId)
@@ -86,6 +104,15 @@
 								@foreach($pages as $subpage)
 									@if($subpage->parentId == $page->pageId)
 										<tr>
+											<td>
+												@if($subpage->publishEndDate < $date)
+													<i class="fa fa-archive fa-lg"></i>
+												@elseif($subpage->publishEndDate < $curDate) 
+													<i class="fa fa-ban fa-lg"></i>
+												@elseif($subpage->publishDate > $curDate)
+													<i class="fa fa-clock-o fa-lg"></i>
+												@endif
+											</td>
 											<td></td>	
 											<td>{!! $subpage->introduction->title !!}</td>
 											<td>{!! $subpage->introduction->subtitle !!} </td>
@@ -105,6 +132,13 @@
 												<a href="{{ route('page.edit', [$subpage->pageId]) }}">
 													<i class="fa fa-pencil-square-o fa-lg"></i>
 												</a>
+											</td>
+											<td>
+												@if($subpage->visible)
+													<i class="fa fa-eye fa-lg"></i>
+												@else
+													<i class="fa fa-eye-slash fa-lg"></i>
+												@endif
 											</td>
 											<td>
 												<a href="{{ route('page.destroy', [$subpage->pageId]) }}" onclick="confirmDelete()">
