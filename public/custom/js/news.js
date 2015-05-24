@@ -21,30 +21,45 @@ $(function()
 	});
 });
 
+
+$('#newDistrictSection').click(function()
+{
+	//$('#districts').append('<div class="col-md-3 no-padding"></div>');
+
+	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
+
+	//$('#districts').append('<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">'+
+	//'<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>'+
+    //'</a>');
+
+
+});
+
+
 function addDistrictSection()
 {
-	var districtSections = document.querySelectorAll('#districtSection');
-	var adjacentElement = districtSections[districtSections.length - 1];
-	var deleteButton = document.querySelector('button[name="deleteDistrictSection"]');
-
-	if (districtSections.length < adjacentElement.length)
-	{
-		var dropdownElement = adjacentElement.cloneNode(true);
-		dropdownElement.setAttribute('name', 'districtSection[' + districtSections.length + ']');
-
-		var newDeleteButton = deleteButton.cloneNode(true);
-
-		var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
-		var tdDistrictSection = adjacentElement.parentNode.cloneNode(false);
-		var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
-
-		tr.appendChild(tdDistrictSection);
-		tr.appendChild(tdDeleteButton);
-		tdDistrictSection.appendChild(dropdownElement);
-		tdDeleteButton.appendChild(newDeleteButton);
-
-		adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
-	}
+	//var districtSections = document.querySelectorAll('#districtSection');
+	//var adjacentElement = districtSections[districtSections.length - 1];
+	//var deleteButton = document.querySelector('button[name="deleteDistrictSection"]');
+	//
+	//if (districtSections.length < adjacentElement.length)
+	//{
+	//	var dropdownElement = adjacentElement.cloneNode(true);
+	//	dropdownElement.setAttribute('name', 'districtSection[' + districtSections.length + ']');
+	//
+	//	var newDeleteButton = deleteButton.cloneNode(true);
+	//
+	//	var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
+	//	var tdDistrictSection = adjacentElement.parentNode.cloneNode(false);
+	//	var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
+	//
+	//	tr.appendChild(tdDistrictSection);
+	//	tr.appendChild(tdDeleteButton);
+	//	tdDistrictSection.appendChild(dropdownElement);
+	//	tdDeleteButton.appendChild(newDeleteButton);
+	//
+	//	adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
+	//}
 }
 
 function addFile()
