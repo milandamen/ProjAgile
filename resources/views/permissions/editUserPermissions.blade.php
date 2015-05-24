@@ -25,7 +25,7 @@
 		{!! Form::open(['url' => route('permissions.update', $user->userId), 'method' => 'POST']) !!}
 
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
-		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSelection']) !!}
+		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
 		{!! Form::hidden('otherSelection', null, ['id' => 'otherSelection']) !!}
 
 		<div class="row">
@@ -51,7 +51,7 @@
 				<div class="well" style="max-height: 300px;overflow: auto;">
 					<ul id="check-list-box-page" class="list-group checked-list-box">
 						@foreach($pages as $page)
-							<li class="list-group-item"> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
 						@endforeach
 					</ul>
 					<br />
@@ -65,7 +65,7 @@
 				<div class="well" style="max-height: 300px;overflow: auto;">
 					<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 						@foreach($districtSections as $districtSection)
-							<li class="list-group-item"> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+							<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 						@endforeach
 					</ul>
 					<br />

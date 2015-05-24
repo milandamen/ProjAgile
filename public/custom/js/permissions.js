@@ -81,13 +81,13 @@ $(function () {
 
 		var checkedPageItems = {}, counter = 0;
 		$("#check-list-box-page li.active").each(function(idx, li) {
-			checkedPageItems[counter] = $(li).text();
+			checkedPageItems[counter] = $(li).attr('id');
 			counter++;
 		});
 
 		var checkedDistrictSectionItems = {}, counter = 0;
 		$("#check-list-box-districtSection li.active").each(function(idx, li) {
-			checkedDistrictSectionItems[counter] = $(li).text();
+			checkedDistrictSectionItems[counter] = $(li).attr('id');
 			counter++;
 		});
 

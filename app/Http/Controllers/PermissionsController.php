@@ -44,17 +44,35 @@
 		public function updateUserPermissions($userId, Request $request)
 		{
 			$pageSelectionString = $request->get('pageSelection');
-			$pageSelectionArray = json_decode($pageSelectionString);
+			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
 
 			$districtSectionSelectionString = $request->get('districtSectionSelection');
-			$districtSectionSelectionArray = json_decode($districtSectionSelectionString);
+			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
 
 			$otherSelectionString = $request->get('otherSelection');
-			$otherSelectionArray = json_decode($otherSelectionString);
+			$otherSelectionArray = json_decode($otherSelectionString, true);
 
-			return $pageSelectionString;
-			return 'update user permissions '.$userId.'';
+			var_dump($pageSelectionArray);
+			var_dump($districtSectionSelectionArray);
+			var_dump($otherSelectionArray);
+
+			return 'updated user permissions';
 		}
 
+		/**
+		 * Convert array of string to array of ints
+		 *
+		 * @param $stringArray
+		 * @return array
+		 */
+		private function stringToIntArray($stringArray)
+		{
+			$intArray = [];
+			foreach($stringArray as $string)
+			{
+				$intArray[] = (int)$string;
+			}
+			return $intArray;
+		}
 
 	}
