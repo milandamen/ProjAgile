@@ -30,9 +30,9 @@
 		{
 			$user = $this->userRepo->get($userId);
 			$pages = $this->pageRepo->getAll();
-			$pageSelection = 'hello world';
+			$districtSections = $this->districtSectionRepo->getAll();
 
-			return view('permissions.editUserPermissions', compact('user', 'pages', 'pageSelection'));
+			return view('permissions.editUserPermissions', compact('user', 'pages', 'districtSections'));
 		}
 
 		/**
@@ -45,9 +45,14 @@
 		{
 			$pageSelectionString = $request->get('pageSelection');
 			$pageSelectionArray = json_decode($pageSelectionString);
-			$arr = ['hello', 'world'];
 
-			dd($arr);
+			$districtSectionSelectionString = $request->get('districtSectionSelection');
+			$districtSectionSelectionArray = json_decode($districtSectionSelectionString);
+
+			$otherSelectionString = $request->get('otherSelection');
+			$otherSelectionArray = json_decode($otherSelectionString);
+
+			return $pageSelectionString;
 			return 'update user permissions '.$userId.'';
 		}
 

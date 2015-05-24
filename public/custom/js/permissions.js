@@ -76,19 +76,40 @@ $(function () {
 		init();
 	});
 
-	$('#get-checked-data').on('click', function(event) {
+	$('#get-checked-data-page').on('click', function(event) {
 		event.preventDefault();
-		var checkedItems = {}, counter = 0;
-		$("#check-list-box li.active").each(function(idx, li) {
-			checkedItems[counter] = $(li).text();
+
+		var checkedPageItems = {}, counter = 0;
+		$("#check-list-box-page li.active").each(function(idx, li) {
+			checkedPageItems[counter] = $(li).text();
 			counter++;
 		});
 
-		var pageSelectionString = JSON.stringify(checkedItems, null, '\t');
-		$('#display-json').html(pageSelectionString);
-		//$.post("actions.php",{'action':action,'editor':editor});
+		var checkedDistrictSectionItems = {}, counter = 0;
+		$("#check-list-box-districtSection li.active").each(function(idx, li) {
+			checkedDistrictSectionItems[counter] = $(li).text();
+			counter++;
+		});
+
+		var checkedOtherItems = {}, counter = 0;
+		$("#check-list-box-other li.active").each(function(idx, li) {
+			checkedOtherItems[counter] = $(li).text();
+			counter++;
+		});
+
+		var pageSelectionString = JSON.stringify(checkedPageItems, null, '\t');
+		$('#display-json-page').html(pageSelectionString);
 		$('#pageSelection').val(pageSelectionString);
 
-		sessionStorage.setItem('stored_data', JSON.stringify(checkedItems, null, '\t'));
+		var districtSectionSelectionString = JSON.stringify(checkedDistrictSectionItems, null, '\t');
+		$('#display-json-districtSection').html(districtSectionSelectionString);
+		$('#districtSectionSelection').val(districtSectionSelectionString);
+
+		var otherSelectionString = JSON.stringify(checkedOtherItems, null, '\t');
+		$('#display-json-other').html(otherSelectionString);
+		$('#otherSelection').val(otherSelectionString);
+
+
+		//sessionStorage.setItem('stored_data', JSON.stringify(checkedItems, null, '\t'));
 	});
 });
