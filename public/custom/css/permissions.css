@@ -5,3 +5,16 @@
 	color: rgb(255, 255, 255);
 	background-color: rgb(66, 139, 202);
 }
+
+/* overwrite bootstrap css */
+
+/*
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+	z-index: 2;
+	color: #fff;
+	background-color: #E8F0F8;
+	border-color: #E8F0F8;
+}
+*/
