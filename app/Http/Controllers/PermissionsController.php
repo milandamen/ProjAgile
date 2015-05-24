@@ -30,8 +30,9 @@
 		{
 			$user = $this->userRepo->get($userId);
 			$pages = $this->pageRepo->getAll();
+			$pageSelection = 'hello world';
 
-			return view('permissions.editUserPermissions', compact('user', 'pages'));
+			return view('permissions.editUserPermissions', compact('user', 'pages', 'pageSelection'));
 		}
 
 		/**
@@ -40,9 +41,14 @@
 		 * @param  int  $id
 		 * @return Response
 		 */
-		public function updateUserPermissions($userId)
+		public function updateUserPermissions($userId, Request $request)
 		{
-			return 'update user permissions';
+			$pageSelectionString = $request->get('pageSelection');
+			$pageSelectionArray = json_decode($pageSelectionString);
+			$arr = ['hello', 'world'];
+
+			dd($arr);
+			return 'update user permissions '.$userId.'';
 		}
 
 

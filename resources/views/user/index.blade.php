@@ -35,6 +35,7 @@
 			<div class="col-md-12">
 				{!! link_to_route('user.create', 'Nieuwe Gebruiker', [], ['class' => 'btn btn-success white']) !!}
 				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white']) !!}
+				<a href="#">Link</a>
 			</div>
 		</div>
 		@include('user.partials._userGroup', ['title' => 'Administrators', 'userTypeCollection' => $admins])

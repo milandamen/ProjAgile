@@ -6,7 +6,7 @@
 		'uses' => 'PermissionsController@editUserPermissions'
 	]);
 
-	Route::patch('autorisatie/{id}/wijzigen',
+	Route::post('autorisatie/{id}/wijzigen',
 	[
 		'as' => 'permissions.update',
 		'uses' => 'PermissionsController@updateUserPermissions'
