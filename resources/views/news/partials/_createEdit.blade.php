@@ -39,12 +39,10 @@
 					{!! Form::select('districtSection[]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control districtSelect']) !!}
 				@endif
 			</div>
-			<div>
-				<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs" aria-label="Left Align">
-					<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
+				<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
+					<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
+				</button>
 		</div>
-	</div>
 
 
 	{{--<table name="districtSections" >--}}

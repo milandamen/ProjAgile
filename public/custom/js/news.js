@@ -28,12 +28,32 @@ $('#newDistrictSection').click(function()
 
 	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
 
-	//$('#districts').append('<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">'+
-	//'<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>'+
-    //'</a>');
+	$('.districtBox').last().find('button').remove();
 
+	$('.districtBox').last().append('<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">' +
+	'<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>' +
+'</button>');
+
+	addRemoveListener();
 
 });
+
+function addRemoveListener()
+{
+	$('.deleteDistrictSection').click(function()
+	{
+		console.log(this);
+		$(this).parent().remove();
+	});
+
+	$('.deleteDistrictSectionSpan').click(function()
+	{
+		console.log(this);
+		$(this).parent().parent().remove();
+	});
+}
+
+addRemoveListener();
 
 
 function addDistrictSection()
