@@ -24,18 +24,9 @@ $(function()
 
 $('#newDistrictSection').click(function()
 {
-	//$('#districts').append('<div class="col-md-3 no-padding"></div>');
-
 	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
 
-	$('.districtBox').last().find('button').remove();
-
-	$('.districtBox').last().append('<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">' +
-	'<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>' +
-'</button>');
-
 	addRemoveListener();
-
 });
 
 function addRemoveListener()
