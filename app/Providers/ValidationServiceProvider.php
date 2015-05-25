@@ -1,9 +1,10 @@
 <?php
-	namespace RocketCandy\Services\Validation;
+	namespace App\Providers;
 
+	use App\Services\CustomValidator;
 	use Illuminate\Support\ServiceProvider;
 
-	class ValidationExtensionServiceProvider extends ServiceProvider 
+	class ValidationServiceProvider extends ServiceProvider 
 	{
 		/**
 		 * Resolve all custom validator services.
@@ -12,9 +13,22 @@
 		 */
 		public function boot() 
 		{
-			$this->app->validator->resolver(function($translator, $data, $rules, $messages = [], $customAttributes = []) 
+			\Validator::resolver(function($translator, $data, $rules, $messages = [], $customAttributes = []) 
 			{
-				return new ValidatorExtended($translator, $data, $rules, $messages, $customAttributes);
+				$postalRepo = \App::make('App\Repositories\RepositoryInterfaces\IPostalRepository');
+				$userRepo = \App::make('App\Repositories\RepositoryInterfaces\IUserRepository');
+
+				return new CustomValidator($translator, $data, $rules, $messages, $customAttributes, $postalRepo, $userRepo);
 			});
+		}
+
+		/**
+		 * Register any application services.
+		 *
+		 * @return void
+		 */
+		public function register()
+		{
+			//
 		}
 	}

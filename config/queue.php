@@ -14,7 +14,6 @@
 		|            "sqs", "iron", "redis"
 		|
 		*/
-
 		'default' => env('QUEUE_DRIVER', 'sync'),
 
 		/*
@@ -27,7 +26,6 @@
 		| for each back-end shipped with Laravel. You are free to add more.
 		|
 		*/
-
 		'connections' => 
 		[
 			'sync' => 
@@ -36,40 +34,40 @@
 			],
 			'database' => 
 			[
-				'driver' => 'database',
-				'table' => 'jobs',
-				'queue' => 'default',
-				'expire' => 60,
+				'driver'	=> 'database',
+				'table'		=> 'jobs',
+				'queue'		=> 'default',
+				'expire'	=> 60,
 			],
 			'beanstalkd' => 
 			[
-				'driver' => 'beanstalkd',
-				'host'   => 'localhost',
-				'queue'  => 'default',
-				'ttr'    => 60,
+				'driver'	=> 'beanstalkd',
+				'host'		=> 'localhost',
+				'queue'		=> 'default',
+				'ttr'		=> 60,
 			],
 			'sqs' => 
 			[
-				'driver' => 'sqs',
-				'key'    => 'your-public-key',
-				'secret' => 'your-secret-key',
-				'queue'  => 'your-queue-url',
-				'region' => 'us-east-1',
+				'driver'	=> 'sqs',
+				'key'		=> 'your-public-key',
+				'secret'	=> 'your-secret-key',
+				'queue'		=> 'your-queue-url',
+				'region'	=> 'us-east-1',
 			],
 			'iron' =>
 			[
-				'driver'  => 'iron',
-				'host'    => 'mq-aws-us-east-1.iron.io',
-				'token'   => 'your-token',
-				'project' => 'your-project-id',
-				'queue'   => 'your-queue-name',
-				'encrypt' => true,
+				'driver'	=> 'iron',
+				'host'		=> 'mq-aws-us-east-1.iron.io',
+				'token'		=> 'your-token',
+				'project'	=> 'your-project-id',
+				'queue'		=> 'your-queue-name',
+				'encrypt'	=> true,
 			],
 			'redis' => 
 			[
-				'driver' => 'redis',
-				'queue'  => 'default',
-				'expire' => 60,
+				'driver'	=> 'redis',
+				'queue'		=> 'default',
+				'expire'	=> 60,
 			],
 		],
 
@@ -83,9 +81,9 @@
 		| have failed. You may change them to any database / table you wish.
 		|
 		*/
-
 		'failed' => 
 		[
-			'database' => 'mysql', 'table' => 'failed_jobs',
+			'database'	=> 'mysql', 
+			'table'		=> 'failed_jobs',
 		],
 	];

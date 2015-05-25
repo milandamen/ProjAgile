@@ -16,6 +16,9 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<h2 class="page-header">Registreren</h2>
+				<div class="row">
+					@include('flash::message')
+				</div>
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
@@ -87,7 +90,11 @@
 								</div>
 							</div>
 							<div class="form-group">
-								{!! Recaptcha::render() !!}
+								<div class="col-md-4">
+								</div>
+								<div class="col-md-6">
+									{!! Recaptcha::render() !!}
+								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-4">
@@ -100,4 +107,8 @@
 			</div>
 		</div>
 	</div>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

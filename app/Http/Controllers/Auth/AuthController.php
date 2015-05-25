@@ -44,6 +44,7 @@
 
 		public function postRegister(RegisterRequest $request)
 		{
+			dd('passed that shizz');
 			$data = $request->only
 			(
 				'username',

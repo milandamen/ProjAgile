@@ -11,8 +11,8 @@
 		| the usual Laravel view path has already been registered for you.
 		|
 		*/
-
-		'paths' => [
+		'paths' => 
+		[
 			realpath(base_path('resources/views'))
 		],
 
@@ -26,6 +26,5 @@
 		| directory. However, as usual, you are free to change this value.
 		|
 		*/
-
 		'compiled' => realpath(storage_path().'/framework/views'),
 	];

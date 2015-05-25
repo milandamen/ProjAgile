@@ -29,6 +29,7 @@
         "App\\Providers\\RouteServiceProvider",
         "App\\Providers\\ViewComposerServiceProvider",
         "App\\Providers\\RepositoryServiceProvider",
+        "App\\Providers\\ValidationServiceProvider",
         "Illuminate\\Html\\HtmlServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
         "DaveJamesMiller\\Breadcrumbs\\ServiceProvider",
@@ -53,6 +54,7 @@
         "App\\Providers\\RouteServiceProvider",
         "App\\Providers\\ViewComposerServiceProvider",
         "App\\Providers\\RepositoryServiceProvider",
+        "App\\Providers\\ValidationServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
         "DaveJamesMiller\\Breadcrumbs\\ServiceProvider",
         "Greggilbert\\Recaptcha\\RecaptchaServiceProvider"

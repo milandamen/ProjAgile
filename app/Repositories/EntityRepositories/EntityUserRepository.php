@@ -179,6 +179,6 @@
 
 		public function getByPostal($postalId)
 		{
-			return User::where('postalId', $postalId)->get();
+			return User::where('postalId', $postalId)->first();
 		}
 	}

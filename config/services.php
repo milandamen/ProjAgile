@@ -14,8 +14,8 @@
 		*/
 		'mailgun' => 
 		[
-			'domain' => '',
-			'secret' => '',
+			'domain'	=> '',
+			'secret'	=> '',
 		],
 		'mandrill' => 
 		[
@@ -23,12 +23,13 @@
 		],
 		'ses' => 
 		[
-			'key' => '',
-			'secret' => '',
-			'region' => 'us-east-1',
+			'key'		=> '',
+			'secret'	=> '',
+			'region'	=> 'us-east-1',
 		],
-		'stripe' => [
-			'model'  => 'User',
-			'secret' => '',
+		'stripe' => 
+		[
+			'model'		=> 'User',
+			'secret'	=> '',
 		],
 	];

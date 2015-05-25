@@ -11,7 +11,6 @@
 		| application. If disabled, a simple generic error page is shown.
 		|
 		*/
-
 		'debug' => env('APP_DEBUG'),
 
 		/*
@@ -24,7 +23,6 @@
 		| your application so that it is used when running Artisan tasks.
 		|
 		*/
-
 		'url' => 'http://localhost',
 
 		/*
@@ -37,7 +35,6 @@
 		| ahead and set this to a sensible default for you out of the box.
 		|
 		*/
-
 		'timezone' => 'UTC',
 
 		/*
@@ -50,7 +47,6 @@
 		| to any of the locales which will be supported by the application.
 		|
 		*/
-
 		'locale' => 'nl',
 
 		/*
@@ -63,7 +59,6 @@
 		| the language folders that are provided through your application.
 		|
 		*/
-
 		'fallback_locale' => 'en',
 
 		/*
@@ -76,9 +71,7 @@
 		| will not be safe. Please do this before deploying an application!
 		|
 		*/
-
 		'key' => env('APP_KEY', 'SomeRandomString'),
-
 		'cipher' => MCRYPT_RIJNDAEL_128,
 
 		/*
@@ -93,7 +86,6 @@
 		| Available Settings: "single", "daily", "syslog", "errorlog"
 		|
 		*/
-
 		'log' => 'daily',
 
 		/*
@@ -106,7 +98,6 @@
 		| this array to grant expanded functionality to your applications.
 		|
 		*/
-
 		'providers' =>
 		[
 			/*
@@ -149,6 +140,7 @@
 			 */ 
 			'App\Providers\ViewComposerServiceProvider',
 			'App\Providers\RepositoryServiceProvider',
+			'App\Providers\ValidationServiceProvider',
 
 			/*
 			 * External Service Providers...
@@ -169,7 +161,6 @@
 		| the aliases are "lazy" loaded so they don't hinder performance.
 		|
 		*/
-
 		'aliases' =>
 		[
 			/*
