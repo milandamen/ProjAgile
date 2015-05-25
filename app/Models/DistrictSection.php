@@ -67,15 +67,15 @@
 			return $this->hasMany('App\Models\Contact', 'districtSectionId');
 		}
 
-		/**
-		 * Get all News models that reference this DistrictSection model.
-		 * 
-		 * @return Collection -> News
-		 */
-		public function news() 
-		{
-			return $this->hasMany('App\Models\News', 'districtSectionId');
-		}
+//		/**
+//		 * Get all News models that reference this DistrictSection model.
+//		 *
+//		 * @return Collection -> News
+//		 */
+//		public function news()
+//		{
+//			return $this->hasMany('App\Models\News', 'districtSectionId');
+//		}
 
 		/**
 		 * Get all Postal models that reference this DistrictSection model.
@@ -105,5 +105,10 @@
 		public function users() 
 		{
 			return $this->hasMany('App\Models\User', 'districtSectionId');
+		}
+
+		public function news()
+		{
+			return $this->belongsToMany('News');
 		}
 	}

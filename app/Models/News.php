@@ -126,14 +126,19 @@
 			return $this->hasMany('App\Models\Carousel', 'newsId');
 		}
 
-		/**
-		 * Get the DistrictSection model that is referenced in this News model.
-		 * 
-		 * @return DistrictSection
-		 */
-		public function districtSection() 
+//		/**
+//		 * Get the DistrictSection model that is referenced in this News model.
+//		 *
+//		 * @return DistrictSection
+//		 */
+//		public function districtSection()
+//		{
+//			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+//		}
+
+		public function DistrictSections()
 		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+			return $this->belongsToMany('DistrictSection');
 		}
 
 		/**
