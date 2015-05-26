@@ -45,7 +45,14 @@
 			$attributes['date'] = Carbon::now();
 			//$attributes['districtSectionId'] = $attributes['districtSection.0'];
 
-			return News::create($attributes);
+			$news = News::create($attributes);
+
+			foreach($attributes['districtSection'] as $district)
+			{
+				$news->attach($district);
+			}
+
+			return $news;
 		}
 
 		/**
