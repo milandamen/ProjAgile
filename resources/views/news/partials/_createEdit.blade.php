@@ -34,9 +34,9 @@
 		<div class="col-md-6 districtBox addmargin">
 			<div class="col-md-6 no-padding">
 				@if(isset($newsItem->districtSectionId))
-					{!! Form::select('districtSection[]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control districtSelect']) !!}
+					{!! Form::select('districtSection[]', $districtSections, $newsItem->districtSectionId, ['class' => 'form-control districtSelect']) !!}
 				@else
-					{!! Form::select('districtSection[]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control districtSelect']) !!}
+					{!! Form::select('districtSection[]', $districtSections, old('districtSectionId'), ['class' => 'form-control districtSelect']) !!}
 				@endif
 			</div>
 				<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">

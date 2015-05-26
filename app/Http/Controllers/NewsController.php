@@ -114,17 +114,19 @@
 			{
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
-					$news = $this->newsRepo->create($request->all());
-					$this->saveFiles($request->file, $news->newsId);
+					//$news = $this->newsRepo->create($request->all());
+					//$this->saveFiles($request->file, $news->newsId);
 
-					$districts = $request->districtSections;
+					$districts = $request->districtSections[0];
 
-					foreach($districts as $district)
-					{
-						$news->districrs->attach($district);
-					}
+					var_dump($request->all());
 
-					return Redirect::route('news.show', [$news->newsId]);
+//					foreach($districts as $district)
+//					{
+//						$news->districrs->attach($district);
+//					}
+
+					//return Redirect::route('news.show', [$news->newsId]);
 				}
 
 				return view('errors.403');
