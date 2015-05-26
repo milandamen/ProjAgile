@@ -49,7 +49,7 @@
 
 			foreach($attributes['districtSection'] as $district)
 			{
-				$news->attach($district);
+				$news->districtSections()->attach($district);
 			}
 
 			return $news;
