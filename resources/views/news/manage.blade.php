@@ -46,9 +46,9 @@
 									@if(($newsItem->hidden) && !($newsItem->publishEndDate < $date))
 										<i class="fa fa-eye-slash fa-lg"></i> 
 									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden))
-										<i class="fa fa-archive fa-lg"></i>
+										<i class="fa fa-ban fa-lg"></i> 
 									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden))
-										<i class="fa fa-archive fa-lg"></i> 
+										<i class="fa fa-ban fa-lg"></i>  
 										<i class="fa fa-eye-slash fa-lg"></i> 
 									@elseif($newsItem->publishStartDate > $curDate)
 										<i class="fa fa-repeat fa-lg"></i>

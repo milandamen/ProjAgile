@@ -34,7 +34,7 @@
 					<div class="row col-md-5">
 						<div class="form-group col-md-12">
 						{!! Form::label('parent', 'Selecteer bovenliggende pagina', ['class' => 'label-form']) !!}
-						{!! Form::select('parent', ['Geen']+ $pages, $page->parentId, ['id' => 'parentname', 'class' => 'form-control']) !!}
+						{!! Form::select('parent', [0 => 'Geen']+ $pages, $page->parentId, ['id' => 'parentname', 'class' => 'form-control']) !!}
 						</div>
 					</div>
 
@@ -68,7 +68,7 @@
 					<div class="form-group col-md-12">
 					{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 					<div class="input-group date">
-						{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
+						{!! Form::text('publishStartDate', $page->publishDate, ['class' => 'form-control']) 
 							. '<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>' 
@@ -82,7 +82,7 @@
 						<div class="form-group col-md-11">
 					{!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
 					<div class="input-group date">
-						{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
+						{!! Form::text('publishEndDate', $page->publishEndDate, ['class' => 'form-control'])
 							. '<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>' 
@@ -97,10 +97,10 @@
 						{!! Form::label('visible', 'Verborgen Pagina') !!}<br/>
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default {{ !$page->visible ? 'active' : '' }}">
-								<input type="radio" name="visible" value="true" {{ !$page->visible ? 'checked="true"' : '' }}>Ja
+								<input type="radio" name="visible" value="false" {{ !$page->visible ? 'checked="true"' : '' }}>Ja
 							</label>
 							<label class="btn btn-default {{ $page->visible ? 'active' : '' }}">
-								<input type="radio" name="visible" value="false" {{ $page->visible ? 'checked="true"' : '' }}>Nee
+								<input type="radio" name="visible" value="true" {{ $page->visible ? 'checked="true"' : '' }}>Nee
 							</label>
 						</div>
 					</div>
@@ -172,7 +172,7 @@
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/page.js') !!}
   	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
-  	    {!! HTML::script('moment/moment.js') !!}
+  	{!! HTML::script('moment/moment.js') !!}
 	{!! HTML::script('moment/locale/nl.js') !!}
 	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
 	{!! HTML::script('custom/js/datepicker.js') !!}
