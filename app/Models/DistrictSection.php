@@ -109,6 +109,6 @@
 
 		public function news()
 		{
-			return $this->belongsToMany('News');
+			return $this->belongsToMany('News', 'newsdistrictsection', 'districtSectionId', 'newsId');
 		}
 	}

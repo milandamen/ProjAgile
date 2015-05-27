@@ -138,7 +138,7 @@
 
 		public function DistrictSections()
 		{
-			return $this->belongsToMany('App\Models\DistrictSection');
+			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
 		}
 
 		/**
