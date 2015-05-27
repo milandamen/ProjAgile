@@ -122,45 +122,62 @@
 					</div>
 				</div>
 			</div>
-					<div class="row col-md-12">
-						<div class="form-group col-md-12">
-							{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
-							{!! Form::textarea('content', $page->introduction->text , ['placeholder' => 'Inhoud', 'class' => 'form-control introductie', 'id' => 'summernote', 'rows' => '6']) !!}	
+
+			<div class="row col-md-12">
+				<div class="form-group col-md-12">
+					{!! Form::label('content', 'Inhoud', ['class' => 'label-form'])!!}
+					{!! Form::textarea('content', $page->introduction->text , ['placeholder' => 'Inhoud', 'class' => 'form-control introductie', 'id' => 'summernote', 'rows' => '6']) !!}	
+				</div>
+			</div>
+			<!-- div for new panels -->
+			<div class="row col-md-8">
+				<div class="col-md-12 form-group" id="newPanels">
+					{{--*/ $i = 0; /*--}}
+					@foreach($page->panels as $panel)	
+						{{-- Loop all panels --}}
+						<div>
+							<h4>Vak met grootte {!! $panel->panel->size !!} 
+								<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a>
+								<a onclick="up(this)" class="btn btn-primary white btn-xs addright">
+									<i class="fa fa-arrow-up"></i>
+								</a>  
+								<a onclick="down(this)" class="btn btn-primary white btn-xs addright">
+									<i class="fa fa-arrow-down"></i>
+								</a>
+							</h4>
+							<input type="text" class="form-control titlevalue"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/>
+							<br/>
+							<textarea class="summer form-control" name="panel[{!!$i!!}][content]" placeholder="Inhoud" rows="6">{!! $panel->text !!}</textarea>
+							<input type="number" class="sizevalue" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
+							<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
+						</div>
+						{{--*/ $i++; /*--}}
+					@endforeach					
+				</div>
+			</div>
+
+			<div class="row col-md-8">
+				
+				<div class="form-group col-md-12" id="newOnSiteGroupPage">
+					<div class="col-md-4">
+						{!! Form::label('newOnSite', 'Tonen nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+							</label>
+							<label class="btn btn-default active">
+								<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+							</label>
 						</div>
 					</div>
-					<!-- div for new panels -->
-					<div class="row col-md-8">
-						<div class="col-md-12 form-group" id="newPanels">
-							{{--*/ $i = 0; /*--}}
-							@foreach($page->panels as $panel)	
-								{{-- Loop all panels --}}
-								<div>
-									<h4>Vak met grootte {!! $panel->panel->size !!} 
-										<a onclick="removePanel(this)" class="btn btn-danger btn-xs white"> Verwijder paneel</a>
-										<a onclick="up(this)" class="btn btn-primary white btn-xs addright">
-											<i class="fa fa-arrow-up"></i>
-										</a>  
-										<a onclick="down(this)" class="btn btn-primary white btn-xs addright">
-											<i class="fa fa-arrow-down"></i>
-										</a>
-									</h4>
-									<input type="text" class="form-control titlevalue"  placeholder="Titel" name="panel[{!!$i!!}][title]" value="{!! $panel->title !!}"/>
-									<br/>
-									<textarea class="summer form-control" name="panel[{!!$i!!}][content]" placeholder="Inhoud" rows="6">{!! $panel->text !!}</textarea>
-									<input type="number" class="sizevalue" name="panel[{!!$i!!}][size]"  value="{!! $panel->panel->size  !!}" hidden/>
-									<input type="number" name="panel[{!!$i!!}][id]"  value="{!! $panel->pagepanelId  !!}" hidden/>
-								</div>
-								{{--*/ $i++; /*--}}
-							@endforeach					
-						</div>
-					</div>
-					<div class="row col-md-8">
-						<div class="form-group">
-							{!! link_to_route('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-							<a onclick="getPreview()" class="btn btn-warning">Preview</a>
-							{!! Form::submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
-						</div>
-					</div>
+				</div>
+		
+				<div class="form-group">
+					{!! link_to_route('page.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+					<a onclick="getPreview()" class="btn btn-warning">Preview</a>
+					{!! Form::submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
+				</div>
+			</div>
 				{!! Form:: close() !!}
 			</div>
 		</div>

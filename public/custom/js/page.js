@@ -86,7 +86,8 @@ function validatePage()
 
 	if(success)
 	{
-		validate();
+		newOnSiteValidate();
+		
 	}
 }
 
@@ -128,17 +129,6 @@ function down(panel)
 	{
 		switchPanels(children[index+1], children[index]);
 	}
-}
-
-function getSummerContent(){
-	var code = $('#summernote').code();
-
-	var div = document.querySelector('#summercontent');
-	div.innerHTML = code;
-
-	console.log('henk');
-	console.log(code);
-	return code;
 }
 
 function getPreview(){
