@@ -16,8 +16,8 @@
 
 		'mailgun' => 
 		[
-			'domain' => '',
-			'secret' => '',
+			'domain' => 'darvit.nl',
+			'secret' => 'key-30k7-bxstoi3jz9mjgyfdr4eszkdd2u8',
 		],
 		'mandrill' => 
 		[

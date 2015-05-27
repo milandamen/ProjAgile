@@ -11,6 +11,7 @@
 	use App\Http\Requests\Home\IntroductionRequest;
 	use Auth;
 	use Request;
+	use Mail;
 
 	class HomeController extends Controller 
 	{
@@ -184,4 +185,18 @@
 			
 			return $modulenews;
 		}
+		
+		public function testEmail()
+		{
+			echo 'ooh';
+			Mail::raw('Text to e-mail', function($message)
+			{
+				$message->from('bunders@darvit.nl', 'Laravel');
+
+				$message->to('milandamenmilandamen@gmail.com');
+			});
+			
+			echo 'Henk';
+		}
+		
 	}
