@@ -13,7 +13,7 @@
 		| Supported: "smtp", "mail", "sendmail", "mailgun", "mandrill", "log"
 		|
 		*/
-		'driver' => 'smtp',
+		'driver' => env('MAIL_DRIVER', 'smtp'),
 
 		/*
 		|--------------------------------------------------------------------------
@@ -25,7 +25,7 @@
 		| the Mailgun mail service which will provide reliable deliveries.
 		|
 		*/
-		'host' => 'smtp.mijnhostingpartner.nl',
+		'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
 
 		/*
 		|--------------------------------------------------------------------------
@@ -37,7 +37,7 @@
 		| stay compatible with the Mailgun e-mail application by default.
 		|
 		*/
-		'port' => '25',
+		'port' => env('MAIL_PORT', 587),
 
 		/*
 		|--------------------------------------------------------------------------
@@ -51,8 +51,8 @@
 		*/
 		'from' => 
 		[
-			'address'	=> 'test@marinusit.com', 
-			'name'		=> 'De Bunders'
+			'address'	=> env('MAIL_FROM_ADDRESS', null), 
+			'name'		=> env('MAIL_FROM_NAME', null)
 		],
 
 		/*
@@ -65,7 +65,7 @@
 		| transport layer security protocol should provide great security.
 		|
 		*/
-		'encryption' => '',
+		'encryption' => env('MAIL_ENCRYPTION', ''),
 
 		/*
 		|--------------------------------------------------------------------------
@@ -77,7 +77,7 @@
 		| connection. You may also set the "password" value below this one.
 		|
 		*/
-		'username' => 'test@marinusit.com',
+		'username' => env('MAIL_USERNAME'),
 
 		/*
 		|--------------------------------------------------------------------------
@@ -89,7 +89,7 @@
 		| connection so that the application will be able to send messages.
 		|
 		*/
-		'password' => 'Koekje07!',
+		'password' => env('MAIL_PASSWORD'),
 
 		/*
 		|--------------------------------------------------------------------------

@@ -185,15 +185,4 @@
 			
 			return $modulenews;
 		}
-		
-		public function testEmail()
-		{
-			echo 'ooh';
-			Mail::send('emails.welcome', ['key' => 'value'], function($message)
-			{
-			    $message->to('ben@vandoormalen.net', 'Ben van Doormalen')->subject('Welcome!');
-			});
-			echo 'Henk';
-		}
-		
 	}
