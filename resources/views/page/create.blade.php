@@ -131,6 +131,22 @@
 						</div>
 					</div>
 					<div class="row col-md-8">
+
+						<div class="form-group col-md-12" id="newOnSiteGroupPage">
+							<div class="col-md-4">
+								{!! Form::label('newOnSite', 'Tonen nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-default">
+										<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+									</label>
+									<label class="btn btn-default active">
+										<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+									</label>
+								</div>
+							</div>
+						</div>
+
+
 						<div class="form-group">
 							{!! HTML::linkRoute('page.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
 								<a onclick="getPreview()" class="btn btn-warning">Preview</a>
