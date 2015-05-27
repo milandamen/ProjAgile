@@ -276,8 +276,6 @@ function hidePreview(){
 	var row = document.querySelector(".side");
 	row.innerHTML = "";
 
-
-
 }
 
 
@@ -286,6 +284,9 @@ function switchPanels(old, current)
 	var temp = old.innerHTML;
 	var oldValue = old.getElementsByClassName("titlevalue")[0].value;
 	var oldContent = old.getElementsByClassName("summer")[0].value;
+
+	// var oldSummer = $(old.getElementsByClassName("summernote")[0]).code();
+	// var newSummer = $(current.getElementsByClassName("summernote")[0]).code();
 
 	var newValue = current.getElementsByClassName("titlevalue")[0].value;
 	var newContent = current.getElementsByClassName("summer")[0].value;
