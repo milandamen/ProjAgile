@@ -189,13 +189,10 @@
 		public function testEmail()
 		{
 			echo 'ooh';
-			Mail::raw('Text to e-mail', function($message)
+			Mail::send('emails.welcome', ['key' => 'value'], function($message)
 			{
-				$message->from('bunders@darvit.nl', 'Laravel');
-
-				$message->to('milandamenmilandamen@gmail.com');
+			    $message->to('ben@vandoormalen.net', 'Ben van Doormalen')->subject('Welcome!');
 			});
-			
 			echo 'Henk';
 		}
 		

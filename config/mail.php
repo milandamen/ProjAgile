@@ -13,8 +13,7 @@
 		| Supported: "smtp", "mail", "sendmail", "mailgun", "mandrill", "log"
 		|
 		*/
-
-		'driver' => env('MAIL_DRIVER'),
+		'driver' => 'smtp',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -26,8 +25,7 @@
 		| the Mailgun mail service which will provide reliable deliveries.
 		|
 		*/
-
-		'host' => env('MAIL_HOST'),
+		'host' => 'smtp.mijnhostingpartner.nl',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -39,8 +37,7 @@
 		| stay compatible with the Mailgun e-mail application by default.
 		|
 		*/
-
-		'port' => env('MAIL_PORT'),
+		'port' => '25',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -52,8 +49,11 @@
 		| used globally for all e-mails that are sent by your application.
 		|
 		*/
-
-		'from' => ['address' => 'derp@derp.nl', 'name' => 'waabgbargbhrgb'],
+		'from' => 
+		[
+			'address'	=> 'test@marinusit.com', 
+			'name'		=> 'De Bunders'
+		],
 
 		/*
 		|--------------------------------------------------------------------------
@@ -65,8 +65,7 @@
 		| transport layer security protocol should provide great security.
 		|
 		*/
-
-		'encryption' => env('MAIL_ENCRYPTION'),
+		'encryption' => '',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -78,8 +77,7 @@
 		| connection. You may also set the "password" value below this one.
 		|
 		*/
-
-		'username' => env('MAIL_USERNAME'),
+		'username' => 'test@marinusit.com',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -91,8 +89,7 @@
 		| connection so that the application will be able to send messages.
 		|
 		*/
-
-		'password' => env('MAIL_PASSWORD'),
+		'password' => 'Koekje07!',
 
 		/*
 		|--------------------------------------------------------------------------
@@ -104,7 +101,6 @@
 		| been provided here, which will work well on most of your systems.
 		|
 		*/
-
 		'sendmail' => '/usr/sbin/sendmail -bs',
 
 		/*
@@ -117,6 +113,5 @@
 		| you may inspect the message. This is great for local development.
 		|
 		*/
-
 		'pretend' => false,
 	];
