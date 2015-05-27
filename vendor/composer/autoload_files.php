@@ -12,12 +12,10 @@ return array(
     $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
     $vendorDir . '/danielstjules/stringy/src/Create.php',
     $vendorDir . '/psy/psysh/src/Psy/functions.php',
-    $vendorDir . '/react/promise/src/functions_include.php',
     $vendorDir . '/illuminate/html/helpers.php',
     $vendorDir . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
     $vendorDir . '/laravel/framework/src/Illuminate/Support/helpers.php',
     $vendorDir . '/laracasts/flash/src/Laracasts/Flash/functions.php',
-    $vendorDir . '/guzzlehttp/promises/src/functions.php',
-    $vendorDir . '/guzzlehttp/psr7/src/functions.php',
+    $vendorDir . '/react/promise/src/functions_include.php',
     $baseDir . '/App/Http/helpers.php',
 );
