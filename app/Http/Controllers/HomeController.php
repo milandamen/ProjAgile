@@ -11,7 +11,6 @@
 	use App\Http\Requests\Home\IntroductionRequest;
 	use Auth;
 	use Request;
-	use Mail;
 
 	class HomeController extends Controller 
 	{

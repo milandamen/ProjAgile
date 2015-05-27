@@ -34,9 +34,3 @@
 		'as' => 'home.search',
 		'uses' => 'HomeController@search'
 	]);
-	
-	Route::get('home/testemail',
-	[
-		'as' => 'home.testemail',
-		'uses' => 'HomeController@testEmail'
-	]);
