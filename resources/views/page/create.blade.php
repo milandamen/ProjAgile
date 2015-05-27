@@ -171,7 +171,7 @@
 					</div>
 					<div class="row" id="previewPanels">
 					</div>
-						<a onclick="hidePreview()" class="btn btn-danger" style="width: 100%; height: 40px; margin-bottom: 10px">Hide preview</a> 
+						<a onclick="hidePreview()" class="btn btn-danger hidepreview" >Hide preview</a> 
 				</div>
 			</div>
 		</div>
