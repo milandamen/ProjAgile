@@ -29,23 +29,6 @@
 		{!! Form::hidden('otherSelection', null, ['id' => 'otherSelection']) !!}
 
 		<div class="row">
-			<div class="col-xs-5 col-xs-offset-7">
-				<h3 class="text-center">Onderdelen</h3>
-				<div class="well" style="max-height: 300px;overflow: auto;">
-					<ul id="check-list-box-other" class="list-group checked-list-box">
-						<li class="list-group-item"> Homepage</li>
-						<li class="list-group-item"> Menu</li>
-						<li class="list-group-item"> Carousel</li>
-						<li class="list-group-item"> Footer</li>
-					</ul>
-					<br />
-					<button class="btn btn-primary col-xs-12" id="get-checked-data">Get Checked Data</button>
-				</div>
-				<pre id="display-json-other"></pre>
-			</div>
-		</div>
-
-		<div class="row">
 			<div class="col-xs-5">
 				<h3 class="text-center">Pagina's</h3>
 				<div class="well" style="max-height: 300px;overflow: auto;">
@@ -71,7 +54,6 @@
 					<br />
 					<button class="btn btn-primary col-xs-12" id="get-checked-data">Get Checked Data</button>
 				</div>
-				<pre id="display-json-districtSection"></pre>
 			</div>
 		</div>
 
