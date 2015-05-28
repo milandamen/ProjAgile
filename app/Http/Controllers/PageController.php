@@ -85,17 +85,17 @@
 				]);
 
 			if(count($request->panel) > 0){
-			foreach($request->panel as $pagepanel){
-				$panel = $this->panelrepo->getBySize($pagepanel['size']);
+				foreach($request->panel as $pagepanel){
+					$panel = $this->panelrepo->getBySize($pagepanel['size']);
 
-				$this->pagepanelrepo->create([
-					'page_id' => $page->pageId,
-					'title' => $pagepanel['title'],
-					'text' => $pagepanel['content'],
-					'panel_id' =>$panel->panelId
-				]);
+					$this->pagepanelrepo->create([
+						'page_id' => $page->pageId,
+						'title' => $pagepanel['title'],
+						'text' => $pagepanel['content'],
+						'panel_id' =>$panel->panelId
+					]);
+				}
 			}
-		}
 
 		    $pageid = $page->pageId;
 
@@ -112,12 +112,12 @@
 
 			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-				if($newOnSite === true)
-				{
-					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-					$attributes['created_at'] = new \DateTime('now');
-					$this->newOnSiteRepository->create($attributes);
-				}
+			if($newOnSite === true)
+			{
+				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+				$attributes['created_at'] = new \DateTime('now');
+				$this->newOnSiteRepository->create($attributes);
+			}
 
 			return Redirect::route('page.show', [$page->pageId]);
 		}
