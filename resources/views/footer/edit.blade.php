@@ -69,12 +69,23 @@
 					<div id="success" class="col-lg-12">
 						<br/>
 						<button type="button" class="btn btn-danger" onclick="location.href='{{route('management.index', '')}}'">Annuleren</button>
+						<a onclick="getPreview()" class="btn btn-warning">Preview</a>
 						{!! Form::submit("Opslaan", ['class' => 'btn btn-success']) !!}
 					</div>
 				@endif
 				{!! Form::close() !!}
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="preview">
+
+			</div>
+		</div>
+
+
+
+
 	</div>
 @endsection
 
