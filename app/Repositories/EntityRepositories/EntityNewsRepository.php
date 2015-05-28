@@ -43,9 +43,14 @@
 		{
 			$attributes['userId'] = Auth::user()->userId;
 			$attributes['date'] = Carbon::now();
-			$attributes['districtSectionId'] = $attributes['districtSection.0'];
+			$news = News::create($attributes);
 
-			return News::create($attributes);
+			foreach($attributes['districtSection'] as $district)
+			{
+				$news->districtSections()->attach($district);
+			}
+
+			return $news;
 		}
 
 		/**
