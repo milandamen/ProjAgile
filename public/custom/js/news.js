@@ -1,19 +1,9 @@
 $(function()
 {
-	//$('#newDistrictSection').click(function()
-	//{
-	//	addDistrictSection();
-	//});
-
 	$('#newFile').click(function()
 	{
 		addFile();
 	});
-
-	//$('[name="districtSections"]').on('click', '[name="deleteDistrictSection"]', function()
-	//{
-	//	deleteDistrictSection(this);
-	//});
 
 	$('[name="fileUpload"]').on('click', '[name="deleteFile"]', function()
 	{
@@ -161,7 +151,6 @@ function validateNews()
 		{
 			event.preventDefault();
 			alert('Selecteer alstublieft een deelwijk.');
-
 			return false;
 		}
 	});

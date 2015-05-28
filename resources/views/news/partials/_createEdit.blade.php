@@ -43,29 +43,6 @@
 					<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
 				</button>
 		</div>
-
-
-	{{--<table name="districtSections" >--}}
-			{{--@if(isset($newsItem->districtSectionId))--}}
-				{{--{!! '<tr>--}}
-					{{--<td>' . Form::select('districtSection[0]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}--}}
-					{{--<!-- <td>--}}
-						{{--<button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">--}}
-							{{--<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>--}}
-						{{--</button>--}}
-					{{--</td> -->--}}
-				{{--</tr>--}}
-			{{--@else--}}
-				{{--{!! '<tr>--}}
-					{{--<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}--}}
-					{{--<td>--}}
-						{{--<!-- <button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">--}}
-							{{--<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>--}}
-						{{--</button> -->--}}
-					{{--</td>--}}
-				{{--</tr>--}}
-			{{--@endif--}}
-		{{--</table>--}}
 	</div>
 </div>
 <div class="form-group col-md-12 no-padding">
