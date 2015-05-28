@@ -1,19 +1,19 @@
 $(function()
 {
-	$('#newDistrictSection').click(function()
-	{
-		addDistrictSection();
-	});
+	//$('#newDistrictSection').click(function()
+	//{
+	//	addDistrictSection();
+	//});
 
 	$('#newFile').click(function()
 	{
 		addFile();
 	});
 
-	$('[name="districtSections"]').on('click', '[name="deleteDistrictSection"]', function()
-	{
-		deleteDistrictSection(this);
-	});
+	//$('[name="districtSections"]').on('click', '[name="deleteDistrictSection"]', function()
+	//{
+	//	deleteDistrictSection(this);
+	//});
 
 	$('[name="fileUpload"]').on('click', '[name="deleteFile"]', function()
 	{
@@ -26,10 +26,10 @@ $('#newDistrictSection').click(function()
 {
 	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
 
-	addRemoveListener();
+	addRemoveDistrictListener();
 });
 
-function addRemoveListener()
+function addRemoveDistrictListener()
 {
 	$('.deleteDistrictSection').click(function()
 	{
@@ -44,34 +44,8 @@ function addRemoveListener()
 	});
 }
 
-addRemoveListener();
+addRemoveDistrictListener();
 
-
-function addDistrictSection()
-{
-	//var districtSections = document.querySelectorAll('#districtSection');
-	//var adjacentElement = districtSections[districtSections.length - 1];
-	//var deleteButton = document.querySelector('button[name="deleteDistrictSection"]');
-	//
-	//if (districtSections.length < adjacentElement.length)
-	//{
-	//	var dropdownElement = adjacentElement.cloneNode(true);
-	//	dropdownElement.setAttribute('name', 'districtSection[' + districtSections.length + ']');
-	//
-	//	var newDeleteButton = deleteButton.cloneNode(true);
-	//
-	//	var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
-	//	var tdDistrictSection = adjacentElement.parentNode.cloneNode(false);
-	//	var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
-	//
-	//	tr.appendChild(tdDistrictSection);
-	//	tr.appendChild(tdDeleteButton);
-	//	tdDistrictSection.appendChild(dropdownElement);
-	//	tdDeleteButton.appendChild(newDeleteButton);
-	//
-	//	adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
-	//}
-}
 
 function addFile()
 {
@@ -94,22 +68,6 @@ function addFile()
 	tdDeleteButton.appendChild(newDeleteButton);
 
 	adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
-}
-
-function deleteDistrictSection(button) 
-{
-	var row = button.parentNode.parentNode;
-	var districtSections = document.querySelectorAll('#districtSection');
-
-	if (districtSections.length > 1)
-	{
-		row.parentNode.removeChild(row);
-		calculateDistrictSectionsIndexes();
-	}
-	else
-	{
-		row.innerHTML = row.innerHTML;
-	}
 }
 
 function deleteFile(button) 
@@ -177,7 +135,25 @@ function validateNews()
 		return false;
 	}
 
-	var districtSections = document.querySelectorAll('#districtSection');
+	var districtSections = document.querySelectorAll('.districtSelect');
+
+	console.log(districtSections);
+
+	for(var i = 0; i < districtSections.length; i++)
+	{
+		console.log('test');
+		var district = districtSections[i];
+
+		for(var j = i + 1; j < districtSections.length; j++)
+		{
+			if(district.value == districtSections[j].value)
+			{
+				event.preventDefault();
+				alert('U heeft meerdere malen hetzelfde deelwijk geselecteerd. U kunt maar één keer hetzelfde deelwijk kiezen.');
+				return false;
+			}
+		}
+	}
 
 	[].forEach.call(districtSections, function(districtSection)
 	{
