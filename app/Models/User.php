@@ -114,6 +114,16 @@
 		}
 
 		/**
+		 * Get all Page models that reference this User model.
+		 *
+		 * @return Collection -> Page
+		 */
+		public function pages()
+		{
+			return $this->belongsToMany('App\Models\Page', 'page_user', 'userId', 'pageId');
+		}
+
+		/**
 		 * Get the Postal model that is referenced in this User model.
 		 * 
 		 * @return Postal

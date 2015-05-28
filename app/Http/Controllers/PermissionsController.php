@@ -13,11 +13,12 @@
 
 	class PermissionsController extends Controller {
 
-		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo)
+		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPageRepository $pageRepo)
 		{
 			$this->userRepo = $userRepo;
 			$this->pageRepo = $pageRepo;
 			$this->districtSectionRepo = $districtSectionRepo;
+			$this->pageRepo = $pageRepo;
 		}
 
 		/**
@@ -55,6 +56,14 @@
 			var_dump($pageSelectionArray);
 			var_dump($districtSectionSelectionArray);
 			var_dump($otherSelectionArray);
+
+			$user = $this->userRepo->get($userId);
+			//$page = $this->pageRepo->get(18);
+			//$user->pages()->attach(18);
+
+			$pages = $user->pages;
+			dd($pages);
+
 
 			return 'updated user permissions';
 		}

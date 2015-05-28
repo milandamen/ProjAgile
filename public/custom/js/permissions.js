@@ -108,8 +108,5 @@ $(function () {
 		var otherSelectionString = JSON.stringify(checkedOtherItems, null, '\t');
 		$('#display-json-other').html(otherSelectionString);
 		$('#otherSelection').val(otherSelectionString);
-
-
-		//sessionStorage.setItem('stored_data', JSON.stringify(checkedItems, null, '\t'));
 	});
 });
