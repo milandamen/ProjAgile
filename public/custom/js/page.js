@@ -196,7 +196,7 @@ function getPreview(){
 
 		var sideBody = document.createElement("div");
 		sideBody.className = "panel-body";
-		sideBody.innerHTML = '<ul><li class="sidebar"><a href="http://localhost:8000">&gt; Home	</a></li></ul>';
+		sideBody.innerHTML = '<ul><li class="sidebar"><a href="#">&gt; Home	</a></li></ul>';
 
 		side.appendChild(sideHeader);
 		side.appendChild(sideBody);
