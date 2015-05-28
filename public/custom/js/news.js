@@ -23,14 +23,26 @@ function addRemoveDistrictListener()
 {
 	$('.deleteDistrictSection').click(function()
 	{
-		console.log(this);
-		$(this).parent().remove();
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
 	});
 
 	$('.deleteDistrictSectionSpan').click(function()
 	{
-		console.log(this);
-		$(this).parent().parent().remove();
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
 	});
 }
 

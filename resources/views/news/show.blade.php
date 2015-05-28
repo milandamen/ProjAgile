@@ -37,8 +37,10 @@
 					<p class="news-info">
 						{{ $news->date }}
 						Door: {{ $news->user->username }} |
-						@if($news->districtSection != null)
-							{{ $news->districtSection->name }}
+						@if($news->districtSections != null)
+							@foreach($news->districtSections as $district)
+								{{$district->name}} |
+							@endforeach
 						@else
 							Algemeen
 						@endif
