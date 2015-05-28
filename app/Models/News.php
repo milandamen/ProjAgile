@@ -127,13 +127,13 @@
 		}
 
 		/**
-		 * Get the DistrictSection model that is referenced in this News model.
-		 * 
-		 * @return DistrictSection
-		 */
-		public function districtSection() 
+		//		 * Get the DistrictSection models that is referenced in this News model.
+		//		 *
+		//		 * @return DistrictSections
+		//		 */
+		public function DistrictSections()
 		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
 		}
 
 		/**
