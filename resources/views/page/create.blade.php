@@ -49,10 +49,10 @@
 								{!! Form::label('sidebar', 'Sidebar toevoegen') !!}<br/>
 								<div class="btn-group" data-toggle="buttons">
 									<label class="btn btn-default">
-										<input type="radio" name="sidebar" value="true">Ja
+										<input type="radio" id="sidebarOn" name="sidebar" value="true">Ja
 									</label>
 									<label class="btn btn-default active">
-										<input type="radio" name="sidebar" value="false" checked="true">Nee
+										<input type="radio" id="sidebarOff" name="sidebar" value="false" checked="true">Nee
 									</label>
 								</div>
 							</div>
@@ -105,7 +105,7 @@
 					<div class="row col-md-5">
 						<div class="form-group col-md-12">
 							{!! Form::label('title', 'Titel', ['class' => 'label-form'])!!}
-							{!! Form::text('title', null , ['class' => 'form-control', 'placeholder' => 'Titel']) !!}
+							{!! Form::text('title', null , ['class' => 'form-control title', 'placeholder' => 'Titel']) !!}
 						</div>
 					</div>
 
@@ -113,7 +113,7 @@
 						<div class="form-group col-md-8">
 							<div class="form-group col-md-11">
 								{!! Form::label('subtitle', 'Subtitel', ['class' => 'label-form'])!!}
-								{!! Form::text('subtitle', null , ['class' => 'form-control', 'placeholder' => 'Subtitel']) !!}
+								{!! Form::text('subtitle', null , ['class' => 'form-control subtitle', 'placeholder' => 'Subtitel']) !!}
 							</div>
 						</div>
 					</div>
@@ -131,8 +131,25 @@
 						</div>
 					</div>
 					<div class="row col-md-8">
+
+						<div class="form-group col-md-12" id="newOnSiteGroupPage">
+							<div class="col-md-4">
+								{!! Form::label('newOnSite', 'Tonen nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+								<div class="btn-group" data-toggle="buttons">
+									<label class="btn btn-default">
+										<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+									</label>
+									<label class="btn btn-default active">
+										<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+									</label>
+								</div>
+							</div>
+						</div>
+
+
 						<div class="form-group">
 							{!! HTML::linkRoute('page.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
+								<a onclick="getPreview()" class="btn btn-warning">Preview</a>
 							{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
 						</div>
 					</div>
@@ -141,6 +158,24 @@
 				{!! Form:: close() !!}
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="preview">
+					<div class="row previewMenu">
+
+					</div>
+					<div class="previewTitles">
+					</div>
+					<div class="row side">
+					</div>
+					<div class="row" id="previewPanels">
+					</div>
+						<a onclick="hidePreview()" class="btn btn-danger hidepreview" >Hide preview</a> 
+				</div>
+			</div>
+		</div>
+
 	</div>
 @endsection
 

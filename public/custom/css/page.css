@@ -8,3 +8,22 @@
 .subpage a{
 	text-decoration: underline;
 }
+
+.previewMenu {
+	visibility: hidden;
+	background-color: #1769d8;
+	height: 50px;
+}
+
+.preview {
+	display: none;
+	margin-top: 50px;
+
+}
+
+.hidepreview {
+	width: 100% !important; 
+	height: 40px; 
+	margin-bottom: 10px;
+}
+

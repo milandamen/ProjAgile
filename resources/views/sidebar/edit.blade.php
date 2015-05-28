@@ -33,7 +33,7 @@
 					<br/>
 					<br/>
 					{{-- Add new row-button --}}
-					<table name="X" id="sidebarTable" class="col-md-12">
+					<table name="X" id="sidebarTable" class="col-md-12 addmargin">
 						<tr>
 							<td>
 								<button type="button" onclick="addSideRow(this)" class="btn btn-primary">Voeg rij toe</button>

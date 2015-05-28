@@ -37,6 +37,27 @@ $('input[type=radio][name=newOnSite]').change(function() {
 	}
 });
 
+// The input box and styling for page is just one bit different.. 
+$('input[type=radio][name=newOnSite]').change(function() {
+	if (this.value == 'true') {
+		if($('#newOnSiteGroupPage') != null){
+			$('#newOnSiteGroupPage').append('<div class="newOnSiteMessage">' +
+			'<div class="form-group col-sm-8">' +
+			'<br/>'+
+			'<label class="control-label col-sm-2">Bericht:</label>'+
+			'<div class="col-sm-10">'+
+			'<input type="text" class="form-control" id="message" name="newOnSiteMessage" maxlength="30">'+
+			'</div>'+
+			'</div>'+
+			'</div>');
+		}
+	}
+	else if (this.value == 'false') {
+		$('.newOnSiteMessage').remove();
+	}
+});
+
+
 
 function newOnSiteValidate()
 {
