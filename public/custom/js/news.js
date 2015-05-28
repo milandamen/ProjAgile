@@ -151,7 +151,7 @@ function validateNews()
 			if(district.value == districtSections[j].value)
 			{
 				event.preventDefault();
-				alert('U heeft meerdere malen hetzelfde deelwijk geselecteerd. U kunt maar één keer hetzelfde deelwijk kiezen.');
+				alert('U heeft meerdere malen dezelfde deelwijk geselecteerd. U kunt maar één keer dezelfde deelwijk kiezen.');
 				return false;
 			}
 		}
