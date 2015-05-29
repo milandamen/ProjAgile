@@ -3,21 +3,21 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Postal extends Model
+	class HouseNumber extends Model
 	{
 		/**
 		 * Table name.
 		 *
 		 * @var string
 		 */
-		protected $table = 'postal';
+		protected $table = 'housenumber';
 
 		/**
 		 * PrimaryKey name.
 		 *
 		 * @var string
 		 */
-		protected $primaryKey = 'postalId';
+		protected $primaryKey = 'houseNumberId';
 
 		/**
 		 * Laravel's automatic timestamps convention.
@@ -33,7 +33,8 @@
 		 */
 		protected $fillable =
 		[
-			'code',
+			'houseNumber',
+			'suffix',
 		];
 
 		/**
@@ -43,7 +44,7 @@
 		 */
 		protected $guarded =
 		[
-			'postalId'
+			'houseNumberId'
 		];
 
 		/**
@@ -53,26 +54,6 @@
 		 */
 		public function address()
 		{
-			return $this->hasMany('App\Models\Address', 'addressId');
-		}
-
-		/**
-		 * Get the DistrictSection model that is referenced in this Postal model.
-		 * 
-		 * @return DistrictSection
-		 */
-		public function districtSection() 
-		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
-		}
-
-		/**
-		 * Get all User models that reference this Postal model.
-		 * 
-		 * @return Collection -> User
-		 */
-		public function users()
-		{
-			return $this->hasMany('App\Models\User', 'postalId');
+			return $this->hasMany('App\Models\Address', 'houseNumberId');
 		}
 	}
