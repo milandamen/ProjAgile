@@ -1,5 +1,12 @@
 $(function()
 {
+	$('#newDistrictSection').click(function()
+	{
+		$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
+
+		addRemoveDistrictListener();
+	});
+	
 	$('#newFile').click(function()
 	{
 		addFile();
@@ -9,14 +16,6 @@ $(function()
 	{
 		deleteFile(this);
 	});
-});
-
-
-$('#newDistrictSection').click(function()
-{
-	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
-
-	addRemoveDistrictListener();
 });
 
 function addRemoveDistrictListener()
@@ -47,7 +46,6 @@ function addRemoveDistrictListener()
 }
 
 addRemoveDistrictListener();
-
 
 function addFile()
 {
@@ -167,32 +165,30 @@ function validateNews()
 		}
 	});
 
-	if (!moment([document.querySelector('#publishStartDate').value, 'nl', true]).isValid())
+	var publishStartDate = moment(document.querySelector('#publishStartDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+	var publishEndDate = moment(document.querySelector('#publishEndDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+
+	if (!publishStartDate.isValid())
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
 
 		return false;
 	}
-	var publishStartDate = moment([document.querySelector('#publishStartDate').value]);
 
-	if (!moment([document.querySelector('#publishEndDate').value, 'nl', true]).isValid())
+	if (!publishEndDate.isValid())
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
 
 		return false;
 	}
-	var publishEndDate = moment([document.querySelector('#publishEndDate').value]);
-	
+
 	if (publishStartDate.isAfter(publishEndDate) || 
 		publishStartDate.isSame(publishEndDate))
 	{
 		event.preventDefault();
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
-
-		console.log(publishStartDate);
-		console.log(publishEndDate);
 
 		return false;
 	}
