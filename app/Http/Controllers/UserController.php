@@ -41,10 +41,8 @@
 
 					return view('user.index', compact('admins', 'contentmanagers', 'residents'));
 				}
-
 				return view('errors.403');
 			}
-
 			return view('errors.401');
 		}
 
@@ -56,13 +54,10 @@
 				{
 					$user = new User();
 					$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
-
 					return view('user.create', compact('user', 'userGroups'));
 				}
-
 				return view('errors.403');
 			}
-
 			return view('errors.401');
 		}
 
@@ -74,13 +69,10 @@
 				{
 					$data = $userRequest->input();
 					$this->userRepo->create($data);
-
 					return redirect::route('user.index');
 				}
-
 				return view('errors.403');
 			}
-
 			return view('errors.401');
 		}
 
@@ -93,13 +85,62 @@
 					$user = $this->userRepo->get($id);
 					$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
 					$postal = '';
-
 					if ($user->postalId !== null)
 					{
 						$postal = $this->postalRepo->getById($user->postalId)->code;
 					}
-
 					return view('user.edit', compact('user', 'userGroups', 'postal'));
+				}
+				return view('errors.403');
+			}
+			return view('errors.401');
+		}
+
+		public function update(UpdateUserRequest $userRequest, $id = null)
+		{
+			if (Auth::check())
+			{
+				if (Auth::user()->usergroup->name === 'Administrator' || $id === null)
+				{
+					$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
+					$data = $userRequest->only
+					(
+						'username',
+						'firstName',
+						'surname',
+						'email',
+						'postal',
+						'houseNumber',
+						'userGroupId'
+					);
+
+					$user->fill($data);
+
+					//only change password when given. If the field is emtpy the password need not be changed.
+					if ($userRequest->get('password') !== '')
+					{
+						$user->password =  Hash::make($userRequest->get('password'));
+					}
+
+					if ($userRequest->get('postal') !== '')
+					{
+						$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+						$user->districtSectionId = $postal->districtSectionId;
+						$user->postalId = $postal->postalId;
+					}
+					else
+					{
+						$user->districtSectionId = null;
+						$user->postalId = null;
+					}
+
+					$this->userRepo->update($user);
+
+					if ($id === null)
+					{
+						return redirect::route('user.showProfile');
+					}
+					return redirect::route('user.index');
 				}
 
 				return view('errors.403');
@@ -115,73 +156,37 @@
 				if(Auth::user()->usergroup->name === 'Administrator')
 				{
 					$user = $this->userRepo->get($id);
+					$postal = '';
+					if ($user->postalId !== null)
+					{
+						$postal = $this->postalRepo->getById($user->postalId)->code;
+					}
 
 					if($user != null)
 					{
-						return view('user.show', compact('user'));
-					}
-					
-					return view('errors.404');
-				}
-				
-				return view('errors.403');
-			}
-			
-			return view('errors.401');
-		}
-
-		public function update($id, UpdateUserRequest $userRequest)
-		{
-			if (Auth::check())
-			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$user = $this->userRepo->get($id);
-					$data = $userRequest->only
-					(
-						'username',
-						'firstName',
-						'surname',
-						'email',
-						'postal',
-						'houseNumber',
-						'userGroupId'
-					);
-					$user->fill($data);
-
-					//only change password when given. If the field is emtpy the password need not be changed.
-					if ($userRequest->get('password') !== '')
-					{
-						$user->password = Hash::make($userRequest->get('password'));
-					}
-
-					if ($userRequest->get('postal') !== '')
-					{
-						$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-						$user->districtSectionId = $postal->districtSectionId;
-						$user->postalId = $postal->postalId;
+						return view('user.show', compact('user', 'postal'));
 					}
 					else
 					{
-						$user->districtSectionId = null;
-						$user->postalId = null;
+						return view('errors.404');
 					}
-					$this->userRepo->update($user);
-
-					return redirect::route('user.index');
 				}
-
-				return view('errors.403');
+				else
+				{
+					return view('errors.403');
+				}
 			}
-
-			return view('errors.401');
+			else
+			{
+				return view('errors.401');
+			}
 		}
 
 		public function deactivate($id)
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator') 
+				if (Auth::user()->usergroup->name === 'Administrator')
 				{
 					$user = $this->userRepo->get($id);
 					$user->active = false;
@@ -200,7 +205,7 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator') 
+				if (Auth::user()->usergroup->name === 'Administrator')
 				{
 					$user = $this->userRepo->get($id);
 					$user->active = true;
@@ -214,4 +219,35 @@
 
 			return view('errors.401');
 		}
+
+		//personal profile functions
+		public function showProfile()
+		{
+			if (Auth::check())
+			{
+				$user = $this->userRepo->get(Auth::user()->userId);
+				if ($user->postalId !== null)
+				{
+					$postal = $this->postalRepo->getById($user->postalId)->code;
+				}
+				return view('user.showProfile', compact('user', 'postal'));
+			}
+			return view('errors.401');
+		}
+
+		public function editProfile()
+		{
+			if (Auth::check())
+			{
+				$user = $this->userRepo->get(Auth::user()->userId);
+				$postal = '';
+				if ($user->postalId !== null)
+				{
+					$postal = $this->postalRepo->getById($user->postalId)->code;
+				}
+				return view('user.editProfile', compact('user', 'postal'));
+			}
+			return view('errors.401');
+		}
+
 	}

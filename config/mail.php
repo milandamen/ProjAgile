@@ -51,8 +51,8 @@
 		*/
 		'from' => 
 		[
-			'address'	=> null, 
-			'name'		=> null
+			'address'	=> env('MAIL_FROM_ADDRESS', null), 
+			'name'		=> env('MAIL_FROM_NAME', null)
 		],
 
 		/*
@@ -65,7 +65,7 @@
 		| transport layer security protocol should provide great security.
 		|
 		*/
-		'encryption' => 'tls',
+		'encryption' => env('MAIL_ENCRYPTION', ''),
 
 		/*
 		|--------------------------------------------------------------------------

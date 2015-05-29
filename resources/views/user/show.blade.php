@@ -15,49 +15,55 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-1 addmargin">
-				<h1>{{ $user->username }}</h1>
+				<h1>{{$user->username}}</h1>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-5">
 				<table class="table credentials-table">
 					<tr>
-						<td class="table-left">Gebruikersroep:</td>
-						<td>{{ $user->usergroup->name }}</td>
+						<td class="table-left">Voornaam:</td>
+						<td>{{$user->firstName}}</td>
 					</tr>
 					<tr>
-						<td class="table-left">Deelwijk:</td>
+						<td class="table-left">Achternaam:</td>
+						<td>{{$user->surname}}</td>
+					</tr>
+					<tr>
+						<td class="table-left">Email:</td>
+						<td>{{$user->email}}</td>
+					</tr>
+					<tr>
+						<td class="table-left">Postcode:</td>
 						<td>
-							@if(isset($user->districtSection))
-								{{ $user->districtsection->name }}
-							@else
-								<i>Geen</i>
+							@if (isset($postal))
+								{{$postal}}
 							@endif
 						</td>
 					</tr>
 					<tr>
-						<td class="table-left">Voornaam:</td>
-						<td>{{ $user->firstName }}</td>
-					</tr>
-					<tr>
-						<td class="table-left">Achternaam:</td>
-						<td>{{ $user->surname }}</td>
-					</tr>
-					<tr>
 						<td class="table-left">Huisnummer:</td>
-						<td>{{ $user->houseNumber }}</td>
+						<td>{{$user->houseNumber}}</td>
 					</tr>
 					<tr>
-						<td class="table-left">Email:</td>
-						<td>{{ $user->email }}</td>
+						<td class="table-left">Deelwijk:</td>
+						<td>
+						@if (isset($user->districtSectionId))
+							{{$user->districtsection->name}}
+						@endif
+						</td>
+					</tr>
+					<tr>
+						<td class="table-left">Gebruikersgroep:</td>
+						<td>{{$user->usergroup->name}}</td>
 					</tr>
 					<tr>
 						<td class="table-left">Actief:</td>
 						<td>
-							@if($user->active)
-								Ja
-							@else
+							@if($user->active === 0)
 								Nee
+							@else
+								Ja
 							@endif
 						</td>
 					</tr>

@@ -1,12 +1,13 @@
-<?php 
+<?php
 	namespace App\Http\Requests\User;
 
 	use App\Http\Controllers\UserController;
 	use App\Http\Requests\Request;
 	use Auth;
 
-	class UpdateUserRequest extends Request 
+	class UpdateUserRequest extends Request
 	{
+
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
@@ -14,7 +15,7 @@
 		 */
 		public function authorize()
 		{
-			return Auth::user()->usergroup->name === 'Administrator';
+			return true;
 		}
 
 		/**
@@ -31,7 +32,7 @@
 				'surname' => 'required|max:80',
 				'email' => 'required|max:60|email|unique:user,email,'.$this->get('userId').',userId',
 			];
-			
+
 			if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
 			{
 				$rules +=

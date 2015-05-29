@@ -18,6 +18,11 @@
 			return Page::find($id);
 		}
 
+		public function show($id){
+			$curDate = date('Y-m-d H:i:s',time());
+			return Page::where('pageId', '=', $id)->where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->get();
+		}
+
 		/**
 		 * Returns all the Page models in the database.
 		 * 
@@ -82,7 +87,7 @@
 		 */
 		public function getAllToList()
 		{
-			return Page::join('introduction', 'introduction.introductionId', '=' ,'page.introduction_introductionId')->where('page.parentId', '=', '0')->lists('title', 'pageId');
+			return Page::join('introduction', 'introduction.introductionId', '=' ,'page.introduction_introductionId')->where('page.parentId', '=', null)->lists('title', 'pageId');
 		}
 
 		public function getAllChildren($id){
