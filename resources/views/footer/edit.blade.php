@@ -31,9 +31,10 @@
 				@endif
 
 				@if(count($footer) > 3)
+
 					<!---1, because id 4 is for the color-->
 					@for($c = 0; $c < count($footer) - 1; $c++)
-						<div class="col-md-4">
+						<div class="col-md-4 footerCol">
 							<h2>Kolom {{$c + 1}}</h2>
 							{!! Form::textarea('column[]', $footer[$c]->text, ['placeholder' => 'Tekst', 'class' => 'form-control summernote']) !!}
 						</div>
@@ -43,7 +44,7 @@
 							<br/>
 							<label class="control-label col-sm-2">Kleur:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="footerColor" placeholder="#FFF"
+								<input type="text" class="form-control footerColor" name="footerColor" placeholder="#FFF"
 										@if($footer[3] != null)
 											value="{{$footer[3]->text}}"
 										@endif
@@ -53,7 +54,8 @@
 					</div>
 
 					<div class="row">
-						<div class="form-group col-md-12" id="newOnSiteGroup">
+						<div class="form-group col-md-8" id="newOnSiteGroupPage">
+							<div class="col-md-5">
 							{!! Form::label('newOnSite', 'Tonen op nieuw op de site?', ['class' => 'label-form']) !!}<br/>
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-default">
@@ -64,17 +66,32 @@
 								</label>
 							</div>
 						</div>
+						</div>
 					</div>
 
 					<div id="success" class="col-lg-12">
 						<br/>
 						<button type="button" class="btn btn-danger" onclick="location.href='{{route('management.index', '')}}'">Annuleren</button>
+						<a onclick="getPreview()" class="btn btn-warning">Preview</a>
 						{!! Form::submit("Opslaan", ['class' => 'btn btn-success']) !!}
 					</div>
 				@endif
 				{!! Form::close() !!}
 			</div>
 		</div>
+
+		<div class="col-md-12">
+			<div class="preview">
+				<div class="previewFooter addmargin">
+				</div>
+				<a onclick="hidePreview()" class="btn btn-danger hidepreview" >Hide preview</a> 	
+			</div>
+
+		</div>
+
+
+
+
 	</div>
 @endsection
 
@@ -83,4 +100,5 @@
 	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
 	{!! HTML::script('custom/js/flash_message.js') !!}
+	{!! HTML::script('custom/js/footer.js') !!}
 @stop
