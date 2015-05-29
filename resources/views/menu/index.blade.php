@@ -15,6 +15,9 @@
 		</div>
 			<div class="col-lg-12">
 				<h2 class="page-header">Menu Wijzigen</h2>
+
+				<div id="picker"></div>
+				
 				<a class="btn btn-success white pull-left" href="{{ route('menu.create') }}" role="button">Nieuw menu item aanmaken</a>
 				{!! Form::open(['id' => 'menuForm','method' => 'PATCH']) !!}
 				<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
@@ -54,7 +57,6 @@
 		{!! Form::close() !!}
 	</div>
     <script>
-        // Sets the URI for the Ajax request for searching an article by title for use in the menu_order.js script.
         var getSwitchPublishMenuURL = "{!! route('menu.switchPublish', '') !!}";
     </script>
 @stop
@@ -62,4 +64,5 @@
 @section('additional_scripts')
 	{!! HTML::script('custom/js/menu_crud/responder.js') !!}
 	{!! HTML::script('custom/js/menu_crud/menu_order.js') !!}
+	{!! HTML::script('custom/js/colpick.js') !!}
 @stop
