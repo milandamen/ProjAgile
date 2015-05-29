@@ -149,13 +149,9 @@ function fillClassList(el, listArray) {
 	Submits the data form.
 */
 function submitLayoutForm() {
-	console.log('Submitting form..');
-	
 	var form = document.forms['dataform'];
 	calculateElementOrderValues(form);
 	form.submit();
-	
-	console.log('Done submitting form.');
 }
 
 /**

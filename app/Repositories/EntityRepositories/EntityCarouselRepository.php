@@ -27,6 +27,22 @@
         {
             return Carousel::all();
         }
+		
+		public function getAllFiltered()
+		{
+			$allcarousel = Carousel::all();
+			
+			$curDate = date('Y-m-d H:i:s',time());
+			
+			$carousel = [];
+			foreach ($allcarousel as $c) {
+				if ($c->news->hidden == 0 && $c->news->publishStartDate <= $curDate && $c->news->publishEndDate >= $curDate) {
+					$carousel[] = $c;
+				}
+			}
+			
+			return $carousel;
+		}
 
         /**
          * Creates a Carousel record in the database.

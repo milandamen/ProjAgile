@@ -6,20 +6,56 @@
 	margin-bottom: 20px;
 }
 
-.pos-relative {
-	position: relative;
+.addright {
+	margin-right: 10px;
 }
 
-.carousel-text-shadow {
-	text-shadow: #000 2px 2px 2px;
+.pos-relative {
+	position: relative;
 }
 
 .black {
 	color: #000;
 }
 
-.white
-{
+.white {
 	color: #FFF;
 	float: right;
+}
+
+.table-shade-selected {
+	background-color: #EEF;
+}
+
+.showMore {
+    float: right;
+}
+
+.floatLeft {
+	float: left;
+}
+
+.floatRight {
+	float: right;
+}
+
+.showMore a {
+    text-decoration: none;
+    color: dimgray;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+.textBold {
+	font-weight: bold;
+}
+
+.slightlyRed {
+	background-color: rgba(200,0,0,0.2);
+}
+
+.redText {
+	color: #D00;
 }

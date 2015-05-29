@@ -1,7 +1,4 @@
-$(function () 
+$(function() 
 {
-    $('#datetimepicker').datetimepicker(
-    {
-        locale: 'nl'
-    });
+	$('.date').datetimepicker();
 });

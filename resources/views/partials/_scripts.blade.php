@@ -5,6 +5,8 @@
 <!-- Multi level menu -->
 {!! HTML::script('custom/js/multilevel_menu.js') !!}
 
-<!-- Bootstrap Core JavaScript   (NEEDS TO BE AFTER JQUERY )-->
+<!-- Bootstrap Core JavaScript -->
 {!! HTML::script('bootstrap/js/bootstrap.js') !!}
 
+<!-- Useful methods used in multiple scripts -->
+{!! HTML::script('custom/js/main.js') !!}

@@ -67,6 +67,29 @@
         }
 
         /**
+         * Returns all the User models in the database filtered by user group.
+         *
+         * @return Collection -> User
+         */
+        public function getAllByUserGroup($userGroupId)
+        {
+            return User::where('userGroupId', $userGroupId)->get();
+        }
+
+        /**
+         * Returns all the User models in the database filtered by user group and search criteria
+         *
+         * @return Collection -> User
+         */
+        public function filterAllByUserGroup($userGroupId, $criteria)
+        {
+            $users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->get();
+
+            return $users->where('userGroupId', $userGroupId);
+        }
+
+
+        /**
          * Creates a User record in the database.
          * 
          * @param  array() $attributes
@@ -75,11 +98,19 @@
          */
         public function create($attributes)
         {
-            $postal = $this->postalRepo->getByCode($attributes['postal']);
+            //userGroupId is not set when registering
+            if (!isset($attributes['userGroupId']))
+            {
+                $attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
+            }
+            //check if postal code is given. This attribute is only required for residents
+            if ($attributes['postal'] !== '')
+            {
+                $postal = $this->postalRepo->getByCode($attributes['postal']);
+                $attributes['districtSectionId'] = $postal->districtSectionId;
+                $attributes['postalId'] = $postal->postalId;
+            }
 
-            $attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
-            $attributes['districtSectionId'] = $postal->districtSectionId;
-            $attributes['postalId'] = $postal->postalId;
             $attributes['password'] = Hash::make($attributes['password']);
             $attributes['active'] = true;
 

@@ -3,15 +3,15 @@
     <div class="container">
         <div class="navbar-header">
             <a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>
-
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse navHeaderCollapse">
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><i class="fa fa-info"></i> Over Ons</a></li>
@@ -32,8 +32,10 @@
                         </a>
                         <ul class="dropdown-menu" style="padding:12px;">
                             <li><a href="#">Wijzig profiel</a></li>
+                            @if(Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+                                <li><a href="{{ route('admin.index') }}">Beheer</a></li>
+                            @endif
                             <li><a href="{{ route('auth.logout') }}">Uitloggen</a></li>
-                            <li><a href="#">etc.</a></li>
                         </ul>
                     </li>
                 @endif
@@ -69,7 +71,7 @@
 								</li>
                             @else
                                 <li>
-									<a href="{{ url($subMenu['main']->relativeUrl) }}">{{ $subMenu['main']->name }}</a>
+									<a href="{{ url($subMenu['main']->link) }}">{{ $subMenu['main']->name }}</a>
 								</li>
                             @endif
                         @endforeach

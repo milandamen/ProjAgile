@@ -35,7 +35,7 @@
         [
             'parentId', 
             'name', 
-            'relativeUrl', 
+            'link',
             'menuOrder', 
             'publish'
         ];

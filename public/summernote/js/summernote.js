@@ -687,7 +687,6 @@
      */
     var isEmpty = function (node) {
       var len = nodeLength(node);
-
       if (len === 0) {
         return true;
       } else if (!dom.isText(node) && len === 1 && node.innerHTML === blankHTML) {

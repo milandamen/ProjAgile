@@ -4,7 +4,7 @@
     Breadcrumbs::register('manage', function($breadcrumbs)
     {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push('Manage', route('admin.index'));
+        $breadcrumbs->push('Beheer', route('admin.index'));
     });
 
     //!!!!! LET OP GEEN ROUTE!
@@ -64,5 +64,5 @@
     Breadcrumbs::register('editmenu', function($breadcrumbs)
     {
         $breadcrumbs->parent('manage');
-        $breadcrumbs->push('Wijzig Menu', route('menu.edit'));
+        $breadcrumbs->push('Wijzig Menu', route('menu.index'));
     });
