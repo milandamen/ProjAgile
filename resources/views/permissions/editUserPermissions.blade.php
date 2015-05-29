@@ -34,7 +34,11 @@
 				<div class="well" style="max-height: 600px;overflow: auto;">
 					<ul id="check-list-box-page" class="list-group checked-list-box">
 						@foreach($pages as $page)
-							<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@if($user->hasPagePermission($page->pageId))
+								<li class="list-group-item checked" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@else
+								<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@endif
 						@endforeach
 					</ul>
 					<br />
@@ -49,7 +53,11 @@
 					<div class="well" style="max-height: 300px;overflow: auto;">
 						<ul id="check-list-box-permission" class="list-group checked-list-box">
 							@foreach($permissions as $permission)
-								<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@if($user->hasPermission($permission->permissionId))
+									<li class="list-group-item checked" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@else
+									<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@endif
 							@endforeach
 						</ul>
 					</div>
@@ -61,7 +69,11 @@
 					<div class="well" style="max-height: 310px;overflow: auto;">
 						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
-								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@if($user->hasDistrictSectionPermission($districtSection->districtSectionId))
+									<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@else
+									<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@endif
 							@endforeach
 						</ul>
 					</div>
