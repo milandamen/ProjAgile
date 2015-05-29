@@ -21,6 +21,8 @@
 	class PageController extends Controller
 	{
 
+		
+
 		public function __construct(IIntroductionRepository $introrepo, IPageRepository $pagerepo,  INewOnSiteRepository $newOnSiteRepository,
 									IPanelRepository $panelrepo, IPagePanelRepository $pagepanelrepo, ISidebarRepository $sidebarrepo)
 		{
@@ -30,6 +32,7 @@
 			$this->pagepanelrepo = $pagepanelrepo;
 			$this->sidebarrepo = $sidebarrepo;
 			$this->newOnSiteRepository = $newOnSiteRepository;
+
 		}
 
 		/**
@@ -82,17 +85,17 @@
 				]);
 
 			if(count($request->panel) > 0){
-			foreach($request->panel as $pagepanel){
-				$panel = $this->panelrepo->getBySize($pagepanel['size']);
+				foreach($request->panel as $pagepanel){
+					$panel = $this->panelrepo->getBySize($pagepanel['size']);
 
-				$this->pagepanelrepo->create([
-					'page_id' => $page->pageId,
-					'title' => $pagepanel['title'],
-					'text' => $pagepanel['content'],
-					'panel_id' =>$panel->panelId
-				]);
+					$this->pagepanelrepo->create([
+						'page_id' => $page->pageId,
+						'title' => $pagepanel['title'],
+						'text' => $pagepanel['content'],
+						'panel_id' =>$panel->panelId
+					]);
+				}
 			}
-		}
 
 		    $pageid = $page->pageId;
 
@@ -107,8 +110,7 @@
 		    		]);
 		    }
 
-
-			$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
 			if($newOnSite === true)
 			{
@@ -133,15 +135,19 @@
 				return Redirect::route('home.index');
 			} 
 
-			$page = $this->pagerepo->get($id);
+			$page = $this->pagerepo->show($id);
 			$children = $this->pagerepo->getAllChildren($id);
-
-			if(isset($page)){
-				if($page->sidebar){
-					$sidebar = $this->sidebarrepo->getByPage($page->pageId);
-					return View('page.show', compact('page', 'sidebar', 'children'));
+			if(isset($page) && count($page)){
+				$page = $page[0];
+				if($page->visible){
+					if($page->sidebar){
+						$sidebar = $this->sidebarrepo->getByPage($page->pageId);
+						return View('page.show', compact('page', 'sidebar', 'children'));
+					} else {
+						return View('page.show', compact('page', 'children'));
+					}
 				} else {
-					return View('page.show', compact('page', 'children'));
+					return view('errors.pubdate');
 				}
 			} else {
 				return view('errors.404');
@@ -201,6 +207,9 @@
 			$page->publishDate = $request->publishStartDate;
 			$page->publishEndDate = $request->publishEndDate;
 			$page->visible = $request->visible;
+
+
+
 			$page->parentId = $request->parent;
 			$this->pagerepo->update($page);
 
@@ -228,16 +237,15 @@
 
 			$this->updateSidebar($old, $new, $pageid, $title);
 
-			$newOnSite = filter_var($_POST['toNewOnSite'], FILTER_VALIDATE_BOOLEAN);
+			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-			if($newOnSite)
+			if($newOnSite === true)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 				$attributes['created_at'] = new \DateTime('now');
-
 				$this->newOnSiteRepository->create($attributes);
-			}
-			
+			}	
+					
 			return Redirect::route('page.show', [$page->pageId]);
 		}
 

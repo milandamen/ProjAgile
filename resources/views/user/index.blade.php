@@ -47,3 +47,4 @@
 	{!! HTML::script('custom/js/filterUserTables.js') !!}
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop
+

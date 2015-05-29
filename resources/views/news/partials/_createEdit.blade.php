@@ -1,6 +1,7 @@
 <div class="form-group col-md-12 no-padding">
 		<h4> Algemene instellingen </h4>
 	<div class="col-md-3 no-padding">
+
 		{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
@@ -9,9 +10,9 @@
 				</span>' 
 			!!}
 		</div>
+
 	</div>
-	<div class="col-md-3"></div>
-	<div class="col-md-3 no-padding">
+	<div class="col-md-offset-3 col-md-3 no-padding">
 		{!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
@@ -23,34 +24,25 @@
 	</div>
 </div>
 <div class="form-group col-md-12 no-padding addmargin">
-	<div class="col-md-12 no-padding">
+	<div class="col-md-3 no-padding">
 		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
-		<!-- <button id="newDistrictSection" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+		<button id="newDistrictSection" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
 			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button> -->
+		</button>
 	</div>
-	<div class="col-md-4 no-padding">
-		<table name="districtSections" >
-			@if(isset($newsItem->districtSectionId))
-				{!! '<tr>
-					<td>' . Form::select('districtSection[0]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
-					<!-- <td>
-						<button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button>
-					</td> -->
-				</tr>
-			@else
-				{!! '<tr>
-					<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
-					<td>
-						<!-- <button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button> -->
-					</td>
-				</tr>
-			@endif
-		</table>
+	<div id="districts" class="row clear addmargin">
+		<div class="col-md-6 districtBox addmargin">
+			<div class="col-md-6 no-padding">
+				@if(isset($newsItem->districtSectionId))
+					{!! Form::select('districtSection[]', $districtSections, $newsItem->districtSectionId, ['class' => 'form-control districtSelect']) !!}
+				@else
+					{!! Form::select('districtSection[]', $districtSections, old('districtSectionId'), ['class' => 'form-control districtSelect']) !!}
+				@endif
+			</div>
+				<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
+					<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
+				</button>
+		</div>
 	</div>
 </div>
 <div class="form-group col-md-12 no-padding">
