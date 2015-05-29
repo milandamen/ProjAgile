@@ -184,7 +184,7 @@ function validateNews()
 		return false;
 	}
 	var publishEndDate = moment([document.querySelector('#publishEndDate').value]);
-
+	
 	if (publishStartDate.isAfter(publishEndDate) || 
 		publishStartDate.isSame(publishEndDate))
 	{

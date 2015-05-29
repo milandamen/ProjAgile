@@ -77,10 +77,37 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding addmargin">
 		<div class="col-md-9 no-padding">
+			<table name="fileCurrent" class="table col-md-12">
+				<thead>
+					<tr>
+						<th class="col-md-9">Huidige bestanden</th>
+						<th class="col-md-3" colspan="2"><span class="floatRight">Verwijder</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if(isset($files) && count($files))
+						@for ($i = 0; $i < count($files); $i++)
+							<tr>
+								<td>{{ $files[$i]->path }}</td>
+								<td>
+									<a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a>
+								</td>
+								<td>
+									<input type="checkbox" name="removefile[{{ $files[$i]->fileId }}]" />
+								</td>
+							</tr>
+						@endfor
+					@else
+						<tr>
+							<td>Dit artikel heeft geen bestanden.</td>
+						</tr>
+					@endif
+				</tbody>
+			</table>
 			<table name="fileUpload" class="table col-md-12">
 				<thead>
 					<tr>
-						<th>Bestanden Toevoegen</th>
+						<th>Bestanden toevoegen</th>
 						<th>
 							<a id="newFile" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
 								<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -89,15 +116,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if(isset($files))
-						@for ($i = 0; $i < count($files); $i++)
-							<tr>
-								<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
-								<td></td>
-							</tr>
-						@endfor
-					@endif
-					
 					<tr>
 						<td>{!! Form::file('file[0]', ['id' => 'file']) !!}</td>
 						<td>
