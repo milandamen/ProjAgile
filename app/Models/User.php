@@ -114,13 +114,33 @@
 		}
 
 		/**
-		 * Get all Page models that reference this User model.
+		 * Get all Page models that reference this User model (permissions).
 		 *
 		 * @return Collection -> Page
 		 */
 		public function pages()
 		{
-			return $this->belongsToMany('App\Models\Page', 'page_user', 'userId', 'pageId');
+			return $this->belongsToMany('App\Models\Page', 'pagepermissions', 'userId', 'pageId');
+		}
+
+		/**
+		 * Get all DistrictSection models that reference this User model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSections()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
+		}
+
+		/**
+		 * Get all Permission models that reference this User model (permissions).
+		 *
+		 * @return Collection -> Permission
+		 */
+		public function permissions()
+		{
+			return $this->belongsToMany('App\Models\Permission', 'userpermissions', 'userId', 'permissionId');
 		}
 
 		/**
@@ -152,4 +172,38 @@
 		{
 			return $this->belongsTo('App\Models\UserGroup', 'userGroupId');
 		}
+
+		/**
+		 * Check if the user has permission to edit the given page
+		 *
+		 * @param $pageId
+		 * @return Boolean
+		 */
+		public function hasPagePermission($pageId)
+		{
+			return $this->pages->contains($pageId);
+		}
+
+		/**
+		 * Check if the user has permission to edit news from the given districtSection.
+		 *
+		 * @param $districtSectionId
+		 * @return Boolean
+		 */
+		public function hasDistrictSectionPermission($districtSectionId)
+		{
+			return $this->districtSections->contains($districtSectionId);
+		}
+
+		/**
+		 * Check if the user has the given permission
+		 *
+		 * @param $permissionId
+		 * @return Boolean
+		 */
+		public function hasPermission($permissionId)
+		{
+			return $this->permissions->contains($permissionId);
+		}
+
 	}

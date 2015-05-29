@@ -79,6 +79,7 @@ $(function () {
 	$('#get-checked-data-page').on('click', function(event) {
 		event.preventDefault();
 
+		//check selected items and store them in JSON objects.
 		var checkedPageItems = {}, counter = 0;
 		$("#check-list-box-page li.active").each(function(idx, li) {
 			checkedPageItems[counter] = $(li).attr('id');
@@ -91,12 +92,13 @@ $(function () {
 			counter++;
 		});
 
-		var checkedOtherItems = {}, counter = 0;
-		$("#check-list-box-other li.active").each(function(idx, li) {
-			checkedOtherItems[counter] = $(li).text();
+		var checkedPermissionItems = {}, counter = 0;
+		$("#check-list-box-permission li.active").each(function(idx, li) {
+			checkedPermissionItems[counter] = $(li).attr('id');
 			counter++;
 		});
 
+		//convert JSON objects to strings and pass to view.
 		var pageSelectionString = JSON.stringify(checkedPageItems, null, '\t');
 		$('#display-json-page').html(pageSelectionString);
 		$('#pageSelection').val(pageSelectionString);
@@ -105,8 +107,8 @@ $(function () {
 		$('#display-json-districtSection').html(districtSectionSelectionString);
 		$('#districtSectionSelection').val(districtSectionSelectionString);
 
-		var otherSelectionString = JSON.stringify(checkedOtherItems, null, '\t');
-		$('#display-json-other').html(otherSelectionString);
-		$('#otherSelection').val(otherSelectionString);
+		var permissionSelectionString = JSON.stringify(checkedPermissionItems, null, '\t');
+		$('#display-json-permission').html(permissionSelectionString);
+		$('#permissionSelection').val(permissionSelectionString);
 	});
 });

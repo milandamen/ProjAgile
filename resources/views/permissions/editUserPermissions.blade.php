@@ -26,7 +26,7 @@
 
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
-		{!! Form::hidden('otherSelection', null, ['id' => 'otherSelection']) !!}
+		{!! Form::hidden('permissionSelection', null, ['id' => 'permissionSelection']) !!}
 
 		<div class="row">
 			<div class="col-xs-5">
@@ -47,14 +47,13 @@
 				<div class="row">
 					<h3 class="text-center">Onderdelen</h3>
 					<div class="well" style="max-height: 300px;overflow: auto;">
-						<ul id="check-list-box-other" class="list-group checked-list-box">
-							<li class="list-group-item"> Homepage</li>
-							<li class="list-group-item"> Menu</li>
-							<li class="list-group-item"> Carousel</li>
-							<li class="list-group-item"> Footer</li>
+						<ul id="check-list-box-permission" class="list-group checked-list-box">
+							@foreach($permissions as $permission)
+								<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+							@endforeach
 						</ul>
 					</div>
-					<pre id="display-json-other"></pre>
+					<pre id="display-json-permission"></pre>
 				</div>
 
 				<div class="row">
