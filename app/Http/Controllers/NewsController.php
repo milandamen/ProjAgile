@@ -187,7 +187,17 @@
 					{
 						$news->districtSections()->attach($district);
 					}
-
+					
+					// Remove selected files
+					if ($request->removefile)
+					{
+						foreach ($request->removefile as $key => $value)
+						{
+							$this->fileRepo->deleteByFileId($key);
+						}
+					}
+					
+					// Save files that were sent with this request
 					$this->saveFiles($request->file, $id);
 
 					return Redirect::route('news.show', [$id]);
