@@ -4,11 +4,13 @@
 			<i class="fa fa-arrows">&nbsp;&nbsp;&nbsp;</i>
 			{{ $item['main']->name }}
 			<div class="pull-right">
+                <a onclick="switchPublish(this)" href="javascript:void(0)">
 				@if ($item['main']->publish == 0)
 					<i class="fa fa-eye-slash"></i>
 				@else
 					<i class="fa fa-eye"></i>
 				@endif
+                </a>
 				{!! link_to_route('menu.edit', '', [e($item['main']->menuId)], ['class' => 'fa fa-pencil-square-o']) !!}
 				<a onclick="removeItem(this)" href="javascript:void(0)">
 					<i class="fa fa-times text-danger"></i>

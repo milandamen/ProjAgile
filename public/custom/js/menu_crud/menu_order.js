@@ -52,9 +52,9 @@ function switchPublish($item)
     var iconObject =  $($item).find('i');
     $.get( getSwitchPublishMenuURL + '/' + menuItemID).done(function() {
         if ($(iconObject).hasClass('fa fa-eye')){
-            $(iconObject).addClass('fa fa-eye-slash')
+            $(iconObject).removeClass('fa fa-eye').addClass('fa fa-eye-slash')
         }else{
-            $(iconObject).addClass('fa fa-eye')
+            $(iconObject).removeClass('fa fa-eye-slash').addClass('fa fa-eye')
         }
     });
 }
