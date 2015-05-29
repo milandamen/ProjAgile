@@ -164,7 +164,7 @@
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
 					$newsItem = $this->newsRepo->get($id);
-					$newsItem->districtSectionId = $request->districtSection[0];
+					//$newsItem->districtSectionId = $request->districtSection[0];
 					$newsItem->title = $request->title;
 					$newsItem->content = $request->content;
 					$newsItem->hidden = $request->hidden;
@@ -173,7 +173,21 @@
 					$newsItem->publishEndDate = $request->publishEndDate;
 					$newsItem->top = $request->top;
 					$news = $this->newsRepo->update($newsItem);
-					
+
+					$districtSections = $request->districtSection;
+
+					$oldDistrictSections = $news->districtSections;
+
+					foreach($oldDistrictSections as $oldDistrict)
+					{
+						$news->districtSections()->detach($oldDistrict);
+					}
+
+					foreach($districtSections as $district)
+					{
+						$news->districtSections()->attach($district);
+					}
+
 					$this->saveFiles($request->file, $id);
 
 					return Redirect::route('news.show', [$id]);
