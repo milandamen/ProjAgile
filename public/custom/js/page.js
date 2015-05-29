@@ -324,3 +324,6 @@ function switchPanels(old, current)
 	current.getElementsByClassName("titlevalue")[0].value = oldValue;
 	current.getElementsByClassName("summer")[0].value = oldContent;
 }
+
+
+

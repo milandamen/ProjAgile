@@ -80,9 +80,9 @@
 									</td>
 									<td>
 										@if($page->visible)
-											<i class="fa fa-eye fa-lg"></i>
+											<a onclick="controlPublic(this)"><i class="fa fa-eye fa-lg" name="{!! $page->pageId !!}"></i></a>
 										@else
-											<i class="fa fa-eye-slash fa-lg"></i>
+											<a onclick="controlPublic(this)"><i class="fa fa-eye-slash fa-lg" name="{!! $page->pageId !!}"></i></a>
 										@endif
 									</td>
 									<td>
@@ -135,9 +135,9 @@
 											</td>
 											<td>
 												@if($subpage->visible)
-													<i class="fa fa-eye fa-lg"></i>
+													<a onclick="controlPublic(this)"><i class="fa fa-eye fa-lg" name="{!! $page->pageId !!}"></i></a>
 												@else
-													<i class="fa fa-eye-slash fa-lg"></i>
+													<a onclick="controlPublic(this)"><i class="fa fa-eye-slash fa-lg" name="{!! $page->pageId !!}"></i></a>
 												@endif
 											</td>
 											<td>
@@ -155,4 +155,12 @@
 			</div>
 		</div>		
 	</div>
+	<script>
+		// Sets the URI for the Ajax request for the visibility eye- script.
+		var getURL = "{!! route('page.visible', [0]) !!}";
+	</script>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/indexpage.js') !!}
 @stop

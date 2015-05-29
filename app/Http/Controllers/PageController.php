@@ -321,4 +321,17 @@
 			
 			return false;
 		}
+
+
+		public function switchPublish($id)
+		{
+			$page = $this->pagerepo->get($id);
+			if($page->visible == 0)
+			{
+				$page->visible = 1;
+			}else{
+				$page->visible = 0;
+			}
+			$this->pagerepo->update($page);
+		}
 	}
