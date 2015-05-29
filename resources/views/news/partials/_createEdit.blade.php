@@ -77,36 +77,54 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding addmargin">
 		<div class="col-md-9 no-padding">
-			{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
-			<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
-				<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-			</button>
-			<table name="fileUpload" class="table col-md-12">
-				@if(isset($files))
-					@for ($i = 0; $i < count($files); $i++)
-						<tr>
-							<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
-							<td> </td>
-						</tr>
-					@endfor
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td>
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</td>
+			<table name="fileCurrent" class="table col-md-12">
+				<thead>
+					<tr>
+						<th class="col-md-9">Huidige bestanden</th>
+						<th class="col-md-3" colspan="2"><span class="floatRight">Verwijder</span></th>
 					</tr>
-				@else
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td style="width: 22px">
+				</thead>
+				<tbody>
+					@if(isset($files) && count($files))
+						@for ($i = 0; $i < count($files); $i++)
+							<tr>
+								<td>{{ $files[$i]->path }}</td>
+								<td>
+									<a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a>
+								</td>
+								<td>
+									<input type="checkbox" name="removefile[{{ $files[$i]->fileId }}]" />
+								</td>
+							</tr>
+						@endfor
+					@else
+						<tr>
+							<td>Dit artikel heeft geen bestanden.</td>
+						</tr>
+					@endif
+				</tbody>
+			</table>
+			<table name="fileUpload" class="table col-md-12">
+				<thead>
+					<tr>
+						<th>Bestanden toevoegen</th>
+						<th>
+							<a id="newFile" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{!! Form::file('file[0]', ['id' => 'file']) !!}</td>
+						<td>
 							<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
 								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</a>
 						</td>
 					</tr>
-				@endif
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -149,6 +167,6 @@
 <div class="form-group">
 	<div class="col-md-12 no-padding">
 		{!! link_to_route('news.manage', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
-		{!! Form::submit('Opslaan', ['class' => 'btn btn-default']) !!}
+		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
 	</div>
 </div>

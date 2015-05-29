@@ -86,4 +86,16 @@
 		{
 			File::where('newsId', '=', $newsId)->delete();
 		}
+		
+		/**
+		 * Deletes the file with the given id.
+		 * 
+		 * @param  int $fileId
+		 * 
+		 * @return void
+		 */
+		public function deleteByFileId($fileId)
+		{
+			File::where('fileId', '=', $fileId)->delete();
+		}
 	}
