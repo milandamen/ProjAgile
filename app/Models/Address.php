@@ -58,16 +58,6 @@
 		}
 
 		/**
-		 * Get the User model that references this Address model.
-		 * 
-		 * @return User
-		 */
-		public function user()
-		{
-			return $this->hasOne('App\Models\User', 'addressId');
-		}
-
-		/**
 		 * Get the Postal model that is referenced in this Address model.
 		 * 
 		 * @return Postal
@@ -75,5 +65,15 @@
 		public function postal()
 		{
 			return $this->belongsTo('App\Models\Postal', 'postalId');
+		}
+
+		/**
+		 * Get the User model that references this Address model.
+		 * 
+		 * @return User
+		 */
+		public function user()
+		{
+			return $this->hasOne('App\Models\User', 'addressId');
 		}
 	}
