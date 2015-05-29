@@ -26,11 +26,13 @@
 								<i class="fa fa-arrows">&nbsp;&nbsp;&nbsp;</i>
 								{!! $subMenu['main']->name !!}
 								<div class="pull-right">
+                                    <a onclick="switchPublish(this)" href="javascript:void(0)">
 									@if ($subMenu['main']->publish == 0)
 										<i class="fa fa-eye-slash"></i>
 									@else
 										<i class="fa fa-eye"></i>
 									@endif
+                                    </a>
 									{!! link_to_route('menu.edit', '', [e($subMenu['main']->menuId)], ['class' => 'fa fa-pencil-square-o']) !!}
 									<a onclick="removeItem(this)" href="javascript:void(0)">
 										<i class="fa fa-times text-danger"></i>
@@ -51,6 +53,10 @@
 		<a class="btn btn-danger pull-right" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
 		{!! Form::close() !!}
 	</div>
+    <script>
+        // Sets the URI for the Ajax request for searching an article by title for use in the menu_order.js script.
+        var getSwitchPublishMenuURL = "{!! route('menu.switchPublish', '') !!}";
+    </script>
 @stop
 
 @section('additional_scripts')

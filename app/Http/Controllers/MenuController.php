@@ -124,4 +124,16 @@
 
 			return Redirect::route('menu.index');
 		}
+
+        public function switchPublish($id)
+        {
+            $menuItem = $this->menuRepo->get($id);
+            if($menuItem->publish == 0)
+            {
+                $menuItem->publish = 1;
+            }else{
+                $menuItem->publish = 0;
+            }
+            $this->menuRepo->update($menuItem);
+        }
 	}
