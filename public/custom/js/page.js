@@ -252,6 +252,38 @@ function getPreview(){
 	return true;
 }
 
+
+// Event listeners for live preview!
+$( "textarea" ).on(
+	"keypress",
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
+		}
+	}
+);
+
+$( "input" ).on(
+	"keypress",
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
+		}
+	}
+);
+
+$('#summernote').summernote({
+	onChange: function() {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
+		}
+}});
+
+
+
 function hidePreview(){
 	var preview = document.querySelector('.preview');
 	preview.style.display = 'none';
@@ -265,6 +297,9 @@ function hidePreview(){
 
 	var row = document.querySelector(".side");
 	row.innerHTML = "";
+
+	var titlesdiv = document.querySelector(".previewTitles");
+	titlesdiv.innerHTML = "";
 
 }
 

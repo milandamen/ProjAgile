@@ -1,18 +1,8 @@
 $(function()
 {
-	$('#newDistrictSection').click(function()
-	{
-		addDistrictSection();
-	});
-
 	$('#newFile').click(function()
 	{
 		addFile();
-	});
-
-	$('[name="districtSections"]').on('click', '[name="deleteDistrictSection"]', function()
-	{
-		deleteDistrictSection(this);
 	});
 
 	$('[name="fileUpload"]').on('click', '[name="deleteFile"]', function()
@@ -21,31 +11,43 @@ $(function()
 	});
 });
 
-function addDistrictSection()
+
+$('#newDistrictSection').click(function()
 {
-	var districtSections = document.querySelectorAll('#districtSection');
-	var adjacentElement = districtSections[districtSections.length - 1];
-	var deleteButton = document.querySelector('button[name="deleteDistrictSection"]');
+	$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
 
-	if (districtSections.length < adjacentElement.length)
+	addRemoveDistrictListener();
+});
+
+function addRemoveDistrictListener()
+{
+	$('.deleteDistrictSection').click(function()
 	{
-		var dropdownElement = adjacentElement.cloneNode(true);
-		dropdownElement.setAttribute('name', 'districtSection[' + districtSections.length + ']');
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	});
 
-		var newDeleteButton = deleteButton.cloneNode(true);
-
-		var tr = adjacentElement.parentNode.parentNode.cloneNode(false);
-		var tdDistrictSection = adjacentElement.parentNode.cloneNode(false);
-		var tdDeleteButton = deleteButton.parentNode.cloneNode(false);
-
-		tr.appendChild(tdDistrictSection);
-		tr.appendChild(tdDeleteButton);
-		tdDistrictSection.appendChild(dropdownElement);
-		tdDeleteButton.appendChild(newDeleteButton);
-
-		adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
-	}
+	$('.deleteDistrictSectionSpan').click(function()
+	{
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	});
 }
+
+addRemoveDistrictListener();
+
 
 function addFile()
 {
@@ -68,22 +70,6 @@ function addFile()
 	tdDeleteButton.appendChild(newDeleteButton);
 
 	adjacentElement.parentNode.parentNode.parentNode.appendChild(tr);
-}
-
-function deleteDistrictSection(button) 
-{
-	var row = button.parentNode.parentNode;
-	var districtSections = document.querySelectorAll('#districtSection');
-
-	if (districtSections.length > 1)
-	{
-		row.parentNode.removeChild(row);
-		calculateDistrictSectionsIndexes();
-	}
-	else
-	{
-		row.innerHTML = row.innerHTML;
-	}
 }
 
 function deleteFile(button) 
@@ -151,7 +137,25 @@ function validateNews()
 		return false;
 	}
 
-	var districtSections = document.querySelectorAll('#districtSection');
+	var districtSections = document.querySelectorAll('.districtSelect');
+
+	console.log(districtSections);
+
+	for(var i = 0; i < districtSections.length; i++)
+	{
+		console.log('test');
+		var district = districtSections[i];
+
+		for(var j = i + 1; j < districtSections.length; j++)
+		{
+			if(district.value == districtSections[j].value)
+			{
+				event.preventDefault();
+				alert('U heeft meerdere malen dezelfde deelwijk geselecteerd. U kunt maar één keer dezelfde deelwijk kiezen.');
+				return false;
+			}
+		}
+	}
 
 	[].forEach.call(districtSections, function(districtSection)
 	{
@@ -159,7 +163,6 @@ function validateNews()
 		{
 			event.preventDefault();
 			alert('Selecteer alstublieft een deelwijk.');
-
 			return false;
 		}
 	});
