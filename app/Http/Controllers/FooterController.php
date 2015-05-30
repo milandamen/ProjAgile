@@ -23,7 +23,7 @@
 		{
 			if(Auth::check())
 			{
-				if(Auth::user()->usergroup->name === 'Administrator')
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER) || Auth::user()->usergroup->name === getAdministratorName())
 				{
 					$footer = $this->footerRepository->getAll();
 
@@ -44,7 +44,7 @@
 		{
 			if(Auth::check())
 			{
-				if(Auth::user()->usergroup->name === 'Administrator')
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER) || Auth::user()->usergroup->name === getAdministratorName())
 				{
 					if(isset($_POST['column']))
 					{

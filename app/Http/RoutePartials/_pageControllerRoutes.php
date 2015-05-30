@@ -31,14 +31,12 @@
 	[
 		'as' => 'page.edit',
 		'uses' => 'PageController@edit',
-		'middleware' => 'admin'
 	]);
 
 	Route::post('pagina/{id}/wijzigen',
 	[
 		'as' => 'page.update',
 		'uses' => 'PageController@update',
-		'middleware' => 'admin'
 	]);
 
 	Route::get('pagina/{id}/verwijderen', 

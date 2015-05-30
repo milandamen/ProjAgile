@@ -59,15 +59,18 @@
 		 */
 		public function editLayout()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+			if (Auth::check())
 			{
-				$news = $this->getNews();
-				//$introduction = $this->introRepo->getPageBar('1');
-				$introduction = $this->pageRepo->get(1)->introduction;
-				$layoutModules = $this->homeLayoutRepo->getAll();
-				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName())
+				{
+					$news = $this->getNews();
+					//$introduction = $this->introRepo->getPageBar('1');
+					$introduction = $this->pageRepo->get(1)->introduction;
+					$layoutModules = $this->homeLayoutRepo->getAll();
+					$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+					return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+				}
 			} 
 			
 			return view('errors.403');
@@ -80,22 +83,23 @@
 		 */
 		public function updateLayout()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+			if (Auth::check())
 			{
-				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName())
 				{
-					$modules = $this->homeLayoutRepo->getAll();
+					if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
+						$modules = $this->homeLayoutRepo->getAll();
 
-					foreach ($modules as $module) 
-					{
-						$module->orderNumber = $_POST[$module->moduleName];
-						$module->save();
+						foreach ($modules as $module) {
+							$module->orderNumber = $_POST[$module->moduleName];
+							$module->save();
+						}
+
+						return Redirect::route('home.index');
 					}
 
-					return Redirect::route('home.index');
+					return Redirect::route('home.editLayout');
 				}
-				
-				return Redirect::route('home.editLayout');
 			}
 			
 			return view('errors.403');
