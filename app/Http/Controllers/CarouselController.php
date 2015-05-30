@@ -26,7 +26,7 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') 
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 				{
 					$carousel = $this->carouselRepo->getAll();
 
@@ -43,7 +43,7 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')) 
+				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 				{
 					$oldItems = $this->carouselRepo->getAll();
 					
