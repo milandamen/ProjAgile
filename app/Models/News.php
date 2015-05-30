@@ -127,16 +127,6 @@
 		}
 
 		/**
-		//		 * Get the DistrictSection models that is referenced in this News model.
-		//		 *
-		//		 * @return DistrictSections
-		//		 */
-		public function DistrictSections()
-		{
-			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
-		}
-
-		/**
 		 * Get all File models that reference this News model.
 		 * 
 		 * @return Collection -> File
