@@ -6,7 +6,15 @@ namespace App\Http\Controllers;
 
     class PostalController extends Controller
     {
-
+        /**
+         * Creates a new PostalController instance.
+         *
+         * @param IPostalRepository 	    $postalRepo
+         * @param IAddressRepository        $addressRepo
+         * @param IHouseNumberRepository    $houseNumberRepo
+         *
+         * @return void
+         */
         public function __construct(IPostalRepository $postalRepo, IAddressRepository $addressRepo,  IHouseNumberRepository $houseNumberRepo)
         {
             $this->postalRepo = $postalRepo;
@@ -16,7 +24,7 @@ namespace App\Http\Controllers;
         }
 
         /**
-         * Display a listing of the resource.
+         * Display the postal management page.
          *
          * @return Response
          */
@@ -27,7 +35,7 @@ namespace App\Http\Controllers;
         }
 
         /**
-         * Show the form for creating a new resource.
+         * Function for uploading the new postal information.
          *
          * @return Response
          */
