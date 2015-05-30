@@ -40,14 +40,14 @@
 		 */
 		protected $fillable = 
 		[
-			'userGroupId', 
-			'districtSectionId',
+			'userGroupId',
+			'addressId',
 			'postalId',
 			'username',
-			'firstName', 
+			'firstName',
+			'insertion',
 			'surname',
 			'password',
-			'houseNumber', 
 			'email', 
 			'active',
 			'remember_Token'
@@ -75,23 +75,23 @@
 		];
 
 		/**
-		 * Get all Comment models that reference this User model.
+		 * Get the Address model that is referenced in this User model.
 		 * 
-		 * @return Collection -> Comment
+		 * @return Address
 		 */
-		public function comments()
+		public function address()
 		{
-			return $this->hasMany('App\Models\Comment', 'userId');
+			return $this->belongsTo('App\Models\Address', 'addressId');
 		}
 
 		/**
-		 * Get the DistrictSection model that is referenced in this User model.
-		 * 
-		 * @return DistrictSection
+		 * Get all DistrictSection models that reference this User model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
 		 */
-		public function districtSection() 
+		public function districtSections()
 		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
 		}
 
 		/**
@@ -152,16 +152,6 @@
 		public function postal()
 		{
 			return $this->belongsTo('App\Models\Postal', 'postalId');
-		}
-
-		/**
-		 * Get all Topic models that reference this User model.
-		 * 
-		 * @return Collection -> Topic
-		 */
-		public function topics()
-		{
-			return $this->hasMany('App\Models\Topic', 'userId');
 		}
 
 		/**

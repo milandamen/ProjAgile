@@ -5,4 +5,5 @@
 	{
 		public function getAllByNewsId($newsId);
 		public function deleteAllByNewsId($newsId);
+		public function deleteByFileId($fileId);
 	}

@@ -47,6 +47,16 @@
 		];
 
 		/**
+		 * Get all Address models that reference this HouseNumber model.
+		 * 
+		 * @return Collection -> Address
+		 */
+		public function address()
+		{
+			return $this->hasMany('App\Models\Address', 'addressId');
+		}
+
+		/**
 		 * Get the DistrictSection model that is referenced in this Postal model.
 		 * 
 		 * @return DistrictSection
