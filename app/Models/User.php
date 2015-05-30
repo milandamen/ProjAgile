@@ -125,16 +125,6 @@
 		}
 
 		/**
-		 * Get all DistrictSection models that reference this User model (permissions).
-		 *
-		 * @return Collection -> DistrictSection
-		 */
-		public function districtSections()
-		{
-			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
-		}
-
-		/**
 		 * Get all Permission models that reference this User model (permissions).
 		 *
 		 * @return Collection -> Permission
