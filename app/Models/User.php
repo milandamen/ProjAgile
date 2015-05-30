@@ -1,6 +1,7 @@
 <?php 
 	namespace App\Models;
 
+	use App\Http\Controllers\PermissionsController;
 	use Illuminate\Auth\Authenticatable;
 	use Illuminate\Database\Eloquent\Model;
 	use Illuminate\Auth\Passwords\CanResetPassword;
@@ -204,6 +205,16 @@
 		public function hasPermission($permissionId)
 		{
 			return $this->permissions->contains($permissionId);
+		}
+
+		/**
+		 * Check if the user has permission to change permissions.
+		 *
+		 * @return Boolean
+		 */
+		public function canChangePermissions()
+		{
+			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
 		}
 
 	}

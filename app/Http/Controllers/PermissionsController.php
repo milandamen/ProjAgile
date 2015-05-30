@@ -14,6 +14,12 @@
 
 	class PermissionsController extends Controller {
 
+		const PERMISSION_MENU = 1;
+		const PERMISSION_FOOTER = 3;
+		const PERMISSION_CAROUSEL = 4;
+		const PERMISSION_HOMEPAGE = 5;
+		const PERMISSION_PERMISSIONS = 6;
+
 		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo)
 		{
 			$this->userRepo = $userRepo;

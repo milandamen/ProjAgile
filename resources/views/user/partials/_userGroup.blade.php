@@ -10,7 +10,10 @@
 							<th>Voornaam</th>
 							<th>Achternaam</th>
 							<th>Email</th>
-							<th colspan="3">Acties</th>
+							<th colspan="2">Acties</th>
+							@if (Auth::user()->canChangePermissions())
+								<th></th>
+							@endif
 							<th><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign questionIcon" title="Toelichting"></span></a></th>
 						</tr>
 					</thead>
@@ -42,11 +45,13 @@
 										</a>
 									@endif
 								</td>
+								@if (Auth::user()->canChangePermissions())
 								<td>
-									<a href="{{ route('user.index') }}" class="right">
+									<a href="{{ route('permissions.edit', [$userType->userId]) }}" class="left black">
 										<i class="fa fa-key"></i>
 									</a>
 								</td>
+								@endif
 							</tr>
 						@endforeach
 					</tbody>
@@ -76,6 +81,9 @@
 				</div>
 				<div>
 					<i class="fa fa-unlock-alt fa-lg text-success activate"></i> - Gebruiker is actief
+				</div>
+				<div>
+					<i class="fa fa-key"></i> - Gebruiker autorisatie bewerken
 				</div>
 			</div>
 			<div class="modal-footer">

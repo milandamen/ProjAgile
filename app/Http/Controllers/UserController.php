@@ -249,5 +249,6 @@
 			}
 			return view('errors.401');
 		}
+		//end personal profile functions
 
 	}
