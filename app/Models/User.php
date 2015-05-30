@@ -197,6 +197,24 @@
 		}
 
 		/**
+		 * Check if the user has permission to edit news from the given districtSection.
+		 *
+		 * @param $districtSectionId
+		 * @return Boolean
+		 */
+		public function hasDistrictSectionPermissions($districtSections)
+		{
+			foreach ($districtSections as $districtSection)
+			{
+				if ($this->districtSections->contains($districtSection->districtSectionId))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
 		 * Check if the user has the given permission
 		 *
 		 * @param $permissionId

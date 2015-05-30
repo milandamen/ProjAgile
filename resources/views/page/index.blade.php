@@ -21,6 +21,9 @@
 			</div>
 		</div>
 		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				 <p class="col-md-8"> 
 					Deze pagina is enkel zichtbaar voor de administrator en toont 
@@ -155,4 +158,8 @@
 			</div>
 		</div>		
 	</div>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

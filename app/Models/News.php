@@ -165,4 +165,14 @@
 		{
 			return $this->belongsTo('App\Models\User', 'userId');
 		}
+
+		/**
+		 * Get all DistrictSection models that reference this News model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSections()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
+		}
 	}

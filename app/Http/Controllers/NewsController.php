@@ -10,6 +10,7 @@
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
+	use Flash;
 	use Auth;
 	use Redirect;
 	use Request;
@@ -135,9 +136,16 @@
 		{
 			if (Auth::check())
 			{
+				$newsItem = $this->newsRepo->get($id);
+
+				if (!Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
+				{
+					Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
+					return Redirect::route('news.manage');
+				}
+
 				if (Auth::user()->usergroup->name === 'Administrator')
 				{
-					$newsItem = $this->newsRepo->get($id);
 					$files = $this->fileRepo->getAllByNewsId($id);
 					$districtSections = $this->districtSectionRepo->getAllToList();
 

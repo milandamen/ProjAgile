@@ -168,6 +168,12 @@
 				return Redirect::route('home.index');
 			}
 
+			if (!Auth::user()->hasPagePermission($id))
+			{
+				Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
+				return Redirect::route('page.index');
+			}
+
 			$page = $this->pagerepo->get($id);
 			$pages = $this->pagerepo->getAllToList();
 			if(isset($page)){
