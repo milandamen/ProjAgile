@@ -37,7 +37,7 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IDistrictSectionRepository $districtSectionRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
+		public function __construct(IAddressRepository $addressRepo, IHouseNumberRepository $houseNumberRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
 		{
 			$this->districtSectionRepo = $districtSectionRepo;
 			$this->postalRepo = $postalRepo;
@@ -98,21 +98,25 @@
 		 */
 		public function create($attributes)
 		{
-			//userGroupId is not set when registering
+			//UserGroupId is not set when registering
 			if (!isset($attributes['userGroupId']))
 			{
 				$attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
 			}
 
-			//check if postal code is given. This attribute is only required for residents
-			if ($attributes['postal'] !== '')
+			//Check if postal code and housenumber is provided. These attributes are only required for residents.
+			if (isset($attributes['postal']) && !empty($attributes['postal']) && 
+				isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
 				$postal = $this->postalRepo->getByCode($attributes['postal']);
-				$attributes['districtSectionId'] = $postal->districtSectionId;
+				$houseNumber = $this->houseNumberRepo->getByHouseNumber($attributes['houseNumber'], $attributes['suffix'] ? : null);
+				$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+
+				//Todo delete
 				$attributes['postalId'] = $postal->postalId;
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
-			$attributes['active'] = true;
+			$attributes['active'] = false;
 
 			return User::create($attributes);
 		}
@@ -175,10 +179,5 @@
 			}
 			
 			return false;
-		}
-
-		public function getByPostal($postalId)
-		{
-			return User::where('postalId', $postalId)->first();
 		}
 	}

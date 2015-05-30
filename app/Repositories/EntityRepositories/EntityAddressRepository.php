@@ -64,4 +64,17 @@
 			$model = Address::findOrFail($id);
 			$model->delete();
 		}
+
+		/**
+		 * Returns a Address model depending on the postal- and houseNumber- id's provided.
+		 * 
+		 * @param  int $postal
+		 * @param  int $houseNumber
+		 * 
+		 * @return Address
+		 */ 
+		public function getByPostalHouseNumber($postal, $houseNumber)
+		{
+			return Address::where('postalId', $postal)->where('houseNumber', $houseNumber)->first();
+		}
 	}
