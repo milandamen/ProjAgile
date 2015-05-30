@@ -49,8 +49,8 @@
 	]);
 
 	Route::get('pagina/{id}/zichtbaarheid', 
-		[
-			'as' => 'page.visible',
-			'uses' => 'PageController@switchPublish',
-			'middleware' => 'admin'
-		]);
+	[
+		'as' => 'page.visible',
+		'uses' => 'PageController@switchPublish',
+		'middleware' => 'admin'
+	]);
