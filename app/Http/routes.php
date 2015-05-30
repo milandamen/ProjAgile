@@ -60,6 +60,11 @@
 	include('RoutePartials/_sidebarControllerRoutes.php');
 
 	/**
-	 * UserController routers
+	 * UserController routes
 	 */
 	include ('RoutePartials/_userControllerRoutes.php');
+
+    /**
+     * PostalController routes
+     */
+    include('RoutePartials/_postalControllerRoutes.php');
