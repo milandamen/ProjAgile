@@ -5,3 +5,18 @@
 	color: rgb(255, 255, 255);
 	background-color: rgb(66, 139, 202);
 }
+
+.well.pages {
+	max-height: 600px;
+	overflow: auto;
+}
+
+.well.permissions {
+	max-height: 300px;
+	overflow: auto;
+}
+
+.well.district-sections {
+	max-height: 310px;
+	overflow: auto;"
+}

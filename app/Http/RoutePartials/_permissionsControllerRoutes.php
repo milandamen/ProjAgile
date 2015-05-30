@@ -1,12 +1,12 @@
 <?php
 
-	Route::get('autorisatie/{id}/wijzigen',
+	Route::get('gebruikers/{id}/autorisatie',
 	[
 		'as' => 'permissions.edit',
 		'uses' => 'PermissionsController@editUserPermissions'
 	]);
 
-	Route::post('autorisatie/{id}/wijzigen',
+	Route::post('gebruikers/{id}/autorisatie',
 	[
 		'as' => 'permissions.update',
 		'uses' => 'PermissionsController@updateUserPermissions'

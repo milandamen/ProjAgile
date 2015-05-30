@@ -10,7 +10,7 @@
 							<th>Voornaam</th>
 							<th>Achternaam</th>
 							<th>Email</th>
-							<th colspan="2">Acties</th>
+							<th colspan="3">Acties</th>
 							<th><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign questionIcon" title="Toelichting"></span></a></th>
 						</tr>
 					</thead>
@@ -41,6 +41,11 @@
 											<i class="fa fa-lock fa-lg"></i>
 										</a>
 									@endif
+								</td>
+								<td>
+									<a href="{{ route('user.index') }}" class="right">
+										<i class="fa fa-key"></i>
+									</a>
 								</td>
 							</tr>
 						@endforeach

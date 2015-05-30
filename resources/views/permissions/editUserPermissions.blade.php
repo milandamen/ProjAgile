@@ -11,7 +11,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			{!! Breadcrumbs::render('user.show', $user) !!}
+			{!! Breadcrumbs::render('permissions.edit', $user) !!}
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
@@ -31,7 +31,7 @@
 		<div class="row">
 			<div class="col-xs-5">
 				<h3 class="text-center">Pagina's</h3>
-				<div class="well" style="max-height: 600px;overflow: auto;">
+				<div class="well pages">
 					<ul id="check-list-box-page" class="list-group checked-list-box">
 						@foreach($pages as $page)
 							@if($user->hasPagePermission($page->pageId))
@@ -50,7 +50,7 @@
 			<div class="col-xs-5 col-xs-offset-2">
 				<div class="row">
 					<h3 class="text-center">Onderdelen</h3>
-					<div class="well" style="max-height: 300px;overflow: auto;">
+					<div class="well permissions">
 						<ul id="check-list-box-permission" class="list-group checked-list-box">
 							@foreach($permissions as $permission)
 								@if($user->hasPermission($permission->permissionId))
@@ -66,7 +66,7 @@
 
 				<div class="row">
 					<h3 class="text-center">Nieuws per deelwijk</h3>
-					<div class="well" style="max-height: 310px;overflow: auto;">
+					<div class="well district-sections">
 						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
 								@if($user->hasDistrictSectionPermission($districtSection->districtSectionId))
@@ -82,8 +82,6 @@
 			</div>
 
 		</div>
-
-
 
 		{!! link_to_route('user.index', 'Terug naar Gebruiker Beheer', [], ['class' => 'btn btn-danger']) !!}
 		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}

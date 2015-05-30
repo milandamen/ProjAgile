@@ -12,6 +12,7 @@
 	use App\Models\Permission;
 
 	use Auth;
+	use Redirect;
 
 
 	class PermissionsController extends Controller {
@@ -59,31 +60,17 @@
 			$permissionSelectionString = $request->get('permissionSelection');
 			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
 
-			var_dump($permissionSelectionArray);
-
 			//update database
 			$user = $this->userRepo->get($userId);
 			$user->pages()->sync($pageSelectionArray);
 			$user->districtSections()->sync($districtSectionSelectionArray);
 			$user->permissions()->sync($permissionSelectionArray);
 
-			//$perm = $user->hasPagePermission(30);
-
-			//$districtSections = $user->districtSections;
-			//$permissions = $this->permissionsRepo->get($userId);
-			//var_dump($permissions);
-
-			//check if the current user has a userpermissions entry in the database. If not, create one.
-
-			//UserPermissions::create(['userId' => 4, 'menu' => true, 'footer' => true, 'carousel' => true, 'homepage' => true, 'permissions' => true]);
-
-
-
-			return 'updated user permissions';
+			return redirect::route('user.index');
 		}
 
 		/**
-		 * Convert array of string to array of ints
+		 * Convert array of strings to array of ints
 		 *
 		 * @param $stringArray
 		 * @return array
