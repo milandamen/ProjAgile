@@ -2,14 +2,11 @@
 	namespace App\Http\Controllers;
 
 	use App\Http\Requests;
-	use App\Http\Controllers\Controller;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPermissionRepository;
 	use Illuminate\Http\Request;
-	use App\Models\User;
-	use App\Models\Permission;
 
 	use Auth;
 	use Redirect;
