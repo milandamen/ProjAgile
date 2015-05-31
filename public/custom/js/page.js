@@ -14,8 +14,8 @@ function newPanel(size)
 	newPanelDiv.innerHTML = label + inputtitle + inputcontent + hiddenfield;
 	pagePanelsDiv.appendChild(newPanelDiv);
 
-	//summer();
 	panelIndex++;
+
 }
 
 function removePanel(link)
@@ -251,34 +251,50 @@ function getPreview(){
 }
 
 
-// Event listeners for live preview!
-$( "textarea" ).on(
-	"keypress",
-	function( eventObject ) {
-		var previewDiv = $('.preview');
-		if(previewDiv.css("display") === "block"){
-			getPreview();
+	// Event listeners for live preview!
+	//for standard input objects
+	$( "input" ).on(
+		"keypress keyup keydown",
+		function( eventObject ) {
+			var previewDiv = $('.preview');
+			if(previewDiv.css("display") === "block"){
+				getPreview();
+			}
 		}
-	}
-);
+	);
 
-$( "input" ).on(
-	"keypress",
-	function( eventObject ) {
-		var previewDiv = $('.preview');
-		if(previewDiv.css("display") === "block"){
-			getPreview();
-		}
-	}
-);
 
-$('#summernote').summernote({
-	onChange: function() {
-		var previewDiv = $('.preview');
-		if(previewDiv.css("display") === "block"){
-			getPreview();
+	$('#summernote').summernote({
+		onChange: function() {
+			var previewDiv = $('.preview');
+			if(previewDiv.css("display") === "block"){
+				getPreview();
+			}
+	}});
+
+
+	// for existing and new panel elements
+	// the selector needs to be set on a existing element that contains the new element.
+
+	$( "#newPanels" ).on(
+		'keypress keyup keydown', '.summer',
+		function( eventObject ) {
+			var previewDiv = $('.preview');
+			if(previewDiv.css("display") === "block"){
+				getPreview();
+			}
 		}
-}});
+	);
+
+	$( "#newPanels" ).on(
+		"keypress keyup keydown", '.titlevalue',
+		function( eventObject ) {
+			var previewDiv = $('.preview');
+			if(previewDiv.css("display") === "block"){
+				getPreview();
+			}
+		}
+	);
 
 
 
@@ -322,3 +338,6 @@ function switchPanels(old, current)
 	current.getElementsByClassName("titlevalue")[0].value = oldValue;
 	current.getElementsByClassName("summer")[0].value = oldContent;
 }
+
+
+
