@@ -19,6 +19,14 @@
     <div class="container">
         <div class="row">
             {!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}
+
+            {!! Form::open(array('action' => 'Controller@method') !!}
+
+                {!! Form::file('Excel');
+
+            {!! Form::close() !!}
+
+
         </div>
 
     </div>
