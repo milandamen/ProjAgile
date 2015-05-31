@@ -2,7 +2,8 @@
 	namespace App\Repositories\EntityRepositories;
 
 	use App\Models\User;
-	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
+	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
@@ -11,12 +12,18 @@
 	class EntityUserRepository implements IUserRepository
 	{
 		/**
-		 * The DistrictSectionRepository implementation.
+		 * The AddressRepository implementation.
 		 * 
-		 * @var IDistrictSectionRepository
+		 * @var IAddressRepository
 		 */
-		private $districtSectionRepo;
+		private $addressRepo;
 
+		/**
+		 * The HouseNumberRepository implementation.
+		 * 
+		 * @var IHouseNumberRepository
+		 */
+		private $houseNumberRepo;
 
 		/**
 		 * The PostalRepository implementation.
@@ -39,7 +46,8 @@
 		 */
 		public function __construct(IAddressRepository $addressRepo, IHouseNumberRepository $houseNumberRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
 		{
-			$this->districtSectionRepo = $districtSectionRepo;
+			$this->addressRepo = $addressRepo;
+			$this->houseNumberRepo = $houseNumberRepo;
 			$this->postalRepo = $postalRepo;
 			$this->userGroupRepo = $userGroupRepo;
 		}
@@ -87,7 +95,6 @@
 
 			return $users->where('userGroupId', $userGroupId);
 		}
-
 
 		/**
 		 * Creates a User record in the database.

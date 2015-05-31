@@ -26,17 +26,36 @@
 		}
 
 		/**
+		 * Validates if the provided postal, housenumber and suffix combination exists.
+		 * 
+		 * @param  array()	$attribute
+		 * @param  array()	$value
+		 * @param  array()	$parameters
+		 * 
+		 * @return boolean
+		 */
+		protected function validateAddressExists($attribute, $value, $parameters)
+		{
+			$postal = $this->postalRepo->getByCode($value);
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($data['houseNumber'], $data['houseNumber'] ? : null);
+			$address = $this->houseNumberRepo->getByHouseNumberSuffix($postal->postalId, $houseNumber->houseNumberId);
+
+			return !isset($address);
+		}
+
+		/**
 		 * Validates if the provided postal is already in use by another user.
 		 * 
 		 * @param array()	$attribute
 		 * @param array()	$value
+		 * @param array()	$parameters
 		 * 
 		 * @return boolean
 		 */
-		protected function validateIsPostalNotInUse($attribute, $value, $parameters)
+		protected function validateIsAddressNotInUse($attribute, $value, $parameters)
 		{
 			$postal = $this->postalRepo->getByCode($value);
-			$user = $this->userRepo->getByPostal($postal->postalId);
+
 
 			return !isset($user);
 		}
