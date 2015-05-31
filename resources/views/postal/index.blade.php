@@ -13,7 +13,7 @@
         <div class="row">
             {{--{!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}--}}
             {!! Breadcrumbs::render('postal.index') !!}
-            {!! Form::open(array('action' => 'Controller@method') !!}
+            {!! Form::open() !!}
 
                 {!! Form::file('Excel') !!}
 
