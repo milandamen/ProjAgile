@@ -1,11 +1,16 @@
 <?php
 namespace App\Http\Controllers;
+
     use App\Repositories\RepositoryInterfaces\IPostalRepository;
     use App\Repositories\RepositoryInterfaces\IAddressRepository;
     use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 
     class PostalController extends Controller
     {
+        private $postalRepo;
+        private $addressRepo;
+        private $houseNumberRepo;
+
         /**
          * Creates a new PostalController instance.
          *
@@ -13,14 +18,12 @@ namespace App\Http\Controllers;
          * @param IAddressRepository        $addressRepo
          * @param IHouseNumberRepository    $houseNumberRepo
          *
-         * @return void
          */
         public function __construct(IPostalRepository $postalRepo, IAddressRepository $addressRepo,  IHouseNumberRepository $houseNumberRepo)
         {
             $this->postalRepo = $postalRepo;
             $this->addressRepo = $addressRepo;
             $this->houseNumberRepo = $houseNumberRepo;
-
         }
 
         /**

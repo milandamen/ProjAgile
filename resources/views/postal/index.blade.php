@@ -1,10 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ron
- * Date: 30-5-2015
- * Time: 14:44
- */
 @extends('app')
 
 @section('title')
@@ -18,11 +11,11 @@
 @section('content')
     <div class="container">
         <div class="row">
-            {!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}
-
+            {{--{!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}--}}
+            {!! Breadcrumbs::render('postal.index') !!}
             {!! Form::open(array('action' => 'Controller@method') !!}
 
-                {!! Form::file('Excel');
+                {!! Form::file('Excel') !!}
 
             {!! Form::close() !!}
 
