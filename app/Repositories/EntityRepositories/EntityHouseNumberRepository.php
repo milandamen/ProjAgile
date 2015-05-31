@@ -73,8 +73,8 @@
 		 * 
 		 * @return HouseNumber
 		 */ 
-		public function getByHouseNumberSuffix($houseNumber, $suffix = null)
+		public function getByHouseNumberSuffix($houseNumber, $suffix)
 		{
-			return HouseNumber::where('houseNumber', $houseNumber)->where('suffix', $suffix)->first();
+			return HouseNumber::where('houseNumber', '=', $houseNumber)->where('suffix', '=', $suffix)->first();
 		}
 	}

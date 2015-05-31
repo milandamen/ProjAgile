@@ -75,6 +75,6 @@
 		 */ 
 		public function getByPostalHouseNumber($postal, $houseNumber)
 		{
-			return Address::where('postalId', $postal)->where('houseNumber', $houseNumber)->first();
+			return Address::where('postalId', '=', $postal)->where('houseNumber', '=', $houseNumber)->first();
 		}
 	}

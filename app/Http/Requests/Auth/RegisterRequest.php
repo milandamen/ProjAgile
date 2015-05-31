@@ -32,18 +32,20 @@
 				'firstName' 			=> 'required|max:50',
 				'insertion' 			=> 'max:30',
 				'surname' 				=> 'required|max:80',
-				'houseNumber' 			=> 'required|integer|digits_between:1,8',
-				'suffix' 				=> 'max:1',
+				'houseNumber' 			=> 'required|integer|digits_between:1,8|exists:housenumber,houseNumber',
+				'suffix' 				=> 'max:1|exists:housenumber,suffix',
 				'postal' 				=> 'required|min:6|max:7|exists:postal,code',
 				'email' 				=> 'required|confirmed|max:60|email|unique:user,email',
 				'email_confirmation' 	=> 'required',
 				'g-recaptcha-response' 	=> 'required|recaptcha',
 			];
 			$postalRepo = \App::make('App\Repositories\RepositoryInterfaces\IPostalRepository');
+			$houseNumberRepo = \App::make('App\Repositories\RepositoryInterfaces\IHouseNumberRepository');
 
-			if($postalRepo->getByCode($this->only('postal')) != null)
+			if($postalRepo->getByCode($this->only('postal')) != null &&
+			   $houseNumberRepo->getByHouseNumberSuffix($this->only('houseNumber'), $this->only('suffix') ? : null) !== null)
 			{
-				$rules['postal'] = $rules['postal'] . '|is_postal_not_in_use';
+				$rules['postal'] = $rules['postal'] . '|address_exists|is_address_not_in_use';
 			}
 
 			return $rules;
