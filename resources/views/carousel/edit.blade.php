@@ -30,6 +30,7 @@
 						<thead>
 							<tr>
 								<th class="cu-smallcol">Index</th>		<!-- Index -->
+								<th class="cu-smallcol">Soort</th>		<!-- Sort -->
 								<th class="cu-smallcol">ID</th>			<!-- Article ID -->	
 								<th class="fullwidth">Beschrijving</th>	<!-- Article title -->	
 								<th>Image</th>
@@ -40,16 +41,43 @@
 						</thead>
 						<tbody id="articlelist">
 							@foreach ($carousel as $article)
-								@if ($article->news->hidden == 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
-									<tr class="slightlyRed">
-									{{-- */ $someRed = true; /* --}}
-								@else
-									<tr>
+								@if($article->news != null)
+									@if ($article->news->hidden == 1 || $article->news->publishStartDate > $curDate || $article->news->publishEndDate < $curDate)
+										<tr class="slightlyRed">
+										{{-- */ $someRed = true; /* --}}
+									@else
+										<tr>
+									@endif
 								@endif
 									<td></td>
 									<td>
-										<input type="text" name="artikel[0]" value="{{ $article->news->newsId }}" class="hiddenInput"/>
-										<span>{{ $article->news->newsId }}</span>
+										@if($article->news != null)
+											Nieuws
+										@elseif($article->page != null)
+											Pagina
+										@else
+											Carousel item
+										@endif
+									</td>
+									<td>
+										<input type="text" name="artikel[0]" value="
+										@if($article->news != null)
+											{{ $article->news->newsId }}
+										@elseif($article->page != null)
+											{{$article->page->pageId}}
+										@else
+												Carousel-item
+										@endif
+										 " class="hiddenInput"/>
+										<span>
+											@if($article->news != null)
+												{{ $article->news->newsId }}
+											@elseif($article->page != null)
+												{{$article->page->pageId}}
+											@else
+												{{$article->carouselId}}
+											@endif
+										</span>
 									</td>
 									<td>
 										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>
