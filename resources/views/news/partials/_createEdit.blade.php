@@ -1,7 +1,7 @@
-
 <div class="form-group col-md-12 no-padding">
 		<h4> Algemene instellingen </h4>
 	<div class="col-md-3 no-padding">
+
 		{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
@@ -10,9 +10,9 @@
 				</span>' 
 			!!}
 		</div>
+
 	</div>
-	<div class="col-md-3"></div>
-	<div class="col-md-3 no-padding">
+	<div class="col-md-offset-3 col-md-3 no-padding">
 		{!! Form::label('publishEndDate', 'Einde Publicatiedatum') !!}
 		<div class="input-group date">
 			{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
@@ -23,42 +23,40 @@
 		</div>
 	</div>
 </div>
-
-
 <div class="form-group col-md-12 no-padding addmargin">
-	<div class="col-md-12 no-padding">
+	<div class="col-md-3 no-padding">
 		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
-		<!-- <button id="newDistrictSection" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+		<button id="newDistrictSection" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
 			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button> -->
+		</button>
 	</div>
-	<div class="col-md-4 no-padding">
-		<table name="districtSections" >
-			@if(isset($newsItem->districtSectionId))
-				{!! '<tr>
-					<td>' . Form::select('districtSection[0]', $districtSections, $newsItem->districtSectionId, ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
-					<!-- <td>
-						<button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+	<div id="districts" class="row clear addmargin">
+			@if(count($newsItem->districtSections) > 0)
+
+				@foreach($newsItem->districtSections as $district)
+					<div class="col-md-6 districtBox addmargin">
+						<div class="col-md-6 no-padding">
+							{!! Form::select('districtSection[]', $districtSections, $district->districtSectionId, ['class' => 'form-control districtSelect']) !!}
+						</div>
+						<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
+							<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
 						</button>
-					</td> -->
-				</tr>
+					</div>
+				@endforeach
+
 			@else
-				{!! '<tr>
-					<td>' . Form::select('districtSection[0]', $districtSections, old('districtSectionId'), ['id' => 'districtSection', 'class' => 'form-control']) . '</td>' !!}
-					<td>
-						<!-- <button name="deleteDistrictSection" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-							<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</button> -->
-					</td>
-				</tr>
+				<div class="col-md-6 districtBox addmargin">
+					<div class="col-md-6 no-padding">
+						{!! Form::select('districtSection[]', $districtSections, null, ['class' => 'form-control districtSelect']) !!}
+					</div>
+					<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
+						<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
+					</button>
+				</div>
+
 			@endif
-		</table>
 	</div>
 </div>
-
-
-
 <div class="form-group col-md-12 no-padding">
 	<h4> Nieuws bericht </h4>
 	<div class="col-md-12 no-padding">
@@ -76,51 +74,61 @@
 		{!! Form::textarea('content', old('content'), ['placeholder' => 'Content', 'class' => 'form-control', 'id' => 'summernote']) !!}
 	</div>
 </div>
-
-
 <div class="form-group">
-	
 	<div class="col-md-12 no-padding addmargin">
 		<div class="col-md-9 no-padding">
-
-	{!! Form::label('fileUpload', 'Bestanden Toevoegen') !!}
-	<button id="newFile" style="margin-left: 10px" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
-		<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-	</button>
-	<table name="fileUpload" class="table col-md-12">
-				@if(isset($files))
-					@for ($i = 0; $i < count($files); $i++)
+			<table name="fileCurrent" class="table col-md-12">
+				<thead>
+					<tr>
+						<th class="col-md-9">Huidige bestanden</th>
+						<th class="col-md-3" colspan="2"><span class="floatRight">Verwijder</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if(isset($files) && count($files))
+						@for ($i = 0; $i < count($files); $i++)
+							<tr>
+								<td>{{ $files[$i]->path }}</td>
+								<td>
+									<a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a>
+								</td>
+								<td>
+									<input type="checkbox" name="removefile[{{ $files[$i]->fileId }}]" />
+								</td>
+							</tr>
+						@endfor
+					@else
 						<tr>
-							<td><a href="{{ asset('uploads/file/news/' . $files[$i]->path) }}" target="_blank">Bekijk huidig</a></td>
-							<td> </td>
+							<td>Dit artikel heeft geen bestanden.</td>
 						</tr>
-					@endfor
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td>
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</td>
-					</tr>
-				@else
-					{!! '<tr>
-						<td>' . Form::file('file[0]', ['id' => 'file', 'çlass' => 'form-control']) . '</td>' !!}
-						<td style="width: 22px">
-							<button name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
-								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-							</button>
-						</td>
-					</tr>
-				@endif
+					@endif
+				</tbody>
 			</table>
+			<table name="fileUpload" class="table col-md-12">
+				<thead>
+					<tr>
+						<th>Bestanden toevoegen</th>
+						<th>
+							<a id="newFile" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{!! Form::file('file[0]', ['id' => 'file']) !!}</td>
+						<td>
+							<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
-</div>
-
-
-
-
 <div class="form-group col-md-12 no-padding addmargin">
 	<div class="col-md-4 no-padding">
 		{!! Form::label('hidden', 'Verbergen?') !!}<br/>
@@ -156,10 +164,9 @@
 		</div>
 	</div>
 </div>
-
 <div class="form-group">
 	<div class="col-md-12 no-padding">
-		{!! Form::submit($submitButton, ['class' => 'btn btn-default']) !!}
-        {!! HTML::linkRoute('news.manage', 'Annuleer', [], ['class' => 'btn btn-danger']) !!}
+		{!! link_to_route('news.manage', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
+		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
 	</div>
 </div>

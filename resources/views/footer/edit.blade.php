@@ -1,74 +1,104 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Footer Wijzigen
+@stop
+
+@section('description')
+	Dit is de beveiligde footer wijzig pagina van De Bunders.
+@stop
+
 @section('content')
-<div class="container">
-    <div class="row">
-        {!! Breadcrumbs::render('editfooter') !!}
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <h1>Wijzig Footer</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            {!! Form::open(['route' => 'footer.postEdit', 'method' => 'POST']) !!}
-                <hr/>
-                <input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
-                <input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
-                <div id="footer-tables" class="col-sm-8">
-                    @for($c = 0; $c < count($footer); $c++)
-                        <table name="{{$c}}" class="col-sm-7 form-group">
-                            <tr>
-                                <td>
-                                    <button type="button" onclick="addRow(this)" class="btn btn-primary btn-sm">Voeg link toe</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                            </tr>
+	<div class="container">
+		<div class="row">
+			{!! Breadcrumbs::render('footer.edit') !!}
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>Footer Wijzigen</h1>
+			</div>
+		</div>
+		<div class="row">
+			@include('flash::message')
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				{!! Form::open(['route' => 'footer.update', 'method' => 'POST', 'onsubmit' => 'newOnSiteValidate();']) !!}
+				<hr/>
 
-                        @for($r = 0; $r < count($footer[$c]); $r++)
-                            <tr>
-                                <td>
-                                    Tekst: <input type="text" name="footer[{{$c}}][text][]" id="footerText" value="{{$footer[$c][$r]->text}}" maxlength="22 " required>
-                                </td>
-                                <td>
-    								Link: &nbsp; <input type="text" name="footer[{{$c}}][link][]" class="autocomplete" id="footerLink" value="{{$footer[$c][$r]->link}}">
-                                </td>
-                                <td>
-                                	@if($r >= 1)
-                                    <button type="button" onclick="removeRow(this)" class="btn btn-danger btn-xs">X</button>
-                                    @else 
-                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
-                                    @endif
-                                </td>
+				@if(count($footer) < 4)
+					<h3>Er is een probleem met de footer tabel in de database, er moeten 4 lege velden aanwezig zijn met id's 1 t/m 4!</h3>
+				@endif
 
-                            </tr>
-                        @endfor
-                        </table>
-                    @endfor
-                </div>
-                <div id="success" class="col-lg-12">
-                    <br/>
-                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('admin.index', '')}}'">Annuleren</button>
-                    <button type="submit" class="btn btn-success" onclick="validate()">Opslaan</button>
-                </div>
-            {!! Form::close() !!}
-        </div>
-    </div>
-</div>
+				@if(count($footer) > 3)
 
-<script>
-    var autocompleteURL = "{!! route('autocomplete.autocomplete', '') !!}";
-</script>
+					<!---1, because id 4 is for the color-->
+					@for($c = 0; $c < count($footer) - 1; $c++)
+						<div class="col-md-4 footerCol">
+							<h2>Kolom {{$c + 1}}</h2>
+							{!! Form::textarea('column[]', $footer[$c]->text, ['placeholder' => 'Tekst', 'class' => 'form-control summernote']) !!}
+						</div>
+					@endfor
+					<div class="row">
+						<div class="form-group col-sm-4">
+							<br/>
+							<label class="control-label col-sm-2">Kleur:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control footerColor" name="footerColor" placeholder="#FFF"
+										@if($footer[3] != null)
+											value="{{$footer[3]->text}}"
+										@endif
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-8" id="newOnSiteGroupPage">
+							<div class="col-md-5">
+							{!! Form::label('newOnSite', 'Tonen op nieuw op de site?', ['class' => 'label-form']) !!}<br/>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default">
+									<input type="radio" class="newOnSite" name="newOnSite" value="true">Ja
+								</label>
+								<label class="btn btn-default active">
+									<input type="radio" class="newOnSite" name="newOnSite" value="false" checked="true">Nee
+								</label>
+							</div>
+						</div>
+						</div>
+					</div>
+
+					<div id="success" class="col-lg-12">
+						<br/>
+						<button type="button" class="btn btn-danger" onclick="location.href='{{route('management.index', '')}}'">Annuleren</button>
+						<a onclick="getPreview()" class="btn btn-warning">Preview</a>
+						{!! Form::submit("Opslaan", ['class' => 'btn btn-success']) !!}
+					</div>
+				@endif
+				{!! Form::close() !!}
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="preview">
+				<div class="previewFooter addmargin">
+				</div>
+				<a onclick="hidePreview()" class="btn btn-danger hidepreview" >Hide preview</a> 	
+			</div>
+
+		</div>
+
+
+
+
+	</div>
 @endsection
 
 @section('additional_scripts')
-    <!-- JavaScript that enables adding and removing columns and rows -->
-    {!! HTML::script('custom/js/footerUpdate.js') !!}
-    {!! HTML::script('custom/js/autocomplete.js') !!}
-    {!! HTML::script('custom/js/validateNewOnSite.js') !!}
-@endsection
-
-
+	{!! HTML::script('summernote/js/summernote.js') !!}
+	{!! HTML::script('custom/js/summernoteFunctions.js') !!}
+	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
+	{!! HTML::script('custom/js/flash_message.js') !!}
+	{!! HTML::script('custom/js/footer.js') !!}
+@stop

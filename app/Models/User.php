@@ -1,4 +1,5 @@
-<?php namespace App\Models;
+<?php 
+	namespace App\Models;
 
 	use Illuminate\Auth\Authenticatable;
 	use Illuminate\Database\Eloquent\Model;
@@ -38,14 +39,14 @@
 		 */
 		protected $fillable = 
 		[
-			'userGroupId', 
-			'districtSectionId',
+			'userGroupId',
+			'addressId',
 			'postalId',
 			'username',
-			'firstName', 
+			'firstName',
+			'insertion',
 			'surname',
-            'password',
-			'houseNumber', 
+			'password',
 			'email', 
 			'active',
 			'remember_Token'
@@ -66,30 +67,30 @@
 		 * 
 		 * @var array
 		 */
-	    protected $hidden =
-	    [
-	        'password',
-	        'remember_Token'
-	    ];
+		protected $hidden =
+		[
+			'password',
+			'remember_Token'
+		];
 
 		/**
-		 * Get all Comment models that reference this User model.
+		 * Get the Address model that is referenced in this User model.
 		 * 
-		 * @return Collection -> Comment
+		 * @return Address
 		 */
-		public function comments()
+		public function address()
 		{
-	        return $this->hasMany('App\Models\Comment', 'userId');
+			return $this->belongsTo('App\Models\Address', 'addressId');
 		}
 
 		/**
-		 * Get the DistrictSection model that is referenced in this User model.
-		 * 
-		 * @return DistrictSection
+		 * Get all DistrictSection models that reference this User model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
 		 */
-		public function districtSection() 
+		public function districtSections()
 		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
 		}
 
 		/**
@@ -99,7 +100,7 @@
 		 */
 		public function news()
 		{
-	        return $this->hasMany('App\Models\News', 'userId');
+			return $this->hasMany('App\Models\News', 'userId');
 		}
 
 		/**
@@ -109,7 +110,27 @@
 		 */
 		public function newsComments()
 		{
-	        return $this->hasMany('App\Models\NewsComment', 'userId');
+			return $this->hasMany('App\Models\NewsComment', 'userId');
+		}
+
+		/**
+		 * Get all Page models that reference this User model (permissions).
+		 *
+		 * @return Collection -> Page
+		 */
+		public function pages()
+		{
+			return $this->belongsToMany('App\Models\Page', 'pagepermissions', 'userId', 'pageId');
+		}
+
+		/**
+		 * Get all Permission models that reference this User model (permissions).
+		 *
+		 * @return Collection -> Permission
+		 */
+		public function permissions()
+		{
+			return $this->belongsToMany('App\Models\Permission', 'userpermissions', 'userId', 'permissionId');
 		}
 
 		/**
@@ -120,16 +141,6 @@
 		public function postal()
 		{
 			return $this->belongsTo('App\Models\Postal', 'postalId');
-		}
-
-		/**
-		 * Get all Topic models that reference this User model.
-		 * 
-		 * @return Collection -> Topic
-		 */
-		public function topics()
-		{
-	        return $this->hasMany('App\Models\Topic', 'userId');
 		}
 
 		/**

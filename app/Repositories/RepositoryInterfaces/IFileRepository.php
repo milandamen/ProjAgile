@@ -1,8 +1,9 @@
 <?php
-    namespace App\Repositories\RepositoryInterfaces;
+	namespace App\Repositories\RepositoryInterfaces;
 
-    interface IFileRepository extends IBaseRepository
-    {
-        public function getAllByNewsId($newsId);
-        public function deleteAllByNewsId($newsId);
-    }
+	interface IFileRepository extends IBaseRepository
+	{
+		public function getAllByNewsId($newsId);
+		public function deleteAllByNewsId($newsId);
+		public function deleteByFileId($fileId);
+	}

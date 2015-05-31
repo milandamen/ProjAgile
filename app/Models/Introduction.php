@@ -1,56 +1,56 @@
 <?php
-    namespace App\Models;
+	namespace App\Models;
 
-    use Illuminate\Database\Eloquent\Model;
+	use Illuminate\Database\Eloquent\Model;
 
-    class Introduction extends Model 
-    {
-        /**
-         * Table name.
-         * 
-         * @var string
-         */
-        protected $table = 'introduction';
+	class Introduction extends Model 
+	{
+		/**
+		 * Table name.
+		 * 
+		 * @var string
+		 */
+		protected $table = 'introduction';
 
-        /**
-         * PrimaryKey name.
-         * 
-         * @var string
-         */
-        protected $primaryKey = 'introductionId';
+		/**
+		 * PrimaryKey name.
+		 * 
+		 * @var string
+		 */
+		protected $primaryKey = 'introductionId';
 
-        /**
-         * Laravel's automatic timestamps convention.
-         * 
-         * @var bool
-         */
-        public $timestamps = false;
+		/**
+		 * Laravel's automatic timestamps convention.
+		 * 
+		 * @var bool
+		 */
+		public $timestamps = false;
 
-        /**
-         * Attributes that can be changed and thus are mass assingable.
-         * 
-         * @var array
-         */
-        protected $fillable = 
-        [
-           	'title',
-        	'subtitle', 
-        	'text'
-        ];
+		/**
+		 * Attributes that can be changed and thus are mass assingable.
+		 * 
+		 * @var array
+		 */
+		protected $fillable = 
+		[
+			'title',
+			'subtitle', 
+			'text'
+		];
 
-        /**
-         * Attributes that cannot be changed and thus are not mass assingable.
-         * 
-         * @var array
-         */
-        protected $guarded = 
-        [
-        	'introductionId'
-        ];
+		/**
+		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * 
+		 * @var array
+		 */
+		protected $guarded = 
+		[
+			'introductionId'
+		];
 
 
-        public function page()
+		public function page()
 		{
-	        return $this->belongsTo('App\Models\Page', 'introduction_introductionId');
+			return $this->belongsTo('App\Models\Page', 'introduction_introductionId');
 		}
-    }
+	}
