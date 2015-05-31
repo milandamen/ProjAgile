@@ -6,7 +6,7 @@
             'middleware' => 'admin'
         ]);
 
-    Route::get('postcodebeheer/upload',
+    Route::post('postcodebeheer/upload',
         [
             'as' => 'postal.upload',
             'uses' => 'PostalController@upload',

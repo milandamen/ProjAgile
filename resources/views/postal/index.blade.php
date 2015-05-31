@@ -13,9 +13,10 @@
         <div class="row">
             {{--{!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}--}}
             {!! Breadcrumbs::render('postal.index') !!}
-            {!! Form::open() !!}
+            {!! Form::open(array('route' => 'postal.upload', 'files' => 'true')) !!}
 
                 {!! Form::file('Excel') !!}
+                {!! Form::submit('Bevestig') !!}
 
             {!! Form::close() !!}
 
