@@ -3,5 +3,5 @@
 
 	interface IAddressRepository extends IBaseRepository
 	{
-		
+		public function getByPostalHouseNumber($postal, $houseNumber);	
 	}

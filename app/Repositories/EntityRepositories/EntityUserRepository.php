@@ -104,20 +104,22 @@
 				$attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
 			}
 
-			//Check if postal code and housenumber is provided. These attributes are only required for residents.
+			//Check if postal and housenumber are provided. These attributes are only required for residents.
 			if (isset($attributes['postal']) && !empty($attributes['postal']) && 
 				isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
 				$postal = $this->postalRepo->getByCode($attributes['postal']);
-				$houseNumber = $this->houseNumberRepo->getByHouseNumber($attributes['houseNumber'], $attributes['suffix'] ? : null);
+				$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null);
 				$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+
+				$attributes['addressId'] = $address->addressId;
 
 				//Todo delete
 				$attributes['postalId'] = $postal->postalId;
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
 			$attributes['active'] = false;
-
+			dd($attributes);
 			return User::create($attributes);
 		}
 
