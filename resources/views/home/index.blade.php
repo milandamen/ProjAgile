@@ -10,11 +10,11 @@
 
 @section('content')
 	<div class="container">
-		{{--<div class="row">--}}
-			{{--<div class="col-md-12">--}}
-				{{--@include('home.partials._module-carousel')--}}
-			{{--</div>--}}
-		{{--</div>--}}
+		<div class="row">
+			<div class="col-md-12">
+				@include('home.partials._module-carousel')
+			</div>
+		</div>
 		@include('flash::message')
 		<div class="row">
 			<div class="col-md-12">
