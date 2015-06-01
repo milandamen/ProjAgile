@@ -91,17 +91,18 @@
 		[
 			'password' =>
 			[
-				'is_password_strong_enough' => 'Het ingevulde wachtwoord voldoet niet aan de minimale sterkte. 
+				'is_password_strong_enough'	=> 'Het ingevulde wachtwoord voldoet niet aan de minimale sterkte. 
 												Het wachtwoord moet minimaal 1 getal, 1 speciaal karakter en 1 hoofdletter 
 												bevatten en moet minimaal 8 karakters lang zijn.',
 			],
-			'postal' =>
+			'postal' 						=>
 			[
-				'is_postal_not_in_use' => 'De ingevulde postcode is al geregistreerd in ons systeem. Neem alstublieft contact met ons op.',
+				'address_exists'			=> 'De ingevulde adresgegevens bestaan niet binnen ons systeem.',
+				'is_address_not_in_use' 	=> 'De ingevulde adresgegevens zijn al door een andere gebruiker geregistreerd in ons systeem. Neem alstublieft contact met ons op.',
 			],
-			'g-recaptcha-response' =>
+			'g-recaptcha-response' 			=>
 			[
-				'recaptcha' => '',
+				'recaptcha' 				=> '',
 			],
 		],
 		
@@ -127,6 +128,7 @@
 			'suffix'				=> 'Toevoeging',
 			'postal'				=> 'Postcode',
 			'email'					=> 'E-mailadres',
+			'email_confirmation'	=> 'Heraal E-mailadres',
 			'title'					=> 'Titel',
 			'content'				=> 'Content',
 			'publishStartDate'		=> 'Publicatiedatum',
