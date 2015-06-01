@@ -15,13 +15,14 @@
 		</div>
 			<div class="col-lg-12">
 				<h2 class="page-header">Menu Wijzigen</h2>
-
-				<div id="picker"></div>
-				
 				<a class="btn btn-success white pull-left" href="{{ route('menu.create') }}" role="button">Nieuw menu item aanmaken</a>
 				{!! Form::open(['id' => 'menuForm','method' => 'PATCH']) !!}
 				<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
 				<a class="btn btn-danger pull-right" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
+
+				<br><br><br>
+				<div id="picker">{!! Form::hidden('menucolor', '', ['id' => 'menucolor' ]) !!}</div>
+
 				<ul class='space first-space' id='fullMenuList'>
 					@foreach($allMenuItemsEdit as $subMenu)
 						<li class='route'>
@@ -58,6 +59,8 @@
 	</div>
     <script>
         var getSwitchPublishMenuURL = "{!! route('menu.switchPublish', '') !!}";
+		//set the color in colorpicker from db
+		var color = "{!! $menuColor->color !!}";
     </script>
 @stop
 

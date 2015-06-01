@@ -59,7 +59,7 @@
 		 * 
 		 * @return void
 		 */
-		public function destroy($id)
+		public function destroy($item)
 		{
 			$model = StyleSetting::findOrFail($item);
 			$model->delete();
