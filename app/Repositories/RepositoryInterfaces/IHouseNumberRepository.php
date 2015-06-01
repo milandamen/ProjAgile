@@ -1,7 +1,7 @@
 <?php
 	namespace App\Repositories\RepositoryInterfaces;
 
-	interface IProjectRepository extends IBaseRepository
+	interface IHouseNumberRepository extends IBaseRepository
 	{
-
+		
 	}

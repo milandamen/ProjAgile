@@ -27,18 +27,19 @@
 		public $timestamps = false;
 
 		/**
-		 * Attributes that can be changed and thus are mass assingable.
+		 * Attributes that can be changed and thus are mass assignable.
 		 * 
 		 * @var array
 		 */
 		protected $fillable = 
 		[
-			'newsId', 
+			'newsId',
+			'pageId',
 			'imagePath'
 		];
 
 		/**
-		 * Attributes that cannot be changed and thus are not mass assingable.
+		 * Attributes that cannot be changed and thus are not mass assignable.
 		 * 
 		 * @var array
 		 */
@@ -55,5 +56,15 @@
 		public function news() 
 		{
 			return $this->belongsTo('App\Models\News', 'newsId');
+		}
+
+		/**
+		 * Get the Page model that is referenced in this Carousel model.
+		 *
+		 * @return Page
+		 */
+		public function page()
+		{
+			return $this->belongsTo('App\Models\Page', 'pageId');
 		}
 	}

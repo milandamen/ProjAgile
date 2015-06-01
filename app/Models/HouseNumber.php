@@ -3,59 +3,57 @@
 
 	use Illuminate\Database\Eloquent\Model;
 
-	class Project extends Model 
+	class HouseNumber extends Model
 	{
 		/**
 		 * Table name.
-		 * 
+		 *
 		 * @var string
 		 */
-		protected $table = 'project';
+		protected $table = 'housenumber';
 
 		/**
 		 * PrimaryKey name.
-		 * 
+		 *
 		 * @var string
 		 */
-		protected $primaryKey = 'projectId';
+		protected $primaryKey = 'houseNumberId';
 
 		/**
 		 * Laravel's automatic timestamps convention.
-		 * 
+		 *
 		 * @var bool
 		 */
 		public $timestamps = false;
 
 		/**
 		 * Attributes that can be changed and thus are mass assingable.
-		 * 
+		 *
 		 * @var array
 		 */
-		protected $fillable = 
+		protected $fillable =
 		[
-			'districtSectionId', 
-			'title',
-			'content',
-			'hidden',
+			'houseNumber',
+			'suffix',
 		];
 
 		/**
 		 * Attributes that cannot be changed and thus are not mass assingable.
-		 * 
+		 *
 		 * @var array
 		 */
-		protected $guarded = 
+		protected $guarded =
 		[
-			'projectId'
+			'houseNumberId'
 		];
 
 		/**
-		 * Get the DistrictSection model that is referenced in this Project model.
+		 * Get all Address models that reference this HouseNumber model.
 		 * 
-		 * @return DistrictSection
+		 * @return Collection -> Address
 		 */
-		public function districtSection() 
+		public function address()
 		{
-			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+			return $this->hasMany('App\Models\Address', 'houseNumberId');
 		}
 	}
