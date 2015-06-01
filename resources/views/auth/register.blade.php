@@ -23,7 +23,6 @@
 					<div class="panel-body">
 						@include('errors.partials._list')
 						{!! Form::open(['method' => 'POST','route' => 'auth.register']) !!}
-							
 							<div class="col-md-12 no-padding addmargin">
 								<div class="col-md-12 addmargin">	
 									<div class="col-md-6">	
@@ -67,7 +66,6 @@
 										{!! Form::text('surname', old('surname'), ['class' => 'form-control']) !!}
 									</div>
 								</div>
-
 								<div class="col-md-12 addmargin no-padding">
 									<div class="col-md-4">
 										{!! Form::label('houseNumber', 'Huisnummer', ['class' => 'control-label']) !!}
