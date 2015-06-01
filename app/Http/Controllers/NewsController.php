@@ -134,26 +134,22 @@
 		 */
 		public function edit($id)
 		{
-			if (Auth::check())
+			$newsItem = $this->newsRepo->get($id);
+
+			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
-				$newsItem = $this->newsRepo->get($id);
+				$files = $this->fileRepo->getAllByNewsId($id);
+				$districtSections = $this->districtSectionRepo->getAllToList();
 
-				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$files = $this->fileRepo->getAllByNewsId($id);
-					$districtSections = $this->districtSectionRepo->getAllToList();
-
-					return view('news.edit', compact('newsItem', 'districtSections', 'files'));
-				}
-				else
-				{
-					Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
-					return Redirect::route('news.manage');
-				}
-
-				return view('errors.403');
+				return view('news.edit', compact('newsItem', 'districtSections', 'files'));
 			}
-			return view('errors.401');
+			else
+			{
+				Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
+				return Redirect::route('news.manage');
+			}
+
+			return view('errors.403');
 		}
 
 		/**
@@ -165,61 +161,56 @@
 		 */
 		public function update($id, NewsRequest $request)
 		{
-			if (Auth::check())
+			$newsItem = $this->newsRepo->get($id);
+
+			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
 				$newsItem = $this->newsRepo->get($id);
+				//$newsItem->districtSectionId = $request->districtSection[0];
+				$newsItem->title = $request->title;
+				$newsItem->content = $request->content;
+				$newsItem->hidden = $request->hidden;
+				$newsItem->commentable = $request->commentable;
+				$newsItem->publishStartDate = $request->publishStartDate;
+				$newsItem->publishEndDate = $request->publishEndDate;
+				$newsItem->top = $request->top;
+				$news = $this->newsRepo->update($newsItem);
 
-				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+				$districtSections = $request->districtSection;
+
+				$oldDistrictSections = $news->districtSections;
+
+				foreach($oldDistrictSections as $oldDistrict)
 				{
-					$newsItem = $this->newsRepo->get($id);
-					//$newsItem->districtSectionId = $request->districtSection[0];
-					$newsItem->title = $request->title;
-					$newsItem->content = $request->content;
-					$newsItem->hidden = $request->hidden;
-					$newsItem->commentable = $request->commentable;
-					$newsItem->publishStartDate = $request->publishStartDate;
-					$newsItem->publishEndDate = $request->publishEndDate;
-					$newsItem->top = $request->top;
-					$news = $this->newsRepo->update($newsItem);
-
-					$districtSections = $request->districtSection;
-
-					$oldDistrictSections = $news->districtSections;
-
-					foreach($oldDistrictSections as $oldDistrict)
-					{
-						$news->districtSections()->detach($oldDistrict);
-					}
-
-					foreach($districtSections as $district)
-					{
-						$news->districtSections()->attach($district);
-					}
-					
-					// Remove selected files
-					if ($request->removefile)
-					{
-						foreach ($request->removefile as $key => $value)
-						{
-							$this->fileRepo->deleteByFileId($key);
-						}
-					}
-					
-					// Save files that were sent with this request
-					$this->saveFiles($request->file, $id);
-
-					return Redirect::route('news.show', [$id]);
-				}
-				else
-				{
-					Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
-					return Redirect::route('news.manage');
+					$news->districtSections()->detach($oldDistrict);
 				}
 
-				return view('errors.403');
-			} 
+				foreach($districtSections as $district)
+				{
+					$news->districtSections()->attach($district);
+				}
 
-			return view('errors.401');
+				// Remove selected files
+				if ($request->removefile)
+				{
+					foreach ($request->removefile as $key => $value)
+					{
+						$this->fileRepo->deleteByFileId($key);
+					}
+				}
+
+				// Save files that were sent with this request
+				$this->saveFiles($request->file, $id);
+
+				return Redirect::route('news.show', [$id]);
+			}
+			else
+			{
+				Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
+				return Redirect::route('news.manage');
+			}
+
+			return view('errors.403');
 		}
 
 		/**
@@ -290,32 +281,27 @@
 		 */
 		public function hide($id)
 		{
-			if (Auth::check())
+			$newsItem = $this->newsRepo->get($id);
+
+			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
-				$newsItem = $this->newsRepo->get($id);
+				$news = $this->newsRepo->get($id);
 
-				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+				if(count($news) > 0)
 				{
-					$news = $this->newsRepo->get($id);
+					$news->hidden = true;
+					$this->newsRepo->update($news);
 
-					if(count($news) > 0)
-					{
-						$news->hidden = true;
-						$this->newsRepo->update($news);
-
-						return Redirect::route('news.manage');
-					} 
-
-					return view('errors.404');
-				}
-				else
-				{
-					Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
 					return Redirect::route('news.manage');
 				}
-			}
 
-			return view('errors.401');
+				return view('errors.404');
+			}
+			else
+			{
+				Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
+				return Redirect::route('news.manage');
+			}
 		}
 
 		/**
@@ -327,34 +313,29 @@
 		 */
 		public function unhide($id)
 		{
-			if (Auth::check()) 
+			$newsItem = $this->newsRepo->get($id);
+
+			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
-				$newsItem = $this->newsRepo->get($id);
+				$news = $this->newsRepo->get($id);
 
-				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+				if(count($news) > 0)
 				{
-					$news = $this->newsRepo->get($id);
-
-					if(count($news) > 0)
-					{
-						$news->hidden = false;
-						$this->newsRepo->update($news);
-					} 
-					else 
-					{
-						return view('errors.404');
-					}
-
-					return Redirect::route('news.manage');
+					$news->hidden = false;
+					$this->newsRepo->update($news);
 				}
 				else
 				{
-					Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
-					return Redirect::route('news.manage');
+					return view('errors.404');
 				}
-			}
 
-			return view('errors.401');
+				return Redirect::route('news.manage');
+			}
+			else
+			{
+				Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
+				return Redirect::route('news.manage');
+			}
 		}
 
 		private function saveFiles($requestFiles, $newsId) 

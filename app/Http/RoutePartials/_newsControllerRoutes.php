@@ -44,23 +44,27 @@
 	Route::get('nieuws/{id}/wijzigen',
 	[
 		'as' => 'news.edit',
-		'uses' => 'NewsController@edit'
+		'uses' => 'NewsController@edit',
+		'middleware' => 'admin'
 	]);
 
 	Route::patch('nieuws/{id}/wijzigen',
 	[
 		'as' => 'news.update',
-		'uses' => 'NewsController@update'
+		'uses' => 'NewsController@update',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('nieuws/{id}/hide',
 	[
 		'as'=>'news.hide',
-		'uses'=>'NewsController@hide'
+		'uses'=>'NewsController@hide',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('nieuws/{id}/unhide',
 	[
 		'as'=>'news.unhide',
-		'uses'=>'NewsController@unhide'
+		'uses'=>'NewsController@unhide',
+		'middleware' => 'admin'
 	]);
