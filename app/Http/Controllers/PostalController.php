@@ -18,8 +18,6 @@ namespace App\Http\Controllers;
         private $validationResults = array();
         private $tempSheetName;
 
-        private $willDeleteActions = array();
-
         /**
          * Creates a new PostalController instance.
          *
@@ -135,11 +133,11 @@ namespace App\Http\Controllers;
                             {
                                 if ($this->formatId($row->id) != 0)
                                 {
+                                    //dd($this->formatId($row->id));
                                     $this->deleteRowInDatabase($row);
                                 }
                             }
                         });
-                        //dd($this->willDeleteActions);
                     }
                 });
             });
@@ -148,11 +146,57 @@ namespace App\Http\Controllers;
         //Database actions
         protected function addRowToDatabase($row)
         {
-            array_push($this->willDeleteActions, array($this->formatId($row->id), $row->postcode, $row->huisnr, $row->toevoeging, 'Add'));
-
             $houseNumber = $this->formatHouseNumber($row->huisnr);
             $suffix = $this->formatSuffix($row->toevoeging);
+            $postal = $this->formatPostal($row->postcode);
 
+            $this->addHouseNumber($houseNumber, $suffix);
+            $this->addPostal($postal);
+
+            //Create address if not exists
+            $districtId = $this->districtRepo->getByName($this->tempSheetName)->districtSectionId;
+            $postalId = $this->postalRepo->getByCode($postal)->postalId;
+            $houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($houseNumber, $suffix)->houseNumberId;
+
+            //dd($districtId, $postalId, $houseNumberId);
+            if($this->addressRepo->getByDistrictPostalAndHouseNumber($districtId, $postalId, $houseNumberId) == null)
+            {
+                $this->addressRepo->create(['districtSectionId' => $districtId, 'postalId' => $postalId, 'houseNumberId' => $houseNumberId]);
+            }
+            //dd($this->addressRepo->getByDistrictPostalAndHouseNumber($districtId, $postalId, $houseNumberId));
+
+        }
+
+        protected function updateRowInDatabase($row)
+        {
+            $houseNumber = $this->formatHouseNumber($row->huisnr);
+            $suffix = $this->formatSuffix($row->toevoeging);
+            $postal = $this->formatPostal($row->postcode);
+
+            $this->addHouseNumber($houseNumber, $suffix);
+            $this->addPostal($postal);
+
+            $districtId = $this->districtRepo->getByName($this->tempSheetName)->districtSectionId;
+            $houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($houseNumber,$suffix)->houseNumberId;
+            $postalId = $this->postalRepo->getByCode($postal)->postalId;
+
+            $address = $this->addressRepo->get($this->formatId($row->id));
+
+            $address->districtSectionId = $districtId;
+            $address->postalId = $postalId;
+            $address->houseNumberId = $houseNumberId;
+
+            $this->addressRepo->update($address);
+        }
+
+        protected function deleteRowInDatabase($row)
+        {
+            $this->addressRepo->destroy($row->id);
+        }
+
+        //Adds
+        protected function addHouseNumber($houseNumber, $suffix)
+        {
             //Create houseNumber if not exists
             if($this->houseNumberRepo->getByHouseNumberSuffix($houseNumber, $suffix) == null)
             {
@@ -161,14 +205,14 @@ namespace App\Http\Controllers;
             }
         }
 
-        protected function updateRowInDatabase($row)
+        protected function addPostal($postal)
         {
-            array_push($this->willDeleteActions, array($this->formatId($row->id), $row->postcode, $row->huisnr, $row->toevoeging, 'Update'));
-        }
-
-        protected function deleteRowInDatabase($row)
-        {
-            array_push($this->willDeleteActions, array($this->formatId($row->id), $row->postcode, $row->huisnr, $row->toevoeging, 'Delete'));
+            //Create postal if not exists
+            if($this->postalRepo->getbyCode($postal) == null)
+            {
+                $postalArray = ['code' => $postal];
+                $this->postalRepo->create($postalArray);
+            }
         }
 
 
@@ -226,21 +270,18 @@ namespace App\Http\Controllers;
         {
             if(strlen($postal) != 6 && strlen($postal) != 7)
             {
-                //dd('lengte = ' . strlen($postal) . 'postcode = ' . $postal);
                 return false;
             }
             else
             {
                 if(!ctype_alnum(substr($postal,0,4)) || !is_numeric(substr($postal,0,4)))
                 {
-                    //dd('niet numeriek ' . $postal . ' checken op: ' . substr($postal,0,4));
                     return false;
                 }
                 else
                 {
                     if(!ctype_alpha(substr($postal,-2,2)))
                     {
-                        //dd('niet letter ' . $postal);
                         return false;
                     }
                 }

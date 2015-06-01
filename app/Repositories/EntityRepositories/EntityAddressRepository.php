@@ -7,7 +7,7 @@
 	class EntityAddressRepository implements IAddressRepository
 	{
 		/**
-		 * Returns a Address model depending on the id provided.
+		 * Returns an Address model depending on the id provided.
 		 * 
 		 * @param  int $id
 		 * 
@@ -17,6 +17,16 @@
 		{
 			return Address::find($id);
 		}
+
+        /**
+         * Returns an Address model depending on districtId, postalId and houseNumberId.
+         *
+         * @return Collection -> Address
+         */
+        public function getByDistrictPostalAndHouseNumber($districtId, $postalId, $houseNumberId)
+        {
+            return Address::where('districtSectionId', '=', $districtId)->where('postalId', '=', $postalId)->where('houseNumberId', '=', $houseNumberId)->first();
+        }
 
 		/**
 		 * Returns all the Address models in the database.

@@ -36,13 +36,13 @@
 			'name', 
 			'generalInfo'
 		];
-		
+
 		/**
 		 * Attributes that cannot be changed and thus are not mass assingable.
-		 * 
+		 *
 		 * @var array
 		 */
-		protected $guarded = 
+		protected $guarded =
 		[
 			'districtSectionId'
 		];

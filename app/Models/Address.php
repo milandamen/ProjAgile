@@ -33,6 +33,7 @@
 		 */
 		protected $fillable = 
 		[
+            'districtSectionId',
 			'postalId',
 			'houseNumberId',
 		];
