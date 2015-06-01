@@ -3,31 +3,36 @@
 	Route::get('gebruikers',
 	[
 		'as' => 'user.index',
-		'uses' => 'UserController@index'
+		'uses' => 'UserController@index',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('gebruikers/{id}/wijzigen',
 	[
 		'as' => 'user.edit',
-		'uses' => 'UserController@edit'
+		'uses' => 'UserController@edit',
+		'middleware' => 'admin'
 	]);
 
 	Route::patch('gebruikers/{id}/wijzigen',
 	[
 		'as' => 'user.update',
-		'uses' => 'UserController@update'
+		'uses' => 'UserController@update',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('gebruikers/aanmaken',
 	[
 		'as' => 'user.create',
-		'uses' => 'UserController@create'
+		'uses' => 'UserController@create',
+		'middleware' => 'admin'
 	]);
 
 	Route::post('gebruikers/aanmaken',
 	[
 		'as' => 'user.store',
-		'uses' => 'UserController@store'
+		'uses' => 'UserController@store',
+		'middleware' => 'admin'
 	]);
 
 	//user profile routes
@@ -53,17 +58,20 @@
 	Route::get('gebruikers/{id}/deactiveer',
 	[
 		'as' => 'user.deactivate',
-		'uses' => 'UserController@deactivate'
+		'uses' => 'UserController@deactivate',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('gebruikers/{id}/activeer',
 	[
 		'as' => 'user.activate',
-		'uses' => 'UserController@activate'
+		'uses' => 'UserController@activate',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('gebruikers/{id}',
 	[
 		'as' => 'user.show',
-		'uses' => 'UserController@show'
+		'uses' => 'UserController@show',
+		'middleware' => 'admin'
 	]);

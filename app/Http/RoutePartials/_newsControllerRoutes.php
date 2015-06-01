@@ -8,19 +8,22 @@
 	Route::get('nieuws/aanmaken', 
 	[
 		'as' => 'news.create',
-		'uses' => 'NewsController@create'
+		'uses' => 'NewsController@create',
+		'middleware' => 'admin'
 	]);
 
 	Route::put('nieuws/aanmaken', 
 	[
 		'as' => 'news.store',
-		'uses' => 'NewsController@store'
+		'uses' => 'NewsController@store',
+		'middleware' => 'admin'
 	]);
 
 	Route::get('nieuws/beheer', 
 	[
 		'as' => 'news.manage',
-		'uses' => 'NewsController@manage'
+		'uses' => 'NewsController@manage',
+		'middleware' => 'admin'
 	]);
 
 	Route::post('nieuws/comment',

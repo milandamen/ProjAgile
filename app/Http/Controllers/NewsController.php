@@ -86,20 +86,14 @@
 		 */
 		public function create()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$newsItem = new News();
-					$districtSections = $this->districtSectionRepo->getAllToList();
+				$newsItem = new News();
+				$districtSections = $this->districtSectionRepo->getAllToList();
 
-					return view('news.create', compact('newsItem', 'districtSections'));
-				}
-
-				return view('errors.403');
-			} 
-
-			return view('errors.401');
+				return view('news.create', compact('newsItem', 'districtSections'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -111,20 +105,14 @@
 		 */
 		public function store(NewsRequest $request)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$news = $this->newsRepo->create($request->all());
-					$this->saveFiles($request->file, $news->newsId);
+				$news = $this->newsRepo->create($request->all());
+				$this->saveFiles($request->file, $news->newsId);
 
-					return Redirect::route('news.show', [$news->newsId]);
-				}
-
-				return view('errors.403');
-			} 
-
-			return view('errors.401');
+				return Redirect::route('news.show', [$news->newsId]);
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -221,20 +209,10 @@
 		 */
 		public function manage()
 		{
-			if (Auth::check()) 
-			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$news = $this->newsRepo->getAllHidden();
-					$sidebar = $this->sidebarRepo->getByPage('2');
+			$news = $this->newsRepo->getAllHidden();
+			$sidebar = $this->sidebarRepo->getByPage('2');
 
-					return view('news.manage', compact('news', 'sidebar'));
-				}
-
-				return view('errors.403');
-			} 
-
-			return view('errors.401');
+			return view('news.manage', compact('news', 'sidebar'));
 		}   
 
 		/**

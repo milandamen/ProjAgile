@@ -22,7 +22,7 @@
 			@include('flash::message')
 		</div>
 
-		{!! Form::open(['url' => route('permissions.update', $user->userId), 'method' => 'POST', 'class' => 'permissionsForm']) !!}
+		{!! Form::open(['url' => route('permissions.update', $user->userId), 'method' => 'POST', 'class' => 'userPermissionsForm']) !!}
 
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}

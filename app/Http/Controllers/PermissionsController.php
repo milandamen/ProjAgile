@@ -19,6 +19,9 @@
 		const PERMISSION_CAROUSEL = 4;
 		const PERMISSION_HOMEPAGE = 5;
 		const PERMISSION_PERMISSIONS = 6;
+		const PERMISSION_USERS = 7;
+		const PERMISSION_SIDEBAR = 8;
+		const PERMISSION_NEWS = 9;
 
 		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo)
 		{

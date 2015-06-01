@@ -108,7 +108,7 @@ $(function () {
 	};
 
 	//get data when submitting form
-	$('.permissionsForm').on('submit', function (event) {
+	$('.userPermissionsForm').on('submit', function (event) {
 		checkData();
 	});
 
