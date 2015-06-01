@@ -37,36 +37,74 @@
 			]);
 		}
 
+		/**
+		 * Show the registration page.
+		 * 
+		 * @return Response
+		 */
 		public function getRegister()
 		{
 			return view('auth.register');
 		}
 
+		/**
+		 * Post the registration and handle the input.
+		 * This will also send an e-mail to both the registered user and the management.
+		 * 
+		 * @param  RegisterRequest $request
+		 * 
+		 * @return Response
+		 */
 		public function postRegister(RegisterRequest $request)
 		{
-			dd('passed that shizz');
-			$data = $request->only
-			(
-				'username',
-				'password',
-				'firstName',
-				'surname',
-				'postal',
-				'houseNumber',
-				'email'
-			);
+			$data = $request->all();
+			$data = array_add($data, 'confirmationCode', str_random(50));
+			dd($data);
+
 			$user = $this->userRepo->create($data);
-			$this->auth->login($user);
-			Flash::success('U bent succesvol geregistreerd en u bent nu ingelogd.');
+
+			Flash::success('Er is een e-mail verstuurd naar het opgegeven e-mailadres. Met deze e-mail kunt u het registratieproces afronden.');
+
+			Mail::send('emails.registration.welcome', $user->confirmationCode, function($message)
+			{
+				$insertion = $user->insertion ? $user->insertion . ' ': '';
+
+				$message->to
+				(	
+					$user->email, 
+					$user->firstName . ' ' . $insertion . $user->lastName
+				)->subject('Welkom bij wijkplatform De Bunders');
+			});
+
+			Mail::send('emails.registration.management', function($message)
+			{
+				$message->to
+				(	
+					'', 
+					''
+				)->subject('Welkom bij wijkplatform De Bunders');
+			});
 
 			return Redirect::route('home.index');
 		}
 
+		/**
+		 * Show the login page.
+		 * 
+		 * @return Response
+		 */
 		public function getLogin()
 		{
 			return view('auth.login');
 		}
 
+		/**
+		 * Post the login and handle the input.
+		 * 
+		 * @param  LoginRequest $request
+		 * 
+		 * @return Response
+		 */
 		public function postLogin(LoginRequest $request)
 		{
 			$credentials = $request->only('username', 'password');
@@ -84,6 +122,11 @@
 			return Redirect::route('home.index');
 		}
 
+		/**
+		 * This action will log out the user.
+		 * 
+		 * @return Response
+		 */
 		public function getLogout()
 		{
 			if (Auth::check())

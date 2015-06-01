@@ -5,6 +5,8 @@
 
 	class CustomValidator extends Validator 
 	{
+		private $addressRepo;
+		private $houseNumberRepo;
 		private $postalRepo;
 		private $userRepo;
 
@@ -17,10 +19,12 @@
 		 * @param array() 				$messages
 		 * @param array() 				$customAttributes
 		 */
-		public function __construct($tanslator, $data, $rules, $messages = [], $customAttributes = [], $postalRepo, $userRepo)
+		public function __construct($tanslator, $data, $rules, $messages = [], $customAttributes = [], $addressRepo, $houseNumberRepo, $postalRepo, $userRepo)
 		{
 			parent::__construct($tanslator, $data, $rules, $messages, $customAttributes);
 
+			$this->addressRepo = $addressRepo;
+			$this->houseNumberRepo = $houseNumberRepo;
 			$this->postalRepo = $postalRepo;
 			$this->userRepo = $userRepo;
 		}
@@ -37,10 +41,10 @@
 		protected function validateAddressExists($attribute, $value, $parameters)
 		{
 			$postal = $this->postalRepo->getByCode($value);
-			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($data['houseNumber'], $data['houseNumber'] ? : null);
-			$address = $this->houseNumberRepo->getByHouseNumberSuffix($postal->postalId, $houseNumber->houseNumberId);
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
+			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 
-			return !isset($address);
+			return isset($address);
 		}
 
 		/**
@@ -55,7 +59,9 @@
 		protected function validateIsAddressNotInUse($attribute, $value, $parameters)
 		{
 			$postal = $this->postalRepo->getByCode($value);
-
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
+			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+			$user = $this->userRepo->getByAddress($address->addressId);
 
 			return !isset($user);
 		}

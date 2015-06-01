@@ -41,11 +41,21 @@
 			];
 			$postalRepo = \App::make('App\Repositories\RepositoryInterfaces\IPostalRepository');
 			$houseNumberRepo = \App::make('App\Repositories\RepositoryInterfaces\IHouseNumberRepository');
+			$addressRepo = \App::make('App\Repositories\RepositoryInterfaces\IAddressRepository');
 
-			if($postalRepo->getByCode($this->only('postal')) != null &&
-			   $houseNumberRepo->getByHouseNumberSuffix($this->only('houseNumber'), $this->only('suffix') ? : null) !== null)
+			$postal = $postalRepo->getByCode($this->only('postal'));
+			$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->only('houseNumber'), $this->only('suffix') ? $this->only('suffix') : null);
+
+			if($postal !== null && $houseNumber !== null)
 			{
-				$rules['postal'] = $rules['postal'] . '|address_exists|is_address_not_in_use';
+				$rules['postal'] = $rules['postal'] . '|address_exists';
+
+				$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+
+				if($address !== null)
+				{
+					$rules['postal'] = $rules['postal'] . '|is_address_not_in_use';
+				}
 			}
 
 			return $rules;

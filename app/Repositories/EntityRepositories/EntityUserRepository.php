@@ -189,4 +189,16 @@
 			
 			return false;
 		}
+
+		/**
+		 * Returns a User record in the database depending on the address id provided.
+		 * 
+		 * @param  int $addresId
+		 * 
+		 * @return User
+		 */
+		public function getByAddress($addressId)
+		{
+			return User::where('addressId', '=', $addressId)->first();
+		}
 	}
