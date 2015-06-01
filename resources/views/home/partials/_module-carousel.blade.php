@@ -18,9 +18,6 @@
 					 <h3>{{-- $item->title --}} &nbsp;</h3> 
 				</a>
 			@endif
-
-
-
 		@endforeach
 	</div>
 	<div id="mod-carousel-description">

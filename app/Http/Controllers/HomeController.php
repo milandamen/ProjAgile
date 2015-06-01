@@ -48,8 +48,6 @@
 			$carousel = $this->carouselRepo->getAllFiltered();
 			$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-			
-
 			return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
 		}
 

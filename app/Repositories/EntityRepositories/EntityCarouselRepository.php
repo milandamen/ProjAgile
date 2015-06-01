@@ -32,10 +32,7 @@
 		{
 			$allcarousel = Carousel::all();
 			
-			$curDate = date('Y-m-d H:i:s',time());
-				
-
-
+			$curDate = date('Y-m-d H:i:s',time());   // this one works for news
 			$carousel = [];
 			foreach ($allcarousel as $c) {
 				if($c->newsId != null){
@@ -46,7 +43,7 @@
 				} 
 
 				if($c->page != null){
-					$date = date('d-m-Y H:i:s',time());
+					$date = date('d-m-Y H:i:s',time()); // this one is needed for pages.
 
 					if ($c->page->visible == 1 && $c->page->publishDate <= $curDate && $c->page->publishEndDate >= $date ){
 							$carousel[] = $c;
@@ -57,8 +54,7 @@
 					$carousel[] = $c;
 				}
 			}
-	
-
+			
 			return $carousel;
 		}
 
