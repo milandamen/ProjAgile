@@ -36,7 +36,6 @@
 			$carousel = [];
 			foreach ($allcarousel as $c) {
 				if($c->newsId != null){
-
 					if ($c->news->hidden == 0 && $c->news->publishStartDate <= $curDate && $c->news->publishEndDate >= $curDate) {
 						$carousel[] = $c;
 					}
@@ -44,7 +43,6 @@
 
 				if($c->page != null){
 					$date = date('d-m-Y H:i:s',time()); // this one is needed for pages.
-
 					if ($c->page->visible == 1 && $c->page->publishDate <= $curDate && $c->page->publishEndDate >= $date ){
 							$carousel[] = $c;
 					}
@@ -54,7 +52,7 @@
 					$carousel[] = $c;
 				}
 			}
-			
+
 			return $carousel;
 		}
 
