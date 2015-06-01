@@ -45,8 +45,10 @@
 			$introduction = $this->pageRepo->get(1)->introduction;
 			htmlspecialchars($introduction);
 			$layoutModules = $this->homeLayoutRepo->getAll();
-			//$carousel = $this->carouselRepo->getAllFiltered();
+			$carousel = $this->carouselRepo->getAllFiltered();
 			$newOnSite = $this->newOnSiteRepository->getAllOrdered();
+
+			
 
 			return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
 		}

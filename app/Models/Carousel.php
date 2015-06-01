@@ -35,7 +35,8 @@
 		[
 			'newsId',
 			'pageId',
-			'imagePath'
+			'imagePath',
+			'description'
 		];
 
 		/**
