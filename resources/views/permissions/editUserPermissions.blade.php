@@ -22,7 +22,7 @@
 			@include('flash::message')
 		</div>
 
-		{!! Form::open(['url' => route('permissions.update', $user->userId), 'method' => 'POST']) !!}
+		{!! Form::open(['url' => route('permissions.update', $user->userId), 'method' => 'POST', 'class' => 'permissionsForm']) !!}
 
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
@@ -41,10 +41,7 @@
 							@endif
 						@endforeach
 					</ul>
-					<br />
-					<button class="btn btn-primary col-xs-12" id="get-checked-data-page">Get Checked Data</button>
 				</div>
-				<pre id="display-json-page"></pre>
 			</div>
 
 			<div class="col-xs-5 col-xs-offset-2">
@@ -61,7 +58,6 @@
 							@endforeach
 						</ul>
 					</div>
-					<pre id="display-json-permission"></pre>
 				</div>
 
 				<div class="row">
@@ -77,7 +73,6 @@
 							@endforeach
 						</ul>
 					</div>
-					<pre id="display-json-districtSection"></pre>
 				</div>
 			</div>
 

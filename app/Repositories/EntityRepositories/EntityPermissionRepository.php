@@ -29,6 +29,22 @@
 		}
 
 		/**
+		 * Returns all the Permission model id's in the database.
+		 *
+		 * @return Collection -> Integer
+		 */
+		public function getAllIds()
+		{
+			$permissions =  Permission::all();
+			$permission_ids = array();
+			foreach($permissions as $permission)
+			{
+				$permission_ids[] = $permission->permissionId;
+			}
+			return $permission_ids;
+		}
+
+		/**
 		 * Creates a Permission record in the database.
 		 *
 		 * @param  array() $attributes

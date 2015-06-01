@@ -69,15 +69,17 @@
 			$user->districtSections()->sync($districtSectionSelectionArray);
 			$user->permissions()->sync($permissionSelectionArray);
 
+			$this->grantAllPermissions($userId);
+
 			return redirect::route('user.index');
 		}
 
 		/**
-		 * Convert array of strings to array of ints
-		 *
-		 * @param $stringArray
-		 * @return array
-		 */
+	 * Convert array of strings to array of ints
+	 *
+	 * @param $stringArray
+	 * @return array
+	 */
 		private function stringToIntArray($stringArray)
 		{
 			$intArray = [];

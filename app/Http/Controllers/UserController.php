@@ -4,6 +4,9 @@
 	use App\Http\Requests\User\CreateUserRequest;
 	use App\Http\Requests\User\UpdateUserRequest;
 	use App\Models\User;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\IPermissionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
@@ -22,11 +25,15 @@
 		const CONTENT_GROUP_ID = 2;
 		const RESIDENT_GROUP_ID = 3;
 
-		public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo)
+		public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo,
+									IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo)
 		{
 			$this->userRepo = $userRepo;
 			$this->userGroupRepo = $userGroupRepo;
 			$this->postalRepo = $postalRepo;
+			$this->pageRepo = $pageRepo;
+			$this->districtSectionRepo = $districtSectionRepo;
+			$this->permissionRepo = $permissionRepo;
 		}
 
 		public function index()
@@ -125,12 +132,12 @@
 					if ($userRequest->get('postal') !== '')
 					{
 						$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-						$user->districtSectionId = $postal->districtSectionId;
+						//$user->districtSectionId = $postal->districtSectionId;
 						$user->postalId = $postal->postalId;
 					}
 					else
 					{
-						$user->districtSectionId = null;
+						//$user->districtSectionId = null;
 						$user->postalId = null;
 					}
 
@@ -250,5 +257,24 @@
 			return view('errors.401');
 		}
 		//end personal profile functions
+
+		/**
+		 * Grant the given user all permissions
+		 *
+		 * @param $userId
+		 * @return Response
+		 */
+		private function grantAllPermissions($userId)
+		{
+			$user = $this->userRepo->get($userId);
+
+			$pages = $this->pageRepo->getAllIds();
+			$districtSections = $this->districtSectionRepo->getAllIds();
+			$permissions = $this->permissionRepo->getAllIds();
+
+			$user->pages()->sync($pages);
+			$user->districtSections()->sync($districtSections);
+			$user->permissions()->sync($permissions);
+		}
 
 	}

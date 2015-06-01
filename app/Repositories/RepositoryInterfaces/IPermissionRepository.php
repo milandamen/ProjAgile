@@ -3,5 +3,5 @@
 
 	interface IPermissionRepository extends IBaseRepository
 	{
-
+		public function getAllIds();
 	}
