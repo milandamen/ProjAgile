@@ -31,9 +31,9 @@
 		public function getAllFiltered()
 		{
 			$allcarousel = Carousel::all();
-			
 			$curDate = date('Y-m-d H:i:s',time());   // this one works for news
 			$carousel = [];
+			
 			foreach ($allcarousel as $c) {
 				if($c->newsId != null){
 					if ($c->news->hidden == 0 && $c->news->publishStartDate <= $curDate && $c->news->publishEndDate >= $curDate) {
