@@ -29,7 +29,6 @@
 				if (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') 
 				{
 					$carousel = $this->carouselRepo->getAll();
-
 					return view('carousel.edit', compact('carousel'));
 				} 
 					
