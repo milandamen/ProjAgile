@@ -15,7 +15,7 @@
 			@else
 				<a href="#">
 					<img src="{{ asset('uploads/img/carousel/' . $item->imagePath) }}" alt="De afbeelding kan niet geladen worden.." />
-					 <h3>{{-- $item->title --}} &nbsp;</h3> 
+					<h3>{{-- $item->title --}} &nbsp;</h3> 
 				</a>
 			@endif
 		@endforeach
@@ -24,9 +24,9 @@
 		@foreach ($carousel as $item)
 			<div>
 				@if(isset($item->news))
-				<a href="{{ route('news.show', $item->news->newsId) }}">
+					<a href="{{ route('news.show', $item->news->newsId) }}">
 				@elseif(isset($item->page))
-				<a href="{{ route('page.show', $item->page->pageId) }}">
+					<a href="{{ route('page.show', $item->page->pageId) }}">
 				@endif
 					<span>{{ $item->description }}</span>
 				</a>
