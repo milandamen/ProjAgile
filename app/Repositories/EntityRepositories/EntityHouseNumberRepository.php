@@ -63,5 +63,18 @@
 		{
 			$model = HouseNumber::findOrFail($id);
 			$model->delete();
-		}
+        }
+
+        /**
+         * Returns a HouseNumber model depending on the houseNumber and suffix provided.
+         *
+         * @param  int 		$houseNumber
+         * @param  mixed 	$suffix
+         *
+         * @return HouseNumber
+         */
+        public function getByHouseNumberSuffix($houseNumber, $suffix)
+        {
+            return HouseNumber::where('houseNumber', '=', $houseNumber)->where('suffix', '=', $suffix)->first();
+        }
 	}
