@@ -158,15 +158,13 @@
 			</div>
 		</div>		
 	</div>
-<script>
- // Sets the URI for the Ajax request for the visibility eye- script.
- var getURL = "{!! route('page.visible', [0]) !!}";
-</script>
+	<script>
+		// Sets the URI for the Ajax request for the visibility eye- script.
+		var getURL = "{!! route('page.visible', [0]) !!}";
+	</script>
 @stop
 
 @section('additional_scripts')
 	{!! HTML::script('custom/js/flash_message.js') !!}
 	{!! HTML::script('custom/js/indexpage.js') !!}
-
 @stop
-
