@@ -37,12 +37,17 @@
 		 */
 		public function editUserPermissions($userId)
 		{
-			$user = $this->userRepo->get($userId);
-			$pages = $this->pageRepo->getAll();
-			$districtSections = $this->districtSectionRepo->getAll();
-			$permissions = $this->permissionRepo->getAll();
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_PERMISSIONS))
+			{
+				$user = $this->userRepo->get($userId);
+				$pages = $this->pageRepo->getAll();
+				$districtSections = $this->districtSectionRepo->getAll();
+				$permissions = $this->permissionRepo->getAll();
 
-			return view('permissions.editUserPermissions', compact('user', 'pages', 'districtSections', 'permissions'));
+				return view('permissions.editUserPermissions', compact('user', 'pages', 'districtSections', 'permissions'));
+			}
+
+			return view('errors.403');
 		}
 
 		/**
@@ -53,25 +58,28 @@
 		 */
 		public function updateUserPermissions($userId, Request $request)
 		{
-			//get posted strings and convert them into arrays.
-			$pageSelectionString = $request->get('pageSelection');
-			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_PERMISSIONS))
+			{
+				//get posted strings and convert them into arrays.
+				$pageSelectionString = $request->get('pageSelection');
+				$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
 
-			$districtSectionSelectionString = $request->get('districtSectionSelection');
-			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
+				$districtSectionSelectionString = $request->get('districtSectionSelection');
+				$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
 
-			$permissionSelectionString = $request->get('permissionSelection');
-			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
+				$permissionSelectionString = $request->get('permissionSelection');
+				$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
 
-			//update database
-			$user = $this->userRepo->get($userId);
-			$user->pages()->sync($pageSelectionArray);
-			$user->districtSections()->sync($districtSectionSelectionArray);
-			$user->permissions()->sync($permissionSelectionArray);
+				//update database
+				$user = $this->userRepo->get($userId);
+				$user->pages()->sync($pageSelectionArray);
+				$user->districtSections()->sync($districtSectionSelectionArray);
+				$user->permissions()->sync($permissionSelectionArray);
 
-			$this->grantAllPermissions($userId);
+				return redirect::route('user.index');
+			}
 
-			return redirect::route('user.index');
+			return view('errors.403');
 		}
 
 		/**

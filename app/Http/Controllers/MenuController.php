@@ -19,14 +19,11 @@
 
 		public function index()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+				$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
 
-					return view('menu.index', compact('allMenuItemsEdit'));
-				}
+				return view('menu.index', compact('allMenuItemsEdit'));
 			}
 			return view('errors.403');
 		}
@@ -38,14 +35,11 @@
 		 */
 		public function create()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$menuItem = new Menu();
+				$menuItem = new Menu();
 
-					return view('menu.create', compact('menuItem'));
-				}
+				return view('menu.create', compact('menuItem'));
 			}
 			return view('errors.403');
 		}
@@ -57,14 +51,11 @@
 		 */
 		public function store(MenuRequest $request)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$this->menuRepo->create($request->all());
+				$this->menuRepo->create($request->all());
 
-					return Redirect::route ('menu.index');
-				}
+				return Redirect::route ('menu.index');
 			}
 			return view('errors.403');
 		}
@@ -78,16 +69,13 @@
 		 */
 		public function edit($id)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$menuItem = $this->menuRepo->get($id);
+				$menuItem = $this->menuRepo->get($id);
 
-					return view('menu.edit', compact('menuItem'));
-				}
-				return view('errors.403');
+				return view('menu.edit', compact('menuItem'));
 			}
+			return view('errors.403');
 		}
 
 		/**
@@ -99,63 +87,57 @@
 		 */
 		public function update(MenuRequest $request)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$item = $this->menuRepo->get($request->id);
-					$item->name = $request->name;
-					$item->link = $request->link;
-					$item->publish = $request->publish;
-					$this->menuRepo->update($item);
+				$item = $this->menuRepo->get($request->id);
+				$item->name = $request->name;
+				$item->link = $request->link;
+				$item->publish = $request->publish;
+				$this->menuRepo->update($item);
 
-					return Redirect::route('menu.index');
-				}
+				return Redirect::route('menu.index');
 			}
 			return view('errors.403');
 		}
 
 		public function updateMenuOrder(Request $request)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
+				$parentId = null;
+				$array = [];
+				$allMenuItems = $this->menuRepo->getAll();
+
+				foreach ($request->all() as $key => $requestItem) //loop trough the names of the textfields
 				{
-					$parentId = null;
-					$array = [];
-					$allMenuItems = $this->menuRepo->getAll();
+					if (!is_string($key)) {
+						foreach ($allMenuItems as $oldIndex => $oldItem) {
+							if ($oldItem->menuId == $key) {
+								unset($allMenuItems[$oldIndex]);
 
-					foreach ($request->all() as $key => $requestItem) //loop trough the names of the textfields
-					{
-						if (!is_string($key)) {
-							foreach ($allMenuItems as $oldIndex => $oldItem) {
-								if ($oldItem->menuId == $key) {
-									unset($allMenuItems[$oldIndex]);
-
-									break;
-								}
+								break;
 							}
-							$requestItemPart = explode(".", $requestItem);
-
-							if ($requestItemPart[0] == 0) {
-								$array = [];
-								$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL);
-							} else {
-								if (isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]])) {
-									$array = array_add($array, $requestItemPart[0], $parentId);
-								}
-								$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
-							}
-							$parentId = $key;
 						}
-					}
+						$requestItemPart = explode(".", $requestItem);
 
-					foreach ($allMenuItems as $oldItem) {
-						$this->menuRepo->destroy($oldItem->menuId);
+						if ($requestItemPart[0] == 0) {
+							$array = [];
+							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL);
+						} else {
+							if (isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]])) {
+								$array = array_add($array, $requestItemPart[0], $parentId);
+							}
+							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
+						}
+						$parentId = $key;
 					}
-
-					return Redirect::route('menu.index');
 				}
+
+				foreach ($allMenuItems as $oldItem) {
+					$this->menuRepo->destroy($oldItem->menuId);
+				}
+
+				return Redirect::route('menu.index');
 			}
 			return view('errors.403');
 		}

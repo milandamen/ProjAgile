@@ -58,19 +58,16 @@
 		 */
 		public function editLayout()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName())
-				{
-					$news = $this->getNews();
-					//$introduction = $this->introRepo->getPageBar('1');
-					$introduction = $this->pageRepo->get(1)->introduction;
-					$layoutModules = $this->homeLayoutRepo->getAll();
-					$newOnSite = $this->newOnSiteRepository->getAllOrdered();
+				$news = $this->getNews();
+				//$introduction = $this->introRepo->getPageBar('1');
+				$introduction = $this->pageRepo->get(1)->introduction;
+				$layoutModules = $this->homeLayoutRepo->getAll();
+				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-					return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
-				}
-			} 
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+			}
 			
 			return view('errors.403');
 		}
@@ -82,23 +79,20 @@
 		 */
 		public function updateLayout()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName())
-				{
-					if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
-						$modules = $this->homeLayoutRepo->getAll();
+				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
+					$modules = $this->homeLayoutRepo->getAll();
 
-						foreach ($modules as $module) {
-							$module->orderNumber = $_POST[$module->moduleName];
-							$module->save();
-						}
-
-						return Redirect::route('home.index');
+					foreach ($modules as $module) {
+						$module->orderNumber = $_POST[$module->moduleName];
+						$module->save();
 					}
 
-					return Redirect::route('home.editLayout');
+					return Redirect::route('home.index');
 				}
+
+				return Redirect::route('home.editLayout');
 			}
 			
 			return view('errors.403');
@@ -111,14 +105,11 @@
 		 */
 		public function editIntroduction()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$introduction = $this->pageRepo->get(1)->introduction;
+				$introduction = $this->pageRepo->get(1)->introduction;
 
-					return view('home.editIntroduction', compact('introduction'));
-				}
+				return view('home.editIntroduction', compact('introduction'));
 			}
 			
 			return view('errors.403');
@@ -131,27 +122,24 @@
 		 */
 		public function updateIntroduction(IntroductionRequest $request)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
-				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
-				{
-					$intro = $this->pageRepo->get($request->pageId)->introduction;
-					$intro->title = $request->title;
-					$intro->subtitle = $request->subtitle;
-					$intro->text = $request->content;
+				$intro = $this->pageRepo->get($request->pageId)->introduction;
+				$intro->title = $request->title;
+				$intro->subtitle = $request->subtitle;
+				$intro->text = $request->content;
 
-					$this->introRepo->update($intro);
+				$this->introRepo->update($intro);
 
-					$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-					if ($newOnSite === true) {
-						$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-						$attributes['created_at'] = new \DateTime('now');
-						$this->newOnSiteRepository->create($attributes);
-					}
-
-					return Redirect::route('home.index');
+				if ($newOnSite === true) {
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepository->create($attributes);
 				}
+
+				return Redirect::route('home.index');
 			}
 			
 			return view('errrors.403');
