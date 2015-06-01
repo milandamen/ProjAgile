@@ -292,7 +292,9 @@
 		{
 			if (Auth::check())
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
+				$newsItem = $this->newsRepo->get($id);
+
+				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 				{
 					$news = $this->newsRepo->get($id);
 
@@ -306,8 +308,11 @@
 
 					return view('errors.404');
 				}
-
-				return view('errors.403');
+				else
+				{
+					Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
+					return Redirect::route('news.manage');
+				}
 			}
 
 			return view('errors.401');
@@ -324,7 +329,9 @@
 		{
 			if (Auth::check()) 
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
+				$newsItem = $this->newsRepo->get($id);
+
+				if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 				{
 					$news = $this->newsRepo->get($id);
 
@@ -340,8 +347,11 @@
 
 					return Redirect::route('news.manage');
 				}
-
-				return view('errors.403');
+				else
+				{
+					Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
+					return Redirect::route('news.manage');
+				}
 			}
 
 			return view('errors.401');
