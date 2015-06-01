@@ -10,7 +10,7 @@
 	Breadcrumbs::register('user.show', function($breadcrumbs, $user)
 	{
 		$breadcrumbs->parent('user.index');
-		$breadcrumbs->push($user->username, route('permissions.edit', [$user->id]));
+		$breadcrumbs->push($user->username, route('user.show', [$user->id]));
 	});
 
 	// Home > Beheer > Gebruikers > Filter
