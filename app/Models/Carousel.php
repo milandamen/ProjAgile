@@ -35,6 +35,9 @@
 		[
 			'newsId',
 			'pageId',
+			'title',
+			'publishStartDate',
+			'publishEndDate',
 			'imagePath',
 			'description'
 		];

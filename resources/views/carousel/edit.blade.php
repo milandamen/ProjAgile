@@ -31,8 +31,12 @@
 							<tr>
 								<th class="cu-smallcol">Index</th>		<!-- Index -->
 								<th class="cu-smallcol">Soort</th>		<!-- Sort -->
-								<th class="cu-smallcol">ID</th>			<!-- Article ID -->	
-								<th class="fullwidth">Beschrijving</th>	<!-- Article title -->	
+								<th class="cu-smallcol">ID</th>			<!-- Article ID -->
+								<th class="cu-smallcol">Titel</th>
+								<th class="cu-smallcol">Start datum</th>
+								<th class="cu-smallcol">Eind datum</th>
+								<th class="fullwidth">Beschrijving</th>	<!-- Article description -->
+
 								<th>Image</th>
 								<th class="cu-smallcol"></th>			<!-- Move up -->
 								<th class="cu-smallcol"></th>			<!-- Move down -->
@@ -78,6 +82,33 @@
 												{{$article->carouselId}}
 											@endif
 										</span>
+									</td>
+									<td>
+										@if($article->news != null)
+											{{$article->news->title}}
+										@elseif($article->page != null)
+											Geen titel
+										@else
+											<input type="text" name="carouselTitle" value="{{$article->title}}" />
+										@endif
+									</td>
+									<td>
+										@if($article->news != null)
+											{{$article->news->publishStartDate}}
+										@elseif($article->page != null)
+											{{$article->page->publishDate}}
+										@else
+											{{$article->publishStartDate}}
+										@endif
+									</td>
+									<td>
+										@if($article->news != null)
+											{{$article->news->publishEndDate}}
+										@elseif($article->page != null)
+											{{$article->page->publishEndDate}}
+										@else
+											{{$article->publishEndDate}}
+										@endif
 									</td>
 									<td>
 										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>

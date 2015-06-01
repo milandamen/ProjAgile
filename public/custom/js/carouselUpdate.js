@@ -49,6 +49,15 @@ $('.add-carousel-button').click(function() {
 	'<span> - </span>' +
 	'</td>' +
 	'<td>' +
+	'<input type="text" name="carouselTitle"/>' +
+	'</td>' +
+	'<td>' +
+	'TO-DO' +
+	'</td>' +
+	'<td>' +
+	'TO-DO' +
+	'</td>' +
+	'<td>' +
 	'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
 	'</td>' +
 	'<td>' +
@@ -93,6 +102,9 @@ function addArticle(button)
 			'<td>' +
 				'<input type="text" name="artikel[0]" value="' + id + '" class="hiddenInput" />' +
 				'<span>' + id + '</span>' +
+			'</td>' +
+			'<td>' +
+			'<span>' + title + '</span>' +
 			'</td>' +
 			'<td>' +
 				'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
