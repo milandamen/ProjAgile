@@ -45,3 +45,10 @@
 		'uses' => 'PageController@destroy',
 		'middelware' => 'admin'
 	]);
+
+	Route::get('pagina/{id}/zichtbaarheid', 
+	[
+		'as' => 'page.visible',
+		'uses' => 'PageController@switchPublish',
+		'middleware' => 'admin'
+	]);

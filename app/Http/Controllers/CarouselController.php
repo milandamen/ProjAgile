@@ -29,7 +29,6 @@
 				if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->usergroup->name === getAdministratorName() || Auth::user()->usergroup->name === getContentManagerName())
 				{
 					$carousel = $this->carouselRepo->getAll();
-
 					return view('carousel.edit', compact('carousel'));
 				} 
 					
