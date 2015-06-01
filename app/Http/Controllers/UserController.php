@@ -76,6 +76,13 @@
 				{
 					$data = $userRequest->input();
 					$this->userRepo->create($data);
+
+					$user = $this->userRepo->get($userRequest->get('userId'));
+					//grant admins all permissions
+					if($user !== null && (int)$user->userGroupId === self::ADMIN_GROUP_ID)
+					{
+						$this->grantAllPermissions($user->userId);
+					}
 					return redirect::route('user.index');
 				}
 				return view('errors.403');
@@ -132,16 +139,20 @@
 					if ($userRequest->get('postal') !== '')
 					{
 						$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-						//$user->districtSectionId = $postal->districtSectionId;
 						$user->postalId = $postal->postalId;
 					}
 					else
 					{
-						//$user->districtSectionId = null;
 						$user->postalId = null;
 					}
 
 					$this->userRepo->update($user);
+
+					//grant admins all permissions
+					if ((int)$user->userGroupId === self::ADMIN_GROUP_ID)
+					{
+						$this->grantAllPermissions($id);
+					}
 
 					if ($id === null)
 					{
