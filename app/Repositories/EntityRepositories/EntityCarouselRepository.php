@@ -48,7 +48,7 @@
 				if($c->page != null){
 					$date = date('d-m-Y H:i:s',time());
 
-					if ($c->page->visible == 1 && $c->page->publishDate <= $curDate && $c->page->publishEndDate > $date ){
+					if ($c->page->visible == 1 && $c->page->publishDate <= $curDate && $c->page->publishEndDate >= $date ){
 							$carousel[] = $c;
 					}
 				}
