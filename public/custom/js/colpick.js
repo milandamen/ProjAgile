@@ -521,5 +521,6 @@ For usage and examples: colpick.com/plugin
 $('#picker').colpick({
 	flat:true,
 	layout:'hex',
-	submit:0
+	submit:0,
+	color:'ff8800'
 });
