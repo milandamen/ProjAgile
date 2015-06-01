@@ -7,12 +7,12 @@
 }
 
 .well.pages {
-	max-height: 730px;
+	max-height: 770px;
 	overflow: auto;
 }
 
 .well.permissions {
-	max-height: 350px;
+	max-height: 390px;
 	overflow: auto;
 }
 
