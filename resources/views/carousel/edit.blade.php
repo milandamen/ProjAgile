@@ -35,7 +35,7 @@
 								<th class="cu-smallcol">Titel</th>
 								<th class="cu-smallcol">Start datum</th>
 								<th class="cu-smallcol">Eind datum</th>
-								<th class="fullwidth">Beschrijving</th>	<!-- Article description -->
+								<th class="">Beschrijving</th>	<!-- Article description -->
 
 								<th>Image</th>
 								<th class="cu-smallcol"></th>			<!-- Move up -->
@@ -111,7 +111,8 @@
 										@endif
 									</td>
 									<td>
-										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>
+										{{--<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>--}}
+										<textarea name="beschrijving[0]" class="fullwidth">{{ $article->description }}</textarea>
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
@@ -162,6 +163,8 @@
 						<tr>
 							<th class="cu-smallcol">ID</th>
 							<th>Titel</th>
+							<th>Start datum</th>
+							<th>Eind datum</th>
 							<th class="cu-smallcol"></th>
 						</tr>
 					</thead>

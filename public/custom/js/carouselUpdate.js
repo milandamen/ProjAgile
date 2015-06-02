@@ -19,6 +19,12 @@ function searchArticle()
 					'<td>' + 
 						item.title + 
 					'</td>' +
+					'<td>' +
+					item.publishStartDate +
+					'</td>' +
+					'<td>' +
+					item.publishEndDate +
+					'</td>' +
 					'<td>' + 
 						'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' + 
 							'<i class="fa fa-plus"></i>' + 
@@ -91,6 +97,8 @@ function addArticle(button)
 	var row = button.parentNode.parentNode;
 	var id = row.children[0].textContent;
 	var title = row.children[1].textContent;
+	var startDate = row.children[2].textContent;
+	var endDate = row.children[3].textContent;
 	
 	var articlelist = document.getElementById('articlelist');
 	
@@ -105,6 +113,12 @@ function addArticle(button)
 			'</td>' +
 			'<td>' +
 			'<span>' + title + '</span>' +
+			'</td>' +
+			'<td>' +
+			'<span>' + startDate + '</span>' +
+			'</td>' +
+			'<td>' +
+			'<span>' + endDate + '</span>' +
 			'</td>' +
 			'<td>' +
 				'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
