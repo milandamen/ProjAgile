@@ -41,6 +41,9 @@
 
 				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
 				{
+					//last carousel index
+					$lci = 0;
+
 					for ($i = 0; $i < count($_POST['artikel']); $i++)
 					{
 
@@ -50,7 +53,7 @@
 							$description = 'Nog geen beschrijving';
 							$item = $this->carouselRepo->create(compact('newsId', 'description'));
 
-							$description = $_POST['beschrijving'][$i];
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
 
 							if (!isset($description) || empty($description))
 							{
@@ -68,6 +71,25 @@
 									break;
 								}
 							}
+						}
+						else if($_POST['sort'][$i] === 'carousel')
+						{
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
+
+							if(!isset($description) || empty($description))
+							{
+								$description = 'Nog geen beschrijving';
+							}
+
+							$newsId = null;
+							$pageId = null;
+							
+							$title = filter_var($_POST['carouselTitle'][$i], FILTER_SANITIZE_STRING);
+							$startDate = filter_var($_POST['carouselStartDate'][$i], FILTER_SANITIZE_STRING);
+							$endDate = filter_var($_POST['carouselEndDate'][$i], FILTER_SANITIZE_STRING);
+
+
+							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'startDate', 'endDate', 'description' ));
 						}
 
 						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')

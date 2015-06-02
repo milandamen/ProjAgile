@@ -92,7 +92,7 @@
 										@elseif($article->page != null)
 											Geen titel
 										@else
-											<input type="text" name="carouselTitle" value="{{$article->title}}" />
+											<input type="text" name="carouselTitle[]" value="{{$article->title}}" />
 										@endif
 									</td>
 									<td>
@@ -101,7 +101,7 @@
 										@elseif($article->page != null)
 											{{$article->page->publishDate}}
 										@else
-											<input type="text" name="carouselStartDate" value="{{$article->publishStartDate}}"/>
+											<input type="text" name="carouselStartDate[]" value="{{$article->publishStartDate}}"/>
 										@endif
 									</td>
 									<td>
@@ -110,7 +110,7 @@
 										@elseif($article->page != null)
 											{{$article->page->publishEndDate}}
 										@else
-											<input type="text" name="carouselEndDate" value="{{$article->publishEndDate}}"/>
+											<input type="text" name="carouselEndDate[]" value="{{$article->publishEndDate}}"/>
 										@endif
 									</td>
 									<td>

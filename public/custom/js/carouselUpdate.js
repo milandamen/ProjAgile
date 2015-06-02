@@ -49,22 +49,23 @@ $('.add-carousel-button').click(function() {
 
 	$('#articlelist').append('<tr>' +
 	'<td> 0 </td>' +
+	'<input type="hidden" name="sort[0]" value="carousel">' +
 	'<td>Carousel item</td>' +
 	'<td>' +
 	'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
 	'<span> - </span>' +
 	'</td>' +
 	'<td>' +
-	'<input type="text" name="carouselTitle"/>' +
+	'<input type="text" name="carouselTitle[]"/>' +
 	'</td>' +
 	'<td>' +
-	'<input type="text" name="carouselStartDate"/>' +
+	'<input type="text" name="carouselStartDate[]"/>' +
 	'</td>' +
 	'<td>' +
-	'<input type="text" name="carouselEndDate"/>' +
+	'<input type="text" name="carouselEndDate[]"/>' +
 	'</td>' +
 	'<td>' +
-	'<textarea name="beschrijving[0]"></textarea>' +
+	'<textarea name="beschrijving[]"></textarea>' +
 	'</td>' +
 	'<td>' +
 	'<input type="file" name="file[0]" />' +
@@ -121,7 +122,7 @@ function addArticle(button)
 			'<span>' + endDate + '</span>' +
 			'</td>' +
 			'<td>' +
-				'<textarea name="beschrijving[0]"></textarea>' +
+				'<textarea name="beschrijving[]"></textarea>' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
@@ -227,11 +228,23 @@ function calculateIndexes()
 			{
 				input.name = 'sort[' + i + ']';
 			}
+			else if(input.name.indexOf('carouselTitle') !== -1)
+			{
+				input.name = 'carouselTitle[]';
+			}
+			else if(input.name.indexOf('carouselStartDate') !== -1)
+			{
+				input.name = 'carouselStartDate[]';
+			}
+			else if(input.name.indexOf('carouselEndDate') !== -1)
+			{
+				input.name = 'carouselEndDate[]';
+			}
 			else if (input.name.indexOf('artikel') !== -1) 
 			{
 				input.name = 'artikel[' + i + ']';
 			}
-			else 
+			else
 			{
 				input.name = 'deletefile[' + i + ']';
 			}
