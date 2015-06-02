@@ -17,6 +17,7 @@ namespace App\Http\Controllers;
         private $districts = array();
         private $validationResults = array();
         private $tempSheetName;
+        private $errors = array();
 
         /**
          * Creates a new PostalController instance.
@@ -50,7 +51,6 @@ namespace App\Http\Controllers;
         public function index()
         {
             return view('postal.index');
-            //return view('page.index', compact('pages'));
         }
 
         /**
@@ -64,7 +64,13 @@ namespace App\Http\Controllers;
             if($this->validateFile($file))
             {
                 $this->uploadFile($file);
+                //return view('postal.index');
+                $success = true;
+                return view('postal.index', compact('success'));
             }
+            $success = false;
+            $errors = $this->errors;
+            return view('postal.index', compact('success', 'errors'));
         }
 
         public function validateFile($file)
@@ -245,6 +251,7 @@ namespace App\Http\Controllers;
         //Validators
         protected function validateRow($row)
         {
+            $succeed = true;
             $postal     = trim($row->postcode);
             $houseNr    = trim($row->huisnr);
             $suffix     = trim($row->toevoeging);
@@ -253,17 +260,25 @@ namespace App\Http\Controllers;
             {
                 if(!$this->validatePostal($postal) || !$this->validateHouseNumber($houseNr) || !$this->validateSuffix($suffix))
                 {
-                    return false;
+                    $succeed =  false;
                 }
             }
             else
             {
                 if(!$this->validatePostal($postal) || !$this->validateHouseNumber($houseNr))
                 {
-                    return false;
+                    $succeed = false;
                 }
             }
-            return true;
+
+            if(!$succeed)
+            {
+                $errorMessage = 'Werkblad: ' . $this->tempSheetName . ' Rij: ' . $this->formatId($row->id) . ' is foutief';
+                if(!in_array($errorMessage,$this->errors)) {
+                    array_push($this->errors, 'Werkblad: ' . $this->tempSheetName . ' Rij: ' . $this->formatId($row->id) . ' is foutief');
+                }
+            }
+            return $succeed;
         }
 
         protected function validatePostal($postal)
