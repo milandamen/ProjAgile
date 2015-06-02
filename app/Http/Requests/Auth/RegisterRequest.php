@@ -5,8 +5,6 @@
 
 	class RegisterRequest extends Request 
 	{
-
-
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
@@ -79,8 +77,8 @@
 			$input['houseNumber'] 			= filter_var($input['houseNumber'], FILTER_SANITIZE_STRING);
 			$input['suffix'] 				= filter_var($input['suffix'], FILTER_SANITIZE_STRING);
 			$input['postal'] 				= filter_var($input['postal'], FILTER_SANITIZE_STRING);
-			$input['email'] 				= filter_var($input['email'], FILTER_SANITIZE_EMAIL);
-			$input['email_confirmation'] 	= filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL);
+			$input['email'] 				= strtolower(filter_var($input['email'], FILTER_SANITIZE_EMAIL));
+			$input['email_confirmation'] 	= strtolower(filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL));
 
 			$input['postal'] = $this->fixPostal($input['postal']);
 

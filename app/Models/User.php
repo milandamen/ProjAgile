@@ -41,7 +41,6 @@
 		[
 			'userGroupId',
 			'addressId',
-			'postalId',
 			'username',
 			'firstName',
 			'insertion',
@@ -49,7 +48,8 @@
 			'password',
 			'email', 
 			'active',
-			'remember_Token'
+			'remember_Token',
+			'confirmation_Token',
 		];
 
 		/**
@@ -81,16 +81,6 @@
 		public function address()
 		{
 			return $this->belongsTo('App\Models\Address', 'addressId');
-		}
-
-		/**
-		 * Get all DistrictSection models that reference this User model (permissions).
-		 *
-		 * @return Collection -> DistrictSection
-		 */
-		public function districtSections()
-		{
-			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
 		}
 
 		/**

@@ -1,9 +1,30 @@
 <?php
+	/*
+	|--------------------------------------------------------------------------
+	| Breadcrumbs
+	|--------------------------------------------------------------------------
+	|
+	| Listed below are all the breadcrumbs that are being used by 
+	| this application.
+	| These breadcrumbs are grouped in partials by controller type
+	| and are sorted based on the file structure of the controller folder. 
+	|
+	*/
 
 	/**
 	 * AuthController breadcrumbs.
 	 */
-	include('BreadcrumbPartials/_authBreadcrumbs.php');
+	include('BreadcrumbPartials/Auth/_authBreadcrumbs.php');
+
+	/**
+	 * PasswordController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/Auth/_passwordBreadcrumbs.php');
+
+	/**
+	 * RegistrationController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/Auth/_registrationBreadcrumbs.php');
 
 	/**
 	 * CarouselController breadcrumbs.

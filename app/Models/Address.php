@@ -33,6 +33,7 @@
 		 */
 		protected $fillable = 
 		[
+			'districtSectionid',
 			'postalId',
 			'houseNumberId',
 		];
@@ -46,6 +47,16 @@
 		[
 			'addressId'
 		];
+
+		/**
+		 * Get the DistrictSection model that is referenced in this Address model.
+		 * 
+		 * @return DistrictSection
+		 */
+		public function districtSection()
+		{
+			return $this->belongsTo('App\Models\DistrictSection', 'districtSectionId');
+		}
 
 		/**
 		 * Get the HouseNumber model that is referenced in this Address model.

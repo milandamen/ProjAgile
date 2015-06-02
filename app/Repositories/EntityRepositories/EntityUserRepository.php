@@ -105,28 +105,27 @@
 		 */
 		public function create($attributes)
 		{
-			//UserGroupId is not set when registering
+			// UserGroupId is not set when registering
 			if (!isset($attributes['userGroupId']))
 			{
 				$attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
 			}
 
-			//Check if postal and housenumber are provided. These attributes are only required for residents.
+			// Check if postal and housenumber are provided. These attributes are only required for residents.
 			if (isset($attributes['postal']) && !empty($attributes['postal']) && 
 				isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
-				$postal = $this->postalRepo->getByCode($attributes['postal']);
-				$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null);
-				$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+				$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
+				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
+				$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
 
-				$attributes['addressId'] = $address->addressId;
-
-				//Todo delete
-				$attributes['postalId'] = $postal->postalId;
+				$attributes['addressId'] = $addressId;
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
 			$attributes['active'] = false;
-			dd($attributes);
+			$attributes['email'] = strtolower($attributes['email']);
+			$attributes['confirmation_Token'] = str_random(100);
+
 			return User::create($attributes);
 		}
 
@@ -139,6 +138,7 @@
 		 */
 		public function update($model)
 		{
+			$model->email = isset($model->email) ? strtolower($model->email) : null;
 			$model->save();
 		}
 
@@ -200,5 +200,17 @@
 		public function getByAddress($addressId)
 		{
 			return User::where('addressId', '=', $addressId)->first();
+		}
+
+		/**
+		 * Returns a User record in the database depending on the confirmation token provided.
+		 * 
+		 * @param  string $confirmation_Token
+		 * 
+		 * @return User
+		 */
+		public function getByConfirmationToken($confirmation_Token)
+		{
+			return User::where('confirmation_Token', '=', $confirmation_Token)->where('active', '=', false)->first();	
 		}
 	}
