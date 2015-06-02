@@ -1,6 +1,7 @@
 <?php 
 	namespace App\Models;
 
+	use App\Http\Controllers\PermissionsController;
 	use Illuminate\Auth\Authenticatable;
 	use Illuminate\Database\Eloquent\Model;
 	use Illuminate\Auth\Passwords\CanResetPassword;
@@ -152,4 +153,66 @@
 		{
 			return $this->belongsTo('App\Models\UserGroup', 'userGroupId');
 		}
+
+		/**
+		 * Check if the user has permission to edit the given page
+		 *
+		 * @param $pageId
+		 * @return Boolean
+		 */
+		public function hasPagePermission($pageId)
+		{
+			return $this->pages->contains($pageId);
+		}
+
+		/**
+		 * Check if the user has permission to edit news from the given districtSection.
+		 *
+		 * @param $districtSectionId
+		 * @return Boolean
+		 */
+		public function hasDistrictSectionPermission($districtSectionId)
+		{
+			return $this->districtSections->contains($districtSectionId);
+		}
+
+		/**
+		 * Check if the user has permission to edit news from the given districtSection.
+		 *
+		 * @param $districtSectionId
+		 * @return Boolean
+		 */
+		public function hasDistrictSectionPermissions($districtSections)
+		{
+			foreach ($districtSections as $districtSection)
+			{
+				if ($this->districtSections->contains($districtSection->districtSectionId))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Check if the user has the given permission
+		 *
+		 * @param $permissionId
+		 * @return Boolean
+		 */
+		public function hasPermission($permissionId)
+		{
+			return $this->permissions->contains($permissionId);
+		}
+
+		/**
+		 * Check if the user has permission to change permissions.
+		 *
+		 * @return Boolean
+		 */
+		public function canChangePermissions()
+		{
+			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
+		}
+
 	}

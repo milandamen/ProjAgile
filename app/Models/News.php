@@ -127,16 +127,6 @@
 		}
 
 		/**
-		//		 * Get the DistrictSection models that is referenced in this News model.
-		//		 *
-		//		 * @return DistrictSections
-		//		 */
-		public function DistrictSections()
-		{
-			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
-		}
-
-		/**
 		 * Get all File models that reference this News model.
 		 * 
 		 * @return Collection -> File
@@ -164,5 +154,15 @@
 		public function user() 
 		{
 			return $this->belongsTo('App\Models\User', 'userId');
+		}
+
+		/**
+		 * Get all DistrictSection models that reference this News model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSections()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
 		}
 	}

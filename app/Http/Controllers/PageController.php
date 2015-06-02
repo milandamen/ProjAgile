@@ -162,19 +162,26 @@
 		 */
 		public function edit($id)
 		{
-			if($this->redirectHome($id)){
-				Flash::error('U kunt de homepage niet op deze manier wijzigen.');
-				return Redirect::route('home.index');
-			}
+			if (Auth::user()->hasPagePermission($id))
+			{
+				if($this->redirectHome($id)){
+					Flash::error('U kunt de homepage niet op deze manier wijzigen.');
+					return Redirect::route('home.index');
+				}
 
-			$page = $this->pagerepo->get($id);
-			$pages = $this->pagerepo->getAllToList();
-			if(isset($page)){
-				return View('page.edit', compact('page', 'pages'));
-			} else {
-				return view('errors.404');
+				$page = $this->pagerepo->get($id);
+				$pages = $this->pagerepo->getAllToList();
+				if(isset($page)){
+					return View('page.edit', compact('page', 'pages'));
+				} else {
+					return view('errors.404');
+				}
 			}
-
+			else
+			{
+				Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
+				return Redirect::route('page.index');
+			}
 		}
 
 		/**
@@ -185,68 +192,77 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if($this->redirectHome($id)){
-				return Redirect::route('home.index');
-			}
-
-			$old = $this->pagerepo->get($id)->sidebar;
-			$new = $request->sidebar;
-
-			// update introduction
-			$introduction = $this->introrepo->get($request->intro_id);
-			$introduction->title = $request->title;	
-			$introduction->subtitle = $request->subtitle;
-			$introduction->text = $request->content;
-
-			$this->introrepo->update($introduction);
-
-			// update page
-
-			$page = $this->pagerepo->get($id);	
-			$page->sidebar = $request->sidebar;
-			$page->publishDate = $request->publishStartDate;
-			$page->publishEndDate = $request->publishEndDate;
-			$page->visible = $request->visible;
-
-
-
-			$page->parentId = $request->parent;
-			$this->pagerepo->update($page);
-
-			// delete all old panels 
-			$this->pagepanelrepo->deleteAllFromPage($id);
-
-			// update panels 
-			if(count($request->panel) > 0)
+			if (Auth::user()->hasPagePermission($id))
 			{
-				foreach($request->panel as $pagepanel)
-				{
-					$panel = $this->panelrepo->getBySize($pagepanel['size']);
-						
-					$this->pagepanelrepo->create(
-					[
-						'page_id' => $page->pageId,
-						'title' => $pagepanel['title'],
-						'text' => $pagepanel['content'],
-						'panel_id' =>$panel->panelId
-					]);					
+				if($this->redirectHome($id)){
+					return Redirect::route('home.index');
 				}
+
+				$old = $this->pagerepo->get($id)->sidebar;
+				$new = $request->sidebar;
+
+				// update introduction
+				$introduction = $this->introrepo->get($request->intro_id);
+				$introduction->title = $request->title;
+				$introduction->subtitle = $request->subtitle;
+				$introduction->text = $request->content;
+
+				$this->introrepo->update($introduction);
+
+				// update page
+
+				$page = $this->pagerepo->get($id);
+				$page->sidebar = $request->sidebar;
+				$page->publishDate = $request->publishStartDate;
+				$page->publishEndDate = $request->publishEndDate;
+				$page->visible = $request->visible;
+
+
+
+				$page->parentId = $request->parent;
+				$this->pagerepo->update($page);
+
+				// delete all old panels
+				$this->pagepanelrepo->deleteAllFromPage($id);
+
+				// update panels
+				if(count($request->panel) > 0)
+				{
+					foreach($request->panel as $pagepanel)
+					{
+						$panel = $this->panelrepo->getBySize($pagepanel['size']);
+
+						$this->pagepanelrepo->create(
+							[
+								'page_id' => $page->pageId,
+								'title' => $pagepanel['title'],
+								'text' => $pagepanel['content'],
+								'panel_id' =>$panel->panelId
+							]);
+					}
+				}
+				$pageid = $page->pageId;
+				$title = $request->title;
+
+				$this->updateSidebar($old, $new, $pageid, $title);
+
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if($newOnSite === true)
+				{
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepository->create($attributes);
+				}
+
+				return Redirect::route('page.show', [$page->pageId]);
 			}
-			$pageid = $page->pageId;
-			$title = $request->title;
-
-			$this->updateSidebar($old, $new, $pageid, $title);
-
-			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
-
-			if($newOnSite === true)
+			else
 			{
-				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-				$attributes['created_at'] = new \DateTime('now');
-				$this->newOnSiteRepository->create($attributes);
-			}	
-					
-			return Redirect::route('page.show', [$page->pageId]);
+				Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
+				return Redirect::route('page.index');
+			}
+
 		}
 
 		/**
@@ -258,24 +274,32 @@
 		 */
 		public function destroy($id)
 		{
-			if($this->redirectHome($id))
+			if (Auth::user()->hasPagePermission($id))
 			{
-				Flash::error('U kunt de homepagina niet verwijderen');
+				if($this->redirectHome($id))
+				{
+					Flash::error('U kunt de homepagina niet verwijderen');
 
-				return Redirect::route('home.index');
+					return Redirect::route('home.index');
+				}
+
+				$page = $this->pagerepo->get($id);
+
+				if($page->sidebar)
+				{
+					$this->sidebarrepo->deleteAllFromPage($id);
+				}
+				$this->pagepanelrepo->deleteAllFromPage($id);
+				$this->pagerepo->destroy($id);
+				$this->introrepo->destroy($page->introduction->introductionId);
+
+				return Redirect::route('page.index');
 			}
-
-			$page = $this->pagerepo->get($id);
-
-			if($page->sidebar)
+			else
 			{
-				$this->sidebarrepo->deleteAllFromPage($id);
+				Flash::error('U bent niet geautoriseerd om deze pagina te verwijderen.');
+				return Redirect::route('page.index');
 			}
-			$this->pagepanelrepo->deleteAllFromPage($id);
-			$this->pagerepo->destroy($id);
-			$this->introrepo->destroy($page->introduction->introductionId);
-
-			return Redirect::route('page.index');
 		}
 
 		/**
