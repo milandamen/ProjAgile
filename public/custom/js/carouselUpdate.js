@@ -58,13 +58,13 @@ $('.add-carousel-button').click(function() {
 	'<input type="text" name="carouselTitle"/>' +
 	'</td>' +
 	'<td>' +
-	'TO-DO' +
+	'<input type="text" name="carouselStartDate"/>' +
 	'</td>' +
 	'<td>' +
-	'TO-DO' +
+	'<input type="text" name="carouselEndDate"/>' +
 	'</td>' +
 	'<td>' +
-	'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
+	'<textarea name="beschrijving[0]"></textarea>' +
 	'</td>' +
 	'<td>' +
 	'<input type="file" name="file[0]" />' +
@@ -121,7 +121,7 @@ function addArticle(button)
 			'<span>' + endDate + '</span>' +
 			'</td>' +
 			'<td>' +
-				'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
+				'<textarea name="beschrijving[0]"></textarea>' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
