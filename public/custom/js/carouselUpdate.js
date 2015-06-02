@@ -20,10 +20,10 @@ function searchArticle()
 						item.title + 
 					'</td>' +
 					'<td>' +
-					item.publishStartDate +
+						item.publishStartDate +
 					'</td>' +
 					'<td>' +
-					item.publishEndDate +
+						item.publishEndDate +
 					'</td>' +
 					'<td>' + 
 						'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' + 
@@ -47,44 +47,45 @@ function searchArticle()
 
 $('.add-carousel-button').click(function() {
 
-	$('#articlelist').append('<tr>' +
-	'<td> 0 </td>' +
-	'<input type="hidden" name="sort[0]" value="carousel">' +
-	'<td>Carousel item</td>' +
-	'<td>' +
-	'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
-	'<span> - </span>' +
-	'</td>' +
-	'<td>' +
-	'<input type="text" name="carouselTitle[]"/>' +
-	'</td>' +
-	'<td>' +
-	'<input type="text" name="carouselStartDate[]"/>' +
-	'</td>' +
-	'<td>' +
-	'<input type="text" name="carouselEndDate[]"/>' +
-	'</td>' +
-	'<td>' +
-	'<textarea name="beschrijving[]"></textarea>' +
-	'</td>' +
-	'<td>' +
-	'<input type="file" name="file[0]" />' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
-	'<i class="fa fa-arrow-up"></i>' +
-	'</a>' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
-	'<i class="fa fa-arrow-down"></i>' +
-	'</a>' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
-	'<i class="fa fa-times"></i>' +
-	'</a>' +
-	'</td>' +
+	$('#articlelist').append(
+	'<tr>' +
+		'<td> 0 </td>' +
+		'<input type="hidden" name="sort[0]" value="carousel" />' +
+		'<td>Carousel item</td>' +
+		'<td>' +
+			'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
+			'<span> - </span>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselTitle[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselStartDate[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselEndDate[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<textarea name="beschrijving[]"></textarea>' +
+		'</td>' +
+		'<td>' +
+			'<input type="file" name="file[0]" />' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
+				'<i class="fa fa-arrow-up"></i>' +
+			'</a>' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
+				'<i class="fa fa-arrow-down"></i>' +
+			'</a>' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
+				'<i class="fa fa-times"></i>' +
+			'</a>' +
+		'</td>' +
 	'</tr>');
 
 	calculateIndexes();
@@ -113,13 +114,13 @@ function addArticle(button)
 				'<span>' + id + '</span>' +
 			'</td>' +
 			'<td>' +
-			'<span>' + title + '</span>' +
+				'<span>' + title + '</span>' +
 			'</td>' +
 			'<td>' +
-			'<span>' + startDate + '</span>' +
+				'<span>' + startDate + '</span>' +
 			'</td>' +
 			'<td>' +
-			'<span>' + endDate + '</span>' +
+				'<span>' + endDate + '</span>' +
 			'</td>' +
 			'<td>' +
 				'<textarea name="beschrijving[]"></textarea>' +

@@ -35,7 +35,7 @@
 								<th class="cu-smallcol">Titel</th>
 								<th class="cu-smallcol">Start datum</th>
 								<th class="cu-smallcol">Eind datum</th>
-								<th class="">Beschrijving</th>	<!-- Article description -->
+								<th>Beschrijving</th>					<!-- Article description -->
 
 								<th>Image</th>
 								<th class="cu-smallcol"></th>			<!-- Move up -->
@@ -68,14 +68,14 @@
 									</td>
 									<td>
 										<input type="text" name="artikel[0]" value="
-										@if($article->news != null)
-											{{ $article->news->newsId }}
-										@elseif($article->page != null)
-											{{$article->page->pageId}}
-										@else
-												Carousel-item
-										@endif
-										 " class="hiddenInput"/>
+											@if($article->news != null)
+												{{ $article->news->newsId }}
+											@elseif($article->page != null)
+												{{$article->page->pageId}}
+											@else
+													Carousel-item
+											@endif
+										" class="hiddenInput" />
 										<span>
 											@if($article->news != null)
 												{{ $article->news->newsId }}
