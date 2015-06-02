@@ -28,7 +28,7 @@
 
 		public function edit($id)
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_SIDEBAR))
 			{
 				$sidebar = $this->sidebarRepo->getByPage($id);
 
@@ -38,17 +38,14 @@
 					$menuList = $this->menuRepo->getAll();
 
 					return View('sidebar.edit', compact('sidebarList', 'menuList'));
-				} 
-				
-				return view('errors.404');
+				}
 			}
-			
 			return view('errors.403');
 		}
 
 		public function update($id)
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_SIDEBAR))
 			{
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 				$maxrowindex = $_POST['maxRowIndex'];

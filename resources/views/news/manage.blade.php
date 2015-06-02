@@ -9,7 +9,10 @@
 			<div class="col-md-12">
 				<h2 class="page-header">Nieuws Beheer</h2>
 			</div>
-		</div>`
+		</div>
+		<div class="row">
+			@include('flash::message')
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<p class="col-md-8"> 
@@ -93,4 +96,8 @@
 			</div>
 		</div>
 	</div>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

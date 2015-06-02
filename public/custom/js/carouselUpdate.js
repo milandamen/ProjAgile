@@ -39,6 +39,41 @@ function searchArticle()
 	});
 }
 
+$('.add-carousel-button').click(function() {
+
+	$('#articlelist').append('<tr>' +
+	'<td> 0 </td>' +
+	'<td>Carousel item</td>' +
+	'<td>' +
+	'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
+	'<span> - </span>' +
+	'</td>' +
+	'<td>' +
+	'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
+	'</td>' +
+	'<td>' +
+	'<input type="file" name="file[0]" />' +
+	'</td>' +
+	'<td>' +
+	'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
+	'<i class="fa fa-arrow-up"></i>' +
+	'</a>' +
+	'</td>' +
+	'<td>' +
+	'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
+	'<i class="fa fa-arrow-down"></i>' +
+	'</a>' +
+	'</td>' +
+	'<td>' +
+	'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
+	'<i class="fa fa-times"></i>' +
+	'</a>' +
+	'</td>' +
+	'</tr>');
+
+	calculateIndexes();
+});
+
 /**
 	Move the article from the 2nd table to the 1st table.
 */
@@ -54,6 +89,7 @@ function addArticle(button)
 	resulthtml +=
 		'<tr>' +
 			'<td> 0 </td>' +
+			'<td>Nieuws</td>' +
 			'<td>' +
 				'<input type="text" name="artikel[0]" value="' + id + '" class="hiddenInput" />' +
 				'<span>' + id + '</span>' +
