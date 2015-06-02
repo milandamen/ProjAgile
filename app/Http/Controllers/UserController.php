@@ -4,6 +4,9 @@
 	use App\Http\Requests\User\CreateUserRequest;
 	use App\Http\Requests\User\UpdateUserRequest;
 	use App\Models\User;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\IPermissionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
@@ -22,202 +25,173 @@
 		const CONTENT_GROUP_ID = 2;
 		const RESIDENT_GROUP_ID = 3;
 
-		public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo)
+		public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo,
+									IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo)
 		{
 			$this->userRepo = $userRepo;
 			$this->userGroupRepo = $userGroupRepo;
 			$this->postalRepo = $postalRepo;
+			$this->pageRepo = $pageRepo;
+			$this->districtSectionRepo = $districtSectionRepo;
+			$this->permissionRepo = $permissionRepo;
 		}
 
 		public function index()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
-					$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
-					$residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
+				$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
+				$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
+				$residents = $this->userRepo->getAllByUserGroup(self::RESIDENT_GROUP_ID);
 
-					return view('user.index', compact('admins', 'contentmanagers', 'residents'));
-				}
-				return view('errors.403');
+				return view('user.index', compact('admins', 'contentmanagers', 'residents'));
 			}
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		public function create()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$user = new User();
-					$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
-					return view('user.create', compact('user', 'userGroups'));
-				}
-				return view('errors.403');
+				$user = new User();
+				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+				return view('user.create', compact('user', 'userGroups'));
 			}
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		public function store(CreateUserRequest $userRequest)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
+				$data = $userRequest->input();
+				$this->userRepo->create($data);
+
+				$user = $this->userRepo->get($userRequest->get('userId'));
+				//grant admins all permissions
+				if($user !== null && (int)$user->userGroupId === self::ADMIN_GROUP_ID)
 				{
-					$data = $userRequest->input();
-					$this->userRepo->create($data);
-					return redirect::route('user.index');
+					$this->grantAllPermissions($user->userId);
 				}
-				return view('errors.403');
+				return redirect::route('user.index');
 			}
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		public function edit($id)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
+				$user = $this->userRepo->get($id);
+				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+				$postal = '';
+				if ($user->postalId !== null)
 				{
-					$user = $this->userRepo->get($id);
-					$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
-					$postal = '';
-					if ($user->postalId !== null)
-					{
-						$postal = $this->postalRepo->getById($user->postalId)->code;
-					}
-					return view('user.edit', compact('user', 'userGroups', 'postal'));
+					$postal = $this->postalRepo->getById($user->postalId)->code;
 				}
-				return view('errors.403');
+				return view('user.edit', compact('user', 'userGroups', 'postal'));
 			}
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		public function update(UpdateUserRequest $userRequest, $id = null)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator' || $id === null)
+				$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
+				$data = $userRequest->only
+				(
+					'username',
+					'firstName',
+					'surname',
+					'email',
+					'postal',
+					'houseNumber',
+					'userGroupId'
+				);
+
+				$user->fill($data);
+
+				//only change password when given. If the field is emtpy the password need not be changed.
+				if ($userRequest->get('password') !== '')
 				{
-					$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
-					$data = $userRequest->only
-					(
-						'username',
-						'firstName',
-						'surname',
-						'email',
-						'postal',
-						'houseNumber',
-						'userGroupId'
-					);
-
-					$user->fill($data);
-
-					//only change password when given. If the field is emtpy the password need not be changed.
-					if ($userRequest->get('password') !== '')
-					{
-						$user->password =  Hash::make($userRequest->get('password'));
-					}
-
-					if ($userRequest->get('postal') !== '')
-					{
-						$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-						$user->districtSectionId = $postal->districtSectionId;
-						$user->postalId = $postal->postalId;
-					}
-					else
-					{
-						$user->districtSectionId = null;
-						$user->postalId = null;
-					}
-
-					$this->userRepo->update($user);
-
-					if ($id === null)
-					{
-						return redirect::route('user.showProfile');
-					}
-					return redirect::route('user.index');
+					$user->password =  Hash::make($userRequest->get('password'));
 				}
 
-				return view('errors.403');
-			}
+				if ($userRequest->get('postal') !== '')
+				{
+					$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+					$user->postalId = $postal->postalId;
+				}
+				else
+				{
+					$user->postalId = null;
+				}
 
-			return view('errors.401');
+				$this->userRepo->update($user);
+
+				//grant admins all permissions
+				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID)
+				{
+					$this->grantAllPermissions($id);
+				}
+
+				if ($id === null)
+				{
+					return redirect::route('user.showProfile');
+				}
+				return redirect::route('user.index');
+			}
+			return view('errors.403');
 		}
 
 		public function show($id)
 		{
-			if(Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if(Auth::user()->usergroup->name === 'Administrator')
+				$user = $this->userRepo->get($id);
+				$postal = '';
+				if ($user->postalId !== null)
 				{
-					$user = $this->userRepo->get($id);
-					$postal = '';
-					if ($user->postalId !== null)
-					{
-						$postal = $this->postalRepo->getById($user->postalId)->code;
-					}
+					$postal = $this->postalRepo->getById($user->postalId)->code;
+				}
 
-					if($user != null)
-					{
-						return view('user.show', compact('user', 'postal'));
-					}
-					else
-					{
-						return view('errors.404');
-					}
+				if($user != null)
+				{
+					return view('user.show', compact('user', 'postal'));
 				}
 				else
 				{
-					return view('errors.403');
+					return view('errors.404');
 				}
 			}
-			else
-			{
-				return view('errors.401');
-			}
+			return view('errors.403');
 		}
 
 		public function deactivate($id)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$user = $this->userRepo->get($id);
-					$user->active = false;
-					$this->userRepo->update($user);
+				$user = $this->userRepo->get($id);
+				$user->active = false;
+				$this->userRepo->update($user);
 
-					return redirect::route('user.index');
-				}
-
-				return view('errors.403');
+				return redirect::route('user.index');
 			}
-
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		public function activate($id)
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator')
-				{
-					$user = $this->userRepo->get($id);
-					$user->active = true;
-					$this->userRepo->update($user);
+				$user = $this->userRepo->get($id);
+				$user->active = true;
+				$this->userRepo->update($user);
 
-					return redirect::route('user.index');
-				}
-
-				return view('errors.403');
+				return redirect::route('user.index');
 			}
-
-			return view('errors.401');
+			return view('errors.403');
 		}
 
 		//personal profile functions
@@ -248,6 +222,26 @@
 				return view('user.editProfile', compact('user', 'postal'));
 			}
 			return view('errors.401');
+		}
+		//end personal profile functions
+
+		/**
+		 * Grant the given user all permissions
+		 *
+		 * @param $userId
+		 * @return Response
+		 */
+		private function grantAllPermissions($userId)
+		{
+			$user = $this->userRepo->get($userId);
+
+			$pages = $this->pageRepo->getAllIds();
+			$districtSections = $this->districtSectionRepo->getAllIds();
+			$permissions = $this->permissionRepo->getAllIds();
+
+			$user->pages()->sync($pages);
+			$user->districtSections()->sync($districtSections);
+			$user->permissions()->sync($permissions);
 		}
 
 	}
