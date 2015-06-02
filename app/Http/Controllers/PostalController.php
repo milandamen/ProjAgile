@@ -48,7 +48,7 @@ namespace App\Http\Controllers;
 		 *
 		 * @return Response
 		 */
-		private function index()
+		public function index()
 		{
 			return view('postal.index');
 		}
@@ -58,7 +58,7 @@ namespace App\Http\Controllers;
 		 *
 		 * @return Response
 		 */
-		private function upload()
+		public function upload()
 		{
 			$file = Request::file('Excel');
 			if($this->validateFile($file))
