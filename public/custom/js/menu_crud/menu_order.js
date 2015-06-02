@@ -47,14 +47,14 @@ function removeItem($item)
 
 function switchPublish(item)
 {
-    var listItem = item.parentNode.parentNode.parentNode;
-    var menuItemID = $(listItem).find('.menuGroupItem').attr('name');
-    var iconObject =  $(item).find('i');
-    $.get( getSwitchPublishMenuURL + '/' + menuItemID).done(function() {
-        if ($(iconObject).hasClass('fa fa-eye')){
-            $(iconObject).removeClass('fa fa-eye').addClass('fa fa-eye-slash')
-        }else{
-            $(iconObject).removeClass('fa fa-eye-slash').addClass('fa fa-eye')
-        }
-    });
+	var listItem = item.parentNode.parentNode.parentNode;
+	var menuItemID = $(listItem).find('.menuGroupItem').attr('name');
+	var iconObject =  $(item).find('i');
+	$.get( getSwitchPublishMenuURL + '/' + menuItemID).done(function() {
+		if ($(iconObject).hasClass('fa fa-eye')){
+			$(iconObject).removeClass('fa fa-eye').addClass('fa fa-eye-slash')
+		}else{
+			$(iconObject).removeClass('fa fa-eye-slash').addClass('fa fa-eye')
+		}
+	});
 }

@@ -14,11 +14,11 @@
 	]);
 
 	Route::get('menuItemAanmaken',
-    [
-        'as' => 'menu.create',
-        'uses' => 'MenuController@create',
-        'middleware' => 'admin'
-    ]);
+	[
+		'as' => 'menu.create',
+		'uses' => 'MenuController@create',
+		'middleware' => 'admin'
+	]);
 
 	Route::put('menuItemAanmaken',
 	[
@@ -41,9 +41,9 @@
 		'middleware' => 'admin'
 	]);
 
-    Route::get('switchPublishMenuItem/{id}',
-    [
-        'as' => 'menu.switchPublish',
-        'uses' => 'MenuController@switchPublish',
-        'middleware' => 'admin'
-    ]);
+	Route::get('switchPublishMenuItem/{id}',
+	[
+		'as' => 'menu.switchPublish',
+		'uses' => 'MenuController@switchPublish',
+		'middleware' => 'admin'
+	]);
