@@ -86,6 +86,7 @@
 		</div>
 	</div>
 	<script>
+		//set the color in colorpicker from db
 		var color = "{!! $footer[3]->text !!}";
 	</script>
 @endsection

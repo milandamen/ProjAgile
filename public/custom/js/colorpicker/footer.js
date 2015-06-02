@@ -1,4 +1,4 @@
-var menuColorField = document.getElementById('footerColor');
+var footerColorField = document.getElementById('footerColor');
 
 $('#picker').colpick({
 	flat:true,
@@ -6,7 +6,7 @@ $('#picker').colpick({
 	submit:0,
 	color: color,
 	onChange:function(hsb,hex) {
-		menuColorField.value = '#'+hex;
+		footerColorField.value = '#'+hex;
 	}
 });
 
