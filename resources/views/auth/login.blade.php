@@ -42,7 +42,7 @@
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-4">
 									{!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
-									{!! link_to_route('auth.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
+									{!! link_to_route('registration.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
 								</div>
 							</div>
 						{!! Form::close() !!}

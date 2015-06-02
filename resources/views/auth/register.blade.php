@@ -11,7 +11,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-		{!! Breadcrumbs::render('auth.register') !!}
+		{!! Breadcrumbs::render('registration.register') !!}
 		</div>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
@@ -22,7 +22,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
-						{!! Form::open(['method' => 'POST','route' => 'auth.register']) !!}
+						{!! Form::open(['method' => 'POST','route' => 'registration.register']) !!}
 							<div class="col-md-12 no-padding addmargin">
 								<div class="col-md-12 addmargin">	
 									<div class="col-md-6">	

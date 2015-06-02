@@ -44,7 +44,7 @@
 
 		/**
 		 * Post the registration and handle the input.
-		 * This will also queue and send an e-mail to both the registered user and the management.
+		 * This will also send an e-mail to both the registered user and the management.
 		 * 
 		 * @param  RegisterRequest $request
 		 * 
@@ -57,7 +57,8 @@
 			$insertion = $user->insertion ? $user->insertion . ' ' : '';
 			$name = $user->firstName . ' '. $insertion . $user->surname;
 			$email = $user->email;
-			$confirmation_Token = $user->confirmationCode;
+			$confirmation_Token = $user->confirmation_Token;
+			$districtSection = $user->address->districtSection->name;
 
 			Mail::send('emails.auth.welcome', compact('name', 'confirmation_Token'), function($message) use($name, $email)
 			{
@@ -67,7 +68,7 @@
 					$name
 				)->subject('Welkom bij wijkplatform De Bunders - Veghel');
 			});
-			Mail::send('emails.auth.management', [], function($message)
+			Mail::send('emails.auth.management', compact('name', 'districtSection'), function($message)
 			{
 				$message->to
 				(	
@@ -99,11 +100,12 @@
 
 				$this->auth->login($user);
 
-				Flash::succes('U heeft succesvol uw account geactiveerd. U bent nu succesvol ingelogd.');
+				Flash::success('U heeft succesvol uw account geactiveerd. U bent nu succesvol ingelogd.');
 			}
 			else
 			{
-				Flash::message('U heeft onsuccesvol geprobeerd een account te activeren.');
+				Flash::error('U heeft onsuccesvol geprobeerd een account te activeren. 
+							  Mogelijke redenen hiervoor zijn dat het account al geactiveerd is of omdat de activatie token verlopen is.')->important();
 			}
 
 			return Redirect::route('home.index');
