@@ -56,11 +56,14 @@
 									<td></td>
 									<td>
 										@if($article->news != null)
+											<input type="hidden" name="sort[0]" value="news">
 											Nieuws
 										@elseif($article->page != null)
+											<input type="hidden" name="sort[0]" value="page">
 											Pagina
 										@else
-											Carousel item
+											<input type="hidden" name="sort[0]" value="carousel">
+											Carousel item test
 										@endif
 									</td>
 									<td>
