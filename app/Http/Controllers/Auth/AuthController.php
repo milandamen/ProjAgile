@@ -25,6 +25,14 @@
 		 */
 		private $userRepo;
 
+		/**
+		 * Create a new AuthController instance.
+		 * 
+		 * @param  Guard			$auth
+		 * @param  IUserRepository	$userRepo
+		 *
+		 * @return void
+		 */
 		public function __construct(Guard $auth, IUserRepository $userRepo)
 		{
 			$this->auth = $auth;
