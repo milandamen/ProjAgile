@@ -44,11 +44,7 @@
 							<br/>
 							<label class="control-label col-sm-2">Kleur:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control footerColor" name="footerColor" placeholder="#FFF"
-										@if($footer[3] != null)
-											value="{{$footer[3]->text}}"
-										@endif
-								>
+								<div id="picker">{!! Form::hidden('footerColor', $footer[3]->text, ['class' => 'footerColor', 'id' => 'footerColor']) !!}</div>
 							</div>
 						</div>
 					</div>
@@ -88,11 +84,10 @@
 			</div>
 
 		</div>
-
-
-
-
 	</div>
+	<script>
+		var color = "{!! $footer[3]->text !!}";
+	</script>
 @endsection
 
 @section('additional_scripts')
@@ -101,4 +96,6 @@
 	{!! HTML::script('custom/js/validateNewOnSite.js') !!}
 	{!! HTML::script('custom/js/flash_message.js') !!}
 	{!! HTML::script('custom/js/footer.js') !!}
+	{!! HTML::script('custom/js/colorpicker/colpick.js') !!}
+	{!! HTML::script('custom/js/colorpicker/footer.js') !!}
 @stop

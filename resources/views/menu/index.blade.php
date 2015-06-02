@@ -21,8 +21,11 @@
 				<a class="btn btn-danger pull-right" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
 
 				<br><br><br>
-				<div id="picker">{!! Form::hidden('menucolor', '', ['id' => 'menucolor' ]) !!}</div>
-
+				<label class="control-label">Menu Kleur:</label>
+				<br><br>
+				<div id="picker">{!! Form::hidden('menucolor', $menuColor->color, ['id' => 'menucolor' ]) !!}</div>
+				<br><br>
+				<label class="control-label">Menu Volgorde:</label>
 				<ul class='space first-space' id='fullMenuList'>
 					@foreach($allMenuItemsEdit as $subMenu)
 						<li class='route'>
@@ -67,5 +70,6 @@
 @section('additional_scripts')
 	{!! HTML::script('custom/js/menu_crud/responder.js') !!}
 	{!! HTML::script('custom/js/menu_crud/menu_order.js') !!}
-	{!! HTML::script('custom/js/colpick.js') !!}
+	{!! HTML::script('custom/js/colorpicker/colpick.js') !!}
+	{!! HTML::script('custom/js/colorpicker/menu.js') !!}
 @stop
