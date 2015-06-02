@@ -71,4 +71,24 @@
 		{
 			return $this->belongsTo('App\Models\Page', 'pageId');
 		}
+
+		/**
+		 * Get the date of this carousel item, in a d-m-Y format (so without the time).
+		 * In order to call this, call $item->startDate() and NOT $item->startDate.
+		 *
+		 * @return string
+		 */
+		public function startDate()
+		{
+			$date = date_create($this->publishStartDate);
+
+			return date_format($date,'d-m-Y') ;
+		}
+
+		public function endDate()
+		{
+			$date = date_create($this->publishEndDate);
+
+			return date_format($date,'d-m-Y') ;
+		}
 	}

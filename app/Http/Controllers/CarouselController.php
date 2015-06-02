@@ -84,12 +84,19 @@
 							$newsId = null;
 							$pageId = null;
 							
-							$title = filter_var($_POST['carouselTitle'][$i], FILTER_SANITIZE_STRING);
-							$startDate = filter_var($_POST['carouselStartDate'][$i], FILTER_SANITIZE_STRING);
-							$endDate = filter_var($_POST['carouselEndDate'][$i], FILTER_SANITIZE_STRING);
+							$title = filter_var($_POST['carouselTitle'][$lci], FILTER_SANITIZE_STRING);
+							$start = filter_var($_POST['carouselStartDate'][$lci], FILTER_SANITIZE_STRING);
+							$end = filter_var($_POST['carouselEndDate'][$lci], FILTER_SANITIZE_STRING);
+
+							$publishStartDate = new \DateTime($start);
+							$publishStartDate->format('Y-m-d');
+							$publishEndDate = new \DateTime($end);
+							$publishEndDate->format('Y-m-d');
 
 
-							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'startDate', 'endDate', 'description' ));
+							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+							$lci++;
 						}
 
 						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')

@@ -97,20 +97,20 @@
 									</td>
 									<td>
 										@if($article->news != null)
-											{{$article->news->publishStartDate}}
+											{{$article->news->normalDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishDate}}
 										@else
-											<input type="text" name="carouselStartDate[]" value="{{$article->publishStartDate}}"/>
+											<input type="text" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
 										@endif
 									</td>
 									<td>
 										@if($article->news != null)
-											{{$article->news->publishEndDate}}
+											{{$article->news->endDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishEndDate}}
 										@else
-											<input type="text" name="carouselEndDate[]" value="{{$article->publishEndDate}}"/>
+											<input type="text" name="carouselEndDate[]" value="{{$article->endDate()}}"/>
 										@endif
 									</td>
 									<td>
