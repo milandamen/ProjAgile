@@ -114,8 +114,7 @@
 										@endif
 									</td>
 									<td>
-										{{--<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>--}}
-										<textarea name="beschrijving[0]" class="fullwidth">{{ $article->description }}</textarea>
+										<textarea name="beschrijving[]" class="fullwidth">{{ $article->description }}</textarea>
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
