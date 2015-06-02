@@ -68,3 +68,8 @@
      * PostalController routes
      */
     include('RoutePartials/_postalControllerRoutes.php');
+
+	/**
+	 * PermissionsController routers
+	 */
+	include ('RoutePartials/_permissionsControllerRoutes.php');

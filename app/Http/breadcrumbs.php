@@ -64,3 +64,8 @@
      * PostalController breadcrumbs.
      */
     include('BreadcrumbPartials/_PostalBreadcrumbs.php');
+
+	/**
+	 * PermissionController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_permissionBreadcrumbs.php');

@@ -45,7 +45,7 @@
 			$introduction = $this->pageRepo->get(1)->introduction;
 			htmlspecialchars($introduction);
 			$layoutModules = $this->homeLayoutRepo->getAll();
-			//$carousel = $this->carouselRepo->getAllFiltered();
+			$carousel = $this->carouselRepo->getAllFiltered();
 			$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
 			return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
@@ -58,7 +58,7 @@
 		 */
 		public function editLayout()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
 				$news = $this->getNews();
 				//$introduction = $this->introRepo->getPageBar('1');
@@ -67,7 +67,7 @@
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
 				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
-			} 
+			}
 			
 			return view('errors.403');
 		}
@@ -79,21 +79,19 @@
 		 */
 		public function updateLayout()
 		{
-			if (Auth::check() && Auth::user()->usergroup->name === 'Administrator') 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
-				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar']))
-				{
+				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
 					$modules = $this->homeLayoutRepo->getAll();
 
-					foreach ($modules as $module) 
-					{
+					foreach ($modules as $module) {
 						$module->orderNumber = $_POST[$module->moduleName];
 						$module->save();
 					}
 
 					return Redirect::route('home.index');
 				}
-				
+
 				return Redirect::route('home.editLayout');
 			}
 			
@@ -107,7 +105,7 @@
 		 */
 		public function editIntroduction()
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
 				$introduction = $this->pageRepo->get(1)->introduction;
 
@@ -124,7 +122,7 @@
 		 */
 		public function updateIntroduction(IntroductionRequest $request)
 		{
-			if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator'  || Auth::user()->usergroup->name === 'Content Beheerder')) 
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
 				$intro = $this->pageRepo->get($request->pageId)->introduction;
 				$intro->title = $request->title;
@@ -135,8 +133,7 @@
 
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-				if($newOnSite === true)
-				{
+				if ($newOnSite === true) {
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepository->create($attributes);

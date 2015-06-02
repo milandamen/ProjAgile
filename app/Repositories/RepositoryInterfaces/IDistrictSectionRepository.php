@@ -5,4 +5,5 @@
 	{
         public function getByName($name);
 		public function getAllToList();
+		public function getAllIds();
 	}

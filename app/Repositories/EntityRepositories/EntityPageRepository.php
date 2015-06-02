@@ -34,6 +34,22 @@
 		}
 
 		/**
+		 * Returns all the Page model id's in the database.
+		 *
+		 * @return Collection -> Integer
+		 */
+		public function getAllIds()
+		{
+			$pages =  Page::all();
+			$page_ids = array();
+			foreach($pages as $page)
+			{
+				$page_ids[] = $page->pageId;
+			}
+			return $page_ids;
+		}
+
+		/**
 		 * Creates a Page record in the database.
 		 * 
 		 * @param  array() $attributes
