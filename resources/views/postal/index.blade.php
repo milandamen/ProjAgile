@@ -11,7 +11,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-            {{--{!! Breadcrumbs::render('news.edit', (object)['id' => $newsItem->newsId, 'title' => $newsItem->title]) !!}--}}
             {!! Breadcrumbs::render('postal.index') !!}
 
             @if(isset($success))
@@ -35,7 +34,6 @@
                 @endif
             @endif
 
-            {{--{!! Form::open(array('route' => 'postal.upload', 'files' => 'true')) !!}            --}}
             {!! Form::open(array('route' => 'postal.upload', 'files' => 'true')) !!}
                 <div class="panel panel-primary col-md-4 no-padding" style='margin-top:25px'>
                     <div class="panel-heading">

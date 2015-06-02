@@ -17,17 +17,17 @@
 			return DistrictSection::find($id);
 		}
 
-        /**
-         * Returns a DistrictSection model depending on the name provided.
-         *
-         * @param  string $name
-         *
-         * @return DistrictSection
-         */
-        public function getByName($name)
-        {
-            return DistrictSection::where('name', '=', $name)->first();
-        }
+		/**
+		 * Returns a DistrictSection model depending on the name provided.
+		 *
+		 * @param  string $name
+		 *
+		 * @return DistrictSection
+		 */
+		public function getByName($name)
+		{
+			return DistrictSection::where('name', '=', $name)->first();
+		}
 
 		/**
 		 * Returns all the DistrictSection models in the database.
