@@ -59,3 +59,8 @@
 	 * UserController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_userBreadcrumbs.php');
+
+	/**
+	 * PermissionController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_permissionBreadcrumbs.php');

@@ -63,3 +63,8 @@
 	 * UserController routers
 	 */
 	include ('RoutePartials/_userControllerRoutes.php');
+
+	/**
+	 * PermissionsController routers
+	 */
+	include ('RoutePartials/_permissionsControllerRoutes.php');

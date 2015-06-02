@@ -26,6 +26,21 @@
 			return DistrictSection::all();
 		}
 		/**
+		 * Returns all the DistrictSection model id's in the database.
+		 *
+		 * @return Collection -> Integer
+		 */
+		public function getAllIds()
+		{
+			$districtSections =  DistrictSection::all();
+			$districtSection_ids = array();
+			foreach($districtSections as $districtSection)
+			{
+				$districtSection_ids[] = $districtSection->districtSectionId;
+			}
+			return $districtSection_ids;
+		}
+		/**
 		 * Creates a DistrictSection record in the database.
 		 *
 		 * @param  array() $attributes
