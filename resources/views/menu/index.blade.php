@@ -19,17 +19,14 @@
 			{!! Form::open(['id' => 'menuForm','method' => 'PATCH']) !!}
 				<a class="btn btn-success pull-right" onclick="submitForm()">Opslaan</a>
 				<a class="btn btn-danger pull-right" onclick="location.href='{{ route('management.index') }}'">Annuleren</a>
-				<br>
-				<br>
+
+				<div class="row top-buffer"></div>
 				<br>
 				<label class="control-label">Menu Kleur:</label>
-				<br>
-				<br>
 				<div id="picker">
 					{!! Form::hidden('menucolor', $menuColor->color, ['id' => 'menucolor' ]) !!}
 				</div>
-				<br>
-				<br>
+
 				<label class="control-label">Menu Volgorde:</label>
 				<ul class='space first-space' id='fullMenuList'>
 					@foreach($allMenuItemsEdit as $subMenu)
