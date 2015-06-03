@@ -74,20 +74,24 @@
 
 		public function update(ResetRequest $request)
 		{
-			$credentials = $request->only('email');
+			$credentials = $request->only('email', 'password', 'password_confirmation', 'token');
 
-			$respone = Password::reset($credentials, function($user, $password)
+			$response = Password::reset($credentials, function($user, $password)
 			{
 				$user->password = Hash::make($password);
 				$this->userRepo->update($user);
 			});
 
-			if($response === Password::INVALID_USER)
+			switch ($response)
 			{
-				return Redirect::back()->withInput()->withErrors([Lang::get($response)]);
-			}
-			Flash::success('Uw wachtwoord is succesvol gereset.')->important();
+				case Password::INVALID_PASSWORD:
+				case Password::INVALID_TOKEN:
+				case Password::INVALID_USER:
+					return Redirect::back()->withErrors([Lang::get($response)]);
+				case Password::PASSWORD_RESET:
+					Flash::success('Uw wachtwoord is succesvol gereset.')->important();
 
-			return Redirect::route('home.index');
+					return Redirect::route('home.index');
+			}
 		}
 	}
