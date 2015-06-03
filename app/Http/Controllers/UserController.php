@@ -73,9 +73,8 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$data = $userRequest->input();
-				$this->userRepo->create($data);
+				$user = $this->userRepo->create($data);
 
-				$user = $this->userRepo->get($userRequest->get('userId'));
 				//grant admins all permissions
 				if($user !== null && (int)$user->userGroupId === self::ADMIN_GROUP_ID)
 				{
@@ -115,7 +114,9 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
+				
 				$data = $userRequest->all();
+				$oldUserGroupId = $user->userGroupId;
 
 				$user->fill($data);
 
@@ -131,13 +132,19 @@
 					$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
 					$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
 					$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
-
-					$attributes['addressId'] = $addressId;
+					$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
+					//$user->postalId = $postal->postalId;
 				}
+				else
+				{
+					//$user->postalId = null;
+				}
+
+				$attributes['addressId'] = $addressId;
 				$this->userRepo->update($user);
 
 				//grant admins all permissions
-				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID)
+				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID && $oldUserGroupId !== self::ADMIN_GROUP_ID)
 				{
 					$this->grantAllPermissions($id);
 				}
