@@ -40,9 +40,14 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-md-6 col-md-offset-4">
+								<div class="col-md-6 col-md-offset-4 addmargin">
 									{!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
 									{!! link_to_route('registration.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
+									{!! link_to_route('password.reminder', 'Wachtwoord vergeten?', [], array('class' => 'btn btn-info')) !!}
 								</div>
 							</div>
 						{!! Form::close() !!}

@@ -57,6 +57,6 @@
 		[
 			'email'		=> 'emails.auth.reminder',
 			'table'		=> 'passwordreset',
-			'expire'	=> 5,
+			'expire'	=> 10,
 		],
 	];

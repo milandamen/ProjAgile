@@ -4,6 +4,7 @@
 	use App\Http\Controllers\Controller;
 	use App\Http\Requests\Auth\ReminderRequest;
 	use App\Http\Requests\Auth\ResetRequest;
+	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use Flash;
 	use Hash;
 	use Illuminate\Contracts\Auth\Guard;
@@ -44,7 +45,6 @@
 			return view('auth.reminder');
 		}
 
-
 		public function request(ReminderRequest $request)
 		{
 			$credentials = $request->only('email');
@@ -57,7 +57,7 @@
 			{
 				return Redirect::back()->withInput()->withErrors([Lang::get($response)]);
 			}
-			Flash::success('Er is een e-mail verstuurd naar het opgegeven e-mailadres. Met deze e-mail kunt u uw account activeren.')->important();
+			Flash::success('Er is een e-mail verstuurd naar het opgegeven e-mailadres. Met deze e-mail kunt u uw wachtwoord resetten.')->important();
 
 			return Redirect::route('home.index');
 		}
@@ -80,15 +80,14 @@
 			{
 				$user->password = Hash::make($password);
 				$this->userRepo->update($user);
-
-				Flash::success('Uw wachtwoord is succesvol gereset.')->important();
-
-				return Redirect::route('home.index');
 			});
 
 			if($response === Password::INVALID_USER)
 			{
 				return Redirect::back()->withInput()->withErrors([Lang::get($response)]);
 			}
+			Flash::success('Uw wachtwoord is succesvol gereset.')->important();
+
+			return Redirect::route('home.index');
 		}
 	}
