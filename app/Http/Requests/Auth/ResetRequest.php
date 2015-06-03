@@ -26,7 +26,7 @@
 			[
 				'email' 					=> 'required|email',
 				'password'					=> 'required|confirmed|is_password_strong_enough',
-				'passoword_confirmation'	=> 'required',
+				'password_confirmation'		=> 'required',
 			];
 		}
 
