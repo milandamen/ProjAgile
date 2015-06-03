@@ -1,89 +1,4 @@
 <?php return array (
-  'app' => 
-  array (
-    'debug' => false,
-    'url' => 'http://localhost',
-    'timezone' => 'UTC',
-    'locale' => 'nl',
-    'fallback_locale' => 'en',
-    'key' => '0JXpSG6AN8zhmV7ByKaC5NBiyksRK70I',
-    'cipher' => 'rijndael-128',
-    'log' => 'daily',
-    'providers' => 
-    array (
-      0 => 'Illuminate\\Foundation\\Providers\\ArtisanServiceProvider',
-      1 => 'Illuminate\\Auth\\AuthServiceProvider',
-      2 => 'Illuminate\\Bus\\BusServiceProvider',
-      3 => 'Illuminate\\Cache\\CacheServiceProvider',
-      4 => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
-      5 => 'Illuminate\\Routing\\ControllerServiceProvider',
-      6 => 'Illuminate\\Cookie\\CookieServiceProvider',
-      7 => 'Illuminate\\Database\\DatabaseServiceProvider',
-      8 => 'Illuminate\\Encryption\\EncryptionServiceProvider',
-      9 => 'Illuminate\\Filesystem\\FilesystemServiceProvider',
-      10 => 'Illuminate\\Foundation\\Providers\\FoundationServiceProvider',
-      11 => 'Illuminate\\Hashing\\HashServiceProvider',
-      12 => 'Illuminate\\Mail\\MailServiceProvider',
-      13 => 'Illuminate\\Pagination\\PaginationServiceProvider',
-      14 => 'Illuminate\\Pipeline\\PipelineServiceProvider',
-      15 => 'Illuminate\\Queue\\QueueServiceProvider',
-      16 => 'Illuminate\\Redis\\RedisServiceProvider',
-      17 => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
-      18 => 'Illuminate\\Session\\SessionServiceProvider',
-      19 => 'Illuminate\\Translation\\TranslationServiceProvider',
-      20 => 'Illuminate\\Validation\\ValidationServiceProvider',
-      21 => 'Illuminate\\View\\ViewServiceProvider',
-      22 => 'App\\Providers\\AppServiceProvider',
-      23 => 'App\\Providers\\BusServiceProvider',
-      24 => 'App\\Providers\\ConfigServiceProvider',
-      25 => 'App\\Providers\\EventServiceProvider',
-      26 => 'App\\Providers\\RouteServiceProvider',
-      27 => 'App\\Providers\\ViewComposerServiceProvider',
-      28 => 'App\\Providers\\RepositoryServiceProvider',
-      29 => 'Illuminate\\Html\\HtmlServiceProvider',
-      30 => 'Laracasts\\Flash\\FlashServiceProvider',
-      31 => 'DaveJamesMiller\\Breadcrumbs\\ServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'App' => 'Illuminate\\Support\\Facades\\App',
-      'Artisan' => 'Illuminate\\Support\\Facades\\Artisan',
-      'Auth' => 'Illuminate\\Support\\Facades\\Auth',
-      'Blade' => 'Illuminate\\Support\\Facades\\Blade',
-      'Bus' => 'Illuminate\\Support\\Facades\\Bus',
-      'Cache' => 'Illuminate\\Support\\Facades\\Cache',
-      'Config' => 'Illuminate\\Support\\Facades\\Config',
-      'Cookie' => 'Illuminate\\Support\\Facades\\Cookie',
-      'Crypt' => 'Illuminate\\Support\\Facades\\Crypt',
-      'DB' => 'Illuminate\\Support\\Facades\\DB',
-      'Eloquent' => 'Illuminate\\Database\\Eloquent\\Model',
-      'Event' => 'Illuminate\\Support\\Facades\\Event',
-      'File' => 'Illuminate\\Support\\Facades\\File',
-      'Hash' => 'Illuminate\\Support\\Facades\\Hash',
-      'Input' => 'Illuminate\\Support\\Facades\\Input',
-      'Inspiring' => 'Illuminate\\Foundation\\Inspiring',
-      'Lang' => 'Illuminate\\Support\\Facades\\Lang',
-      'Log' => 'Illuminate\\Support\\Facades\\Log',
-      'Mail' => 'Illuminate\\Support\\Facades\\Mail',
-      'Password' => 'Illuminate\\Support\\Facades\\Password',
-      'Queue' => 'Illuminate\\Support\\Facades\\Queue',
-      'Redirect' => 'Illuminate\\Support\\Facades\\Redirect',
-      'Redis' => 'Illuminate\\Support\\Facades\\Redis',
-      'Request' => 'Illuminate\\Support\\Facades\\Request',
-      'Response' => 'Illuminate\\Support\\Facades\\Response',
-      'Route' => 'Illuminate\\Support\\Facades\\Route',
-      'Schema' => 'Illuminate\\Support\\Facades\\Schema',
-      'Session' => 'Illuminate\\Support\\Facades\\Session',
-      'Storage' => 'Illuminate\\Support\\Facades\\Storage',
-      'URL' => 'Illuminate\\Support\\Facades\\URL',
-      'Validator' => 'Illuminate\\Support\\Facades\\Validator',
-      'View' => 'Illuminate\\Support\\Facades\\View',
-      'HTML' => 'Illuminate\\Html\\HtmlFacade',
-      'Form' => 'Illuminate\\Html\\FormFacade',
-      'Flash' => 'Laracasts\\Flash\\Flash',
-      'Breadcrumbs' => 'DaveJamesMiller\\Breadcrumbs\\Facade',
-    ),
-  ),
   'auth' => 
   array (
     'driver' => 'eloquent',
@@ -363,8 +278,352 @@
       'secret' => '',
     ),
   ),
+  'app' => 
+  array (
+    'debug' => false,
+    'url' => 'http://localhost',
+    'timezone' => 'UTC',
+    'locale' => 'nl',
+    'fallback_locale' => 'en',
+    'key' => '0JXpSG6AN8zhmV7ByKaC5NBiyksRK70I',
+    'cipher' => 'rijndael-128',
+    'log' => 'daily',
+    'providers' => 
+    array (
+      0 => 'Illuminate\\Foundation\\Providers\\ArtisanServiceProvider',
+      1 => 'Illuminate\\Auth\\AuthServiceProvider',
+      2 => 'Illuminate\\Bus\\BusServiceProvider',
+      3 => 'Illuminate\\Cache\\CacheServiceProvider',
+      4 => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
+      5 => 'Illuminate\\Routing\\ControllerServiceProvider',
+      6 => 'Illuminate\\Cookie\\CookieServiceProvider',
+      7 => 'Illuminate\\Database\\DatabaseServiceProvider',
+      8 => 'Illuminate\\Encryption\\EncryptionServiceProvider',
+      9 => 'Illuminate\\Filesystem\\FilesystemServiceProvider',
+      10 => 'Illuminate\\Foundation\\Providers\\FoundationServiceProvider',
+      11 => 'Illuminate\\Hashing\\HashServiceProvider',
+      12 => 'Illuminate\\Mail\\MailServiceProvider',
+      13 => 'Illuminate\\Pagination\\PaginationServiceProvider',
+      14 => 'Illuminate\\Pipeline\\PipelineServiceProvider',
+      15 => 'Illuminate\\Queue\\QueueServiceProvider',
+      16 => 'Illuminate\\Redis\\RedisServiceProvider',
+      17 => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
+      18 => 'Illuminate\\Session\\SessionServiceProvider',
+      19 => 'Illuminate\\Translation\\TranslationServiceProvider',
+      20 => 'Illuminate\\Validation\\ValidationServiceProvider',
+      21 => 'Illuminate\\View\\ViewServiceProvider',
+      22 => 'App\\Providers\\AppServiceProvider',
+      23 => 'App\\Providers\\BusServiceProvider',
+      24 => 'App\\Providers\\ConfigServiceProvider',
+      25 => 'App\\Providers\\EventServiceProvider',
+      26 => 'App\\Providers\\RouteServiceProvider',
+      27 => 'App\\Providers\\ViewComposerServiceProvider',
+      28 => 'App\\Providers\\RepositoryServiceProvider',
+      29 => 'Illuminate\\Html\\HtmlServiceProvider',
+      30 => 'Laracasts\\Flash\\FlashServiceProvider',
+      31 => 'DaveJamesMiller\\Breadcrumbs\\ServiceProvider',
+      32 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'App' => 'Illuminate\\Support\\Facades\\App',
+      'Artisan' => 'Illuminate\\Support\\Facades\\Artisan',
+      'Auth' => 'Illuminate\\Support\\Facades\\Auth',
+      'Blade' => 'Illuminate\\Support\\Facades\\Blade',
+      'Bus' => 'Illuminate\\Support\\Facades\\Bus',
+      'Cache' => 'Illuminate\\Support\\Facades\\Cache',
+      'Config' => 'Illuminate\\Support\\Facades\\Config',
+      'Cookie' => 'Illuminate\\Support\\Facades\\Cookie',
+      'Crypt' => 'Illuminate\\Support\\Facades\\Crypt',
+      'DB' => 'Illuminate\\Support\\Facades\\DB',
+      'Eloquent' => 'Illuminate\\Database\\Eloquent\\Model',
+      'Event' => 'Illuminate\\Support\\Facades\\Event',
+      'File' => 'Illuminate\\Support\\Facades\\File',
+      'Hash' => 'Illuminate\\Support\\Facades\\Hash',
+      'Input' => 'Illuminate\\Support\\Facades\\Input',
+      'Inspiring' => 'Illuminate\\Foundation\\Inspiring',
+      'Lang' => 'Illuminate\\Support\\Facades\\Lang',
+      'Log' => 'Illuminate\\Support\\Facades\\Log',
+      'Mail' => 'Illuminate\\Support\\Facades\\Mail',
+      'Password' => 'Illuminate\\Support\\Facades\\Password',
+      'Queue' => 'Illuminate\\Support\\Facades\\Queue',
+      'Redirect' => 'Illuminate\\Support\\Facades\\Redirect',
+      'Redis' => 'Illuminate\\Support\\Facades\\Redis',
+      'Request' => 'Illuminate\\Support\\Facades\\Request',
+      'Response' => 'Illuminate\\Support\\Facades\\Response',
+      'Route' => 'Illuminate\\Support\\Facades\\Route',
+      'Schema' => 'Illuminate\\Support\\Facades\\Schema',
+      'Session' => 'Illuminate\\Support\\Facades\\Session',
+      'Storage' => 'Illuminate\\Support\\Facades\\Storage',
+      'URL' => 'Illuminate\\Support\\Facades\\URL',
+      'Validator' => 'Illuminate\\Support\\Facades\\Validator',
+      'View' => 'Illuminate\\Support\\Facades\\View',
+      'HTML' => 'Illuminate\\Html\\HtmlFacade',
+      'Form' => 'Illuminate\\Html\\FormFacade',
+      'Flash' => 'Laracasts\\Flash\\Flash',
+      'Breadcrumbs' => 'DaveJamesMiller\\Breadcrumbs\\Facade',
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+  ),
   'breadcrumbs' => 
   array (
     'view' => 'breadcrumbs::bootstrap3',
+  ),
+  'excel' => 
+  array (
+    'cache' => 
+    array (
+      'enable' => true,
+      'driver' => 'memory',
+      'settings' => 
+      array (
+        'memoryCacheSize' => '32MB',
+        'cacheTime' => 600,
+      ),
+      'memcache' => 
+      array (
+        'host' => 'localhost',
+        'port' => 11211,
+      ),
+      'dir' => '/data/backupbunders/ProjAgile/storage/cache',
+    ),
+    'properties' => 
+    array (
+      'creator' => 'Maatwebsite',
+      'lastModifiedBy' => 'Maatwebsite',
+      'title' => 'Spreadsheet',
+      'description' => 'Default spreadsheet export',
+      'subject' => 'Spreadsheet export',
+      'keywords' => 'maatwebsite, excel, export',
+      'category' => 'Excel',
+      'manager' => 'Maatwebsite',
+      'company' => 'Maatwebsite',
+    ),
+    'sheets' => 
+    array (
+      'pageSetup' => 
+      array (
+        'orientation' => 'portrait',
+        'paperSize' => '9',
+        'scale' => '100',
+        'fitToPage' => false,
+        'fitToHeight' => true,
+        'fitToWidth' => true,
+        'columnsToRepeatAtLeft' => 
+        array (
+          0 => '',
+          1 => '',
+        ),
+        'rowsToRepeatAtTop' => 
+        array (
+          0 => 0,
+          1 => 0,
+        ),
+        'horizontalCentered' => false,
+        'verticalCentered' => false,
+        'printArea' => NULL,
+        'firstPageNumber' => NULL,
+      ),
+    ),
+    'creator' => 'Maatwebsite',
+    'csv' => 
+    array (
+      'delimiter' => ',',
+      'enclosure' => '"',
+      'line_ending' => '
+',
+    ),
+    'export' => 
+    array (
+      'autosize' => true,
+      'autosize-method' => 'approx',
+      'generate_heading_by_indices' => true,
+      'merged_cell_alignment' => 'left',
+      'calculate' => false,
+      'includeCharts' => false,
+      'sheets' => 
+      array (
+        'page_margin' => false,
+        'nullValue' => NULL,
+        'startCell' => 'A1',
+        'strictNullComparison' => false,
+      ),
+      'store' => 
+      array (
+        'path' => '/data/backupbunders/ProjAgile/storage/exports',
+        'returnInfo' => false,
+      ),
+      'pdf' => 
+      array (
+        'driver' => 'DomPDF',
+        'drivers' => 
+        array (
+          'DomPDF' => 
+          array (
+            'path' => '/data/backupbunders/ProjAgile/vendor/dompdf/dompdf/',
+          ),
+          'tcPDF' => 
+          array (
+            'path' => '/data/backupbunders/ProjAgile/vendor/tecnick.com/tcpdf/',
+          ),
+          'mPDF' => 
+          array (
+            'path' => '/data/backupbunders/ProjAgile/vendor/mpdf/mpdf/',
+          ),
+        ),
+      ),
+    ),
+    'filters' => 
+    array (
+      'registered' => 
+      array (
+        'chunk' => 'Maatwebsite\\Excel\\Filters\\ChunkReadFilter',
+      ),
+      'enabled' => 
+      array (
+      ),
+    ),
+    'import' => 
+    array (
+      'heading' => 'slugged',
+      'startRow' => 1,
+      'separator' => '_',
+      'includeCharts' => false,
+      'to_ascii' => true,
+      'encoding' => 
+      array (
+        'input' => 'UTF-8',
+        'output' => 'UTF-8',
+      ),
+      'calculate' => true,
+      'ignoreEmpty' => false,
+      'force_sheets_collection' => false,
+      'dates' => 
+      array (
+        'enabled' => true,
+        'format' => false,
+        'columns' => 
+        array (
+        ),
+      ),
+      'sheets' => 
+      array (
+        'test' => 
+        array (
+          'firstname' => 'A2',
+        ),
+      ),
+    ),
+    'views' => 
+    array (
+      'styles' => 
+      array (
+        'th' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
+        ),
+        'strong' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
+        ),
+        'b' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
+        ),
+        'i' => 
+        array (
+          'font' => 
+          array (
+            'italic' => true,
+            'size' => 12,
+          ),
+        ),
+        'h1' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 24,
+          ),
+        ),
+        'h2' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 18,
+          ),
+        ),
+        'h3' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 13.5,
+          ),
+        ),
+        'h4' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
+        ),
+        'h5' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 10,
+          ),
+        ),
+        'h6' => 
+        array (
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 7.5,
+          ),
+        ),
+        'a' => 
+        array (
+          'font' => 
+          array (
+            'underline' => true,
+            'color' => 
+            array (
+              'argb' => 'FF0000FF',
+            ),
+          ),
+        ),
+        'hr' => 
+        array (
+          'borders' => 
+          array (
+            'bottom' => 
+            array (
+              'style' => 'thin',
+              'color' => 
+              array (
+                0 => 'FF000000',
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   ),
 );
