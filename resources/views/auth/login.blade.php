@@ -19,7 +19,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
-						{!! Form::open(['method' => 'POST','route' => 'auth.login']) !!}
+						{!! Form::open(['method' => 'POST', 'route' => 'auth.login']) !!}
 							<div class="form-group">
 								{!! Form::label('username', 'Gebruikersnaam:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6">

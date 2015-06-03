@@ -16,4 +16,5 @@
 		'token'		=> 'Dit wachtwoord reset token is ongeldig.',
 		'sent'		=> 'Wij hebben uw wachtwoord reset link verstuurd!',
 		'reset'		=> 'Uw wachtwoord is gereset!',
+		'subject'	=> 'Wachtwoord reset aanvraag',
 	];

@@ -22,7 +22,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
-						{!! Form::open(['method' => 'POST','route' => 'registration.register']) !!}
+						{!! Form::open(['method' => 'POST', 'route' => 'registration.register']) !!}
 							<div class="col-md-12 no-padding addmargin">
 								<div class="col-md-12 addmargin">	
 									<div class="col-md-6">	

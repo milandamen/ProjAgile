@@ -1,54 +1,58 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Wachtwoord Reset Aanvragen
+@stop
+
+@section('description')
+	Dit is de wachtwoord reset pagina van De Bunders.
+@stop
+
 @section('content')
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+		{!! Breadcrumbs::render('password.reset') !!}
+		</div>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h2 class="page-header">Wachtwoord Resetten</h2>
+				<div class="row">
+					@include('flash::message')
+				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading">Reset Password</div>
 					<div class="panel-body">
-						@if (count($errors) > 0)
-							<div class="alert alert-danger">
-								<strong>Whoops!</strong> There were some problems with your input.<br><br>
-								<ul>
-									@foreach ($errors->all() as $error)
-										<li>{{ $error }}</li>
-									@endforeach
-								</ul>
-							</div>
-						@endif
-						<form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-							<input type="hidden" name="token" value="{{ $token }}">
-							<div class="form-group">
-								<label class="col-md-4 control-label">E-Mail Address</label>
-								<div class="col-md-6">
-									<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+						@include('errors.partials._list')
+						{!! Form::open(['method' => 'POST', 'route' => 'password.request']) !!}
+							{!! Form::hidden('token', $token) !!}
+							<div class="col-md-12 no-padding">
+								<div class="col-md-4">	
+									{!! Form::label('email', 'E-mailadres:', ['class' => ' control-label']) !!}
+									{!! Form::text('email', old('email'), ['class' => 'form-control']) !!}
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label">Password</label>
-								<div class="col-md-6">
-									<input type="password" class="form-control" name="password">
+							<div class="col-md-12 no-padding">
+								<div class="col-md-4">	
+									{!! Form::label('password', 'Wachtwoord:', ['class' => ' control-label']) !!}
+									{!! Form::password('password', ['class' => 'form-control']) !!}
+								</div>
+								<div class="col-md-4">	
+									{!! Form::label('password_confirmation', 'Herhaal Wachtwoord:', ['class' => ' control-label']) !!}
+									{!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-md-4 control-label">Confirm Password</label>
-								<div class="col-md-6">
-									<input type="password" class="form-control" name="password_confirmation">
+							<div class="col-md-12 no-padding">
+								<div class="col-md-12">
+									{!! Form::submit('Nieuw Wachtwoord Bevestigen', ['class' => 'btn btn-primary']) !!}
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-md-6 col-md-offset-4">
-									<button type="submit" class="btn btn-primary">
-										Reset Password
-									</button>
-								</div>
-							</div>
-						</form>
+						{!! Form::close() !!}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+@stop
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop
