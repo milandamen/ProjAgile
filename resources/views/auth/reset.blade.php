@@ -22,7 +22,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
-						{!! Form::open(['method' => 'POST', 'route' => 'password.request']) !!}
+						{!! Form::open(['method' => 'POST', 'route' => 'password.update']) !!}
 							{!! Form::hidden('token', $token) !!}
 							<div class="col-md-12 no-padding">
 								<div class="col-md-4">	
