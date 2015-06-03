@@ -156,6 +156,7 @@
 	        'Illuminate\Html\HtmlServiceProvider',
 	        'Laracasts\Flash\FlashServiceProvider',
 	        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+            'Maatwebsite\Excel\ExcelServiceProvider',
 		],
 
 		/*
@@ -214,5 +215,6 @@
 	        'Form'      	=> 'Illuminate\Html\FormFacade',
 	        'Flash'       	=> 'Laracasts\Flash\Flash',
 	        'Breadcrumbs' 	=> 'DaveJamesMiller\Breadcrumbs\Facade',
+            'Excel'         => 'Maatwebsite\Excel\Facades\Excel',
 		],
 	];
