@@ -40,3 +40,10 @@
 		'uses' => 'MenuController@update',
 		'middleware' => 'admin'
 	]);
+
+	Route::get('switchPublishMenuItem/{id}',
+	[
+		'as' => 'menu.switchPublish',
+		'uses' => 'MenuController@switchPublish',
+		'middleware' => 'admin'
+	]);

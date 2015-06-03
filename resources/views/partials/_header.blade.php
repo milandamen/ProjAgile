@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" id="menuBar" style="background-color:#{{ $menuColor->color }}">
 	<div class="container">
 		<div class="navbar-header">
 			<a href="{{ route('home.index') }}">{!! HTML::image('custom/img/logo.png') !!}</a>

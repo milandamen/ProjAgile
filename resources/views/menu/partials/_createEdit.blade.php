@@ -19,3 +19,7 @@
 </p>
 {!! link_to_route('menu.index', 'Annuleren', [], ['class' => 'btn btn-danger']) !!}
 {!! Form::submit('Opslaan', ['class' => 'btn btn-success white pull-left']) !!}
+
+@section('additional_scripts')
+	{!! HTML::script('custom/js/autocomplete.js') !!}
+@stop
