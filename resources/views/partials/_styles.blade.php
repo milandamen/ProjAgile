@@ -21,6 +21,7 @@
 {!! HTML::style('custom/css/multilevel_menu.css') !!}
 {!! HTML::style('custom/css/menu_crud/design.css') !!}
 {!! HTML::style('custom/css/page.css') !!}
+{!! HTML::style('custom/css/colpick.css') !!}
 {!! HTML::style('custom/css/permissions.css') !!}
 
 {{-- Fonts --}}

@@ -4,10 +4,10 @@
 
 		{!! Form::label('publishStartDate', 'Publicatiedatum') !!}
 		<div class="input-group date">
-			{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control']) 
+			{!! Form::text('publishStartDate', old('publishStartDate'), ['class' => 'form-control'])
 				. '<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
-				</span>' 
+				</span>'
 			!!}
 		</div>
 
@@ -18,7 +18,7 @@
 			{!! Form::text('publishEndDate', old('publishEndDate'), ['class' => 'form-control'])
 				. '<span class="input-group-addon">
 					<span class="glyphicon glyphicon-calendar"></span>
-				</span>' 
+				</span>'
 			!!}
 		</div>
 	</div>

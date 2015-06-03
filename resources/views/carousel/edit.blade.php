@@ -31,8 +31,12 @@
 							<tr>
 								<th class="cu-smallcol">Index</th>		<!-- Index -->
 								<th class="cu-smallcol">Soort</th>		<!-- Sort -->
-								<th class="cu-smallcol">ID</th>			<!-- Article ID -->	
-								<th class="fullwidth">Beschrijving</th>	<!-- Article title -->	
+								<th class="cu-smallcol">ID</th>			<!-- Article ID -->
+								<th class="cu-smallcol">Titel</th>
+								<th class="cu-smallcol">Start datum</th>
+								<th class="cu-smallcol">Eind datum</th>
+								<th>Beschrijving</th>					<!-- Article description -->
+
 								<th>Image</th>
 								<th class="cu-smallcol"></th>			<!-- Move up -->
 								<th class="cu-smallcol"></th>			<!-- Move down -->
@@ -52,23 +56,26 @@
 									<td></td>
 									<td>
 										@if($article->news != null)
+											<input type="hidden" name="sort[0]" value="news">
 											Nieuws
 										@elseif($article->page != null)
+											<input type="hidden" name="sort[0]" value="page">
 											Pagina
 										@else
-											Carousel item
+											<input type="hidden" name="sort[0]" value="carousel">
+											Carousel item test
 										@endif
 									</td>
 									<td>
 										<input type="text" name="artikel[0]" value="
-										@if($article->news != null)
-											{{ $article->news->newsId }}
-										@elseif($article->page != null)
-											{{$article->page->pageId}}
-										@else
-												Carousel-item
-										@endif
-										 " class="hiddenInput"/>
+											@if($article->news != null)
+												{{ $article->news->newsId }}
+											@elseif($article->page != null)
+												{{$article->page->pageId}}
+											@else
+													Carousel-item
+											@endif
+										" class="hiddenInput" />
 										<span>
 											@if($article->news != null)
 												{{ $article->news->newsId }}
@@ -80,7 +87,34 @@
 										</span>
 									</td>
 									<td>
-										<input type="text" name="beschrijving[0]" class="fullwidth" value="{{ $article->description }}"/>
+										@if($article->news != null)
+											{{$article->news->title}}
+										@elseif($article->page != null)
+											Geen titel
+										@else
+											<input type="text" name="carouselTitle[]" value="{{$article->title}}" />
+										@endif
+									</td>
+									<td>
+										@if($article->news != null)
+											{{$article->news->normalDate()}}
+										@elseif($article->page != null)
+											{{$article->page->publishDate}}
+										@else
+											<input type="text" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
+										@endif
+									</td>
+									<td>
+										@if($article->news != null)
+											{{$article->news->endDate()}}
+										@elseif($article->page != null)
+											{{$article->page->publishEndDate}}
+										@else
+											<input type="text" name="carouselEndDate[]" value="{{$article->endDate()}}"/>
+										@endif
+									</td>
+									<td>
+										<textarea name="beschrijving[]" class="fullwidth">{{ $article->description }}</textarea>
 									</td>
 									<td>
 										@if ($article->imagePath !== 'blank.jpg')
@@ -131,6 +165,8 @@
 						<tr>
 							<th class="cu-smallcol">ID</th>
 							<th>Titel</th>
+							<th>Start datum</th>
+							<th>Eind datum</th>
 							<th class="cu-smallcol"></th>
 						</tr>
 					</thead>

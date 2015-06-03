@@ -3,6 +3,7 @@
 
 	use App\Models\Menu;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
+	use App\Repositories\RepositoryInterfaces\IStyleSettingRepository;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Redirect;
 	use App\Http\Requests\Menu\MenuRequest;
@@ -11,10 +12,12 @@
 	class MenuController extends Controller 
 	{
 		private $menuRepo;
+		private $styleRepo;
 
-		public function __construct(IMenuRepository $menuRepo)
+		public function __construct(IMenuRepository $menuRepo, IStyleSettingRepository $styleRepo)
 		{
 			$this->menuRepo = $menuRepo;
+			$this->styleRepo = $styleRepo;
 		}
 
 		public function index()
@@ -22,8 +25,9 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
 				$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+				$menuColor = $this->styleRepo->get('defaultMenuColor');
 
-				return view('menu.index', compact('allMenuItemsEdit'));
+				return view('menu.index', compact('allMenuItemsEdit','menuColor'));
 			}
 			return view('errors.403');
 		}
@@ -130,6 +134,10 @@
 							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
 						}
 						$parentId = $key;
+					}elseif ($key == 'menucolor') {
+						$model = $this->styleRepo->get('defaultMenuColor');
+						$model->color = $requestItem;
+						$this->styleRepo->update($model);
 					}
 				}
 
@@ -140,5 +148,17 @@
 				return Redirect::route('menu.index');
 			}
 			return view('errors.403');
+		}
+
+		public function switchPublish($id)
+		{
+			$menuItem = $this->menuRepo->get($id);
+			if($menuItem->publish == 0)
+			{
+				$menuItem->publish = 1;
+			}else{
+				$menuItem->publish = 0;
+			}
+			$this->menuRepo->update($menuItem);
 		}
 	}

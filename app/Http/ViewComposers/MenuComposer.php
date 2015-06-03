@@ -4,14 +4,16 @@
 	use Illuminate\Contracts\View\View;
 	use App\Http\Controllers\Controller;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
+	use App\Repositories\RepositoryInterfaces\IStyleSettingRepository;
 
 	class MenuComposer
 	{
 		private $menuRepo;
 
-		public function __construct(IMenuRepository $menuRepo)
+		public function __construct(IMenuRepository $menuRepo, IStyleSettingRepository $styleRepo)
 		{
 			$this->menuRepo = $menuRepo;
+			$this->styleRepo = $styleRepo;
 		}
 
 		/**
@@ -23,6 +25,8 @@
 		public function compose(View $view)
 		{
 			$menu = $this->menuRepo->getMenu();
-			$view->with('menu', $menu);
+			$menuColor = $this->styleRepo->get('defaultMenuColor');
+
+			$view->with(['menu' => $menu, 'menuColor' => $menuColor]);
 		}
 	}
