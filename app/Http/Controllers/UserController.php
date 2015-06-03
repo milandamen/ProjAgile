@@ -99,6 +99,7 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
+				$oldUserGroupId = $user->userGroupId;
 				$data = $userRequest->only
 				(
 					'username',
@@ -121,17 +122,17 @@
 				if ($userRequest->get('postal') !== '')
 				{
 					$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-					$user->postalId = $postal->postalId;
+					//$user->postalId = $postal->postalId;
 				}
 				else
 				{
-					$user->postalId = null;
+					//$user->postalId = null;
 				}
 
 				$this->userRepo->update($user);
 
 				//grant admins all permissions
-				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID)
+				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID && $oldUserGroupId !== self::ADMIN_GROUP_ID)
 				{
 					$this->grantAllPermissions($id);
 				}
