@@ -19,6 +19,12 @@ function searchArticle()
 					'<td>' + 
 						item.title + 
 					'</td>' +
+					'<td>' +
+						item.publishStartDate +
+					'</td>' +
+					'<td>' +
+						item.publishEndDate +
+					'</td>' +
 					'<td>' + 
 						'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' + 
 							'<i class="fa fa-plus"></i>' + 
@@ -41,34 +47,45 @@ function searchArticle()
 
 $('.add-carousel-button').click(function() {
 
-	$('#articlelist').append('<tr>' +
-	'<td> 0 </td>' +
-	'<td>Carousel item</td>' +
-	'<td>' +
-	'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
-	'<span> - </span>' +
-	'</td>' +
-	'<td>' +
-	'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
-	'</td>' +
-	'<td>' +
-	'<input type="file" name="file[0]" />' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
-	'<i class="fa fa-arrow-up"></i>' +
-	'</a>' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
-	'<i class="fa fa-arrow-down"></i>' +
-	'</a>' +
-	'</td>' +
-	'<td>' +
-	'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
-	'<i class="fa fa-times"></i>' +
-	'</a>' +
-	'</td>' +
+	$('#articlelist').append(
+	'<tr>' +
+		'<td> 0 </td>' +
+		'<input type="hidden" name="sort[0]" value="carousel" />' +
+		'<td>Carousel item</td>' +
+		'<td>' +
+			'<input type="text" name="artikel[0]" value="' + null + '" class="hiddenInput" />' +
+			'<span> - </span>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselTitle[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselStartDate[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<input type="text" name="carouselEndDate[]"/>' +
+		'</td>' +
+		'<td>' +
+			'<textarea name="beschrijving[]"></textarea>' +
+		'</td>' +
+		'<td>' +
+			'<input type="file" name="file[0]" />' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
+				'<i class="fa fa-arrow-up"></i>' +
+			'</a>' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
+				'<i class="fa fa-arrow-down"></i>' +
+			'</a>' +
+		'</td>' +
+		'<td>' +
+			'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
+				'<i class="fa fa-times"></i>' +
+			'</a>' +
+		'</td>' +
 	'</tr>');
 
 	calculateIndexes();
@@ -82,6 +99,8 @@ function addArticle(button)
 	var row = button.parentNode.parentNode;
 	var id = row.children[0].textContent;
 	var title = row.children[1].textContent;
+	var startDate = row.children[2].textContent;
+	var endDate = row.children[3].textContent;
 	
 	var articlelist = document.getElementById('articlelist');
 	
@@ -95,7 +114,16 @@ function addArticle(button)
 				'<span>' + id + '</span>' +
 			'</td>' +
 			'<td>' +
-				'<input type="text" name="beschrijving[0]" class="fullwidth" value="" />' +
+				'<span>' + title + '</span>' +
+			'</td>' +
+			'<td>' +
+				'<span>' + startDate + '</span>' +
+			'</td>' +
+			'<td>' +
+				'<span>' + endDate + '</span>' +
+			'</td>' +
+			'<td>' +
+				'<textarea name="beschrijving[]"></textarea>' +
 			'</td>' +
 			'<td>' +
 				'<input type="file" name="file[0]" />' +
@@ -196,16 +224,28 @@ function calculateIndexes()
 			if (input.type == 'file') 
 			{
 				input.name = 'file[' + i + ']';
-			} 
+			}
+			else if(input.name.indexOf('sort') !== -1)
+			{
+				input.name = 'sort[' + i + ']';
+			}
+			else if(input.name.indexOf('carouselTitle') !== -1)
+			{
+				input.name = 'carouselTitle[]';
+			}
+			else if(input.name.indexOf('carouselStartDate') !== -1)
+			{
+				input.name = 'carouselStartDate[]';
+			}
+			else if(input.name.indexOf('carouselEndDate') !== -1)
+			{
+				input.name = 'carouselEndDate[]';
+			}
 			else if (input.name.indexOf('artikel') !== -1) 
 			{
 				input.name = 'artikel[' + i + ']';
-			} 
-			else if (input.name.indexOf('beschrijving') !== -1) 
-			{
-				input.name = 'beschrijving[' + i + ']';
-			} 
-			else 
+			}
+			else
 			{
 				input.name = 'deletefile[' + i + ']';
 			}

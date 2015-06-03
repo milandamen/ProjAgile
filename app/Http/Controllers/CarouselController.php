@@ -24,39 +24,38 @@
 		
 		public function edit()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
 			{
-				if (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder') 
-				{
-					$carousel = $this->carouselRepo->getAll();
-					return view('carousel.edit', compact('carousel'));
-				} 
-					
-				return view('errors.403');
+				$carousel = $this->carouselRepo->getAll();
+				return view('carousel.edit', compact('carousel'));
 			}
-				
-			return view('errors.401');
+
+			return view('errors.403');
 		}
 
 		public function update()
 		{
-			if (Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
 			{
-				if (Auth::check() && (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder')) 
+				$oldItems = $this->carouselRepo->getAll();
+
+				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
 				{
-					$oldItems = $this->carouselRepo->getAll();
-					
-					if (isset($_POST['artikel']) && isset($_POST['beschrijving'])) 
+					//last carousel index
+					$lci = 0;
+
+					for ($i = 0; $i < count($_POST['artikel']); $i++)
 					{
-						for ($i = 0; $i < count($_POST['artikel']); $i++) 
+
+						if($_POST['sort'][$i] === 'news')
 						{
 							$newsId = $_POST['artikel'][$i];
 							$description = 'Nog geen beschrijving';
 							$item = $this->carouselRepo->create(compact('newsId', 'description'));
-							
-							$description = $_POST['beschrijving'][$i];
 
-							if (!isset($description) || empty($description)) 
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
+
+							if (!isset($description) || empty($description))
 							{
 								$description = 'Nog geen beschrijving';
 							}
@@ -64,38 +63,116 @@
 							$this->carouselRepo->update($item);
 							$oldItem = null;
 
-							foreach ($oldItems as $oI) 
+							foreach ($oldItems as $oI)
 							{
-								if ($oI->newsId == $newsId) 
+								if ($oI->newsId == $newsId)
 								{
 									$oldItem = $oI;
 									break;
 								}
 							}
-							
-							if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true') 
-							{
-								$item->imagePath = 'blank.jpg';
-								$oldItem->imagePath = 'blank.jpg';
-							}
-							$this->saveImage($item, $i, $oldItem);
-							$this->carouselRepo->update($item);
 						}
-					}
-					
-					foreach ($oldItems as $oldItem) 
-					{
-						$oldItem->delete();
-					}
-					
-					return Redirect::route('home.index');
-				} 
+						else if($_POST['sort'][$i] === 'carousel')
+						{
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
 
-				return view('errors.403');
+							if(!isset($description) || empty($description))
+							{
+								$description = 'Nog geen beschrijving';
+							}
+
+							$newsId = null;
+							$pageId = null;
+							
+							$title = filter_var($_POST['carouselTitle'][$lci], FILTER_SANITIZE_STRING);
+							$start = filter_var($_POST['carouselStartDate'][$lci], FILTER_SANITIZE_STRING);
+							$end = filter_var($_POST['carouselEndDate'][$lci], FILTER_SANITIZE_STRING);
+
+							$publishStartDate = new \DateTime($start);
+							$publishStartDate->format('Y-m-d');
+							$publishEndDate = new \DateTime($end);
+							$publishEndDate->format('Y-m-d');
+
+
+							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+							$lci++;
+						}
+
+						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')
+						{
+							$item->imagePath = 'blank.jpg';
+							$oldItem->imagePath = 'blank.jpg';
+						}
+						$this->saveImage($item, $i, $oldItem);
+						$this->carouselRepo->update($item);
+					}
+				}
+
+				foreach ($oldItems as $oldItem)
+				{
+					$oldItem->delete();
+				}
+
+				return Redirect::route('home.index');
 			}
-			
-			return view('errors.401');
+
+			return view('errors.403');
 		}
+
+//		public function update()
+//		{
+//			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
+//			{
+//				$oldItems = $this->carouselRepo->getAll();
+//
+//				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
+//				{
+//					for ($i = 0; $i < count($_POST['artikel']); $i++)
+//					{
+//						$newsId = $_POST['artikel'][$i];
+//						$description = 'Nog geen beschrijving';
+//						$item = $this->carouselRepo->create(compact('newsId', 'description'));
+//
+//						$description = $_POST['beschrijving'][$i];
+//
+//						if (!isset($description) || empty($description))
+//						{
+//							$description = 'Nog geen beschrijving';
+//						}
+//						$item->description = $description;
+//						$this->carouselRepo->update($item);
+//						$oldItem = null;
+//
+//						foreach ($oldItems as $oI)
+//						{
+//							if ($oI->newsId == $newsId)
+//							{
+//								$oldItem = $oI;
+//								break;
+//							}
+//						}
+//
+//						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')
+//						{
+//							$item->imagePath = 'blank.jpg';
+//							$oldItem->imagePath = 'blank.jpg';
+//						}
+//						$this->saveImage($item, $i, $oldItem);
+//						$this->carouselRepo->update($item);
+//					}
+//				}
+//
+//				foreach ($oldItems as $oldItem)
+//				{
+//					$oldItem->delete();
+//				}
+//
+//				return Redirect::route('home.index');
+//			}
+//
+//			return view('errors.403');
+//		}
 		
 		private function saveImage($item, $count, $oldItem) 
 		{

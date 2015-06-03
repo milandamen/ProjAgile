@@ -149,6 +149,7 @@
 			'Laracasts\Flash\FlashServiceProvider',
 			'DaveJamesMiller\Breadcrumbs\ServiceProvider',
 			'Greggilbert\Recaptcha\RecaptchaServiceProvider',
+			'Maatwebsite\Excel\ExcelServiceProvider',
 		],
 
 		/*
@@ -207,5 +208,6 @@
 			'Flash'			=> 'Laracasts\Flash\Flash',
 			'Breadcrumbs'	=> 'DaveJamesMiller\Breadcrumbs\Facade',
 			'Recaptcha'		=> 'Greggilbert\Recaptcha\Facades\Recaptcha',
+			'Excel'			=> 'Maatwebsite\Excel\Facades\Excel',
 		],
 	];

@@ -16,6 +16,19 @@
 		{
 			return DistrictSection::find($id);
 		}
+
+		/**
+		 * Returns a DistrictSection model depending on the name provided.
+		 *
+		 * @param  string $name
+		 *
+		 * @return DistrictSection
+		 */
+		public function getByName($name)
+		{
+			return DistrictSection::where('name', '=', $name)->first();
+		}
+
 		/**
 		 * Returns all the DistrictSection models in the database.
 		 *
@@ -24,6 +37,21 @@
 		public function getAll()
 		{
 			return DistrictSection::all();
+		}
+		/**
+		 * Returns all the DistrictSection model id's in the database.
+		 *
+		 * @return Collection -> Integer
+		 */
+		public function getAllIds()
+		{
+			$districtSections =  DistrictSection::all();
+			$districtSection_ids = array();
+			foreach($districtSections as $districtSection)
+			{
+				$districtSection_ids[] = $districtSection->districtSectionId;
+			}
+			return $districtSection_ids;
 		}
 		/**
 		 * Creates a DistrictSection record in the database.

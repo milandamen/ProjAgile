@@ -3,24 +3,33 @@
 
 	use App\Models\Menu;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
+	use App\Repositories\RepositoryInterfaces\IStyleSettingRepository;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Redirect;
 	use App\Http\Requests\Menu\MenuRequest;
+	use Auth;
 
 	class MenuController extends Controller 
 	{
 		private $menuRepo;
+		private $styleRepo;
 
-		public function __construct(IMenuRepository $menuRepo)
+		public function __construct(IMenuRepository $menuRepo, IStyleSettingRepository $styleRepo)
 		{
 			$this->menuRepo = $menuRepo;
+			$this->styleRepo = $styleRepo;
 		}
 
 		public function index()
 		{
-			$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			{
+				$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
+				$menuColor = $this->styleRepo->get('defaultMenuColor');
 
-			return view('menu.index', compact('allMenuItemsEdit'));
+				return view('menu.index', compact('allMenuItemsEdit','menuColor'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -30,9 +39,13 @@
 		 */
 		public function create()
 		{
-			$menuItem = new Menu();
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			{
+				$menuItem = new Menu();
 
-			return view('menu.create', compact('menuItem'));
+				return view('menu.create', compact('menuItem'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -42,9 +55,13 @@
 		 */
 		public function store(MenuRequest $request)
 		{
-			$this->menuRepo->create($request->all());
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			{
+				$this->menuRepo->create($request->all());
 
-			return Redirect::route ('menu.index');
+				return Redirect::route ('menu.index');
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -56,9 +73,13 @@
 		 */
 		public function edit($id)
 		{
-			$menuItem = $this->menuRepo->get($id);
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			{
+				$menuItem = $this->menuRepo->get($id);
 
-			return view('menu.edit', compact('menuItem'));
+				return view('menu.edit', compact('menuItem'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -70,58 +91,74 @@
 		 */
 		public function update(MenuRequest $request)
 		{
-		   $item = $this->menuRepo->get($request->id);
-		   $item->name = $request->name;
-		   $item->link = $request->link;
-		   $item->publish = $request->publish;
-		   $this->menuRepo->update($item);
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			{
+				$item = $this->menuRepo->get($request->id);
+				$item->name = $request->name;
+				$item->link = $request->link;
+				$item->publish = $request->publish;
+				$this->menuRepo->update($item);
 
-			return Redirect::route('menu.index');
+				return Redirect::route('menu.index');
+			}
+			return view('errors.403');
 		}
 
 		public function updateMenuOrder(Request $request)
 		{
-			$parentId = null;
-			$array = [];
-			$allMenuItems = $this->menuRepo->getAll();
-
-			foreach($request->all() as $key => $requestItem) //loop trough the names of the textfields
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
 			{
-				if (! is_string( $key ))
+				$parentId = null;
+				$array = [];
+				$allMenuItems = $this->menuRepo->getAll();
+
+				foreach ($request->all() as $key => $requestItem) //loop trough the names of the textfields
 				{
-					foreach($allMenuItems as $oldIndex => $oldItem)
-					{
-						if ($oldItem->menuId == $key)
-						{
-							unset($allMenuItems[$oldIndex]);
+					if (!is_string($key)) {
+						foreach ($allMenuItems as $oldIndex => $oldItem) {
+							if ($oldItem->menuId == $key) {
+								unset($allMenuItems[$oldIndex]);
 
-							break;
+								break;
+							}
 						}
-					}
-					$requestItemPart = explode(".", $requestItem);
+						$requestItemPart = explode(".", $requestItem);
 
-					if ($requestItemPart[0] == 0)
-					{
-						$array = [];
-						$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL );
-					}
-					else
-					{
-						if(isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]]))
-						{
-							$array = array_add($array, $requestItemPart[0], $parentId);
+						if ($requestItemPart[0] == 0) {
+							$array = [];
+							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL);
+						} else {
+							if (isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]])) {
+								$array = array_add($array, $requestItemPart[0], $parentId);
+							}
+							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
 						}
-						$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
+						$parentId = $key;
+					}elseif ($key == 'menucolor') {
+						$model = $this->styleRepo->get('defaultMenuColor');
+						$model->color = $requestItem;
+						$this->styleRepo->update($model);
 					}
-					$parentId = $key;
 				}
-			}
 
-			foreach($allMenuItems as $oldItem)
+				foreach ($allMenuItems as $oldItem) {
+					$this->menuRepo->destroy($oldItem->menuId);
+				}
+
+				return Redirect::route('menu.index');
+			}
+			return view('errors.403');
+		}
+
+		public function switchPublish($id)
+		{
+			$menuItem = $this->menuRepo->get($id);
+			if($menuItem->publish == 0)
 			{
-				$this->menuRepo->destroy($oldItem->menuId);
+				$menuItem->publish = 1;
+			}else{
+				$menuItem->publish = 0;
 			}
-
-			return Redirect::route('menu.index');
+			$this->menuRepo->update($menuItem);
 		}
 	}

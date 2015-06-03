@@ -21,78 +21,60 @@
 
 		public function edit()
 		{
-			if(Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER))
 			{
-				if(Auth::user()->usergroup->name === 'Administrator')
-				{
-					$footer = $this->footerRepository->getAll();
+				$footer = $this->footerRepository->getAll();
 
-					return view('footer/edit', array('footer' => $footer));
-				}
-				else
-				{
-					return view('errors.403');
-				}
+				return view('footer/edit', array('footer' => $footer));
 			}
-			else
-			{
-				return view('errors.401');
-			}
+
+			return view('errors.403');
 		}
 
 		public function update()
 		{
-			if(Auth::check())
+			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER))
 			{
-				if(Auth::user()->usergroup->name === 'Administrator')
+				if(isset($_POST['column']))
 				{
-					if(isset($_POST['column']))
+					$counter = 1;
+
+					foreach($_POST['column'] as $col)
 					{
-						$counter = 1;
+						filter_var($col, FILTER_SANITIZE_STRING);
 
-						foreach($_POST['column'] as $col)
-						{
-							filter_var($col, FILTER_SANITIZE_STRING);
+						$footerCol = $this->footerRepository->get($counter);
 
-							$footerCol = $this->footerRepository->get($counter);
+						$footerCol->text = $col;
 
-							$footerCol->text = $col;
+						$this->footerRepository->update($footerCol);
 
-							$this->footerRepository->update($footerCol);
-
-							$counter++;
-						}
-
-						if(isset($_POST['footerColor']) && $_POST['footerColor'] != null)
-						{
-							$footerColor = $this->footerRepository->get($this->colorId);
-
-							$footerColor->text = filter_var($_POST['footerColor'], FILTER_SANITIZE_STRING);
-
-							$this->footerRepository->update($footerColor);
-						}
+						$counter++;
 					}
 
-					$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
-
-					if($newOnSite === true)
+					if(isset($_POST['footerColor']) && $_POST['footerColor'] != null)
 					{
-						$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-						$attributes['created_at'] = new \DateTime('now');
-						$this->newOnSiteRepository->create($attributes);
-					}
+						$footerColor = $this->footerRepository->get($this->colorId);
 
-					return Redirect::action('FooterController@edit');
+						$footerColor->text = filter_var($_POST['footerColor'], FILTER_SANITIZE_STRING);
+
+						$this->footerRepository->update($footerColor);
+					}
 				}
-				else
+
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if($newOnSite === true)
 				{
-					return view('errors.403');
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepository->create($attributes);
 				}
+
+				return Redirect::action('FooterController@edit');
 			}
-			else
-			{
-				return view('errors.401');
-			}
+
+			return view('errors.403');
 		}
 	}
 

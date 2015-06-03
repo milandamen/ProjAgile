@@ -72,6 +72,16 @@
 	include('BreadcrumbPartials/_pageBreadcrumbs.php');
 
 	/**
+	 * PermissionController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_permissionBreadcrumbs.php');
+
+	/**
+	 * PostalController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_postalBreadcrumbs.php');
+
+	/**
 	 * SidebarController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_sidebarBreadcrumbs.php');

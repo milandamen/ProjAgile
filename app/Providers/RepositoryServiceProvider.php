@@ -47,5 +47,8 @@
 			$this->app->bind('App\Repositories\RepositoryInterfaces\ISidebarRepository',			'App\Repositories\EntityRepositories\EntitySidebarRepository');
 			$this->app->bind('App\Repositories\RepositoryInterfaces\IUserGroupRepository',			'App\Repositories\EntityRepositories\EntityUserGroupRepository');
 			$this->app->bind('App\Repositories\RepositoryInterfaces\IUserRepository',				'App\Repositories\EntityRepositories\EntityUserRepository');
+			$this->app->bind('App\Repositories\RepositoryInterfaces\IStyleSettingRepository',		'App\Repositories\EntityRepositories\EntityStyleSettingRepository');
+			$this->app->bind('App\Repositories\RepositoryInterfaces\IPermissionRepository',			'App\Repositories\EntityRepositories\EntityPermissionRepository');
+			
 		}
 	}
