@@ -4,7 +4,9 @@
 	use App\Http\Requests\User\CreateUserRequest;
 	use App\Http\Requests\User\UpdateUserRequest;
 	use App\Models\User;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPermissionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
@@ -18,6 +20,8 @@
 
 	class UserController extends Controller
 	{
+		private $addressRepo;
+		private $houseNumberRepo;
 		private $userRepo;
 		private $userGroupRepo;
 		private $postalRepo;
@@ -25,9 +29,12 @@
 		const CONTENT_GROUP_ID = 2;
 		const RESIDENT_GROUP_ID = 3;
 
-		public function __construct(IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo,
-									IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo)
+		public function __construct(IAddressRepository $addressRepo, IDistrictSectionRepository $districtSectionRepo, IHouseNumberRepository $houseNumberRepo,
+									IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo,
+									IPageRepository $pageRepo, IPermissionRepository $permissionRepo)
 		{
+			$this->addressRepo = $addressRepo;
+			$this->houseNumberRepo = $houseNumberRepo;
 			$this->userRepo = $userRepo;
 			$this->userGroupRepo = $userGroupRepo;
 			$this->postalRepo = $postalRepo;
@@ -55,6 +62,7 @@
 			{
 				$user = new User();
 				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+
 				return view('user.create', compact('user', 'userGroups'));
 			}
 			return view('errors.403');
@@ -85,11 +93,19 @@
 				$user = $this->userRepo->get($id);
 				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
 				$postal = '';
-				if ($user->postalId !== null)
+				$houseNumber = '';
+				$suffix = '';
+
+				if ($user->addressId !== null)
 				{
-					$postal = $this->postalRepo->getById($user->postalId)->code;
+					$address = $this->addressRepo->get($user->addressId);
+
+					$postal = $address->postal->code;
+					$houseNumber = $address->houseNumber->houseNumber;
+					$suffix = $address->houseNumber->suffix;
 				}
-				return view('user.edit', compact('user', 'userGroups', 'postal'));
+
+				return view('user.edit', compact('user', 'userGroups', 'postal', 'houseNumber', 'suffix'));
 			}
 			return view('errors.403');
 		}
@@ -99,16 +115,7 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
-				$data = $userRequest->only
-				(
-					'username',
-					'firstName',
-					'surname',
-					'email',
-					'postal',
-					'houseNumber',
-					'userGroupId'
-				);
+				$data = $userRequest->all();
 
 				$user->fill($data);
 
@@ -118,16 +125,15 @@
 					$user->password =  Hash::make($userRequest->get('password'));
 				}
 
-				if ($userRequest->get('postal') !== '')
+				if ($userRequest->get('postal') !== '' || 
+					$userRequest->get('houseNumber') !== '')
 				{
-					$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-					$user->postalId = $postal->postalId;
-				}
-				else
-				{
-					$user->postalId = null;
-				}
+					$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
+					$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
+					$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
 
+					$attributes['addressId'] = $addressId;
+				}
 				$this->userRepo->update($user);
 
 				//grant admins all permissions

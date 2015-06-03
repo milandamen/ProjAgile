@@ -30,14 +30,16 @@
 				'username' => 'required|max:30|unique:user,username,'.$this->get('userId').',userId',
 				'firstName' => 'required|max:50',
 				'surname' => 'required|max:80',
+				'suffix' => 'max:1|exists:housenumber,suffix',
 				'email' => 'required|max:60|email|unique:user,email,'.$this->get('userId').',userId',
+				'email_confirmation' => 'required',
 			];
 
 			if ((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
 			{
 				$rules +=
 				[
-					'houseNumber' => 'required|integer|digits_between:1,8',
+					'houseNumber' => 'required|integer|digits_between:1,8|exists:housenumber,houseNumber',
 					'postal' => 'required|min:6|max:7|exists:postal,code',
 				];
 			}
@@ -45,7 +47,7 @@
 			{
 				$rules +=
 				[
-					'houseNumber' => 'integer|digits_between:1,8',
+					'houseNumber' => 'integer|digits_between:1,8|exists:housenumber,houseNumber',
 					'postal' => 'min:6|max:7|exists:postal,code',
 				];
 			}
@@ -57,6 +59,24 @@
 					'password' => 'required|confirmed|min:8',
 					'password_confirmation' => 'required',
 				];
+			}
+			$postalRepo = \App::make('App\Repositories\RepositoryInterfaces\IPostalRepository');
+			$houseNumberRepo = \App::make('App\Repositories\RepositoryInterfaces\IHouseNumberRepository');
+			$addressRepo = \App::make('App\Repositories\RepositoryInterfaces\IAddressRepository');
+
+			$postal = $postalRepo->getByCode($this->only('postal'));
+			$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->only('houseNumber'), $this->only('suffix') ? $this->only('suffix') : null);
+
+			if($postal !== null && $houseNumber !== null)
+			{
+				$rules['postal'] = $rules['postal'] . '|address_exists';
+
+				$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+
+				if($address !== null)
+				{
+					$rules['postal'] = $rules['postal'] . '|is_address_not_in_use';
+				}
 			}
 
 			return $rules;
@@ -72,13 +92,16 @@
 			$input = $this->all();
 
 			$input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
-			$input['firstName'] = filter_var($input['firstName'], FILTER_SANITIZE_STRING);
-			$input['surname'] = filter_var($input['surname'], FILTER_SANITIZE_STRING);
 			$input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
 			$input['password_confirmation'] = filter_var($input['password_confirmation'], FILTER_SANITIZE_STRING);
+			$input['firstName'] = filter_var($input['firstName'], FILTER_SANITIZE_STRING);
+			$input['insertion'] = filter_var($input['insertion'], FILTER_SANITIZE_STRING);
+			$input['surname'] = filter_var($input['surname'], FILTER_SANITIZE_STRING);
 			$input['houseNumber'] = filter_var($input['houseNumber'], FILTER_SANITIZE_STRING);
+			$input['suffix'] = filter_var($input['suffix'], FILTER_SANITIZE_STRING);
 			$input['postal'] = filter_var($input['postal'], FILTER_SANITIZE_STRING);
 			$input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
+			$input['email_confirmation'] = strtolower(filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL));
 
 			$input['postal'] = $this->fixPostal($input['postal']);
 

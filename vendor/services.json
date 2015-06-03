@@ -29,9 +29,12 @@
         "App\\Providers\\RouteServiceProvider",
         "App\\Providers\\ViewComposerServiceProvider",
         "App\\Providers\\RepositoryServiceProvider",
+        "App\\Providers\\ValidationServiceProvider",
         "Illuminate\\Html\\HtmlServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
-        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider"
+        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider",
+        "Greggilbert\\Recaptcha\\RecaptchaServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -52,8 +55,11 @@
         "App\\Providers\\RouteServiceProvider",
         "App\\Providers\\ViewComposerServiceProvider",
         "App\\Providers\\RepositoryServiceProvider",
+        "App\\Providers\\ValidationServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
-        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider"
+        "DaveJamesMiller\\Breadcrumbs\\ServiceProvider",
+        "Greggilbert\\Recaptcha\\RecaptchaServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
