@@ -63,7 +63,7 @@
 											Pagina
 										@else
 											<input type="hidden" name="sort[0]" value="carousel">
-											Carousel item test
+											Carousel item
 										@endif
 									</td>
 									<td>
@@ -73,7 +73,7 @@
 											@elseif($article->page != null)
 												{{$article->page->pageId}}
 											@else
-													Carousel-item
+													{{$article->carouselId}}
 											@endif
 										" class="hiddenInput" />
 										<span>
