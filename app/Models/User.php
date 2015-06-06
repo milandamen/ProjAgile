@@ -85,6 +85,16 @@
 		}
 
 		/**
+		 * Get all DistrictSection models that reference this User model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSections()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionpermissions', 'userId', 'districtSectionId');
+		}
+
+		/**
 		 * Get all News models that reference this User model.
 		 * 
 		 * @return Collection -> News
@@ -125,16 +135,6 @@
 		}
 
 		/**
-		 * Get the Postal model that is referenced in this User model.
-		 * 
-		 * @return Postal
-		 */
-		public function postal()
-		{
-			return $this->belongsTo('App\Models\Postal', 'postalId');
-		}
-
-		/**
 		 * Get the UserGroup model that is referenced in this User model.
 		 * 
 		 * @return UserGroup
@@ -147,8 +147,9 @@
 		/**
 		 * Check if the user has permission to edit the given page
 		 *
-		 * @param $pageId
-		 * @return Boolean
+		 * @param  int $pageId
+		 * 
+		 * @return boolean
 		 */
 		public function hasPagePermission($pageId)
 		{
@@ -158,8 +159,9 @@
 		/**
 		 * Check if the user has permission to edit news from the given districtSection.
 		 *
-		 * @param $districtSectionId
-		 * @return Boolean
+		 * @param  int $districtSectionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasDistrictSectionPermission($districtSectionId)
 		{
@@ -169,8 +171,9 @@
 		/**
 		 * Check if the user has permission to edit news from the given districtSection.
 		 *
-		 * @param $districtSectionId
-		 * @return Boolean
+		 * @param  int $districtSectionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasDistrictSectionPermissions($districtSections)
 		{
@@ -187,8 +190,9 @@
 		/**
 		 * Check if the user has the given permission
 		 *
-		 * @param $permissionId
-		 * @return Boolean
+		 * @param  int $permissionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasPermission($permissionId)
 		{
@@ -198,7 +202,7 @@
 		/**
 		 * Check if the user has permission to change permissions.
 		 *
-		 * @return Boolean
+		 * @return boolean
 		 */
 		public function canChangePermissions()
 		{
