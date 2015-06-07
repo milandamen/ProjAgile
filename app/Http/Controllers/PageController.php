@@ -368,7 +368,18 @@
 		 */
 		public function getPagesByTitle($term)
 		{
-			$data = $this->pagerepo->getByTitle($term);
-			echo json_encode($data);
+			$json = array();
+			$json_row = array();
+
+			$data = $this->pagerepo->getAllLikeTerm($term);
+
+			foreach($data as $page)
+			{
+				$json_row['page'] = $page;
+				$json_row['introduction'] = $page->introduction;
+				array_push($json, $json_row);
+			}
+
+			echo json_encode($json);
 		}
 	}

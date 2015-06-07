@@ -58,19 +58,20 @@ function searchPage()
 		var resulthtml = '';
 		[].forEach.call(dataresult, function (item)
 		{
+			console.log(dataresult);
 			resulthtml +=
 				'<tr>' +
 				'<td>' +
-				item.newsId +
+				item.page.pageId +
 				'</td>' +
 				'<td>' +
-				item.title +
+				item.introduction.title +
 				'</td>' +
 				'<td>' +
-				item.publishStartDate +
+				item.page.publishDate +
 				'</td>' +
 				'<td>' +
-				item.publishEndDate +
+				item.page.publishEndDate +
 				'</td>' +
 				'<td>' +
 				'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' +

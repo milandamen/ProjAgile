@@ -110,17 +110,4 @@
 			return Page::where('parentId', '=', $id)->get();
 		}
 
-		/**
-		 * Returns a Page Collection depending on the term provided.
-		 *
-		 * @param  string $term
-		 *
-		 * @return Collection -> Page
-		 */
-		public function getByTitle($term)
-		{
-			$term = '%' . $term . '%';
-			return Page::where('title', 'LIKE', $term)->where('visible', '=', 1)->get();
-		}
-
 	}
