@@ -358,4 +358,17 @@
 			}
 			$this->pagerepo->update($page);
 		}
+
+		/**
+		 * Get all the pages by title name.
+		 *
+		 * @param  String $term
+		 *
+		 * @return Json
+		 */
+		public function getPagesByTitle($term)
+		{
+			$data = $this->pagerepo->getByTitle($term);
+			echo json_encode($data);
+		}
 	}

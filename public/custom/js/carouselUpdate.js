@@ -45,6 +45,53 @@ function searchArticle()
 	});
 }
 
+/**
+ Grab list of pages using the input field as search term, then display articles in third table.
+ */
+function searchPage()
+{
+	var searchterm = document.getElementById('pageTitle').value;
+	var searchresultsbody = document.getElementById('page-searchresults');
+
+	$.getJSON(getPagesByTitleURL + '/' + searchterm).done(function(dataresult)
+	{
+		var resulthtml = '';
+		[].forEach.call(dataresult, function (item)
+		{
+			resulthtml +=
+				'<tr>' +
+				'<td>' +
+				item.newsId +
+				'</td>' +
+				'<td>' +
+				item.title +
+				'</td>' +
+				'<td>' +
+				item.publishStartDate +
+				'</td>' +
+				'<td>' +
+				item.publishEndDate +
+				'</td>' +
+				'<td>' +
+				'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' +
+				'<i class="fa fa-plus"></i>' +
+				'</a>' +
+				'</td>' +
+				'</tr>';
+		});
+
+		searchresultsbody.innerHTML = resulthtml;
+	})
+		.fail(function(jqxhr, textStatus, error)
+		{
+			//Fails if no articles can be found with the given term or if the syntax is wrong.
+			var err = textStatus + ', ' + error;
+			console.log('Request failed: ' + err);
+
+			searchresultsbody.innerHTML = ''
+		});
+}
+
 $('.add-carousel-button').click(function() {
 
 	$('#articlelist').append(

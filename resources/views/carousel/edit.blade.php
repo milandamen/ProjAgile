@@ -174,10 +174,33 @@
 				</table>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Zoek pagina op titel</h2>
+				<input type="text" id="pageTitle" />
+				<a onclick="searchPage()" class="btn btn-primary">Zoek</a>
+			</div>
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+					<tr>
+						<th class="cu-smallcol">ID</th>
+						<th>Titel</th>
+						<th>Start datum</th>
+						<th>Eind datum</th>
+						<th class="cu-smallcol"></th>
+					</tr>
+					</thead>
+					<tbody id="page-searchresults"></tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 	<script>
 		// Sets the URI for the Ajax request for searching an article by title for use in the carouselUpdate.js script.
 		var getArticlesByTitleURL = "{!! route('news.getArticlesByTitle', '') !!}";
+
+		var getPagesByTitleURL = "{!! route('page.getPagesByTitle', '') !!}";
 	</script>
 @stop
 
