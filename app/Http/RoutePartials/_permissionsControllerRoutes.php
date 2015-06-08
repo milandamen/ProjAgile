@@ -36,3 +36,17 @@
 		'uses' => 'PermissionsController@storeUserGroup',
 		'middleware' => 'admin'
 	]);
+
+	Route::get('gebruikersgroepen/{userGroupid}/wijzigen',
+	[
+		'as' => 'permissions.editUserGroup',
+		'uses' => 'PermissionsController@editUserGroup',
+		'middleware' => 'admin'
+	]);
+
+	Route::post('gebruikersgroepen/{userGroupid}/wijzigen',
+	[
+		'as' => 'permissions.updateUserGroup',
+		'uses' => 'PermissionsController@updateUserGroup',
+		'middleware' => 'admin'
+	]);

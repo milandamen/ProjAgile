@@ -40,7 +40,7 @@
 							<tr>
 								<td>{{ $userGroup->name }}</td>
 								<td>
-									<a href="{{ route('permissions.index') }}" class="left">
+									<a href="{{ route('permissions.editUserGroup', ['userGroupId' => $userGroup->userGroupId]) }}" class="left">
 										<i class="fa fa-pencil-square-o"></i>
 									</a>
 								</td>

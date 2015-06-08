@@ -71,17 +71,39 @@
 			$userGroup->districtSections()->sync($districtSectionSelectionArray);
 			$userGroup->permissions()->sync($permissionSelectionArray);
 
-			return view('permissions.index');
+			return redirect::route('permissions.index');
 		}
 
-		public function editUserGroupPermissions($userGroupId)
+		public function editUserGroup($userGroupId)
 		{
+			$userGroup = $this->userGroupRepo->get($userGroupId);
+			$pages = $this->pageRepo->getAll();
+			$districtSections = $this->districtSectionRepo->getAll();
+			$permissions = $this->permissionRepo->getAll();
 
+			return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions'));
 		}
 
-		public function updateUserGroupPermissions($userGroupId)
+		public function updateUserGroup($userGroupId, Request $request)
 		{
-			
+			$userGroup = $this->userGroupRepo->get($userGroupId);
+
+			//get posted permission strings and convert them into arrays.
+			$pageSelectionString = $request->get('pageSelection');
+			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
+
+			$districtSectionSelectionString = $request->get('districtSectionSelection');
+			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
+
+			$permissionSelectionString = $request->get('permissionSelection');
+			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
+
+			//update usergroup permissions in database.
+			$userGroup->pages()->sync($pageSelectionArray);
+			$userGroup->districtSections()->sync($districtSectionSelectionArray);
+			$userGroup->permissions()->sync($permissionSelectionArray);
+
+			return redirect::route('permissions.index');
 		}
 
 		/**

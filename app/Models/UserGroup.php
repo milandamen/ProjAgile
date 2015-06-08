@@ -85,4 +85,37 @@
 		{
 			return $this->belongsToMany('App\Models\Permission', 'usergrouppermissions', 'userGroupId', 'permissionId');
 		}
+
+		/**
+		 * Check if the usergroup has permission to edit the given page
+		 *
+		 * @param $pageId
+		 * @return Boolean
+		 */
+		public function hasPagePermission($pageId)
+		{
+			return $this->pages->contains($pageId);
+		}
+
+		/**
+		 * Check if the usergroup has permission to edit news from the given districtSection.
+		 *
+		 * @param $districtSectionId
+		 * @return Boolean
+		 */
+		public function hasDistrictSectionPermission($districtSectionId)
+		{
+			return $this->districtSections->contains($districtSectionId);
+		}
+
+		/**
+		 * Check if the usergroup has the given permission
+		 *
+		 * @param $permissionId
+		 * @return Boolean
+		 */
+		public function hasPermission($permissionId)
+		{
+			return $this->permissions->contains($permissionId);
+		}
 	}

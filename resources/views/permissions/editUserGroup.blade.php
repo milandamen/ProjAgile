@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('title')
-	De Bunders - Gebruikersgroep aanmaken
+	De Bunders - Gebruikersgroep wijzigen
 @stop
 
 @section('description')
-	Dit is de beveiligde gebruikersgroep aanmaak pagina van De Bunders.
+	Dit is de beveiligde gebruikersgroep wijzig pagina van De Bunders.
 @stop
 
 @section('content')
@@ -14,27 +14,19 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				<h2 class="page-header">Gebruikersgroep aanmaken</h2>
+				<h2 class="page-header">Gebruikersgroep wijzigen - {{$userGroup->name}}</h2>
 			</div>
 		</div>
 		<div class="row">
 			@include('flash::message')
 		</div>
 
-		{!! Form::open(['url' => route('permissions.storeUserGroup'), 'method' => 'POST', 'class' => 'userPermissionsForm']) !!}
+		{!! Form::open(['url' => route('permissions.updateUserGroup', $userGroup->userGroupId), 'method' => 'POST', 'class' => 'userPermissionsForm']) !!}
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
 		{!! Form::hidden('permissionSelection', null, ['id' => 'permissionSelection']) !!}
 
 		@include('errors.partials._list')
-		<div class="row">
-			<div class="col-lg-5">
-				<div class="form-group">
-					{!! Form::label('name', 'Groepsnaam') !!}
-					{!! Form::text('name', null, ['class' => 'form-control']) !!}
-				</div>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-xs-5">
@@ -42,7 +34,11 @@
 				<div class="well pages">
 					<ul id="check-list-box-page" class="list-group checked-list-box">
 						@foreach($pages as $page)
-							<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@if($userGroup->hasPagePermission($page->pageId))
+								<li class="list-group-item checked" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@else
+								<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+							@endif
 						@endforeach
 					</ul>
 				</div>
@@ -54,7 +50,11 @@
 					<div class="well permissions">
 						<ul id="check-list-box-permission" class="list-group checked-list-box">
 							@foreach($permissions as $permission)
-								<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@if($userGroup->hasPermission($permission->permissionId))
+									<li class="list-group-item checked" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@else
+									<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+								@endif
 							@endforeach
 						</ul>
 					</div>
@@ -65,7 +65,11 @@
 					<div class="well district-sections">
 						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
-								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@if($userGroup->hasDistrictSectionPermission($districtSection->districtSectionId))
+									<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@else
+									<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@endif
 							@endforeach
 						</ul>
 					</div>
@@ -74,7 +78,7 @@
 
 		</div>
 
-		{!! link_to_route('user.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
+		{!! link_to_route('permissions.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
 		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
 		{!! Form::close() !!}
 
