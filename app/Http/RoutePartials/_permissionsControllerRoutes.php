@@ -13,3 +13,26 @@
 		'uses' => 'PermissionsController@updateUserPermissions',
 		'middleware' => 'admin'
 	]);
+
+	//usergroup routes
+
+	Route::get('gebruikersgroepen',
+	[
+		'as' => 'permissions.index',
+		'uses' => 'PermissionsController@index',
+		'middleware' => 'admin'
+	]);
+
+	Route::get('gebruikersgroepen/aanmaken',
+	[
+		'as' => 'permissions.createUserGroup',
+		'uses' => 'PermissionsController@createUserGroup',
+		'middleware' => 'admin'
+	]);
+
+	Route::post('gebruikersgroepen/aanmaken',
+	[
+		'as' => 'permissions.storeUserGroup',
+		'uses' => 'PermissionsController@storeUserGroup',
+		'middleware' => 'admin'
+	]);
