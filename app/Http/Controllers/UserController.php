@@ -1,8 +1,7 @@
 <?php
 	namespace App\Http\Controllers;
 
-	use App\Http\Requests\User\CreateUserRequest;
-	use App\Http\Requests\User\UpdateUserRequest;
+	use App\Http\Requests\User\UserRequest;
 	use App\Models\User;
 	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
@@ -13,39 +12,62 @@
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
 	use Auth;
+	use Hash;
 	use Redirect;
 	use Request;
 	use View;
-	use Hash;
-
+	
 	class UserController extends Controller
 	{
-		private $addressRepo;
-		private $houseNumberRepo;
-		private $userRepo;
-		private $userGroupRepo;
-		private $postalRepo;
-		const ADMIN_GROUP_ID = 1;
-		const CONTENT_GROUP_ID = 2;
+		const ADMIN_GROUP_ID 	= 1;
+		const CONTENT_GROUP_ID 	= 2;
 		const RESIDENT_GROUP_ID = 3;
 
+		private $addressRepo;
+		private $districtSectionRepo;
+		private $houseNumberRepo;
+		private $pageRepo;
+		private $permissionRepo;
+		private $postalRepo;
+		private $userGroupRepo;
+		private $userRepo;
+		
+		/**
+		* Create a new UserController instance.
+		*
+		* @param  IAddressRepository 			$addressRepo
+		* @param  IDistrictSectionRepository 	$districtSectionRepo
+		* @param  IHouseNumberRepository 		$houseNumberRepo
+		* @param  IPageRepository 				$pageRepo
+		* @param  IPermissionRepository 		$permissionRepo
+		* @param  IPostalRepository 			$postalRepo
+		* @param  IUserGroupRepository 			$userGroupRepo
+		* @param  IUserRepository 				$userRepo
+		*
+		* @return void
+		*/
 		public function __construct(IAddressRepository $addressRepo, IDistrictSectionRepository $districtSectionRepo, IHouseNumberRepository $houseNumberRepo,
-									IUserRepository $userRepo, IUserGroupRepository $userGroupRepo, IPostalRepository $postalRepo,
-									IPageRepository $pageRepo, IPermissionRepository $permissionRepo)
+									IPageRepository $pageRepo, IPermissionRepository $permissionRepo, IPostalRepository $postalRepo,
+									IUserGroupRepository $userGroupRepo, IUserRepository $userRepo)
 		{
-			$this->addressRepo = $addressRepo;
-			$this->houseNumberRepo = $houseNumberRepo;
-			$this->userRepo = $userRepo;
-			$this->userGroupRepo = $userGroupRepo;
-			$this->postalRepo = $postalRepo;
-			$this->pageRepo = $pageRepo;
-			$this->districtSectionRepo = $districtSectionRepo;
-			$this->permissionRepo = $permissionRepo;
+			$this->addressRepo 			= $addressRepo;
+			$this->districtSectionRepo 	= $districtSectionRepo;
+			$this->houseNumberRepo 		= $houseNumberRepo;
+			$this->pageRepo 			= $pageRepo;
+			$this->permissionRepo 		= $permissionRepo;
+			$this->postalRepo 			= $postalRepo;
+			$this->userGroupRepo 		= $userGroupRepo;
+			$this->userRepo 			= $userRepo;
 		}
 
+		/**
+		 * Show the user overview page.
+		 *
+		 * @return Response
+		 */
 		public function index()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
 				$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
@@ -53,200 +75,257 @@
 
 				return view('user.index', compact('admins', 'contentmanagers', 'residents'));
 			}
+
 			return view('errors.403');
 		}
 
+		/**
+		 * Show the create user page.
+		 *
+		 * @return Response
+		 */
 		public function create()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = new User();
-				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
+				$userGroups = $this->userGroupRepo->getAllToList();
 
 				return view('user.create', compact('user', 'userGroups'));
 			}
+
 			return view('errors.403');
 		}
 
-		public function store(CreateUserRequest $userRequest)
+		/**
+		 * Stores the created user in the database.
+		 * 
+		 * @param  UserRequest $request
+		 * 
+		 * @return Response
+		 */
+		public function store(UserRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				$data = $userRequest->input();
+				$data = $request->all();
 				$user = $this->userRepo->create($data);
 
-				//grant admins all permissions
-				if($user !== null && (int)$user->userGroupId === self::ADMIN_GROUP_ID)
+				// Grant admins all permissions
+				if($user !== null && $user->userGroupId === self::ADMIN_GROUP_ID)
 				{
 					$this->grantAllPermissions($user->userId);
 				}
-				return redirect::route('user.index');
+
+				return Redirect::route('user.index');
 			}
+
 			return view('errors.403');
 		}
 
-		public function edit($id)
+		/**
+		 * Show the user.
+		 *
+		 * @return Response
+		 */
+		public function show($id)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = $this->userRepo->get($id);
-				$userGroups = $this->userGroupRepo->getAll()->lists('name', 'userGroupId');
-				$postal = '';
-				$houseNumber = '';
-				$suffix = '';
 
-				if ($user->addressId !== null)
+				if($user->addressId !== null)
 				{
 					$address = $this->addressRepo->get($user->addressId);
-
-					$postal = $address->postal->code;
-					$houseNumber = $address->houseNumber->houseNumber;
-					$suffix = $address->houseNumber->suffix;
+					$districtSection = $address->districtSection;
+					$postal = $this->postalRepo->get($address->postalId);
+					$houseNumber = $this->houseNumberRepo->get($address->houseNumberId);
 				}
 
-				return view('user.edit', compact('user', 'userGroups', 'postal', 'houseNumber', 'suffix'));
+				if(isset($user) && !empty($user))
+				{
+					return view('user.show', compact('user', 'districtSection', 'postal', 'houseNumber'));
+				}
+				
+				return view('errors.404');
 			}
+
 			return view('errors.403');
 		}
 
-		public function update(UpdateUserRequest $userRequest, $id = null)
+		/**
+		 * Show the edit user page.
+		 *
+		 * @return Response
+		 */
+		public function edit($id)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) && (int)$id !== Auth::user()->userId)
 			{
-				$user = ($id === null ? $this->userRepo->get(Auth::user()->userId) : $this->userRepo->get($id));
-				
-				$data = $userRequest->all();
-				$oldUserGroupId = $user->userGroupId;
+				$user = $this->userRepo->get($id);
+				$userGroups = $this->userGroupRepo->getAllToList();
 
+				if($user->addressId !== null)
+				{
+					$address = $this->addressRepo->get($user->addressId);
+					$postal = $this->postalRepo->get($address->postalId);
+					$houseNumber = $this->houseNumberRepo->get($address->houseNumberId);
+				}
+
+				return view('user.edit', compact('user', 'userGroups', 'postal', 'houseNumber'));
+			}
+
+			return view('errors.403');
+		}
+
+		/**
+		 * Updates the existing user in the database.
+		 * 
+		 * @param  UserRequest	$request
+		 * @param  int			$id
+		 * 
+		 * @return Response
+		 */
+		public function update(UserRequest $request, $id = null)
+		{
+			dd(PermissionsController::PERMISSION_USERS, Auth::user()->permissions());
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			{
+				$user = ($id === null ? Auth::user() : $this->userRepo->get($id));
+				
+				$data = $request->only
+				(
+					'firstName',
+					'insertion',
+					'surname',
+					'email'
+				);
+
+				if($user->userId !== Auth::user()->userId)
+				{
+					$data += $request->only
+					(
+						'username',
+						'userGroupId'
+					);
+				}
+				$oldUserGroupId = $user->userGroupId;
 				$user->fill($data);
 
-				//only change password when given. If the field is emtpy the password need not be changed.
-				if ($userRequest->get('password') !== '')
+				// Only change password when given. If the field is emtpy the password need not be changed.
+				if($request->get('password') !== '')
 				{
-					$user->password =  Hash::make($userRequest->get('password'));
+					$user->password = Hash::make($request->get('password'));
 				}
 
-				if ($userRequest->get('postal') !== '' || 
-					$userRequest->get('houseNumber') !== '')
+				if($user->userId !== Auth::user()->userId)
 				{
-					$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
-					$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
-					$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
-					$postal = $this->postalRepo->getByCode($userRequest->get('postal'));
-					//$user->postalId = $postal->postalId;
-				}
-				else
-				{
-					//$user->postalId = null;
-				}
+					if($request->get('postal') !== '' || $request->get('houseNumber') !== '')
+					{
+						$postalId = $this->postalRepo->getByCode($request->get('postal'))->postalId;
+						$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($request->get('houseNumber'), $request->get('suffix') ? : null)->houseNumberId;
+						$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
 
-				$attributes['addressId'] = $addressId;
+						$user->addressId = $addressId;
+					}
+				}
 				$this->userRepo->update($user);
 
-				//grant admins all permissions
-				if ((int)$user->userGroupId === self::ADMIN_GROUP_ID && $oldUserGroupId !== self::ADMIN_GROUP_ID)
+				// Grant admins all permissions
+				if($user->userGroupId === self::ADMIN_GROUP_ID && $oldUserGroupId !== self::ADMIN_GROUP_ID)
 				{
 					$this->grantAllPermissions($id);
 				}
 
-				if ($id === null)
+				if($id === null)
 				{
-					return redirect::route('user.showProfile');
+					return Redirect::route('user.showProfile');
 				}
-				return redirect::route('user.index');
+
+				return Redirect::route('user.index');
 			}
+
 			return view('errors.403');
 		}
-
-		public function show($id)
-		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
-			{
-				$user = $this->userRepo->get($id);
-				$postal = '';
-				if ($user->postalId !== null)
-				{
-					$postal = $this->postalRepo->getById($user->postalId)->code;
-				}
-
-				if($user != null)
-				{
-					return view('user.show', compact('user', 'postal'));
-				}
-				else
-				{
-					return view('errors.404');
-				}
-			}
-			return view('errors.403');
-		}
-
-		public function deactivate($id)
-		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
-			{
-				$user = $this->userRepo->get($id);
-				$user->active = false;
-				$this->userRepo->update($user);
-
-				return redirect::route('user.index');
-			}
-			return view('errors.403');
-		}
-
-		public function activate($id)
-		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
-			{
-				$user = $this->userRepo->get($id);
-				$user->active = true;
-				$this->userRepo->update($user);
-
-				return redirect::route('user.index');
-			}
-			return view('errors.403');
-		}
-
-		//personal profile functions
-		public function showProfile()
-		{
-			if (Auth::check())
-			{
-				$user = $this->userRepo->get(Auth::user()->userId);
-				if ($user->postalId !== null)
-				{
-					$postal = $this->postalRepo->getById($user->postalId)->code;
-				}
-				return view('user.showProfile', compact('user', 'postal'));
-			}
-			return view('errors.401');
-		}
-
-		public function editProfile()
-		{
-			if (Auth::check())
-			{
-				$user = $this->userRepo->get(Auth::user()->userId);
-				$postal = '';
-				if ($user->postalId !== null)
-				{
-					$postal = $this->postalRepo->getById($user->postalId)->code;
-				}
-				return view('user.editProfile', compact('user', 'postal'));
-			}
-			return view('errors.401');
-		}
-		//end personal profile functions
 
 		/**
-		 * Grant the given user all permissions
-		 *
-		 * @param $userId
+		 * Show the user profile page.
+		 * 
 		 * @return Response
 		 */
-		private function grantAllPermissions($userId)
+		public function showProfile()
 		{
-			$user = $this->userRepo->get($userId);
+			if(Auth::check())
+			{
+				$user = $this->userRepo->get(Auth::user()->userId);
+
+				if($user->addressId !== null)
+				{
+					$address = $this->addressRepo->get($user->addressId);
+					$districtSection = $address->districtSection;
+					$postal = $this->postalRepo->get($address->postalId);
+					$houseNumber = $this->houseNumberRepo->get($address->houseNumberId);
+				}
+
+				return view('user.showProfile', compact('user', 'districtSection', 'postal', 'houseNumber'));
+			}
+
+			return view('errors.401');
+		}
+
+		/**
+		 * Show the account edit page for a regular user.
+		 * 
+		 * @return Response
+		 */
+		public function editProfile()
+		{
+			if(Auth::check())
+			{
+				$user = $this->userRepo->get(Auth::user()->userId);
+
+				if($user->postalId !== null)
+				{
+					$postal = $this->postalRepo->getById($user->postalId)->code;
+				}
+
+				return view('user.editProfile', compact('user', 'postal'));
+			}
+
+			return view('errors.401');
+		}
+
+		/**
+		 * Toggles the user's activation status.
+		 * 
+		 * @param  int $id
+		 * 
+		 * @return Response
+		 */
+		public function toggleActivation($id)
+		{
+			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			{
+				$user = $this->userRepo->get($id);
+				$user->active ? $user->active = fale : $user->active = true;
+				$this->userRepo->update($user);
+
+				return Redirect::route('user.index');
+			}
+
+			return view('errors.403');
+		}
+
+		/**
+		 * Grant the given user all permissions.
+		 *
+		 * @param  $id
+		 * 
+		 * @return void
+		 */
+		private function grantAllPermissions($id)
+		{
+			$user = $this->userRepo->get($id);
 
 			$pages = $this->pageRepo->getAllIds();
 			$districtSections = $this->districtSectionRepo->getAllIds();
@@ -256,5 +335,4 @@
 			$user->districtSections()->sync($districtSections);
 			$user->permissions()->sync($permissions);
 		}
-
 	}

@@ -1,6 +1,7 @@
 <?php
 	namespace App\Repositories\EntityRepositories;
 
+	use Auth;
 	use App\Models\User;
 	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
@@ -75,28 +76,6 @@
 		}
 
 		/**
-		 * Returns all the User models in the database filtered by user group.
-		 *
-		 * @return Collection -> User
-		 */
-		public function getAllByUserGroup($userGroupId)
-		{
-			return User::where('userGroupId', $userGroupId)->get();
-		}
-
-		/**
-		 * Returns all the User models in the database filtered by user group and search criteria
-		 *
-		 * @return Collection -> User
-		 */
-		public function filterAllByUserGroup($userGroupId, $criteria)
-		{
-			$users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->get();
-
-			return $users->where('userGroupId', $userGroupId);
-		}
-
-		/**
 		 * Creates a User record in the database.
 		 * 
 		 * @param  array() $attributes
@@ -157,6 +136,58 @@
 		}
 
 		/**
+		 * Returns all the User models in the database filtered by user group.
+		 * Note that this will exclude the currently logged in user from the query.
+		 *
+		 * @return Collection -> User
+		 */
+		public function getAllByUserGroup($userGroupId)
+		{
+			return User::where('userGroupId', $userGroupId)->where('userId', '!=', Auth::user()->userId)->get();
+		}
+
+		/**
+		 * Returns all the User models in the database filtered by user group and search criteria.
+		 * Note that this will exclude the currently logged in user from the query.
+		 *
+		 * @return Collection -> User
+		 */
+		public function filterAllByUserGroup($userGroupId, $criteria)
+		{
+			$users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->
+						   orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->
+						   where('username', '!=', Auth::user()->userId)->get();
+
+			return $users->where('userGroupId', $userGroupId);
+		}
+
+		/**
+		 * Returns a User record in the database depending on the address id provided.
+		 * Note that this will exclude the given user id from the query.
+		 * 
+		 * @param  int $addresId
+		 * @param  int $userId
+		 * 
+		 * @return User
+		 */
+		public function getByAddress($addressId, $userId)
+		{
+			return User::where('addressId', '=', $addressId)->where('userId', '!=', $userId)->first();
+		}
+
+		/**
+		 * Returns a User record in the database depending on the confirmation token provided.
+		 * 
+		 * @param  string $confirmation_Token
+		 * 
+		 * @return User
+		 */
+		public function getByConfirmationToken($confirmation_Token)
+		{
+			return User::where('confirmation_Token', '=', $confirmation_Token)->where('active', '=', false)->first();	
+		}
+
+		/**
 		 * Checks if the provided user has the Administrator role.
 		 * 
 		 * @param  User $user
@@ -188,29 +219,5 @@
 			}
 			
 			return false;
-		}
-
-		/**
-		 * Returns a User record in the database depending on the address id provided.
-		 * 
-		 * @param  int $addresId
-		 * 
-		 * @return User
-		 */
-		public function getByAddress($addressId)
-		{
-			return User::where('addressId', '=', $addressId)->first();
-		}
-
-		/**
-		 * Returns a User record in the database depending on the confirmation token provided.
-		 * 
-		 * @param  string $confirmation_Token
-		 * 
-		 * @return User
-		 */
-		public function getByConfirmationToken($confirmation_Token)
-		{
-			return User::where('confirmation_Token', '=', $confirmation_Token)->where('active', '=', false)->first();	
 		}
 	}

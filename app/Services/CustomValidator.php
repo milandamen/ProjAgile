@@ -50,9 +50,9 @@
 		/**
 		 * Validates if the provided postal is already in use by another user.
 		 * 
-		 * @param array()	$attribute
-		 * @param array()	$value
-		 * @param array()	$parameters
+		 * @param  array()	$attribute
+		 * @param  array()	$value
+		 * @param  array()	$parameters
 		 * 
 		 * @return boolean
 		 */
@@ -61,22 +61,23 @@
 			$postal = $this->postalRepo->getByCode($value);
 			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
 			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
-			$user = $this->userRepo->getByAddress($address->addressId);
-
+			$user = $this->userRepo->getByAddress($address->addressId, $parameters[0]);
+			
 			return !isset($user);
 		}
 
 		/**
 		 * Validates if the provided password has a certain password strength.
 		 * 
-		 * @param array()	$attribute
-		 * @param array()	$value
+		 * @param  array()	$attribute
+		 * @param  array()	$value
+		 * @param  array()	$parameters
 		 * 
 		 * @return boolean
 		 */
 		protected function validateIsPasswordStrongEnough($attribute, $value, $parameters)
 		{
-			// Set configurable variables for the regex to adept to.
+			// Set configurable variables for the regex to adapt to.
 			$numDigits					= 1;
 			$allowedDigits 				= '[0-9]';
 
@@ -84,7 +85,7 @@
 			$allowedLowerCaseLetters	= '[a-z]';
 
 			$numSpecialCaseLetters		= 1;
-			$allowedSpecialCaseLetters	= '[!@#$&*]';
+			$allowedSpecialCaseLetters	= '[!@#$%^&*]';
 
 			$numUpperCaseLetters 		= 1;
 			$allowedUpperCaseLetters	= '[A-Z]';
