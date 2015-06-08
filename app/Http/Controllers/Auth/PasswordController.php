@@ -28,7 +28,7 @@
 		 * 
 		 * @return void
 		 */
-		public function __construct(Guard $auth, PasswordBroker $passwords, IuserRepository $userRepo)
+		public function __construct(Guard $auth, PasswordBroker $passwords, IUserRepository $userRepo)
 		{
 			$this->auth = $auth;
 			$this->passwords = $passwords;
