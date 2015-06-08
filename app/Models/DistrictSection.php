@@ -74,6 +74,6 @@
 		*/
 		public function districtSectionPermissions()
 		{
-			return $this->belongsToMany('Address', 'districtSectionpermissions', 'districtSectionId', 'userId');
+			return $this->belongsToMany('Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
 	}
