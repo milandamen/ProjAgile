@@ -1,9 +1,30 @@
 <?php
+	/*
+	|--------------------------------------------------------------------------
+	| Breadcrumbs
+	|--------------------------------------------------------------------------
+	|
+	| Listed below are all the breadcrumbs that are being used by 
+	| this application.
+	| These breadcrumbs are grouped in partials by controller type
+	| and are sorted based on the file structure of the controller folder. 
+	|
+	*/
 
 	/**
 	 * AuthController breadcrumbs.
 	 */
-	include('BreadcrumbPartials/_authBreadcrumbs.php');
+	include('BreadcrumbPartials/Auth/_authBreadcrumbs.php');
+
+	/**
+	 * PasswordController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/Auth/_passwordBreadcrumbs.php');
+
+	/**
+	 * RegistrationController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/Auth/_registrationBreadcrumbs.php');
 
 	/**
 	 * CarouselController breadcrumbs.
@@ -51,6 +72,16 @@
 	include('BreadcrumbPartials/_pageBreadcrumbs.php');
 
 	/**
+	 * PermissionController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_permissionBreadcrumbs.php');
+
+	/**
+	 * PostalController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_postalBreadcrumbs.php');
+
+	/**
 	 * SidebarController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_sidebarBreadcrumbs.php');
@@ -59,13 +90,3 @@
 	 * UserController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_userBreadcrumbs.php');
-
-	/**
-	 * PostalController breadcrumbs.
-	 */
-	include('BreadcrumbPartials/_postalBreadcrumbs.php');
-
-	/**
-	 * PermissionController breadcrumbs.
-	 */
-	include('BreadcrumbPartials/_permissionBreadcrumbs.php');

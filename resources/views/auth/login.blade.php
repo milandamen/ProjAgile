@@ -19,7 +19,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						@include('errors.partials._list')
-						{!! Form::open(['method' => 'POST','route' => 'auth.login']) !!}
+						{!! Form::open(['method' => 'POST', 'route' => 'auth.login']) !!}
 							<div class="form-group">
 								{!! Form::label('username', 'Gebruikersnaam:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6">
@@ -35,14 +35,20 @@
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-4">
 									<label>
-										<input type="checkbox" name="remember"></input>Onthoudt mij
+										<input type="checkbox" name="remember"></input>
+										Onthoud mij
 									</label>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-md-6 col-md-offset-4">
+								<div class="col-md-6 col-md-offset-4 addmargin">
 									{!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
-									{!! link_to_route('auth.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
+									{!! link_to_route('registration.register', 'Nog geen account?', [], array('class' => 'btn btn-info')) !!}
+									{!! link_to_route('password.reminder', 'Wachtwoord vergeten?', [], array('class' => 'btn btn-info')) !!}
 								</div>
 							</div>
 						{!! Form::close() !!}
