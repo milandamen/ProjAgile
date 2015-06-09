@@ -188,7 +188,6 @@
 		 */
 		public function update(UserRequest $request, $id = null)
 		{
-			dd(PermissionsController::PERMISSION_USERS, Auth::user()->permissions());
 			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = ($id === null ? Auth::user() : $this->userRepo->get($id));

@@ -26,8 +26,8 @@
 							<div class="col-md-12 no-padding addmargin">
 								<div class="col-md-12 addmargin">	
 									<div class="col-md-6">	
-									{!! Form::label('username', 'Gebruikersnaam:', ['class' => ' control-label']) !!}
-									{!! Form::text('username', old('username'), ['class' => 'form-control']) !!}
+										{!! Form::label('username', 'Gebruikersnaam:', ['class' => ' control-label']) !!}
+										!! Form::text('username', old('username'), ['class' => 'form-control']) !!}
 									</div>
 								</div>
 								<div class="col-md-12 addmargin">
@@ -84,8 +84,8 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<div class="col-md-4 floatCenter addmargin">
-									{!! Recaptcha::render() !!}
-								</div>
+										{!! Recaptcha::render() !!}
+									</div>
 								</div>
 							</div>
 							<div class="form-group">

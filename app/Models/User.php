@@ -51,6 +51,8 @@
 			'active',
 			'remember_Token',
 			'confirmation_Token',
+			'loginAttempts',
+			'lastLoginAttempt',
 		];
 
 		/**
@@ -208,5 +210,4 @@
 		{
 			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
 		}
-
 	}
