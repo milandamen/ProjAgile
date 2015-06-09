@@ -8,6 +8,7 @@
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
+	use Carbon\Carbon;
 	use Hash;
 
 	class EntityUserRepository implements IUserRepository
@@ -85,14 +86,14 @@
 		public function create($attributes)
 		{
 			// UserGroupId is not set when registering
-			if (!isset($attributes['userGroupId']))
+			if(!isset($attributes['userGroupId']))
 			{
 				$attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
 			}
 
 			// Check if postal and housenumber are provided. These attributes are only required for residents.
-			if (isset($attributes['postal']) && !empty($attributes['postal']) && 
-				isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
+			if(isset($attributes['postal']) && !empty($attributes['postal']) && 
+			   isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
 				$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
 				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
@@ -104,6 +105,8 @@
 			$attributes['active'] = false;
 			$attributes['email'] = strtolower($attributes['email']);
 			$attributes['confirmation_Token'] = str_random(100);
+			$attributes['loginAttempts'] = 0;
+			$attributes['lastLoginAttempt'] = Carbon::now();
 
 			return User::create($attributes);
 		}
@@ -159,6 +162,18 @@
 						   where('username', '!=', Auth::user()->userId)->get();
 
 			return $users->where('userGroupId', $userGroupId);
+		}
+
+		/**
+		 * Return a User record in the database depending on the username provided.
+		 *
+		 * @param  string $username
+		 *
+		 * @return User
+		 */
+		public function getByUsername($username)
+		{
+			return User::where('username', '=', $username)->first();
 		}
 
 		/**
