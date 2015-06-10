@@ -74,6 +74,7 @@
 						}
 						else if($_POST['sort'][$i] === 'carousel')
 						{
+							$carouselId = $_POST['artikel'][$i];
 							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
 
 							if(!isset($description) || empty($description))
@@ -93,8 +94,18 @@
 							$publishEndDate = new \DateTime($end);
 							$publishEndDate->format('Y-m-d');
 
-
 							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+							$oldItem = null;
+
+							foreach ($oldItems as $oI)
+							{
+								if ($oI->carouselId == $carouselId)
+								{
+									$oldItem = $oI;
+									break;
+								}
+							}
 
 							$lci++;
 						}
@@ -119,60 +130,6 @@
 
 			return view('errors.403');
 		}
-
-//		public function update()
-//		{
-//			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
-//			{
-//				$oldItems = $this->carouselRepo->getAll();
-//
-//				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
-//				{
-//					for ($i = 0; $i < count($_POST['artikel']); $i++)
-//					{
-//						$newsId = $_POST['artikel'][$i];
-//						$description = 'Nog geen beschrijving';
-//						$item = $this->carouselRepo->create(compact('newsId', 'description'));
-//
-//						$description = $_POST['beschrijving'][$i];
-//
-//						if (!isset($description) || empty($description))
-//						{
-//							$description = 'Nog geen beschrijving';
-//						}
-//						$item->description = $description;
-//						$this->carouselRepo->update($item);
-//						$oldItem = null;
-//
-//						foreach ($oldItems as $oI)
-//						{
-//							if ($oI->newsId == $newsId)
-//							{
-//								$oldItem = $oI;
-//								break;
-//							}
-//						}
-//
-//						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')
-//						{
-//							$item->imagePath = 'blank.jpg';
-//							$oldItem->imagePath = 'blank.jpg';
-//						}
-//						$this->saveImage($item, $i, $oldItem);
-//						$this->carouselRepo->update($item);
-//					}
-//				}
-//
-//				foreach ($oldItems as $oldItem)
-//				{
-//					$oldItem->delete();
-//				}
-//
-//				return Redirect::route('home.index');
-//			}
-//
-//			return view('errors.403');
-//		}
 		
 		private function saveImage($item, $count, $oldItem) 
 		{

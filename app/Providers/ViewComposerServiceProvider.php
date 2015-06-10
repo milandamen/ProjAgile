@@ -23,7 +23,7 @@
 		}
 
 		/**
-		 * Register
+		 * Register any application services.
 		 *
 		 * @return void
 		 */

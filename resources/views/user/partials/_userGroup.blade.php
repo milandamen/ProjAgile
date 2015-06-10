@@ -11,10 +11,14 @@
 							<th>Achternaam</th>
 							<th>Email</th>
 							<th colspan="2">Acties</th>
-							@if (Auth::user()->canChangePermissions())
+							@if(Auth::user()->canChangePermissions())
 								<th></th>
 							@endif
-							<th><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign questionIcon" title="Toelichting"></span></a></th>
+							<th>
+								<a href="#" data-toggle="modal" data-target="#myModal">
+									<span class="glyphicon glyphicon-question-sign questionIcon" title="Toelichting"></span>
+								</a>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -36,21 +40,21 @@
 								</td>
 								<td>
 									@if($userType->active)
-										<a href="{{ route('user.deactivate', [$userType->userId]) }}" class="text-success activate">
+										<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="text-success activate">
 											<i class="fa fa-unlock-alt fa-lg"></i>
 										</a>
-									@elseif(!$userType->active)
-										<a href="{{ route('user.activate', [$userType->userId]) }}" class="black deactivate">
+									@else
+										<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="black deactivate">
 											<i class="fa fa-lock fa-lg"></i>
 										</a>
 									@endif
 								</td>
-								@if (Auth::user()->canChangePermissions())
-								<td>
-									<a href="{{ route('permissions.edit', [$userType->userId]) }}" class="left black">
-										<i class="fa fa-key"></i>
-									</a>
-								</td>
+								@if(Auth::user()->canChangePermissions())
+									<td>
+										<a href="{{ route('permissions.edit', [$userType->userId]) }}" class="left black">
+											<i class="fa fa-key"></i>
+										</a>
+									</td>
 								@endif
 							</tr>
 						@endforeach
@@ -61,29 +65,36 @@
 	</div>
 </div>
 
-<!-- Modal -->
+{{-- Modal --}}
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				<h4 class="modal-title" id="myModalLabel">Toelichting</h4>
 			</div>
 			<div class="modal-body">
 				<div>
-					<i class="glyphicon glyphicon-new-window text-primary"></i> - Gebruiker details
+					<i class="glyphicon glyphicon-new-window text-primary"></i> 
+					- Gebruiker Details
 				</div>
 				<div>
-					<i class="fa fa-pencil-square-o"></i> - Gebruiker bewerken
+					<i class="fa fa-pencil-square-o"></i> 
+					- Gebruiker bewerken
 				</div>
 				<div>
-					<i class="fa fa-lock fa-lg"></i> - Gebruiker is inactief
+					<i class="fa fa-lock fa-lg"></i> 
+					- Gebruiker is inactief
 				</div>
 				<div>
-					<i class="fa fa-unlock-alt fa-lg text-success activate"></i> - Gebruiker is actief
+					<i class="fa fa-unlock-alt fa-lg text-success activate"></i> 
+					- Gebruiker Is Actief
 				</div>
 				<div>
-					<i class="fa fa-key"></i> - Gebruiker autorisatie bewerken
+					<i class="fa fa-key"></i> 
+					- Gebruiker Autorisatie Bewerken
 				</div>
 			</div>
 			<div class="modal-footer">

@@ -15,7 +15,7 @@
 		/**
 		* Create a new SidebarController instance.
 		*
-		* @parm ISidebarRepository $sidebarRepo
+		* @param ISidebarRepository $sidebarRepo
 		*
 		* @return void
 		*/

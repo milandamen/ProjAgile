@@ -41,7 +41,7 @@
 			{
 				Flash::info('U bent al ingelogd!');
 				
-				return new RedirectResponse(url('/'));
+				return new RedirectResponse(route('home.index'));
 			}
 
 			return $next($request);
