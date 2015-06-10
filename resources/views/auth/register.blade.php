@@ -27,7 +27,7 @@
 								<div class="col-md-12 addmargin">	
 									<div class="col-md-6">	
 										{!! Form::label('username', 'Gebruikersnaam:', ['class' => ' control-label']) !!}
-										!! Form::text('username', old('username'), ['class' => 'form-control']) !!}
+										{!! Form::text('username', old('username'), ['class' => 'form-control']) !!}
 									</div>
 								</div>
 								<div class="col-md-12 addmargin">

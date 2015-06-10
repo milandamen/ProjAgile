@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								{!! Form::label('remember', 'Onthoud mij', ['class' => 'col-md-4 control-label']) !!}
+								{!! Form::label('remember', 'Onthoud mij:', ['class' => 'col-md-4 control-label']) !!}
 								<div class="col-md-6 addmargin">
 									<div class="btn-group" data-toggle="buttons">
 										<label class="btn btn-default">
@@ -58,7 +58,7 @@
 								</div>
 							@endif
 							<div class="form-group">
-								<div class="col-md-6 col-md-offset-4">
+								<div class="col-md-6 col-md-offset-4 addmargin">
 									{!! Form::submit('Login', ['class' => 'btn btn-primary']) !!}
 								</div>
 							</div>

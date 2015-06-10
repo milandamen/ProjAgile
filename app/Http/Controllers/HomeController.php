@@ -1,19 +1,28 @@
 <?php 
 	namespace App\Http\Controllers;
 
+	use App\Http\Requests\Home\IntroductionRequest;
+	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
-	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
-	use Illuminate\Support\Facades\Redirect;
-	use App\Http\Requests\Home\IntroductionRequest;
+	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use Auth;
+	use Illuminate\Support\Facades\Redirect;
 	use Request;
 
 	class HomeController extends Controller 
 	{
+		private $carouselRepo;
+		private $homeLayoutRepo;
+		private $introRepo;
+		private $newOnSiteRepository;
+		private $newsRepo;
+		private $pageRepo;
+		private $sidebarRepo;
+
 		/**
 		 * Creates a new HomeController instance.
 		 *
@@ -23,15 +32,17 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, IPageRepository $pageRepo,
-									INewsRepository $newsRepo, ICarouselRepository $carouselRepo, INewOnSiteRepository $newOnSiteRepository)
+		public function __construct(ICarouselRepository $carouselRepo, IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, 
+									INewOnSiteRepository $newOnSiteRepository, INewsRepository $newsRepo, IPageRepository $pageRepo,
+									ISidebarRepository $sidebarRepo)
 		{
+			$this->carouselRepo = $carouselRepo;
 			$this->homeLayoutRepo = $homeLayoutRepo;
 			$this->introRepo = $introRepo;
-			$this->newsRepo = $newsRepo;
-			$this->carouselRepo = $carouselRepo;
 			$this->newOnSiteRepository = $newOnSiteRepository;
+			$this->newsRepo = $newsRepo;
 			$this->pageRepo = $pageRepo;
+			$this->sidebarRepo = $sidebarRepo;
 		}
 
 		/**
@@ -43,12 +54,13 @@
 		{
 			$news = $this->getNews();
 			$introduction = $this->pageRepo->get(1)->introduction;
+			$sidebar = $this->sidebarRepo->getByPage(1);
 			htmlspecialchars($introduction);
 			$layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAllFiltered();
 			$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-			return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
+			return view('home.index', compact('news', 'introduction', 'sidebar', 'layoutModules', 'carousel', 'newOnSite'));
 		}
 
 		/**
@@ -61,7 +73,6 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
 				$news = $this->getNews();
-				//$introduction = $this->introRepo->getPageBar('1');
 				$introduction = $this->pageRepo->get(1)->introduction;
 				$layoutModules = $this->homeLayoutRepo->getAll();
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();

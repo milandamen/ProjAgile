@@ -60,71 +60,89 @@
 		 */
 		public function postLogin(LoginRequest $request)
 		{
-			if(!Auth::viaRemember())
+			$credentials = $request->only('username', 'password');
+
+			// Set additional credentials requirements.
+			$credentials['active'] = true;
+
+			$user = $this->userRepo->getByUsername($credentials['username']);
+
+			if(isset($user))
 			{
-				$credentials = $request->only('username', 'password');
+				// Set configurable security settings.
+				$attemptsBeforeReCaptcha = 1;
+				$attemptsBeforeLockout = 5;
 
-				// Set additional credentials requirements.
-				$credentials['active'] = true;
+				// Set the configurable timeout and lockout settings (in minutes).
+				$captchaTimeout = 1;
+				$lockoutTimeout = 10;
 
-				if(!$this->auth->attempt($credentials, $request['remember']))
+				// Set attempt count and timestamp.
+				$user->loginAttempts++;
+				$user->lastLoginAttempt = Carbon::now();
+
+				$messages = 
+				[
+					'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.'
+				];
+
+				if($user->loginAttempts >= $attemptsBeforeReCaptcha)
 				{
-					// Set configurable security settings.
-					$attemptsBeforeCaptcha = 1;
-					$attemptsBeforeLockout = 5;
+					if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $captchaTimeout)
+					{
+						if($user->loginAttempts >= $attemptsBeforeLockout)
+						{
+							if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $lockoutTimeout)
+							{
+								$messages['username'] = 'Wegens de hoeveelheid inlogpogingen hebben wij uw account geblokkeerd.
+														Uw account zal over tien minuten gedeblokkeerd worden.';
 
-					// Set the configurable timeout and lockout settings (in minutes).
-					$captchaTimeout = 1;
-					$lockoutTimeout = 10;
+								return Redirect::route('auth.login')->withErrors
+								([
+									 $messages
+								]);
+							}
+						}
+						Session::put('enableReCaptcha', true);
+					}
+					else
+					{
+						$user->loginAttempts = 1;
+						$user->lastLoginAttempt = Carbon::now();
+					}
+				}
+			}
+			
+			if(Auth::viaRemember() || $this->auth->attempt($credentials, $request['remember']))
+			{
+				if($user->loginAttempts !== 0)
+				{
+					$user->loginAttempts = 0;
+					$user->lastLoginAttempt = null;
+					$this->userRepo->update($user);
+				}
 
-					$user = $this->userRepo->getByUsername($credentials['username']);
+				Session::forget('enableReCaptcha');
+				Flash::success('U bent succesvol ingelogd!');
 
+				return Redirect::route('home.index');
+			}
+
+			if(isset($user))
+			{
+				if($user->loginAttempts === 0)
+				{
 					// Set attempt count and timestamp.
 					$user->loginAttempts++;
 					$user->lastLoginAttempt = Carbon::now();
-
-					$enableReCaptcha = false;
-					$messages = 
-					[
-						'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.'
-					];
-
-					if($user->loginAttempts >= $attemptsBeforeCaptcha)
-					{
-						if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $captchaTimeout)
-						{
-							$enableReCaptcha = true;
-
-							if($user->loginAttempts >= $attemptsBeforeLockout)
-							{
-								if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $lockoutTimeout)
-								{
-									$messages['username'] = 'Wegens de hoeveelheid inlogpogingen hebben wij uw account geblokkeerd.
-															Uw account zal over tien minuten gedeblokkeerd worden.';
-								}
-							}
-						}
-						else
-						{
-							$user->loginAttempts = 0;
-						}
-					}
-
-					if($user->loginAttempts <= $attemptsBeforeLockout)
-					{
-						$this->userRepo->update($user);
-					}
-					Session::put('enableReCaptcha', $enableReCaptcha);
-
-					return Redirect::route('auth.login')->withErrors
-					([
-						 $messages
-					]);
 				}
+				$this->userRepo->update($user);
 			}
-			Flash::success('U bent succesvol ingelogd!');
 
-			return Redirect::route('home.index');
+			return Redirect::route('auth.login')->withErrors
+			([
+				 $messages
+			]);
 		}
 
 		/**
