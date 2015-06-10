@@ -111,31 +111,31 @@
 						$user->lastLoginAttempt = Carbon::now();
 					}
 				}
-			}
-			
-			if(Auth::viaRemember() || $this->auth->attempt($credentials, $request['remember']))
-			{
-				if($user->loginAttempts !== 0)
+
+				if(Auth::viaRemember() || $this->auth->attempt($credentials, $request['remember']))
 				{
-					$user->loginAttempts = 0;
-					$user->lastLoginAttempt = null;
+					if($user->loginAttempts !== 0)
+					{
+						$user->loginAttempts = 0;
+						$user->lastLoginAttempt = null;
+						$this->userRepo->update($user);
+					}
+					Session::forget('enableReCaptcha');
+					Flash::success('U bent succesvol ingelogd!');
+
+					return Redirect::route('home.index');
+				}
+
+				if(isset($user))
+				{
+					if($user->loginAttempts === 0)
+					{
+						// Set attempt count and timestamp.
+						$user->loginAttempts++;
+						$user->lastLoginAttempt = Carbon::now();
+					}
 					$this->userRepo->update($user);
 				}
-				Session::forget('enableReCaptcha');
-				Flash::success('U bent succesvol ingelogd!');
-
-				return Redirect::route('home.index');
-			}
-
-			if(isset($user))
-			{
-				if($user->loginAttempts === 0)
-				{
-					// Set attempt count and timestamp.
-					$user->loginAttempts++;
-					$user->lastLoginAttempt = Carbon::now();
-				}
-				$this->userRepo->update($user);
 			}
 
 			return Redirect::route('auth.login')->withErrors
