@@ -18,7 +18,7 @@
 		private $pageRepo;
 
 		/**
-		 * Create a new AutocompleteController instance.
+		 * Creates a new AutocompleteController instance.
 		 * 
 		 * @param  IPageRepository	$pageRepo
 		 *

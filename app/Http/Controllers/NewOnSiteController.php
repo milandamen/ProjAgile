@@ -13,7 +13,7 @@
 		private $newOnSiteRepo;
 
 		/**
-		 * Create a new NewOnSiteController instance.
+		 * Creates a new NewOnSiteController instance.
 		 *
 		 * @param INewOnSiteRepository $newOnSiteRepo
 		 *

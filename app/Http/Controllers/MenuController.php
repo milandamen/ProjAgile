@@ -26,7 +26,7 @@
 		private $styleRepo;
 
 		/**
-		 * Create a new MenuController instance.
+		 * Creates a new MenuController instance.
 		 *
 		 * @param IMenuRepository			$menuRepo
 		 * @param IStyleSettingRepository	$styleRepo

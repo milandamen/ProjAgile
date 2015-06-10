@@ -39,7 +39,7 @@
 		private $newOnSiteRepository;
 
 		/**
-		 * Create a new FooterController instance.
+		 * Creates a new FooterController instance.
 		 *
 		 * @param ICarouselRepository $carouselRepo
 		 *

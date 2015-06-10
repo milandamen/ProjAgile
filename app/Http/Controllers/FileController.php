@@ -13,7 +13,7 @@
 		private $responseFactory;
 
 		/**
-		 * Create a new controller instance.
+		 * Creates a new controller instance.
 		 *
 		 * @param  ResponseFactory $responseFactory
 		 *

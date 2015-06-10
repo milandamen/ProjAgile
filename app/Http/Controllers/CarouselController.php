@@ -11,7 +11,7 @@
 		private $carouselRepo;
 		
 		/**
-		 * Create a new CarouselController instance.
+		 * Creates a new CarouselController instance.
 		 *
 		 * @param ICarouselRepository $carouselRepo
 		 *
