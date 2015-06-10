@@ -329,6 +329,27 @@
 			}
 		}
 
+		public function contact(){
+
+			$page = $this->pagerepo->get(2);
+
+			return view('page.contact', compact('page'));
+		}
+
+		public function editContact(){
+
+			if (Auth::user()->hasPagePermission('2'))
+			{
+				$introduction = $this->pagerepo->get(2)->introduction;
+
+				return view('home.editIntroduction', compact('introduction'));
+			}
+			
+			return view('errors.403');
+		}
+
+
+
 		/* 
 		 * redirectHome will redirect if the page is the homepage.
 		 * The homepage has different edit functions and a different pageview.
@@ -345,6 +366,8 @@
 			
 			return false;
 		}
+
+
 
 
 		public function switchPublish($id)

@@ -6,6 +6,26 @@
 		'middleware' => 'admin'
 	]);
 
+
+	Route::get('pagina/contact',
+	[
+		'as' => 'page.contact',
+		'uses' => 'PageController@contact',
+	]);
+
+	Route::get('pagina/contact/wijzig',
+	[
+		'as' => 'page.contactedit',
+		'uses' => 'PageController@editContact',
+	]);
+
+	Route::post('pagina/contact/wijzig',
+	[
+		'as' => 'page.contactedit',
+		'uses' => 'PageController@editContact',
+	]);
+
+
 	Route::get('pagina/aanmaken',
 	[
 		'as' => 'page.create',
@@ -19,6 +39,7 @@
 		'uses' => 'PageController@store',
 		'middleware' => 'admin'
 	]);
+
 
 	Route::get('pagina/{id}',
 	[
@@ -54,3 +75,6 @@
 		'uses' => 'PageController@switchPublish',
 		'middleware' => 'admin'
 	]);
+
+
+
