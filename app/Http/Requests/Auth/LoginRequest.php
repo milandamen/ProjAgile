@@ -8,7 +8,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -18,7 +18,7 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{	
@@ -32,18 +32,18 @@
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function sanitize()
 		{
 			$input = $this->all();
 
-			$input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
-			$input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING);
+			$input['username']		= filter_var($input['username'], FILTER_SANITIZE_STRING);
+			$input['password']		= filter_var($input['password'], FILTER_SANITIZE_STRING);
 
 			if (isset($input['remember']))
 			{
-				$input['remember'] = filter_var($input['remember'], FILTER_SANITIZE_STRING);
+				$input['remember']	= filter_var($input['remember'], FILTER_SANITIZE_STRING);
 			}
 
 			$this->replace($input);

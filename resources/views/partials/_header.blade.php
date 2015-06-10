@@ -56,10 +56,10 @@
 						<i class="fa fa-search"></i>
 					</a>
 					<ul class="dropdown-menu" style="padding:12px;">
-						{!! Form::open(['route' => 'home.search', 'class' => 'navbar-form', 'role' => 'search']) !!}
+						{!! Form::open(['route' => 'search.index', 'class' => 'navbar-form', 'role' => 'search']) !!}
 							<div class="input-group">
 								<div class="col-md-12" style="padding:0">
-									{!! Form::text('query', null, ['placeholder' => 'Zoeken...', 'class' => 'form-control','style' => 'cols="20"']) !!}
+									{!! Form::text('query', old('query'), ['placeholder' => 'Zoeken...', 'class' => 'form-control','style' => 'cols="20"']) !!}
 								</div>
 								<div class="input-group-btn">
 									{!! Form::button('<i class="glyphicon glyphicon-search"></i>', ['type' => 'submit', 'class' => 'btn btn-default']) !!}

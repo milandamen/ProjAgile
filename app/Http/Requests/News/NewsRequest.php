@@ -8,7 +8,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -18,19 +18,19 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{
 			$rules = 
 			[
-				'title' => 'required',
-				'content' => 'required',
-				'hidden' => 'required',
-				'commentable' => 'required',
-				'publishStartDate' => 'required|date|before:publishEndDate',
-				'publishEndDate' => 'required|date',
-				'top' => 'required',
+				'title'				=> 'required',
+				'content'			=> 'required',
+				'hidden'			=> 'required',
+				'commentable'		=> 'required',
+				'publishStartDate'	=> 'required|date|before:publishEndDate',
+				'publishEndDate'	=> 'required|date',
+				'top'				=> 'required',
 			];
 
 			if ($this->request->has('districtSection'))
@@ -78,28 +78,27 @@
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function sanitize()
 		{
 			$input = $this->all();
 
-			$input['title'] = filter_var($input['title'], FILTER_SANITIZE_STRING);
-			$input['content'] = htmlspecialchars_decode($_POST['content']);
-			$input['hidden'] = filter_var($input['hidden'], FILTER_SANITIZE_STRING);
-			$input['commentable'] = filter_var($input['commentable'], FILTER_SANITIZE_STRING);
-			$input['publishStartDate'] = filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
-			$input['publishEndDate'] = filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
-			$input['top'] = filter_var($input['top'], FILTER_SANITIZE_STRING);
+			$input['title']				= filter_var($input['title'], FILTER_SANITIZE_STRING);
+			$input['content']			= htmlspecialchars_decode($_POST['content']);
+			$input['hidden']			= filter_var($input['hidden'], FILTER_SANITIZE_STRING);
+			$input['commentable']		= filter_var($input['commentable'], FILTER_SANITIZE_STRING);
+			$input['publishStartDate']	= filter_var($input['publishStartDate'], FILTER_SANITIZE_STRING);
+			$input['publishEndDate']	= filter_var($input['publishEndDate'], FILTER_SANITIZE_STRING);
+			$input['top']				= filter_var($input['top'], FILTER_SANITIZE_STRING);
 
 			foreach ($this->request->get('districtSection') as $key => $value)
 			{
 				$input['districtSection.' . $key] = parseSelectorField(filter_var($value, FILTER_SANITIZE_STRING));
 			}
-			
-			$input['hidden'] = parseCheckboxOrRadioButton($input['hidden']);
-			$input['commentable'] = parseCheckboxOrRadioButton($input['commentable']);
-			$input['top'] = parseCheckboxOrRadioButton($input['top']);
+			$input['hidden']			= parseCheckboxOrRadioButton($input['hidden']);
+			$input['commentable']		= parseCheckboxOrRadioButton($input['commentable']);
+			$input['top']				= parseCheckboxOrRadioButton($input['top']);
 			
 			$this->replace($input);
 

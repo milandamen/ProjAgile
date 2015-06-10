@@ -8,7 +8,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -18,7 +18,7 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{
@@ -33,7 +33,7 @@
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function sanitize()
 		{

@@ -82,6 +82,11 @@
 	include('BreadcrumbPartials/_postalBreadcrumbs.php');
 
 	/**
+	 * SearchController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_searchBreadcrumbs.php');
+
+	/**
 	 * SidebarController breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_sidebarBreadcrumbs.php');
