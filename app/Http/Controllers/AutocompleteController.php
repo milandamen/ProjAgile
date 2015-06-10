@@ -10,32 +10,52 @@
 
 	class AutocompleteController extends Controller
 	{
+		/**
+		 * The PageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
+		private $pageRepo;
 
-		public function __construct(IPageRepository $pageRepository)
+		/**
+		 * Create a new AutocompleteController instance.
+		 * 
+		 * @param  IPageRepository	$pageRepo
+		 *
+		 * @return void
+		 */
+		public function __construct(IPageRepository $pageRepo)
 		{
-			$this->pageRepository = $pageRepository;
+			$this->pageRepo = $pageRepo;
 		}
 
+		/**
+		 * Provide autocomplete results requested via an Ajax call.
+		 * 
+		 * @return JSON
+		 */
 		public function autocomplete()
 		{
-			//prevent direct access (check if ajax request)
+			// Prevent direct access (check if ajax request).
 			$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
 			strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-			if(!$isAjax) {
+
+			if(!$isAjax) 
+			{
 				$user_error = 'Access denied - not an AJAX request...';
 				trigger_error($user_error, E_USER_ERROR);
 			}
 
-			//get what user typed in autocomplete input
+			// Get what user typed in autocomplete input.
 			$term = trim(Input::get('term'));
 
 			$a_json = array();
 			$a_json_row = array();
 
-			// replace multiple spaces with one
+			// Replace multiple spaces with one.
 			$term = preg_replace('/\s+/', ' ', $term);
 
-			$items = $this->pageRepository->getAllLikeTerm($term);
+			$items = $this->pageRepo->getAllLikeTerm($term);
 
 			foreach($items as $item)
 			{
@@ -48,9 +68,14 @@
 			print $json;
 		}
 
+		/**
+		 * Provide autocomplete user results requested via an Ajax call.
+		 * 
+		 * @return JSON
+		 */
 		public function userAutocomplete()
 		{
-			//prevent direct access (check if ajax request)
+			// Prevent direct access (check if ajax request).
 			$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
 			strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
@@ -60,13 +85,13 @@
 				trigger_error($user_error, E_USER_ERROR);
 			}
 
-			//get what user typed in autocomplete input
+			// Get what the user typed in autocomplete input.
 			$term = trim(Input::get('term'));
 
 			$a_json = array();
 			$a_json_row = array();
 
-			// replace multiple spaces with one
+			// Replace multiple spaces with one.
 			$term = preg_replace('/\s+/', ' ', $term);
 
 			$items = User::where('username', 'LIKE', '%' . $term . '%')->get();

@@ -28,7 +28,7 @@
 		private $userRepo;
 
 		/**
-		 * Create a new AuthController instance.
+		 * Creates a new AuthController instance.
 		 * 
 		 * @param  Guard			$auth
 		 * @param  IUserRepository	$userRepo

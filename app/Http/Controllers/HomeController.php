@@ -15,30 +15,71 @@
 
 	class HomeController extends Controller 
 	{
+		/**
+		 * The ICarouselRepository implementation.
+		 * 
+		 * @var ICarouselRepository
+		 */
 		private $carouselRepo;
+
+		/**
+		 * The IHomeLayoutRepository implementation.
+		 * 
+		 * @var IHomeLayoutRepository
+		 */
 		private $homeLayoutRepo;
-		private $introRepo;
+
+		/**
+		 * The IIntroductionRepository implementation.
+		 * 
+		 * @var IIntroductionRepository
+		 */
+		private $introductionRepo;
+
+		/**
+		 * The INewOnSiteRepository implementation.
+		 * 
+		 * @var INewOnSiteRepository
+		 */
 		private $newOnSiteRepository;
+
+		/**
+		 * The INewsRepository implementation.
+		 * 
+		 * @var INewsRepository
+		 */
 		private $newsRepo;
+
+		/**
+		 * The IPageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
 		private $pageRepo;
+
+		/**
+		 * The ISidebarRepository implementation.
+		 * 
+		 * @var ISidebarRepository
+		 */
 		private $sidebarRepo;
 
 		/**
 		 * Creates a new HomeController instance.
 		 *
 		 * @param IHomeLayoutRepository 	$homeLayoutRepo
-		 * @param IIntroductionRepository   $introRepo
+		 * @param IIntroductionRepository   $introductionRepo
 		 * @param INewsRepository        	$newsRepo
 		 *
 		 * @return void
 		 */
-		public function __construct(ICarouselRepository $carouselRepo, IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, 
+		public function __construct(ICarouselRepository $carouselRepo, IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introductionRepo, 
 									INewOnSiteRepository $newOnSiteRepository, INewsRepository $newsRepo, IPageRepository $pageRepo,
 									ISidebarRepository $sidebarRepo)
 		{
 			$this->carouselRepo = $carouselRepo;
 			$this->homeLayoutRepo = $homeLayoutRepo;
-			$this->introRepo = $introRepo;
+			$this->introductionRepo = $introductionRepo;
 			$this->newOnSiteRepository = $newOnSiteRepository;
 			$this->newsRepo = $newsRepo;
 			$this->pageRepo = $pageRepo;
@@ -140,7 +181,7 @@
 				$intro->subtitle = $request->subtitle;
 				$intro->text = $request->content;
 
-				$this->introRepo->update($intro);
+				$this->introductionRepo->update($intro);
 
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
@@ -154,19 +195,13 @@
 			}
 			
 			return view('errrors.403');
-		}
+		} 
 		
 		/**
-		 * Show the results of the search query.
-		 *
-		 * @return Response
+		 * Returns the five most important news items.
+		 * 
+		 * @return Collection -> News
 		 */
-		public function search(Request $request) 
-		{
-			// TODO search results.
-			return view('errors.404');
-		}
-		
 		private function getNews()
 		{
 			$news = $this->newsRepo->getAll();

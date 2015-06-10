@@ -6,7 +6,16 @@
 	class FileController extends Controller
 	{
 		/**
+		 * The ResponseFactory implementation.
+		 * 
+		 * @var ResponseFactory
+		 */
+		private $responseFactory;
+
+		/**
 		 * Create a new controller instance.
+		 *
+		 * @param  ResponseFactory $responseFactory
 		 *
 		 * @return void
 		 */
@@ -14,8 +23,7 @@
 		{
 			$this->responseFactory = $responseFactory;
 		}
-		
-		// 
+
 		/**
 		 * For this function to work, enable "extension=php_fileinfo.dll" in php.ini.
 		 * 
@@ -25,7 +33,7 @@
 		 */
 		public function getDownload($fileName)
 		{
-			// Check if file exists in app/public/uploads folder
+			// Check if file exists in app/public/uploads folder.
 			$file_path = public_path() . '/uploads/' . $fileName;
 
 			if (file_exists($file_path))
@@ -33,10 +41,10 @@
 				// Send Download
 				return $this->responseFactory->download($file_path, $fileName, 
 				[
-					'Content-Length: '. filesize($file_path)
+					'Content-Length: ' . filesize($file_path)
 				]);
 			}
-			// If file does not exist, throw error
+			// If file does not exist, throw error.
 			exit('Bestand niet gevonden');
 		}
 	}

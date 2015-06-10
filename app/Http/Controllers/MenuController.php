@@ -1,25 +1,49 @@
 <?php
 	namespace App\Http\Controllers;
 
+	use App\Http\Requests\Menu\MenuRequest;
 	use App\Models\Menu;
 	use App\Repositories\RepositoryInterfaces\IMenuRepository;
 	use App\Repositories\RepositoryInterfaces\IStyleSettingRepository;
+	use Auth;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Redirect;
-	use App\Http\Requests\Menu\MenuRequest;
-	use Auth;
 
 	class MenuController extends Controller 
 	{
+		/**
+		 * The IMenuRepository implementation.
+		 * 
+		 * @var IMenuRepository
+		 */
 		private $menuRepo;
+
+		/**
+		 * The IStyleSettingRepository implementation.
+		 * 
+		 * @var IStyleSettingRepository
+		 */
 		private $styleRepo;
 
+		/**
+		 * Create a new MenuController instance.
+		 *
+		 * @param IMenuRepository			$menuRepo
+		 * @param IStyleSettingRepository	$styleRepo
+		 *
+		 * @return void
+		 */
 		public function __construct(IMenuRepository $menuRepo, IStyleSettingRepository $styleRepo)
 		{
 			$this->menuRepo = $menuRepo;
 			$this->styleRepo = $styleRepo;
 		}
 
+		/**
+		 * Show the menu overview page.
+		 * 
+		 * @return Response
+		 */
 		public function index()
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
@@ -27,8 +51,9 @@
 				$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
 				$menuColor = $this->styleRepo->get('defaultMenuColor');
 
-				return view('menu.index', compact('allMenuItemsEdit','menuColor'));
+				return view('menu.index', compact('allMenuItemsEdit', 'menuColor'));
 			}
+
 			return view('errors.403');
 		}
 
@@ -45,6 +70,7 @@
 
 				return view('menu.create', compact('menuItem'));
 			}
+
 			return view('errors.403');
 		}
 
@@ -59,15 +85,16 @@
 			{
 				$this->menuRepo->create($request->all());
 
-				return Redirect::route ('menu.index');
+				return Redirect::route('menu.index');
 			}
+
 			return view('errors.403');
 		}
 
 		/**
 		 * Show the form for editing the specified resource.
 		 *
-		 * @param  int  $id
+		 * @param  int $id
 		 * 
 		 * @return Response
 		 */
@@ -79,13 +106,14 @@
 
 				return view('menu.edit', compact('menuItem'));
 			}
+
 			return view('errors.403');
 		}
 
 		/**
 		 * Update the specified resource in storage.
 		 *
-		 * @param  int  $id
+		 * @param  int $id
 		 * 
 		 * @return Response
 		 */
@@ -101,9 +129,17 @@
 
 				return Redirect::route('menu.index');
 			}
+
 			return view('errors.403');
 		}
 
+		/**
+		 * Post and handle the reordening request.
+		 * 
+		 * @param  Request $request
+		 * 
+		 * @return Response
+		 */
 		public function updateMenuOrder(Request $request)
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
@@ -112,11 +148,15 @@
 				$array = [];
 				$allMenuItems = $this->menuRepo->getAll();
 
-				foreach ($request->all() as $key => $requestItem) //loop trough the names of the textfields
+				// Loop trough the names of the textfields.
+				foreach ($request->all() as $key => $requestItem) 
 				{
-					if (!is_string($key)) {
-						foreach ($allMenuItems as $oldIndex => $oldItem) {
-							if ($oldItem->menuId == $key) {
+					if (!is_string($key)) 
+					{
+						foreach ($allMenuItems as $oldIndex => $oldItem) 
+						{
+							if ($oldItem->menuId == $key) 
+							{
 								unset($allMenuItems[$oldIndex]);
 
 								break;
@@ -124,41 +164,51 @@
 						}
 						$requestItemPart = explode(".", $requestItem);
 
-						if ($requestItemPart[0] == 0) {
+						if ($requestItemPart[0] == 0) 
+						{
 							$array = [];
 							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], NULL);
-						} else {
-							if (isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]])) {
+						} 
+						else 
+						{
+							if (isset($array[$requestItemPart[0]]) || empty($array[$requestItemPart[0]])) 
+							{
 								$array = array_add($array, $requestItemPart[0], $parentId);
 							}
 							$this->menuRepo->updateMenuItemOrder($key, $requestItemPart[1], $array[$requestItemPart[0]]);
 						}
 						$parentId = $key;
-					}elseif ($key == 'menucolor') {
+					}
+					elseif ($key == 'menucolor') 
+					{
 						$model = $this->styleRepo->get('defaultMenuColor');
 						$model->color = $requestItem;
 						$this->styleRepo->update($model);
 					}
 				}
 
-				foreach ($allMenuItems as $oldItem) {
+				foreach ($allMenuItems as $oldItem) 
+				{
 					$this->menuRepo->destroy($oldItem->menuId);
 				}
 
 				return Redirect::route('menu.index');
 			}
+
 			return view('errors.403');
 		}
 
+		/**
+		 * Toggle the publish state of a menu item.
+		 * 
+		 * @param  int $id
+		 * 
+		 * @return void
+		 */
 		public function switchPublish($id)
 		{
 			$menuItem = $this->menuRepo->get($id);
-			if($menuItem->publish == 0)
-			{
-				$menuItem->publish = 1;
-			}else{
-				$menuItem->publish = 0;
-			}
+			$menuItem->publish ? $menuItem->publish = false : $menuItem->publish = true;
 			$this->menuRepo->update($menuItem);
 		}
 	}
