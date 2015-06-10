@@ -79,12 +79,12 @@
 				$attemptsBeforeLockout = 5;
 
 				// Set the configurable timeout and lockout settings (in minutes).
-				$captchaTimeout = 1;
+				$captchaTimeout = 10;
 				$lockoutTimeout = 10;
 
-				// Set attempt count and timestamp.
+				// Increase attempt count.
 				$user->loginAttempts++;
-				$user->lastLoginAttempt = Carbon::now();
+				$user->lastLoginAttempt = Carbon::parse($user->lastLoginAttempt);
 
 				if($user->loginAttempts >= $attemptsBeforeReCaptcha)
 				{
@@ -108,12 +108,12 @@
 					else
 					{
 						$user->loginAttempts = 1;
-						$user->lastLoginAttempt = Carbon::now();
 					}
 				}
 
 				if(Auth::viaRemember() || $this->auth->attempt($credentials, $request['remember']))
 				{
+					// Save ourselves one query if the user didn't make a mistake.
 					if($user->loginAttempts !== 0)
 					{
 						$user->loginAttempts = 0;
@@ -125,17 +125,8 @@
 
 					return Redirect::route('home.index');
 				}
-
-				if(isset($user))
-				{
-					if($user->loginAttempts === 0)
-					{
-						// Set attempt count and timestamp.
-						$user->loginAttempts++;
-						$user->lastLoginAttempt = Carbon::now();
-					}
-					$this->userRepo->update($user);
-				}
+				$user->lastLoginAttempt = Carbon::now();
+				$this->userRepo->update($user);
 			}
 
 			return Redirect::route('auth.login')->withErrors
