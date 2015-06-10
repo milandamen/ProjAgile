@@ -37,7 +37,7 @@
 		{
 			$input = $this->all();
 
-			$input['query'] = filter_var($input['query'], FILTER_SANITIZE_STRING);
+			$input['query'] = filter_var(isset($input['query']) ? $input['query'] : '', FILTER_SANITIZE_STRING);
 
 			$this->replace($input);
 
