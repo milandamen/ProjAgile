@@ -67,6 +67,11 @@
 
 			$user = $this->userRepo->getByUsername($credentials['username']);
 
+			$messages = 
+			[
+				'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.'
+			];
+
 			if(isset($user))
 			{
 				// Set configurable security settings.
@@ -80,11 +85,6 @@
 				// Set attempt count and timestamp.
 				$user->loginAttempts++;
 				$user->lastLoginAttempt = Carbon::now();
-
-				$messages = 
-				[
-					'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.'
-				];
 
 				if($user->loginAttempts >= $attemptsBeforeReCaptcha)
 				{
@@ -121,7 +121,6 @@
 					$user->lastLoginAttempt = null;
 					$this->userRepo->update($user);
 				}
-
 				Session::forget('enableReCaptcha');
 				Flash::success('U bent succesvol ingelogd!');
 
