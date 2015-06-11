@@ -1,5 +1,5 @@
 <?php
-	Route::post('zoeken/{query}',
+	Route::get('zoeken/{query?}',
 	[
 		'as'			=> 'search.index',
 		'uses'			=> 'SearchController@index'
