@@ -12,9 +12,13 @@
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
+	use App\Http\Requests\Page\ContactRequest;
+	use App\Http\Requests\Home\IntroductionRequest;
 	use Flash;
 	use Auth;
 	use Redirect;
+	use Mail;
+
 	use Request;
 	use View;
 
@@ -336,13 +340,77 @@
 			return view('page.contact', compact('page'));
 		}
 
+		public function sendContact(ContactRequest $request){
+
+			$name = $request->name;
+			$email = $request->email;
+			$text = $request->message;
+			$subject = $request->subject;
+
+			// verification email for sender
+			Mail::send('emails.contact.verify', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email)
+			{
+				$message->to
+				(	
+					$email, 
+					$name
+				)->subject('Bevestiging contact email');
+
+			});
+
+			$email = $request->email;
+
+			// email to bunders
+			Mail::send('emails.contact.contactform', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email, $subject)
+			{
+				$message->from($email);
+				$message->to
+				(	
+					'bunders@secrecy.nl', 
+					'Contact'
+				)->subject($subject);
+			});
+			Flash::success('Uw mail is succesvol verzonden.')->important();
+
+
+			return Redirect::route('page.contact');
+		}
+
 		public function editContact(){
 
 			if (Auth::user()->hasPagePermission('2'))
 			{
 				$introduction = $this->pagerepo->get(2)->introduction;
+				$page = $this->pagerepo->get(2);
+				return view('page.editcontact', compact('page','introduction'));
+			}
+			
+			return view('errors.403');
+		}
 
-				return view('home.editIntroduction', compact('introduction'));
+		public function editContactSave(IntroductionRequest $request){
+
+			if (Auth::user()->hasPagePermission('2'))
+			{
+				
+				// update introduction
+				$introduction = $this->introrepo->get('2');
+				$introduction->title = $request->title;
+				$introduction->subtitle = $request->subtitle;
+				$introduction->text = $request->content;
+
+				$this->introrepo->update($introduction);
+				
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if($newOnSite === true)
+				{
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepository->create($attributes);
+				}
+
+				return Redirect::route('page.contact');
 			}
 			
 			return view('errors.403');

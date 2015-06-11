@@ -13,16 +13,24 @@
 		'uses' => 'PageController@contact',
 	]);
 
+	Route::post('pagina/contact',
+	[
+		'as' => 'page.sendcontact',
+		'uses' => 'PageController@sendContact',
+	]);
+
 	Route::get('pagina/contact/wijzig',
 	[
 		'as' => 'page.contactedit',
 		'uses' => 'PageController@editContact',
+		'middleware'	=> 'admin'
 	]);
 
 	Route::post('pagina/contact/wijzig',
 	[
 		'as' => 'page.contactedit',
-		'uses' => 'PageController@editContact',
+		'uses' => 'PageController@editContactSave',
+		'middleware'	=> 'admin'
 	]);
 
 
