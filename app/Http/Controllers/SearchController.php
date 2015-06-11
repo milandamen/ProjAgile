@@ -46,7 +46,7 @@
 		 */
 		public function index(SearchRequest $request)
 		{
-			$query = $request->get('query');
+			$query = $request->get('q');
 
 			return view('search.index', compact('query'));
 		}
