@@ -109,6 +109,40 @@
 
 							$lci++;
 						}
+						else if($_POST['sort'][$i] === 'page')
+						{
+
+							$pageId = $_POST['artikel'][$i];
+							$newsId = null;
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
+
+							if(!isset($description) || empty($description))
+							{
+								$description = 'Nog geen beschrijving';
+							}
+
+							//title via page -> relatie
+							$title = null;
+
+							$start = null;
+							$end = null;
+
+							$publishStartDate = new \DateTime($start);
+							$publishStartDate->format('Y-m-d');
+							$publishEndDate = new \DateTime($end);
+							$publishEndDate->format('Y-m-d');
+
+							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+							foreach ($oldItems as $oI)
+							{
+								if ($oI->pageId == $pageId)
+								{
+									$oldItem = $oI;
+									break;
+								}
+							}
+						}
 
 						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')
 						{
