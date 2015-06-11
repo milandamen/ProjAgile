@@ -5,9 +5,11 @@
 	use App\Http\Requests\Auth\LoginRequest;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use Auth;
+	use Carbon\Carbon;
 	use Flash;
 	use Illuminate\Contracts\Auth\Guard;
 	use Redirect;
+	use Session;
 
 	class AuthController extends Controller
 	{
@@ -26,7 +28,7 @@
 		private $userRepo;
 
 		/**
-		 * Create a new AuthController instance.
+		 * Creates a new AuthController instance.
 		 * 
 		 * @param  Guard			$auth
 		 * @param  IUserRepository	$userRepo
@@ -63,16 +65,74 @@
 			// Set additional credentials requirements.
 			$credentials['active'] = true;
 
-			if (!$this->auth->attempt($credentials, $request['remember']))
-			{
-				return Redirect::route('auth.login')->withErrors
-				([
-					'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.',
-				]);
-			}
-			Flash::success('U bent succesvol ingelogd!');
+			$user = $this->userRepo->getByUsername($credentials['username']);
 
-			return Redirect::route('home.index');
+			$messages = 
+			[
+				'username' => 'De ingevoerde gebruikersnaam met wachtwoord combinatie klopt helaas niet. Probeer het alstublieft opnieuw.'
+			];
+
+			if(isset($user))
+			{
+				// Set configurable security settings.
+				$attemptsBeforeReCaptcha = 1;
+				$attemptsBeforeLockout = 5;
+
+				// Set the configurable timeout and lockout settings (in minutes).
+				$captchaTimeout = 10;
+				$lockoutTimeout = 10;
+
+				// Increase attempt count.
+				$user->loginAttempts++;
+				$user->lastLoginAttempt = Carbon::parse($user->lastLoginAttempt);
+
+				if($user->loginAttempts >= $attemptsBeforeReCaptcha)
+				{
+					if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $captchaTimeout)
+					{
+						if($user->loginAttempts >= $attemptsBeforeLockout)
+						{
+							if(Carbon::now()->diffInMinutes($user->lastLoginAttempt) < $lockoutTimeout)
+							{
+								$messages['username'] = 'Wegens de hoeveelheid inlogpogingen hebben wij uw account geblokkeerd.
+														Uw account zal over tien minuten gedeblokkeerd worden.';
+
+								return Redirect::route('auth.login')->withErrors
+								([
+									 $messages
+								]);
+							}
+						}
+						Session::put('enableReCaptcha', true);
+					}
+					else
+					{
+						$user->loginAttempts = 1;
+					}
+				}
+
+				if(Auth::viaRemember() || $this->auth->attempt($credentials, $request['remember']))
+				{
+					// Save ourselves one query if the user didn't make a mistake.
+					if($user->loginAttempts !== 0)
+					{
+						$user->loginAttempts = 0;
+						$user->lastLoginAttempt = null;
+						$this->userRepo->update($user);
+					}
+					Session::forget('enableReCaptcha');
+					Flash::success('U bent succesvol ingelogd!');
+
+					return Redirect::route('home.index');
+				}
+				$user->lastLoginAttempt = Carbon::now();
+				$this->userRepo->update($user);
+			}
+
+			return Redirect::route('auth.login')->withErrors
+			([
+				 $messages
+			]);
 		}
 
 		/**
@@ -82,7 +142,7 @@
 		 */
 		public function getLogout()
 		{
-			if (Auth::check())
+			if(Auth::check())
 			{
 				$this->auth->logout();
 

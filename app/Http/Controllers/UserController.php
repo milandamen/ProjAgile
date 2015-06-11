@@ -23,17 +23,64 @@
 		const CONTENT_GROUP_ID 	= 2;
 		const RESIDENT_GROUP_ID = 3;
 
+		/**
+		 * The IAddressRepository implementation.
+		 * 
+		 * @var IAddressRepository
+		 */
 		private $addressRepo;
+
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
 		private $districtSectionRepo;
+
+		/**
+		 * The IHouseNumberRepository implementation.
+		 * 
+		 * @var IHouseNumberRepository
+		 */
 		private $houseNumberRepo;
+
+		/**
+		 * The IPageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
 		private $pageRepo;
+
+		/**
+		 * The IPermissionRepository implementation.
+		 * 
+		 * @var IPermissionRepository
+		 */
 		private $permissionRepo;
+
+		/**
+		 * The IPostalRepository implementation.
+		 * 
+		 * @var IPostalRepository
+		 */
 		private $postalRepo;
+
+		/**
+		 * The IUserGroupRepository implementation.
+		 * 
+		 * @var IUserGroupRepository
+		 */
 		private $userGroupRepo;
+
+		/**
+		 * The IUserRepository implementation.
+		 * 
+		 * @var IUserRepository
+		 */
 		private $userRepo;
 		
 		/**
-		* Create a new UserController instance.
+		* Creates a new UserController instance.
 		*
 		* @param  IAddressRepository 			$addressRepo
 		* @param  IDistrictSectionRepository 	$districtSectionRepo
@@ -188,7 +235,6 @@
 		 */
 		public function update(UserRequest $request, $id = null)
 		{
-			dd(PermissionsController::PERMISSION_USERS, Auth::user()->permissions());
 			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
 				$user = ($id === null ? Auth::user() : $this->userRepo->get($id));

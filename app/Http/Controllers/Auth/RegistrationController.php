@@ -27,7 +27,7 @@
 		private $userRepo;
 
 		/**
-		 * Create a new RegistrationController instance.
+		 * Creates a new RegistrationController instance.
 		 * 
 		 * @param  Guard			$auth
 		 * @param  IUserRepository	$userRepo
@@ -90,7 +90,7 @@
 		}
 
 		/**
-		 * This action confirms the user's e-mailaddress via the provided confirmation token.
+		 * Confirm the user's e-mailaddress via the provided confirmation token.
 		 * 
 		 * @param  string $confirmation_Token
 		 * 

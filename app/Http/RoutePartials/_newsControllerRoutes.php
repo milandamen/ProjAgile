@@ -58,16 +58,9 @@
 		'middleware'	=> 'admin'
 	]);
 
-	Route::get('nieuws/{id}/hide',
+	Route::get('nieuws/{id}/toggleZichtbaarheid',
 	[
-		'as'			=> 'news.hide',
-		'uses'			=> 'NewsController@hide',
-		'middleware'	=> 'admin'
-	]);
-
-	Route::get('nieuws/{id}/unhide',
-	[
-		'as'			=> 'news.unhide',
-		'uses'			=> 'NewsController@unhide',
+		'as'			=> 'news.toggleHide',
+		'uses'			=> 'NewsController@toggleHide',
 		'middleware'	=> 'admin'
 	]);

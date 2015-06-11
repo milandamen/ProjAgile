@@ -21,7 +21,7 @@
 		private $userRepo;
 
 		/**
-		 * Create a new password controller instance.
+		 * Creates a new password controller instance.
 		 *
 		 * @param  Guard  			$auth
 		 * @param  PasswordBroker  	$passwords
@@ -45,6 +45,13 @@
 			return view('auth.reminder');
 		}
 
+		/**
+		 * Post and handle the reminder request.
+		 * 
+		 * @param  ReminderRequest $request
+		 * 
+		 * @return Response
+		 */
 		public function request(ReminderRequest $request)
 		{
 			$credentials = $request->only('email');
@@ -72,6 +79,13 @@
 			return view('auth.reset', compact('token'));
 		}
 
+		/**
+		 * Post and handle the reset request.
+		 * 
+		 * @param  ResetRequest $request
+		 * 
+		 * @return Response
+		 */
 		public function update(ResetRequest $request)
 		{
 			$credentials = $request->only('email', 'password', 'password_confirmation', 'token');
@@ -88,6 +102,7 @@
 				case Password::INVALID_TOKEN:
 				case Password::INVALID_USER:
 					return Redirect::back()->withErrors([Lang::get($response)]);
+					
 				case Password::PASSWORD_RESET:
 					Flash::success('Uw wachtwoord is succesvol gereset.')->important();
 

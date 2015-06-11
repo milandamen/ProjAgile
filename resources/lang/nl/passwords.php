@@ -12,7 +12,7 @@
 		|
 		*/
 		'password'	=> 'Het wachtwoord moet op minstens uit acht karakters bestaan.',
-		'user'		=> 'Wij konden geen gebruiker vinden met het aangegeven emailadres.',
+		'user'		=> 'Wij konden geen gebruiker vinden met het aangegeven e-mailadres.',
 		'token'		=> 'Dit wachtwoord reset token is ongeldig.',
 		'sent'		=> 'Wij hebben uw wachtwoord reset link verstuurd!',
 		'reset'		=> 'Uw wachtwoord is gereset!',
