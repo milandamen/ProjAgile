@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-	De Bunders - {{ $query ? : '' }}
+	De Bunders - {{ $query }}
 @stop
 
 @section('description')
@@ -11,13 +11,11 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			{!! Breadcrumbs::render('search.index', $query ? : '') !!}
+			{!! Breadcrumbs::render('search.index', $query) !!}
 		</div>
 		<div class="row">
-			@if(isset($categories))
-				@include('search.partials._category', ['title' => 'Nieuws', 'categories' => $news])
-				@include('search.partials._category', ['title' => 'Paginas', 'categories' => $pages])
-			@endif
+			@include('search.partials._category', ['title' => 'Nieuws', 'categories' => $news])
+			@include('search.partials._category', ['title' => 'Paginas, 'categories' => $pages])
 		</div>
 	</div>
 @stop
