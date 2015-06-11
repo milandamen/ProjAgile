@@ -199,7 +199,7 @@
 	<script>
 		// Sets the URI for the Ajax request for searching an article by title for use in the carouselUpdate.js script.
 		var getArticlesByTitleURL = "{!! route('news.getArticlesByTitle', '') !!}";
-
+		// Sets the URI for the Ajax request for searching a page by title for use in the carouselUpdate.js script.
 		var getPagesByTitleURL = "{!! route('page.getPagesByTitle', '') !!}";
 	</script>
 @stop

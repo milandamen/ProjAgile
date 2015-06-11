@@ -46,6 +46,66 @@ function searchArticle()
 }
 
 /**
+ Move the page from the third table to the 1st table.
+ */
+function addPage(button)
+{
+	var row = button.parentNode.parentNode;
+	var id = row.children[0].textContent;
+	var title = row.children[1].textContent;
+	var startDate = row.children[2].textContent;
+	var endDate = row.children[3].textContent;
+
+	var articlelist = document.getElementById('articlelist');
+
+	var resulthtml = articlelist.innerHTML;
+	resulthtml +=
+		'<tr>' +
+		'<td> 0 </td>' +
+		'<input type="hidden" name="sort[0]" value="page" />' +
+		'<td>Pagina</td>' +
+		'<td>' +
+		'<input type="text" name="page[]" value="' + id + '" class="hiddenInput" />' +
+		'<span>' + id + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + title + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + startDate + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + endDate + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<textarea name="beschrijving[]"></textarea>' +
+		'</td>' +
+		'<td>' +
+		'<input type="file" name="file[0]" />' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
+		'<i class="fa fa-arrow-up"></i>' +
+		'</a>' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
+		'<i class="fa fa-arrow-down"></i>' +
+		'</a>' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
+		'<i class="fa fa-times"></i>' +
+		'</a>' +
+		'</td>' +
+		'</tr>';
+
+	articlelist.innerHTML = resulthtml;
+
+	calculateIndexes();
+}
+
+/**
  Grab list of pages using the input field as search term, then display articles in third table.
  */
 function searchPage()
@@ -74,7 +134,7 @@ function searchPage()
 				item.page.publishEndDate +
 				'</td>' +
 				'<td>' +
-				'<a class="btn btn-success btn-xs" onclick="addArticle(this)">' +
+				'<a class="btn btn-success btn-xs" onclick="addPage(this)">' +
 				'<i class="fa fa-plus"></i>' +
 				'</a>' +
 				'</td>' +
@@ -156,6 +216,7 @@ function addArticle(button)
 	resulthtml +=
 		'<tr>' +
 			'<td> 0 </td>' +
+			'<input type="hidden" name="sort[0]" value="news" />' +
 			'<td>Nieuws</td>' +
 			'<td>' +
 				'<input type="text" name="artikel[0]" value="' + id + '" class="hiddenInput" />' +
