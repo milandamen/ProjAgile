@@ -15,8 +15,8 @@
 		</div>
 
 		<div class="row">
-						<div class="col-md-12">
-					@include('flash::message')
+			<div class="col-md-12">
+				@include('flash::message')
 			</div>
 			<div class="col-md-12">
 				<h2 class="page-header">
@@ -64,7 +64,6 @@
 			<div class="col-md-8">
 				{!! Form::submit('Verstuur', ['class' => 'btn btn-primary']) !!}
 			</div>
-		{{-- End layout script --}}
 		</div>
 	</div>
 @stop

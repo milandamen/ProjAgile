@@ -358,8 +358,6 @@
 
 			});
 
-			$email = $request->email;
-
 			// email to bunders
 			Mail::send('emails.contact.contactform', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email, $subject)
 			{
