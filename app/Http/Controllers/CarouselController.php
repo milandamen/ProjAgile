@@ -3,6 +3,7 @@
 	
 	use App\Models\Carousel;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use Illuminate\Support\Facades\Redirect;
 	use Auth;
 	
@@ -17,9 +18,10 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(ICarouselRepository $carouselRepo)
+		public function __construct(ICarouselRepository $carouselRepo, IPageRepository $pageRepo)
 		{
 			$this->carouselRepo = $carouselRepo;
+			$this->pageRepo= $pageRepo;
 		}
 		
 		public function edit()
@@ -111,7 +113,6 @@
 						}
 						else if($_POST['sort'][$i] === 'page')
 						{
-
 							$pageId = $_POST['artikel'][$i];
 							$newsId = null;
 							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
@@ -121,18 +122,23 @@
 								$description = 'Nog geen beschrijving';
 							}
 
+							$page = $this->pageRepo->get($pageId);
+
 							//title via page -> relatie
-							$title = null;
+							$title = $page->introduction->title;
 
-							$start = null;
-							$end = null;
+							$publishStartDate = $page->publishDate;
+							$publishEndDate = $page->publishEndDate;
 
-							$publishStartDate = new \DateTime($start);
-							$publishStartDate->format('Y-m-d');
-							$publishEndDate = new \DateTime($end);
-							$publishEndDate->format('Y-m-d');
+//							$publishStartDate = new \DateTime($start);
+//							$publishStartDate->format('Y-m-d');
+//							$publishEndDate = new \DateTime($end);
+//							$publishEndDate->format('Y-m-d');
 
 							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+
+							$oldItem = null;
 
 							foreach ($oldItems as $oI)
 							{
@@ -159,10 +165,10 @@
 					$oldItem->delete();
 				}
 
-				return Redirect::route('home.index');
+				//return Redirect::route('home.index');
 			}
 
-			return view('errors.403');
+			//return view('errors.403');
 		}
 		
 		private function saveImage($item, $count, $oldItem) 

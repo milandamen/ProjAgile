@@ -62,8 +62,8 @@ function addPage(button)
 	resulthtml +=
 		'<tr>' +
 		'<td> 0 </td>' +
-		'<input type="hidden" name="sort[0]" value="page" />' +
-		'<td>Pagina</td>' +
+		'<td><input type="hidden" name="sort[0]" value="page" />' +
+		'Pagina</td>' +
 		'<td>' +
 		'<input type="text" name="page[]" value="' + id + '" class="hiddenInput" />' +
 		'<span>' + id + '</span>' +
