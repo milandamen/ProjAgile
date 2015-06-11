@@ -78,8 +78,20 @@
 			return PagePanel::where('page_id', '=', $pageId);
 		}
 
-		public function deleteAllFromPage($pageId){
+		public function deleteAllFromPage($pageId)
+		{
 			PagePanel::where('page_id', '=', $pageId)->delete();
-		
+		}
+
+		/**
+		 * Returns a PagePanel Collection which contain the specified parameters.
+		 *
+		 * @param  string $query
+		 * 
+		 * @return Collection -> PagePanel
+		 */
+		public function search($query)
+		{
+			return PagePanel::whereRaw('MATCH(title, text) AGAINST(?)', [$query])->with('pages')->get();
 		}
 	}

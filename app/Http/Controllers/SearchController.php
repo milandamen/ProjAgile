@@ -4,11 +4,20 @@
 	use App\Http\Controllers\Controller;
 	use App\Http\Requests;
 	use App\Http\Requests\Search\SearchRequest;
+	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
-	use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
+	use App\Repositories\RepositoryInterfaces\IUserRepository;
 
 	class SearchController extends Controller 
 	{
+		/**
+		 * The IIntroductionRepository implementation.
+		 * 
+		 * @var IIntroductionRepository
+		 */
+		private $introductionRepo;
+
 		/**
 		 * The INewsRepository implementation.
 		 * 
@@ -17,11 +26,11 @@
 		private $newsRepo;
 
 		/**
-		 * The IPageRepository implementation.
+		 * The IPagePanelRepository implementation.
 		 * 
-		 * @var IPageRepository
+		 * @var IPagePanelRepository
 		 */
-		private $pageRepo;
+		private $pagePanelRepo;
 
 		/**
 		 * Creates a new SearchController instance.
@@ -31,10 +40,11 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(INewsRepository $newsRepo, IPageRepository $pageRepo)
+		public function __construct(IIntroductionRepository $introductionRepo, INewsRepository $newsRepo, IPagePanelRepository $pagePanelRepo)
 		{
+			$this->introductionRepo = $introductionRepo;
 			$this->newsRepo = $newsRepo;
-			$this->pageRepo = $pageRepo;
+			$this->pagePanelRepo = $pagePanelRepo;
 		}
 
 		/**
@@ -47,6 +57,14 @@
 		public function index(SearchRequest $request)
 		{
 			$query = $request->get('q');
+
+			$news = $this->newsRepo->search($query);
+			$introductions = $this->introductionRepo->search($query);
+			$pagePanels = $this->pagePanelRepo->search($query);
+
+			$data = compact('news', 'introductions', 'pagePanels');
+
+			dd($data);
 
 			return view('search.index', compact('query'));
 		}

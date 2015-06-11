@@ -5,4 +5,5 @@
 	{
 		public function getPagePanels($pageId);
 		public function deleteAllFromPage($pageId);
+		public function search($query);
 	}
