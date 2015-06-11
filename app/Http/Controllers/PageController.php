@@ -11,9 +11,16 @@
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPanelRepository;
+	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+	use App\Http\Requests;
+	use App\Http\Requests\Page\PageRequest;
+	use App\Http\Requests\Page\ContactRequest;
+	use App\Http\Requests\Home\IntroductionRequest;
 	use Auth;
 	use Flash;
 	use Redirect;
+	use Mail;
+
 	use Request;
 	use View;
 
@@ -389,6 +396,112 @@
 		}
 
 		/**
+		 * Method to show the contact page. It is a different page, with different features.
+		 *
+		 * @param void 
+		 *
+		 * @return view
+		 */
+
+		public function contact(){
+
+			$page = $this->pagerepo->get(2);
+
+			return view('page.contact', compact('page'));
+		}
+
+		public function sendContact(ContactRequest $request){
+
+			$name = $request->name;
+			$email = $request->email;
+			$text = $request->message;
+			$subject = $request->subject;
+
+			// verification email for sender
+			Mail::send('emails.contact.verify', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email)
+			{
+				$message->to
+				(	
+					$email, 
+					$name
+				)->subject('Bevestiging contact email');
+
+			});
+
+			// email to bunders
+			Mail::send('emails.contact.contactform', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email, $subject)
+			{
+				$message->from($email);
+				$message->to
+				(	
+					'bunders@secrecy.nl', 
+					'Contact'
+				)->subject($subject);
+			});
+			Flash::success('Uw mail is succesvol verzonden.')->important();
+
+
+			return Redirect::route('page.contact');
+		}
+
+		/**
+		 * The method to edit the contact page
+		 *
+		 * @param void 
+		 *
+		 * @return boolean
+		 */
+
+		public function editContact(){
+
+			if (Auth::user()->hasPagePermission('2'))
+			{
+				$introduction = $this->pagerepo->get(2)->introduction;
+				$page = $this->pagerepo->get(2);
+				return view('page.editcontact', compact('page','introduction'));
+			}
+			
+			return view('errors.403');
+		}
+
+		/**
+		 * The method to save the edited contact page
+		 *
+		 * @param IntroductionRequest 
+		 *
+		 * @return redirect to view
+		 */
+
+		public function editContactSave(IntroductionRequest $request){
+
+			if (Auth::user()->hasPagePermission('2'))
+			{
+				
+				// update introduction
+				$introduction = $this->introrepo->get('2');
+				$introduction->title = $request->title;
+				$introduction->subtitle = $request->subtitle;
+				$introduction->text = $request->content;
+
+				$this->introrepo->update($introduction);
+				
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if($newOnSite === true)
+				{
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepository->create($attributes);
+				}
+
+				return Redirect::route('page.contact');
+			}
+			
+			return view('errors.403');
+		}
+
+
+		/**
 		 * RedirectHome will redirect the user if the page is the homepage.
 		 * The homepage has different edit functions and a different pageview.
 		 *
@@ -415,6 +528,7 @@
 		 * 
 		 * @return void
 		 */
+
 		public function switchPublish($id)
 		{
 			$page = $this->pageRepo->get($id);
