@@ -59,7 +59,7 @@
 						{!! Form::open(['route' => 'search.index', 'method' => 'GET', 'class' => 'navbar-form', 'role' => 'search']) !!}
 							<div class="input-group">
 								<div class="col-md-12" style="padding:0">
-									{!! Form::text('q', old('q'), ['placeholder' => 'Zoeken...', 'class' => 'form-control','style' => 'cols="20"']) !!}
+									{!! Form::text('q', isset($query) ? $query : old('q'), ['placeholder' => 'Zoeken...', 'class' => 'form-control','style' => 'cols="20"']) !!}
 								</div>
 								<div class="input-group-btn">
 									{!! Form::button('<i class="glyphicon glyphicon-search"></i>', ['type' => 'submit', 'class' => 'btn btn-default']) !!}

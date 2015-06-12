@@ -140,11 +140,11 @@
 		}
 
 		/**
-		 * Returns a News Collection which contain the specified parameters.
+		 * Returns a Page Collection which contain the specified parameters.
 		 *
 		 * @param  string $query
 		 * 
-		 * @return Collection -> News
+		 * @return Collection -> Page
 		 */
 		public function search($query)
 		{
@@ -155,13 +155,13 @@
 			{
 				if(Auth::user()->usergroup->name === "Administrator")
 				{
-					$pages = Page::orWhereHas('introduction', function($query) use($query)
+					$pages = Page::orWhereHas('introduction', function($q) use($query)
 								   {
-								   		$query->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
+								   		$q->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
 								   })->with('introduction')->
-								   orWhereHas('panels', function($query) use($query)
+								   orWhereHas('panels', function($q) use($query)
 								   {
-								   		$query->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
+								   		$q->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
 								   })->with('panels')->
 							 	   where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
 							 	   where('visible', '=', true)->get();
@@ -170,18 +170,21 @@
 				{
 					$userDistrictSection = Auth::user()->address->districtSection->name;
 
-					$pages = Page::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
-							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
-							 	  where('hidden', '=', false)->whereHas('districtSections', function($query) use ($homeDistrictSection, $userDistrictSection)
-							 	  {
-							 	  	$query->where('name', '=', $homeDistrictSection)->
-							 	  			orWhere('name', '=', $userDistrictSection);
-							 	  })->get();
+					$pages = Page::orWhereHas('introduction', function($q) use($query)
+							       {
+							   			$q->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
+							       })->with('introduction')->
+							       orWhereHas('panels', function($q) use($query)
+							       {
+							   			$q->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
+							       })->with('panels')->
+						 	       where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+						 	       where('visible', '=', true)->get();
 				}
 			}
 			else
 			{
-				$pages = Page::orWhereHas('introduction', function($q) use($query)
+				$pages = Page::whereHas('introduction', function($q) use($query)
 						       {
 						   			$q->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
 						       })->
@@ -190,7 +193,8 @@
 						   			$q->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
 						       })->
 					 	       where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
-					 	       where('visible', '=', true)->get();
+					 	       where('visible', '=', true)->
+					 	       with('introduction')->with('panels')->get();
 			}
 
 			return $pages;

@@ -65,16 +65,4 @@
 			$model = Introduction::findOrFail($id);
 			$model->delete();
 		}
-
-		/**
-		 * Returns a Introduction Collection which contain the specified parameters.
-		 *
-		 * @param  string $query
-		 * 
-		 * @return Collection -> Introduction
-		 */
-		public function search($query)
-		{
-			return Introduction::whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query])->with('page')->get();
-		}
 	}

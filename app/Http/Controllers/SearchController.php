@@ -69,15 +69,8 @@
 			$query = $request->get('q');
 
 			$news = $this->newsRepo->search($query);
-			$introductions = $this->introductionRepo->search($query);
-			$pagePanels = $this->pagePanelRepo->search($query);
-
-			dd($pages = $this->pageRepo->search($query));
-
-			$pages = compact('introductions', 'pagePanels');
-
-			$categories = compact('news', 'pages');
-
-			return view('search.index', compact('query', 'categories'));
+			$pages = $this->pageRepo->search($query);
+			
+			return view('search.index', compact('query', 'news', 'pages'));
 		}
 	}
