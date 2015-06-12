@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('title')
-	De Bunders - Deelwijken
+	De Bunders - Deelwijk beheren
 @stop
 
 @section('description')
-	Dit is de deelwijken overzichts pagina van De Bunders.
+	Dit is de beveiligde deelwijk beheer pagina van De Bunders.
 @stop
 
 @section('content')
@@ -29,6 +29,9 @@
 					en welke pagina's er aan vast zitten.)
 				</p>
 			</div>
+				{!! link_to_route('district.create', 'Nieuwe deelwijk', [], ['class' => 'btn btn-success white ']) !!}
+				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white addright addmargin']) !!}
+			
 		</div>
 
 		<div class="row">
@@ -40,12 +43,12 @@
 							<th> Informatie </th>
 							<th> Pagina's  #</th>
 							<th> Nieuws #</th>
+							<th colspan="3">Acties</th>
 						</tr>
 
 						{{--*/ $curDate = date('Y-m-d H:i:s', time());
 						 $count = 0; /*--}}
 						@foreach($districts as $district)
-							{{--*/	$count = 0; /*--}}
 							<tr>
 								<td><a href="{!! route('district.show', $district->name)!!}"> {!! $district->name !!} </a> </td>
 								 {{--*/ $phrase = trunc($district->generalInfo, 20); /*--}}
@@ -58,6 +61,21 @@
 									@endif
 								@endforeach
 								<td> {!! $count !!}</td>
+								<td>
+									<a href="{{ route('district.show', [$district->name]) }}"> 
+										<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+									</a>
+								</td>
+								<td>
+									<a class="right" href="{{ route('district.edit', [$district->districtSectionId]) }}">
+										<i class="fa fa-pencil-square-o fa-lg"></i>
+									</a>
+								</td>
+								<td>
+									<a href="{{ route('district.destroy', [$district->districtSectionId]) }}" onclick="confirmDelete()">
+											<i class="fa fa-times fa-lg text-danger"></i>
+									</a>
+								</td>
 							</tr>
 						@endforeach
 					</table>

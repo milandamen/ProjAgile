@@ -12,3 +12,11 @@
 		$breadcrumbs->parent('district.index');
 		$breadcrumbs->push($district->name, route('district.show', [$district->name]));
 	});
+
+
+	// Home > Deelwijk > [Naam]
+	Breadcrumbs::register('district.edit', function($breadcrumbs, $district) 
+	{
+		$breadcrumbs->parent('district.index');
+		$breadcrumbs->push($district->name, route('district.edit', [$district->districtSectionId]));
+	});

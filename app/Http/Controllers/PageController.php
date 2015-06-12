@@ -345,11 +345,11 @@
 		{
 			if (Auth::user()->hasPagePermission($id))
 			{
-				if($this->redirectHome($id))
+				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
-					Flash::error('U kunt de homepagina niet verwijderen');
+					Flash::error('U kunt deze pagina niet verwijderen');
 
-					return Redirect::route('home.index');
+					return Redirect::route('page.index');
 				}
 				$page = $this->pageRepo->get($id);
 

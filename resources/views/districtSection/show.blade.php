@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Deelwijk {!! $district->name !!}
+@stop
+
+@section('description')
+	Dit is de pagina van de deelwijk {!! $district->name !!} van De Bunders.
+@stop
+
 @section('content')
 	 <div class="container">
 		<div class="row">
@@ -15,7 +23,7 @@
 
 		<div class="row addmargin">
 			<div class="col-md-8">
-				<p> {!! $district->generalInfo !!} </p>
+				<p> {!! nl2br($district->generalInfo) !!} </p>
 			</div>
 		</div>
 
@@ -38,7 +46,7 @@
 							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
 								@if($news->top)
 									<tr>
-										<td> {!! $news->title !!} </td>
+										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </a></td>
 										 {{--*/ $phrase = trunc($news->content, 20); /*--}}
 										<td colspan="2"><i> {!! $phrase !!} </i></td>
 										<td> {!! count($news->comments) !!}</td>
@@ -53,7 +61,7 @@
 							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
 								@if(!$news->top)
 									<tr>
-										<td> {!! $news->title !!} </td>
+										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </td>
 										 {{--*/ $phrase = trunc($news->content, 30); /*--}}
 										<td colspan="2"> {!! $phrase !!} </td>
 										<td> {!! count($news->comments) !!}</td>
