@@ -80,11 +80,11 @@
 								</td>
 								<td> 
 									@if(!$newsItem->hidden)
-										<a href="{{ route('news.hide', [$newsItem->newsId]) }}" class="black">
+										<a href="{{ route('news.toggleHide', [$newsItem->newsId]) }}" class="black">
 											<i class="fa fa-eye-slash fa-lg"></i>
 										</a> 
-									@elseif($newsItem->hidden)
-										<a href="{{ route('news.unhide', [$newsItem->newsId]) }}" class="text-success">
+									@else
+										<a href="{{ route('news.toggleHide', [$newsItem->newsId]) }}" class="text-success">
 											<i class="fa fa-eye fa-lg"></i>
 										</a>
 									@endif

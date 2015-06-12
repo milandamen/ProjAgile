@@ -6,6 +6,34 @@
 		'middleware'	=> 'admin'
 	]);
 
+
+	Route::get('pagina/contact',
+	[
+		'as' => 'page.contact',
+		'uses' => 'PageController@contact',
+	]);
+
+	Route::post('pagina/contact',
+	[
+		'as' => 'page.sendcontact',
+		'uses' => 'PageController@sendContact',
+	]);
+
+	Route::get('pagina/contact/wijzig',
+	[
+		'as' => 'page.contactedit',
+		'uses' => 'PageController@editContact',
+		'middleware'	=> 'admin'
+	]);
+
+	Route::post('pagina/contact/wijzig',
+	[
+		'as' => 'page.contactedit',
+		'uses' => 'PageController@editContactSave',
+		'middleware'	=> 'admin'
+	]);
+
+
 	Route::get('pagina/aanmaken',
 	[
 		'as'			=> 'page.create',
@@ -19,6 +47,7 @@
 		'uses'			=> 'PageController@store',
 		'middleware'	=> 'admin'
 	]);
+
 
 	Route::get('pagina/{id}',
 	[
@@ -44,7 +73,7 @@
 	[
 		'as'			=> 'page.destroy',
 		'uses'			=> 'PageController@destroy',
-		'middelware'	=> 'admin'
+		'middleware'	=> 'admin'
 	]);
 
 	Route::get('pagina/{id}/zichtbaarheid', 
@@ -53,3 +82,4 @@
 		'uses'			=> 'PageController@switchPublish',
 		'middleware'	=> 'admin'
 	]);
+
