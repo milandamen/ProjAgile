@@ -230,13 +230,13 @@
 @stop
 
 @section('additional_scripts')
-	<!-- JavaScript file that handles removing and adding of rows and posting of the data form -->
-	{!! HTML::script('custom/js/carouselUpdate.js') !!}
-
 	{!! HTML::script('moment/moment.js') !!}
 	{!! HTML::script('moment/locale/nl.js') !!}
 	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
 	{!! HTML::script('custom/js/datepicker.js') !!}
+
+	<!-- JavaScript file that handles removing and adding of rows and posting of the data form -->
+	{!! HTML::script('custom/js/carouselUpdate.js') !!}
 
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop

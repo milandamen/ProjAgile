@@ -206,6 +206,7 @@ $('.add-carousel-button').click(function() {
 		'</td>' +
 	'</tr>');
 
+	$('.date').datetimepicker();
 	calculateIndexes();
 });
 
@@ -400,29 +401,29 @@ function validateCarousel()
 		}
 	});
 
-	if (!publishStartDate.isValid())
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
-
-		return false;
-	}
-
-	if (!publishEndDate.isValid())
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
-
-		return false;
-	}
-
-	if (publishStartDate.isAfter(publishEndDate) ||
-		publishStartDate.isSame(publishEndDate))
-	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een startdatum en een tijdstip voor de Einde Publicatiedatum.');
-
-		return false;
-	}
+	//if (!publishStartDate.isValid())
+	//{
+	//	event.preventDefault();
+	//	alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+	//
+	//	return false;
+	//}
+	//
+	//if (!publishEndDate.isValid())
+	//{
+	//	event.preventDefault();
+	//	alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+	//
+	//	return false;
+	//}
+	//
+	//if (publishStartDate.isAfter(publishEndDate) ||
+	//	publishStartDate.isSame(publishEndDate))
+	//{
+	//	event.preventDefault();
+	//	alert('Selecteer alstublieft een startdatum en een tijdstip voor de Einde Publicatiedatum.');
+	//
+	//	return false;
+	//}
 
 }
