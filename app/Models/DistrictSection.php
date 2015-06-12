@@ -66,6 +66,16 @@
 		{
 			return $this->belongsToMany('News', 'newsdistrictsection', 'districtSectionId', 'newsId');
 		}
+		
+		/**
+		* Get all Page models that reference this DistrictSection model.
+		*
+		* @return Collection -> Page
+		*/
+		public function pages()
+		{
+			return $this->belongsToMany('Page', 'districtsection_has_page', 'districtsection_districtSectionId', 'page_pageId');
+		}
 
 		/**
 		* Get all User models that reference this DistrictSection model.
