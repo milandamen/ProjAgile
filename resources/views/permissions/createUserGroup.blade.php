@@ -37,6 +37,12 @@
 		</div>
 
 		<div class="row">
+			<div class="col-md-12">
+				<h2 class="page-header">Permissies</h2>
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-xs-5">
 				<h3 class="text-center">Pagina's</h3>
 				<div class="well pages">
@@ -74,9 +80,32 @@
 
 		</div>
 
-		{!! link_to_route('user.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
-		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
-		{!! Form::close() !!}
+		<div class="row">
+			<div class="col-md-12">
+					<h2 class="page-header">Gebruikers toevoegen</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-5">
+				<div class="row">
+					<h3 class="text-center">Gebruikers per deelwijk</h3>
+					<div class="well district-sections">
+						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
+							@foreach($districtSections as $districtSection)
+								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+							@endforeach
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			{!! link_to_route('user.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
+			{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
+			{!! Form::close() !!}
+		</div>
 
 	</div>
 @stop

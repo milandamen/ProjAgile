@@ -34,6 +34,7 @@
 				<table class="table">
 					<thead>
 						<th>Groepsnaam</th>
+						<th></th>
 					</thead>
 					<tbody>
 						@foreach($userGroups as $userGroup)
@@ -43,6 +44,9 @@
 									<a href="{{ route('permissions.editUserGroup', ['userGroupId' => $userGroup->userGroupId]) }}" class="left">
 										<i class="fa fa-pencil-square-o"></i>
 									</a>
+								<a href="{{ route('permissions.index', [$userGroup->userGroupId]) }}">
+									<i class="fa fa-times fa-lg text-danger"></i>
+								</a>
 								</td>
 							</tr>
 						@endforeach

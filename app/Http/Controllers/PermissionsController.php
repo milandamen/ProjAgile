@@ -159,6 +159,11 @@
 			return view('errors.403');
 		}
 
+		public function deleteUserGroup($userId)
+		{
+
+		}
+
 		/**
 	 * Convert array of strings to array of ints
 	 *
