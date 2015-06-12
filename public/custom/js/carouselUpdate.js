@@ -165,13 +165,23 @@ $('.add-carousel-button').click(function() {
 			'<span> - </span>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselTitle[]"/>' +
+			'<input type="text" name="carouselTitle[]" class="carouselTitle"/>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselStartDate[]"/>' +
+			'<div class="input-group date icon-width">' +
+				'<input type="hidden" name="carouselStartDate[]" class="carousel-start-date"/>' +
+				'<span class="input-group-addon">' +
+					'<span class="glyphicon glyphicon-calendar"></span>' +
+				'</span>' +
+			'</div>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselEndDate[]"/>' +
+			'<div class="input-group date icon-width">' +
+				'<input type="hidden" name="carouselEndDate[]" class="carousel-end-date"/>' +
+				'<span class="input-group-addon">' +
+					'<span class="glyphicon glyphicon-calendar"></span>' +
+				'</span>' +
+			'</div>' +
 		'</td>' +
 		'<td>' +
 			'<textarea name="beschrijving[]"></textarea>' +
@@ -377,8 +387,20 @@ $("#cancel").click(function()
 
 function validateCarousel()
 {
+	var carouselItemTitles = document.querySelectorAll('.carouselTitle');
 	var publishStartDate = moment(document.querySelector('.carousel-start-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
 	var publishEndDate = moment(document.querySelector('.carousel-end-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+
+
+	$('.carouselTitle').each(function()
+	{
+		if($(this).val() == '' || $(this).val() == null)
+		{
+			alert('Vul alstublieft alle carousel titels in.');
+			event.preventDefault();
+			return false;
+		}
+	});
 
 	if (!publishStartDate.isValid())
 	{
