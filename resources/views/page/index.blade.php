@@ -53,11 +53,9 @@
 
 								<tr>
 									<td>
-										@if($page->publishEndDate < $date)
+										@if(strtotime($page->publishEndDate) < strtotime($curDate))
 											<i class="fa fa-archive fa-lg"></i>
-										@elseif($page->publishEndDate < $curDate) 
-											<i class="fa fa-ban fa-lg" alt=""></i>
-										@elseif($page->publishDate > $curDate)
+										@elseif(strtotime($page->publishDate) > strtotime($curDate))
 											<i class="fa fa-clock-o fa-lg" alt="scheduled" title="scheduled"></i>
 										@endif
 									</td>	
@@ -108,11 +106,9 @@
 									@if($subpage->parentId == $page->pageId)
 										<tr>
 											<td>
-												@if($subpage->publishEndDate < $date)
+												@if(strtotime($subpage->publishEndDate) < strtotime($curDate))
 													<i class="fa fa-archive fa-lg"></i>
-												@elseif($subpage->publishEndDate < $curDate) 
-													<i class="fa fa-ban fa-lg"></i>
-												@elseif($subpage->publishDate > $curDate)
+												@elseif(strtotime($subpage->publishDate) > strtotime($curDate))
 													<i class="fa fa-clock-o fa-lg"></i>
 												@endif
 											</td>
