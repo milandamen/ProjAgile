@@ -28,10 +28,17 @@
 
 	Route::post('pagina/contact/wijzig',
 	[
-		'as' => 'page.contactedit',
-		'uses' => 'PageController@editContactSave',
+		'as' 			=> 'page.contactedit',
+		'uses' 			=> 'PageController@editContactSave',
 		'middleware'	=> 'admin'
 	]);
+	
+	Route::get('overons',
+	[
+		'as'			=> 'page.about',
+		'uses'			=> 'PageController@showAbout',
+	]);
+
 
 
 	Route::get('pagina/aanmaken',
