@@ -27,7 +27,7 @@
 		{
 			return DistrictSection::all();
 		}
-
+		
 		/**
 		 * Creates a DistrictSection record in the database.
 		 *

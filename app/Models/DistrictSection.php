@@ -64,8 +64,10 @@
 		*/
 		public function news()
 		{
-			return $this->belongsToMany('News', 'newsdistrictsection', 'districtSectionId', 'newsId');
+			return $this->belongsToMany('App\Models\News', 'newsdistrictsection', 'districtSectionId', 'newsId');
 		}
+
+	
 
 		/**
 		* Get all User models that reference this DistrictSection model.
@@ -74,6 +76,6 @@
 		*/
 		public function districtSectionPermissions()
 		{
-			return $this->belongsToMany('Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
+			return $this->belongsToMany('App\Models\Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
 	}
