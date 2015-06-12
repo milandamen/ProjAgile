@@ -377,15 +377,31 @@ $("#cancel").click(function()
 
 function validateCarousel()
 {
-	var startdate = $('.carousel-start-date').val();
-	var enddate = $('.carousel-end-date').val();
+	var publishStartDate = moment(document.querySelector('.carousel-start-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+	var publishEndDate = moment(document.querySelector('.carousel-end-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
 
-	alert('st:' + startdate + ' ed: ' + enddate);
-
-	if(startdate > enddate)
+	if (!publishStartDate.isValid())
 	{
-
 		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+
+		return false;
+	}
+
+	if (!publishEndDate.isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+	if (publishStartDate.isAfter(publishEndDate) ||
+		publishStartDate.isSame(publishEndDate))
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een startdatum en een tijdstip voor de Einde Publicatiedatum.');
+
 		return false;
 	}
 
