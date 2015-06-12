@@ -130,11 +130,6 @@
 							$publishStartDate = $page->publishDate;
 							$publishEndDate = $page->publishEndDate;
 
-//							$publishStartDate = new \DateTime($start);
-//							$publishStartDate->format('Y-m-d');
-//							$publishEndDate = new \DateTime($end);
-//							$publishEndDate->format('Y-m-d');
-
 							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
 
 

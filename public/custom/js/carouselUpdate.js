@@ -354,10 +354,6 @@ function calculateIndexes()
 			{
 				input.name = 'artikel[' + i + ']';
 			}
-			//else if(input.name.indexOf('page') !== -1)
-			//{
-			//	input.name = 'page[' + i + ']';
-			//}
 			else
 			{
 				input.name = 'deletefile[' + i + ']';
@@ -378,3 +374,15 @@ $("#cancel").click(function()
 {
 	document.getElementById("upload").value = "";
 });
+
+function validateCarousel()
+{
+	var startdate = $('.carousel-start-date');
+	var enddate = $('.carousel-end-date');
+
+	if(startdate > enddate)
+	{
+		alert('test');
+		event.preventDefault();
+	}
+}
