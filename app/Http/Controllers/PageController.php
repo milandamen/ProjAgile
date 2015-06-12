@@ -4,9 +4,7 @@
 	use App\Models\Page;
 	use App\Models\PagePanel;
 	use App\Models\Panel;
-	use App\Http\Requests\Page\PageRequest;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
-	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
@@ -405,7 +403,7 @@
 
 		public function contact(){
 
-			$page = $this->pagerepo->get(2);
+			$page = $this->pageRepo->get(2);
 
 			return view('page.contact', compact('page'));
 		}
@@ -456,8 +454,8 @@
 
 			if (Auth::user()->hasPagePermission('2'))
 			{
-				$introduction = $this->pagerepo->get(2)->introduction;
-				$page = $this->pagerepo->get(2);
+				$introduction = $this->pageRepo->get(2)->introduction;
+				$page = $this->pageRepo->get(2);
 				return view('page.editcontact', compact('page','introduction'));
 			}
 			
