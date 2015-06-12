@@ -65,7 +65,7 @@ function addPage(button)
 		'<td><input type="hidden" name="sort[0]" value="page" />' +
 		'Pagina</td>' +
 		'<td>' +
-		'<input type="text" name="page[]" value="' + id + '" class="hiddenInput" />' +
+		'<input type="text" name="artikel[]" value="' + id + '" class="hiddenInput" />' +
 		'<span>' + id + '</span>' +
 		'</td>' +
 		'<td>' +
@@ -354,6 +354,10 @@ function calculateIndexes()
 			{
 				input.name = 'artikel[' + i + ']';
 			}
+			//else if(input.name.indexOf('page') !== -1)
+			//{
+			//	input.name = 'page[' + i + ']';
+			//}
 			else
 			{
 				input.name = 'deletefile[' + i + ']';

@@ -165,10 +165,10 @@
 					$oldItem->delete();
 				}
 
-				//return Redirect::route('home.index');
+				return Redirect::route('home.index');
 			}
 
-			//return view('errors.403');
+			return view('errors.403');
 		}
 		
 		private function saveImage($item, $count, $oldItem) 
