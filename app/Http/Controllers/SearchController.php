@@ -7,6 +7,7 @@
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 
 	class SearchController extends Controller 
@@ -33,6 +34,13 @@
 		private $pagePanelRepo;
 
 		/**
+		 * The IPageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
+		private $pageRepo;
+
+		/**
 		 * Creates a new SearchController instance.
 		 * 
 		 * @param  INewsRepository	$newsRepo
@@ -40,11 +48,13 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IIntroductionRepository $introductionRepo, INewsRepository $newsRepo, IPagePanelRepository $pagePanelRepo)
+		public function __construct(IIntroductionRepository $introductionRepo, INewsRepository $newsRepo, 
+									IPagePanelRepository $pagePanelRepo, IPageRepository $pageRepo)
 		{
 			$this->introductionRepo = $introductionRepo;
 			$this->newsRepo = $newsRepo;
 			$this->pagePanelRepo = $pagePanelRepo;
+			$this->pageRepo = $pageRepo;
 		}
 
 		/**
@@ -61,6 +71,9 @@
 			$news = $this->newsRepo->search($query);
 			$introductions = $this->introductionRepo->search($query);
 			$pagePanels = $this->pagePanelRepo->search($query);
+
+			dd($pages = $this->pageRepo->search($query));
+
 			$pages = compact('introductions', 'pagePanels');
 
 			$categories = compact('news', 'pages');

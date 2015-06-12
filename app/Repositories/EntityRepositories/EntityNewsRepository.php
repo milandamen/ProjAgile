@@ -185,7 +185,7 @@
 							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
 							 	  where('hidden', '=', false)->whereHas('districtSections', function($query) use ($homeDistrictSection, $userDistrictSection)
 							 	  {
-							 	  	$query->where('name', '=', $homeDistrictSection)->
+							 	  		$query->where('name', '=', $homeDistrictSection)->
 							 	  			orWhere('name', '=', $userDistrictSection);
 							 	  })->get();
 				}
@@ -197,7 +197,7 @@
 							 	  where('hidden', '=', false)->
 							 	  whereHas('districtSections', function($query) use ($homeDistrictSection)
 							 	  {
-							 	  	$query->where('name', '=', $homeDistrictSection);
+							 	  		$query->where('name', '=', $homeDistrictSection);
 							 	  })->get();
 			}
 
