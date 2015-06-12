@@ -387,10 +387,8 @@ $("#cancel").click(function()
 
 function validateCarousel()
 {
-	var carouselItemTitles = document.querySelectorAll('.carouselTitle');
 	var publishStartDate = moment(document.querySelector('.carousel-start-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
 	var publishEndDate = moment(document.querySelector('.carousel-end-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
-
 
 	$('.carouselTitle').each(function()
 	{

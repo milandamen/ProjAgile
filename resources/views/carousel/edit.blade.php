@@ -107,7 +107,7 @@
 										@elseif($article->page != null)
 											{{$article->page->introduction->title}}
 										@else
-											<input type="text" name="carouselTitle[]" value="{{$article->title}}" />
+											<input type="text" name="carouselTitle[]" value="{{$article->title}}" class="carouselTitle"/>
 										@endif
 									</td>
 									<td class="date-box">
