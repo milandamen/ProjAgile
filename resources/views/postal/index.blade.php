@@ -14,6 +14,9 @@
 			{!! Breadcrumbs::render('postal.index') !!}
         </div>
         <div class="row">
+            @include('flash::message')
+        </div>
+        <div class="row">
             @include('errors.partials._list')
         </div>
         <div class="row">

@@ -7,6 +7,7 @@
 	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 	use App\Http\Requests\Postal\PostalRequest;
 	use Excel;
+	use Flash;
 
 	class PostalController extends Controller
 	{
@@ -59,7 +60,7 @@
 		 */
 		public function upload(PostalRequest $request)
 		{
-			$file = $request->excel;
+			$file = $request->file('excel');
 
 			if($this->validateFile($file))
 			{
@@ -68,6 +69,7 @@
 
 				return view('postal.index');
 			}
+			Flash::error('De postcodes zijn helaas niet aangepast wegens een fout in het excel bestand.')->important();
 
 			return view('postal.index')->withErrors($this->errors);
 		}
