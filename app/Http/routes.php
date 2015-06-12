@@ -1,8 +1,29 @@
 <?php
+	/*
+	|--------------------------------------------------------------------------
+	| Routes
+	|--------------------------------------------------------------------------
+	|
+	| Listed below are all the routes that are being used by this application.
+	| These routes are grouped in partials by controller type
+	| and are sorted based on the file structure of the controller folder. 
+	|
+	*/
+
 	/**
 	 * AuthController routes
 	 */
-	include('RoutePartials/_authControllerRoutes.php');
+	include('RoutePartials/Auth/_authControllerRoutes.php');
+
+	/**
+	 * Passwordontroller routes
+	 */
+	include('RoutePartials/Auth/_passwordControllerRoutes.php');
+
+	/**
+	 * RegistrationController routes
+	 */
+	include('RoutePartials/Auth/_registrationControllerRoutes.php');
 
 	/**
 	 * AutocompleteController routes
@@ -55,6 +76,16 @@
 	include ('RoutePartials/_pageControllerRoutes.php');
 
 	/**
+	 * PostalController routes
+	 */
+	include('RoutePartials/_postalControllerRoutes.php');
+
+	/**
+	 * PermissionsController routers
+	 */
+	include ('RoutePartials/_permissionsControllerRoutes.php');
+
+	/**
 	 * SidebarController routes
 	 */
 	include('RoutePartials/_sidebarControllerRoutes.php');
@@ -65,11 +96,6 @@
 	include ('RoutePartials/_userControllerRoutes.php');
 
 	/**
-	 * PostalController routes
+	 * DistrictSectionController routes
 	 */
-	include('RoutePartials/_postalControllerRoutes.php');
-
-	/**
-	 * PermissionsController routers
-	 */
-	include ('RoutePartials/_permissionsControllerRoutes.php');
+	include ('RoutePartials/_districtSectionRoutes.php');

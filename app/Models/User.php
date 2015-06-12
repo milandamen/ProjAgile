@@ -42,7 +42,6 @@
 		[
 			'userGroupId',
 			'addressId',
-			'postalId',
 			'username',
 			'firstName',
 			'insertion',
@@ -50,7 +49,10 @@
 			'password',
 			'email', 
 			'active',
-			'remember_Token'
+			'remember_Token',
+			'confirmation_Token',
+			'loginAttempts',
+			'lastLoginAttempt',
 		];
 
 		/**
@@ -135,16 +137,6 @@
 		}
 
 		/**
-		 * Get the Postal model that is referenced in this User model.
-		 * 
-		 * @return Postal
-		 */
-		public function postal()
-		{
-			return $this->belongsTo('App\Models\Postal', 'postalId');
-		}
-
-		/**
 		 * Get the UserGroup model that is referenced in this User model.
 		 * 
 		 * @return UserGroup
@@ -157,8 +149,9 @@
 		/**
 		 * Check if the user has permission to edit the given page
 		 *
-		 * @param $pageId
-		 * @return Boolean
+		 * @param  int $pageId
+		 * 
+		 * @return boolean
 		 */
 		public function hasPagePermission($pageId)
 		{
@@ -168,8 +161,9 @@
 		/**
 		 * Check if the user has permission to edit news from the given districtSection.
 		 *
-		 * @param $districtSectionId
-		 * @return Boolean
+		 * @param  int $districtSectionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasDistrictSectionPermission($districtSectionId)
 		{
@@ -179,8 +173,9 @@
 		/**
 		 * Check if the user has permission to edit news from the given districtSection.
 		 *
-		 * @param $districtSectionId
-		 * @return Boolean
+		 * @param  int $districtSectionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasDistrictSectionPermissions($districtSections)
 		{
@@ -197,8 +192,9 @@
 		/**
 		 * Check if the user has the given permission
 		 *
-		 * @param $permissionId
-		 * @return Boolean
+		 * @param  int $permissionId
+		 * 
+		 * @return boolean
 		 */
 		public function hasPermission($permissionId)
 		{
@@ -208,11 +204,10 @@
 		/**
 		 * Check if the user has permission to change permissions.
 		 *
-		 * @return Boolean
+		 * @return boolean
 		 */
 		public function canChangePermissions()
 		{
 			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
 		}
-
 	}

@@ -1,20 +1,20 @@
 <?php
 	namespace App\Http\Controllers;
-	
+
+	use Auth;
 	use App\Models\Carousel;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use Illuminate\Support\Facades\Redirect;
-	use Auth;
 	
 	class CarouselController extends Controller
 	{
 		private $carouselRepo;
 		
 		/**
-		 * Create a new CarouselController instance.
+		 * Creates a new CarouselController instance.
 		 *
-		 * @parm ICarouselRepository $carouselRepo
+		 * @param ICarouselRepository $carouselRepo
 		 *
 		 * @return void
 		 */
@@ -24,17 +24,28 @@
 			$this->pageRepo= $pageRepo;
 		}
 		
+		/**
+		 * Show the carousel edit page.
+		 * 
+		 * @return Response
+		 */
 		public function edit()
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
 			{
 				$carousel = $this->carouselRepo->getAll();
+
 				return view('carousel.edit', compact('carousel'));
 			}
 
 			return view('errors.403');
 		}
 
+		/**
+		 * Post the carousel and handle the input.
+		 * 
+		 * @return Response
+		 */
 		public function update()
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
@@ -43,12 +54,11 @@
 
 				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
 				{
-					//last carousel index
+					// Last carousel index.
 					$lci = 0;
 
 					for ($i = 0; $i < count($_POST['artikel']); $i++)
 					{
-
 						if($_POST['sort'][$i] === 'news')
 						{
 							$newsId = $_POST['artikel'][$i];
@@ -108,7 +118,6 @@
 									break;
 								}
 							}
-
 							$lci++;
 						}
 						else if($_POST['sort'][$i] === 'page')
@@ -166,14 +175,30 @@
 			return view('errors.403');
 		}
 		
+		/**
+		 * Handle saving an image for the carousel.
+		 * 
+		 * @param  Carousel	$item
+		 * @param  int 		$count
+		 * @param  Carousel	$oldItem
+		 * 
+		 * @return void
+		 */
 		private function saveImage($item, $count, $oldItem) 
 		{
 			if (isset($_FILES) && isset($_FILES['file'])) 
 			{
 				$target = public_path() . '/uploads/img/carousel/';
-				
-				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];			// Specify only lowercase.
-				
+
+				// Specify only lowercase.
+				$allowed = 
+				[
+					'png' , 
+					'jpg', 
+					'jpeg', 
+					'gif'
+				];			
+
 				$filename = $_FILES['file']['name'][$count];
 				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 				
