@@ -52,6 +52,21 @@
 									@else
 										<tr>
 									@endif
+
+								@elseif($article->page != null)
+
+									@if($article->page->visible == 0 || $article->page->publishDate > $curDate || $article->page->publishEndDate < $curDate)
+										<tr class="slightlyRed">
+										{{-- */ $someRed = true; /* --}}
+									@endif
+
+								@else
+
+									@if($article->publishStartDate > $curDate || $article->publishEndDate < $curDate)
+										<tr class="slightlyRed">
+										{{-- */ $someRed = true; /* --}}
+									@endif
+
 								@endif
 									<td></td>
 									<td>
@@ -90,27 +105,37 @@
 										@if($article->news != null)
 											{{$article->news->title}}
 										@elseif($article->page != null)
-											Geen titel
+											{{$article->page->introduction->title}}
 										@else
 											<input type="text" name="carouselTitle[]" value="{{$article->title}}" />
 										@endif
 									</td>
-									<td>
+									<td class="date-box">
 										@if($article->news != null)
 											{{$article->news->normalDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishDate}}
 										@else
-											<input type="text" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
+											<div class="input-group date icon-width">
+												<input type="hidden" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
 										@endif
 									</td>
-									<td>
+									<td class="date-box">
 										@if($article->news != null)
 											{{$article->news->endDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishEndDate}}
 										@else
-											<input type="text" name="carouselEndDate[]" value="{{$article->endDate()}}"/>
+											<div class="input-group date icon-width">
+												<input type="hidden" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
 										@endif
 									</td>
 									<td>
@@ -207,5 +232,11 @@
 @section('additional_scripts')
 	<!-- JavaScript file that handles removing and adding of rows and posting of the data form -->
 	{!! HTML::script('custom/js/carouselUpdate.js') !!}
+
+	{!! HTML::script('moment/moment.js') !!}
+	{!! HTML::script('moment/locale/nl.js') !!}
+	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
+	{!! HTML::script('custom/js/datepicker.js') !!}
+
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop
