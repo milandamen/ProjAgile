@@ -136,5 +136,6 @@
 			'link'					=> 'Link',
 			'name'					=> 'Naam',
 			'g-recaptcha-response'	=> 'reCAPTCHA',
+			'excel'					=> 'Excel',
 		],
 	];
