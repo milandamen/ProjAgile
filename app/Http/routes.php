@@ -94,3 +94,8 @@
 	 * UserController routes
 	 */
 	include ('RoutePartials/_userControllerRoutes.php');
+
+	/**
+	 * DistrictSectionController routes
+	 */
+	include ('RoutePartials/_districtSectionRoutes.php');
