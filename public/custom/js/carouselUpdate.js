@@ -377,12 +377,13 @@ $("#cancel").click(function()
 
 function validateCarousel()
 {
+	alert('test');
 	var startdate = $('.carousel-start-date');
 	var enddate = $('.carousel-end-date');
 
 	if(startdate > enddate)
 	{
-		alert('test');
+		alert('test2');
 		event.preventDefault();
 	}
 }

@@ -23,7 +23,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data" onsubmit="validateCarousel">
+				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data" onsubmit="validateCarousel()">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					{{-- */ $curDate = date('Y-m-d H:i:s',time()); $someRed = false; /* --}}
 					<table id="articlelisttable" class="table">
@@ -131,7 +131,7 @@
 											{{$article->page->publishEndDate}}
 										@else
 											<div class="input-group date icon-width">
-												<input type="hidden" name="carouselEndDate[]" value="{{$article->startDate()}}" class="carousel-end-date"/>
+												<input type="hidden" name="carouselEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-calendar"></span>
 												</span>
