@@ -38,6 +38,8 @@
 		{
 			return DistrictSection::all();
 		}
+
+
 		/**
 		 * Returns all the DistrictSection model id's in the database.
 		 *
