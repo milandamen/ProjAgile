@@ -118,5 +118,6 @@
             'publishEndDate'        => 'Einde Publicatiedatum',
             'link'                  => 'Link',
             'name'                  => 'Naam',
+			'excel'					=> 'Excel',
         ],
     ];

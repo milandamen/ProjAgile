@@ -1,12 +1,11 @@
 <?php
-namespace App\Http\Controllers;
+	namespace App\Http\Controllers;
 
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
-	use Request;
-	use Input;
+	use App\Http\Requests\Postal\PostalRequest;
 	use Excel;
 
 	class PostalController extends Controller
@@ -14,10 +13,10 @@ namespace App\Http\Controllers;
 		private $postalRepo;
 		private $addressRepo;
 		private $houseNumberRepo;
-		private $districts = array();
-		private $validationResults = array();
+		private $districts = [];
+		private $validationResults = [];
 		private $tempSheetName;
-		private $errors = array();
+		private $errors = [];
 
 		/**
 		 * Creates a new PostalController instance.
@@ -58,26 +57,23 @@ namespace App\Http\Controllers;
 		 *
 		 * @return Response
 		 */
-		public function upload()
+		public function upload(PostalRequest $request)
 		{
-			$file = Request::file('Excel');
+			$file = $request->excel;
+
 			if($this->validateFile($file))
 			{
 				$this->uploadFile($file);
-				$success = true;
-				return view('postal.index', compact('success'));
+				Flash::success('De postcodes zijn succesvol aangepast.')->important();
+
+				return view('postal.index');
 			}
-			$success = false;
-			$errors = $this->errors;
-			return view('postal.index', compact('success', 'errors'));
+
+			return view('postal.index')->withErrors($this->errors);
 		}
 
 		private function validateFile($file)
 		{
-
-			//TODO:: Mimetype check
-
-
 			Excel::load($file, function($reader)
 			{
 				//Loop through all sheets
