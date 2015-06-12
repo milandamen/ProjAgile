@@ -10,22 +10,46 @@
 
 	class SidebarController extends Controller
 	{
+		/**
+		 * The IMenuRepository implementation.
+		 * 
+		 * @var IMenuRepository
+		 */
+		private $menuRepo;
+
+		/**
+		 * The INewOnSiteRepository implementation.
+		 * 
+		 * @var INewOnSiteRepository
+		 */
+		private $newOnSiteRepository;
+
+		/**
+		 * The ISidebarRepository implementation.
+		 * 
+		 * @var ISidebarRepository
+		 */
 		private $sidebarRepo;
 
 		/**
-		* Create a new SidebarController instance.
+		* Creates a new SidebarController instance.
 		*
-		* @parm ISidebarRepository $sidebarRepo
+		* @param ISidebarRepository $sidebarRepo
 		*
 		* @return void
 		*/
-		public function __construct(ISidebarRepository $sidebarRepo, IMenuRepository $menuRepo, INewOnSiteRepository $newOnSiteRepository)
+		public function __construct(IMenuRepository $menuRepo, INewOnSiteRepository $newOnSiteRepository, ISidebarRepository $sidebarRepo)
 		{
-			$this->sidebarRepo = $sidebarRepo;
 			$this->menuRepo = $menuRepo;
 			$this->newOnSiteRepository = $newOnSiteRepository;
+			$this->sidebarRepo = $sidebarRepo;
 		}
 
+		/**
+		 * Show the sidebar edit page.
+		 * 
+		 * @return Response
+		 */
 		public function edit($id)
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_SIDEBAR))
@@ -43,19 +67,24 @@
 			return view('errors.403');
 		}
 
+		/**
+		 * Post the sidebar and handle the input.
+		 * 
+		 * @return Response
+		 */
 		public function update($id)
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_SIDEBAR))
 			{
 				$title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
 				$maxrowindex = $_POST['maxRowIndex'];
-				$i=0;
+				$i = 0;
 				$pageId = $id;
 
 				// first delete all old items, to prevent double items and or not deleting rows.
 				$this->sidebarRepo->deleteAllFromPage($pageId);
 			
-				for($rows =0; $rows <= $maxrowindex; $rows++)
+				for($rows = 0; $rows <= $maxrowindex; $rows++)
 				{
 					if(isset($_POST['sidebar'][$rows]))
 					{
@@ -102,7 +131,6 @@
 						}
 					}             
 				}
-
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
 				if($newOnSite === true)

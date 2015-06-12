@@ -5,15 +5,33 @@
 
 	class NewOnSiteController extends Controller
 	{
+		/**
+		 * The INewOnSiteRepository implementation.
+		 * 
+		 * @var INewOnSiteRepository
+		 */
+		private $newOnSiteRepo;
 
-		public function __construct(INewOnSiteRepository $newOnSiteRepository)
+		/**
+		 * Creates a new NewOnSiteController instance.
+		 *
+		 * @param INewOnSiteRepository $newOnSiteRepo
+		 *
+		 * @return void
+		 */
+		public function __construct(INewOnSiteRepository $newOnSiteRepo)
 		{
-			$this->newOnSiteRepository = $newOnSiteRepository;
+			$this->newOnSiteRepo = $newOnSiteRepo;
 		}
 
+		/**
+		 * Show the new on site overview page.
+		 *
+		 * @return Response
+		 */
 		public function index()
 		{
-			$items = $this->newOnSiteRepository->getAll();
+			$items = $this->newOnSiteRepo->getAll();
 
 			return view('newOnSite.index', compact('items'));
 		}

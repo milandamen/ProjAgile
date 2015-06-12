@@ -18,7 +18,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="{!! route('page.contact') !!}">
 						<i class="fa fa-paper-plane"></i> 
 						Contact
 					</a>

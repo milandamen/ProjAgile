@@ -16,9 +16,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h2 class="page-header">
-					Gebruiker Beheer
-				</h2>
+				<h2 class="page-header">Gebruiker Beheer</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -47,4 +45,3 @@
 	{!! HTML::script('custom/js/filterUserTables.js') !!}
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop
-

@@ -10,7 +10,6 @@
 		
 		@include('partials._styles')
 	</head>
-
 	<body>
 		@include('partials._header')
 

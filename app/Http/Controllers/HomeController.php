@@ -1,37 +1,89 @@
 <?php 
 	namespace App\Http\Controllers;
 
+	use App\Http\Requests\Home\IntroductionRequest;
+	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
 	use App\Repositories\RepositoryInterfaces\IHomeLayoutRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
-	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
-	use Illuminate\Support\Facades\Redirect;
-	use App\Http\Requests\Home\IntroductionRequest;
+	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use Auth;
+	use Illuminate\Support\Facades\Redirect;
 	use Request;
 
 	class HomeController extends Controller 
 	{
 		/**
+		 * The ICarouselRepository implementation.
+		 * 
+		 * @var ICarouselRepository
+		 */
+		private $carouselRepo;
+
+		/**
+		 * The IHomeLayoutRepository implementation.
+		 * 
+		 * @var IHomeLayoutRepository
+		 */
+		private $homeLayoutRepo;
+
+		/**
+		 * The IIntroductionRepository implementation.
+		 * 
+		 * @var IIntroductionRepository
+		 */
+		private $introductionRepo;
+
+		/**
+		 * The INewOnSiteRepository implementation.
+		 * 
+		 * @var INewOnSiteRepository
+		 */
+		private $newOnSiteRepository;
+
+		/**
+		 * The INewsRepository implementation.
+		 * 
+		 * @var INewsRepository
+		 */
+		private $newsRepo;
+
+		/**
+		 * The IPageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
+		private $pageRepo;
+
+		/**
+		 * The ISidebarRepository implementation.
+		 * 
+		 * @var ISidebarRepository
+		 */
+		private $sidebarRepo;
+
+		/**
 		 * Creates a new HomeController instance.
 		 *
 		 * @param IHomeLayoutRepository 	$homeLayoutRepo
-		 * @param IIntroductionRepository   $introRepo
+		 * @param IIntroductionRepository   $introductionRepo
 		 * @param INewsRepository        	$newsRepo
 		 *
 		 * @return void
 		 */
-		public function __construct(IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introRepo, IPageRepository $pageRepo,
-									INewsRepository $newsRepo, ICarouselRepository $carouselRepo, INewOnSiteRepository $newOnSiteRepository)
+		public function __construct(ICarouselRepository $carouselRepo, IHomeLayoutRepository $homeLayoutRepo, IIntroductionRepository $introductionRepo, 
+									INewOnSiteRepository $newOnSiteRepository, INewsRepository $newsRepo, IPageRepository $pageRepo,
+									ISidebarRepository $sidebarRepo)
 		{
-			$this->homeLayoutRepo = $homeLayoutRepo;
-			$this->introRepo = $introRepo;
-			$this->newsRepo = $newsRepo;
 			$this->carouselRepo = $carouselRepo;
+			$this->homeLayoutRepo = $homeLayoutRepo;
+			$this->introductionRepo = $introductionRepo;
 			$this->newOnSiteRepository = $newOnSiteRepository;
+			$this->newsRepo = $newsRepo;
 			$this->pageRepo = $pageRepo;
+			$this->sidebarRepo = $sidebarRepo;
 		}
 
 		/**
@@ -43,12 +95,13 @@
 		{
 			$news = $this->getNews();
 			$introduction = $this->pageRepo->get(1)->introduction;
+			$sidebar = $this->sidebarRepo->getByPage(1);
 			htmlspecialchars($introduction);
 			$layoutModules = $this->homeLayoutRepo->getAll();
 			$carousel = $this->carouselRepo->getAllFiltered();
 			$newOnSite = $this->newOnSiteRepository->getAllOrdered();
 
-			return view('home.index', compact('news', 'introduction', 'layoutModules', 'carousel', 'newOnSite'));
+			return view('home.index', compact('news', 'introduction', 'sidebar', 'layoutModules', 'carousel', 'newOnSite'));
 		}
 
 		/**
@@ -61,7 +114,6 @@
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
 			{
 				$news = $this->getNews();
-				//$introduction = $this->introRepo->getPageBar('1');
 				$introduction = $this->pageRepo->get(1)->introduction;
 				$layoutModules = $this->homeLayoutRepo->getAll();
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
@@ -129,7 +181,7 @@
 				$intro->subtitle = $request->subtitle;
 				$intro->text = $request->content;
 
-				$this->introRepo->update($intro);
+				$this->introductionRepo->update($intro);
 
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
@@ -143,19 +195,13 @@
 			}
 			
 			return view('errrors.403');
-		}
+		} 
 		
 		/**
-		 * Show the results of the search query.
-		 *
-		 * @return Response
+		 * Returns the five most important news items.
+		 * 
+		 * @return Collection -> News
 		 */
-		public function search(Request $request) 
-		{
-			// TODO search results.
-			return view('errors.404');
-		}
-		
 		private function getNews()
 		{
 			$news = $this->newsRepo->getAll();

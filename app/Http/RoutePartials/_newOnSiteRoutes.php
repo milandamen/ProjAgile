@@ -1,6 +1,6 @@
 <?php
 	Route::get('nieuwopdesite',
 	[
-		'as' => 'newOnSite.index',
-		'uses' => 'NewOnSiteController@index'
+		'as'			=> 'newOnSite.index',
+		'uses'			=> 'NewOnSiteController@index'
 	]);

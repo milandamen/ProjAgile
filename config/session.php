@@ -14,7 +14,6 @@
 		|            "memcached", "redis", "array"
 		|
 		*/
-
 		'driver' => env('SESSION_DRIVER', 'file'),
 
 		/*
@@ -27,10 +26,8 @@
 		| to immediately expire on the browser closing, set that option.
 		|
 		*/
-
-		'lifetime' => 120,
-
-		'expire_on_close' => false,
+		'lifetime'			=> 30,
+		'expire_on_close'	=> true,
 
 		/*
 		|--------------------------------------------------------------------------
@@ -42,7 +39,6 @@
 		| automatically by Laravel and you can use the Session like normal.
 		|
 		*/
-
 		'encrypt' => false,
 
 		/*
@@ -55,7 +51,6 @@
 		| location may be specified. This is only needed for file sessions.
 		|
 		*/
-
 		'files' => storage_path().'/framework/sessions',
 
 		/*
@@ -68,7 +63,6 @@
 		| correspond to a connection in your database configuration options.
 		|
 		*/
-
 		'connection' => null,
 
 		/*
@@ -81,7 +75,6 @@
 		| provided for you; however, you are free to change this as needed.
 		|
 		*/
-
 		'table' => 'sessions',
 
 		/*
@@ -94,7 +87,6 @@
 		| happen on a given request. By default, the odds are 2 out of 100.
 		|
 		*/
-
 		'lottery' => [2, 100],
 
 		/*
@@ -107,7 +99,6 @@
 		| new session cookie is created by the framework for every driver.
 		|
 		*/
-
 		'cookie' => 'laravel_session',
 
 		/*
@@ -120,7 +111,6 @@
 		| your application but you are free to change this when necessary.
 		|
 		*/
-
 		'path' => '/',
 
 		/*
@@ -133,7 +123,6 @@
 		| available to in your application. A sensible default has been set.
 		|
 		*/
-
 		'domain' => null,
 
 		/*
@@ -146,6 +135,5 @@
 		| the cookie from being sent to you if it can not be done securely.
 		|
 		*/
-
 		'secure' => false,
 	];

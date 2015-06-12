@@ -3,17 +3,17 @@
 	
 	use App\Models\Carousel;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
-	use Illuminate\Support\Facades\Redirect;
 	use Auth;
+	use Illuminate\Support\Facades\Redirect;
 	
 	class CarouselController extends Controller
 	{
 		private $carouselRepo;
 		
 		/**
-		 * Create a new CarouselController instance.
+		 * Creates a new CarouselController instance.
 		 *
-		 * @parm ICarouselRepository $carouselRepo
+		 * @param ICarouselRepository $carouselRepo
 		 *
 		 * @return void
 		 */
@@ -22,17 +22,28 @@
 			$this->carouselRepo = $carouselRepo;
 		}
 		
+		/**
+		 * Show the carousel edit page.
+		 * 
+		 * @return Response
+		 */
 		public function edit()
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
 			{
 				$carousel = $this->carouselRepo->getAll();
+
 				return view('carousel.edit', compact('carousel'));
 			}
 
 			return view('errors.403');
 		}
 
+		/**
+		 * Post the carousel and handle the input.
+		 * 
+		 * @return Response
+		 */
 		public function update()
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
@@ -41,12 +52,11 @@
 
 				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
 				{
-					//last carousel index
+					// Last carousel index.
 					$lci = 0;
 
 					for ($i = 0; $i < count($_POST['artikel']); $i++)
 					{
-
 						if($_POST['sort'][$i] === 'news')
 						{
 							$newsId = $_POST['artikel'][$i];
@@ -74,6 +84,7 @@
 						}
 						else if($_POST['sort'][$i] === 'carousel')
 						{
+							$carouselId = $_POST['artikel'][$i];
 							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
 
 							if(!isset($description) || empty($description))
@@ -93,9 +104,18 @@
 							$publishEndDate = new \DateTime($end);
 							$publishEndDate->format('Y-m-d');
 
-
 							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
 
+							$oldItem = null;
+
+							foreach ($oldItems as $oI)
+							{
+								if ($oI->carouselId == $carouselId)
+								{
+									$oldItem = $oI;
+									break;
+								}
+							}
 							$lci++;
 						}
 
@@ -119,69 +139,31 @@
 
 			return view('errors.403');
 		}
-
-//		public function update()
-//		{
-//			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
-//			{
-//				$oldItems = $this->carouselRepo->getAll();
-//
-//				if (isset($_POST['artikel']) && isset($_POST['beschrijving']))
-//				{
-//					for ($i = 0; $i < count($_POST['artikel']); $i++)
-//					{
-//						$newsId = $_POST['artikel'][$i];
-//						$description = 'Nog geen beschrijving';
-//						$item = $this->carouselRepo->create(compact('newsId', 'description'));
-//
-//						$description = $_POST['beschrijving'][$i];
-//
-//						if (!isset($description) || empty($description))
-//						{
-//							$description = 'Nog geen beschrijving';
-//						}
-//						$item->description = $description;
-//						$this->carouselRepo->update($item);
-//						$oldItem = null;
-//
-//						foreach ($oldItems as $oI)
-//						{
-//							if ($oI->newsId == $newsId)
-//							{
-//								$oldItem = $oI;
-//								break;
-//							}
-//						}
-//
-//						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')
-//						{
-//							$item->imagePath = 'blank.jpg';
-//							$oldItem->imagePath = 'blank.jpg';
-//						}
-//						$this->saveImage($item, $i, $oldItem);
-//						$this->carouselRepo->update($item);
-//					}
-//				}
-//
-//				foreach ($oldItems as $oldItem)
-//				{
-//					$oldItem->delete();
-//				}
-//
-//				return Redirect::route('home.index');
-//			}
-//
-//			return view('errors.403');
-//		}
 		
+		/**
+		 * Handle saving an image for the carousel.
+		 * 
+		 * @param  Carousel	$item
+		 * @param  int 		$count
+		 * @param  Carousel	$oldItem
+		 * 
+		 * @return void
+		 */
 		private function saveImage($item, $count, $oldItem) 
 		{
 			if (isset($_FILES) && isset($_FILES['file'])) 
 			{
 				$target = public_path() . '/uploads/img/carousel/';
-				
-				$allowed = ['png' , 'jpg', 'jpeg', 'gif'];			// Specify only lowercase.
-				
+
+				// Specify only lowercase.
+				$allowed = 
+				[
+					'png' , 
+					'jpg', 
+					'jpeg', 
+					'gif'
+				];			
+
 				$filename = $_FILES['file']['name'][$count];
 				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 				
