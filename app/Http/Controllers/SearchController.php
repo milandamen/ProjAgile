@@ -61,11 +61,10 @@
 			$news = $this->newsRepo->search($query);
 			$introductions = $this->introductionRepo->search($query);
 			$pagePanels = $this->pagePanelRepo->search($query);
+			$pages = compact('introductions', 'pagePanels');
 
-			$data = compact('news', 'introductions', 'pagePanels');
+			$categories = compact('news', 'pages');
 
-			dd($data);
-
-			return view('search.index', compact('query'));
+			return view('search.index', compact('query', 'categories'));
 		}
 	}

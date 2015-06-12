@@ -14,9 +14,10 @@
 			{!! Breadcrumbs::render('search.index', $query ? : '') !!}
 		</div>
 		<div class="row">
-			@if(isset($categories))
-				@include('search.partials._category', ['title' => 'Nieuws', 'categories' => $news])
-				@include('search.partials._category', ['title' => 'Paginas', 'categories' => $pages])
+			@if(!isset($categories))
+				@foreach($categories as $category)
+					@include('search.partials._category', ['title' => 'Nieuws', 'category' => $category])
+				@endforeach
 			@endif
 		</div>
 	</div>
