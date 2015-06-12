@@ -18,7 +18,6 @@
 	use Flash;
 	use Redirect;
 	use Mail;
-
 	use Request;
 	use View;
 
@@ -193,6 +192,7 @@
 			{
 				return Redirect::route('home.index');
 			} 
+
 			$page = $this->pageRepo->show($id);
 			$children = $this->pageRepo->getAllChildren($id);
 
@@ -235,6 +235,11 @@
 
 					return Redirect::route('home.index');
 				}
+
+				if($id === '2'){
+					return $this->editContact();
+				}
+
 				$page = $this->pageRepo->get($id);
 				$pages = $this->pageRepo->getAllToList();
 
@@ -319,6 +324,9 @@
 					$this->newOnSiteRepo->create($attributes);
 				}
 
+				if($page->pageId === 3) {
+					return Redirect::route('page.about');
+				}
 				return Redirect::route('page.show', [$page->pageId]);
 			}
 			Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
@@ -391,6 +399,12 @@
 					$this->sidebarRepo->deleteAllFromPage($pageId);
 				}
 			}
+		}
+
+
+		public function showAbout(){
+		
+			return $this->show(3);
 		}
 
 		/**
