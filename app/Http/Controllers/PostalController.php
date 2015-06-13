@@ -75,7 +75,6 @@
 
 				return view('postal.index');
 			}
-			Flash::error('De postcodes zijn helaas niet aangepast wegens een fout in het excel bestand.')->important();
 
 			return view('postal.index')->withErrors($this->errors);
 		}
@@ -147,7 +146,7 @@
 
 				array_push($totalArray, [
 					'id' => $address->addressId,
-					'postalCode' => $postal->postalId,
+					'postalCode' => $postal->code,
 					'houseNumber' => $houseNumber->houseNumber,
 					'suffix' => $houseNumber->suffix
 				]);
