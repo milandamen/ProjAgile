@@ -57,19 +57,6 @@
 		public function download()
 		{
 			$this->createExcel();
-//			$file = 'monkey.gif';
-//
-//			if (file_exists($file)) {
-//				header('Content-Description: File Transfer');
-//				header('Content-Type: application/octet-stream');
-//				header('Content-Disposition: attachment; filename=' . basename($file));
-//				header('Expires: 0');
-//				header('Cache-Control: must-revalidate');
-//				header('Pragma: public');
-//				header('Content-Length: ' . filesize($file));
-//				readfile($file);
-//				exit;
-//			}
 		}
 
 		/**
@@ -109,9 +96,8 @@
 						$excelFile->sheet($district->name, function ($sheet) use($AdressArray){
 
 
-							//Locks first column
+							//Protects certain cells from editing
 							$sheet->getProtection()->setSheet(true);
-							//$sheet->getStyleByColumn('B')->getProtection
 							$sheet->getStyle('B:B')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
 							$sheet->getStyle('C:C')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
 							$sheet->getStyle('D:D')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
