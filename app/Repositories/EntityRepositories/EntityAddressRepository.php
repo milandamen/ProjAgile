@@ -67,6 +67,18 @@
 
 		/**
 		 * Returns a Address model depending on the postal- and houseNumber- id's provided.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return Address
+		 */
+		public function getByDistrictSectionId($districtSectionId)
+		{
+			return Address::where('districtSectionId', '=', $districtSectionId)->get();
+		}
+
+		/**
+		 * Returns a Address model depending on the postal- and houseNumber- id's provided.
 		 * 
 		 * @param  int $postal
 		 * @param  int $houseNumber
