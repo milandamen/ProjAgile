@@ -4,7 +4,6 @@
 	use App\Models\Page;
 	use App\Models\PagePanel;
 	use App\Models\Panel;
-	use App\Repositories\EntityRepositories\EntityPageRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
