@@ -58,8 +58,11 @@
 									@endif
 								</td>	
 								<td> 
-									@if(isset($newsItem->districtSection))
-										{!! $newsItem->districtSection->name !!}
+									@if(count($newsItem->districtSections))
+										 {!! $newsItem->districtSections[0]->name !!}
+										@if(count($newsItem->districtSections) > 1)
+										,..
+										@endif
 									@else
 										Algemeen
 									@endif 

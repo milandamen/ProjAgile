@@ -39,7 +39,7 @@
 						Door: {{ $news->user->username }} |
 						@if($news->districtSections != null)
 							@foreach($news->districtSections as $district)
-								{{$district->name}} |
+								<a href="{!! route('district.show', $district->name) !!}">{{$district->name}} </a>|
 							@endforeach
 						@else
 							Algemeen

@@ -16,6 +16,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2 class="page-header">
+					@if(Auth::check() &&  (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
+							<a href="{{ route('district.edit', [$district->districtSectionId]) }}">
+								<i class="fa fa-pencil-square-o"></i>
+							</a>
+						@endif
 					Deelwijk {!! $district->name !!}
 				</h2>
 			</div>
