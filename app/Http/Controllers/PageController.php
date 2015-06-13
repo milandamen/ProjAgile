@@ -547,4 +547,28 @@
 			$page->visible ? $page->visible = false : $page->visible = true;
 			$this->pageRepo->update($page);
 		}
+
+		/**
+		 * Get all the pages by title name.
+		 *
+		 * @param  String $term
+		 *
+		 * @return Json
+		 */
+		public function getPagesByTitle($term)
+		{
+			$json = array();
+			$json_row = array();
+
+			$data = $this->pageRepo->getAllLikeTerm($term);
+
+			foreach($data as $page)
+			{
+				$json_row['page'] = $page;
+				$json_row['introduction'] = $page->introduction;
+				array_push($json, $json_row);
+			}
+
+			echo json_encode($json);
+		}
 	}
