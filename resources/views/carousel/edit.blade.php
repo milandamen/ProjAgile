@@ -23,7 +23,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data">
+				<form method="post" action="{!! route('carousel.update') !!}" enctype="multipart/form-data" onsubmit="validateCarousel()">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					{{-- */ $curDate = date('Y-m-d H:i:s',time()); $someRed = false; /* --}}
 					<table id="articlelisttable" class="table">
@@ -52,6 +52,21 @@
 									@else
 										<tr>
 									@endif
+
+								@elseif($article->page != null)
+
+									@if($article->page->visible == 0 || $article->page->publishDate > $curDate || $article->page->publishEndDate < $curDate)
+										<tr class="slightlyRed">
+										{{-- */ $someRed = true; /* --}}
+									@endif
+
+								@else
+
+									@if($article->publishStartDate > $curDate || $article->publishEndDate < $curDate)
+										<tr class="slightlyRed">
+										{{-- */ $someRed = true; /* --}}
+									@endif
+
 								@endif
 									<td></td>
 									<td>
@@ -90,27 +105,37 @@
 										@if($article->news != null)
 											{{$article->news->title}}
 										@elseif($article->page != null)
-											Geen titel
+											{{$article->page->introduction->title}}
 										@else
-											<input type="text" name="carouselTitle[]" value="{{$article->title}}" />
+											<input type="text" name="carouselTitle[]" value="{{$article->title}}" class="carouselTitle"/>
 										@endif
 									</td>
-									<td>
+									<td class="date-box">
 										@if($article->news != null)
 											{{$article->news->normalDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishDate}}
 										@else
-											<input type="text" name="carouselStartDate[]" value="{{$article->startDate()}}"/>
+											<div class="input-group date icon-width">
+												<input type="hidden" name="carouselStartDate[]" value="{{$article->startDate()}}" class="carousel-start-date"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
 										@endif
 									</td>
-									<td>
+									<td class="date-box">
 										@if($article->news != null)
 											{{$article->news->endDate()}}
 										@elseif($article->page != null)
 											{{$article->page->publishEndDate}}
 										@else
-											<input type="text" name="carouselEndDate[]" value="{{$article->endDate()}}"/>
+											<div class="input-group date icon-width">
+												<input type="hidden" name="carouselEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
 										@endif
 									</td>
 									<td>
@@ -145,7 +170,7 @@
 						</tbody>
 					</table>
 					@if ($someRed)
-						<p class="redText">De publicatiedatum van één of meerdere nieuws artikelen is verlopen.</p>
+						<p class="redText">De publicatiedatum van één of meerdere artikelen is verlopen.</p>
 					@endif
 					<button type="button" class="btn btn-danger" onclick="location.href='{{ route('management.index') }}'">Annuleren</button>
 					<button type="button" class="btn btn-primary add-carousel-button">Voeg carousel item toe</button>
@@ -174,15 +199,44 @@
 				</table>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Zoek pagina op titel</h2>
+				<input type="text" id="pageTitle" />
+				<a onclick="searchPage()" class="btn btn-primary">Zoek</a>
+			</div>
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+					<tr>
+						<th class="cu-smallcol">ID</th>
+						<th>Titel</th>
+						<th>Start datum</th>
+						<th>Eind datum</th>
+						<th class="cu-smallcol"></th>
+					</tr>
+					</thead>
+					<tbody id="page-searchresults"></tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 	<script>
 		// Sets the URI for the Ajax request for searching an article by title for use in the carouselUpdate.js script.
 		var getArticlesByTitleURL = "{!! route('news.getArticlesByTitle', '') !!}";
+		// Sets the URI for the Ajax request for searching a page by title for use in the carouselUpdate.js script.
+		var getPagesByTitleURL = "{!! route('page.getPagesByTitle', '') !!}";
 	</script>
 @stop
 
 @section('additional_scripts')
+	{!! HTML::script('moment/moment.js') !!}
+	{!! HTML::script('moment/locale/nl.js') !!}
+	{!! HTML::script('bootstrap/js/bootstrap-datetimepicker.js') !!}
+	{!! HTML::script('custom/js/datepicker.js') !!}
+
 	<!-- JavaScript file that handles removing and adding of rows and posting of the data form -->
 	{!! HTML::script('custom/js/carouselUpdate.js') !!}
+
 	{!! HTML::script('custom/js/flash_message.js') !!}
 @stop
