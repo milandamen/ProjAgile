@@ -15,7 +15,7 @@
 
 	Route::get('postcodebeheer/download',
 	[
-		'as'			=> 'postal.index',
+		'as'			=> 'postal.download',
 		'uses'			=> 'PostalController@download',
 		'middleware'	=> 'admin'
 	]);
