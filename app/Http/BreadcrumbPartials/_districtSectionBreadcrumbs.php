@@ -18,5 +18,12 @@
 	Breadcrumbs::register('district.edit', function($breadcrumbs, $district) 
 	{
 		$breadcrumbs->parent('district.index');
-		$breadcrumbs->push($district->name, route('district.edit', [$district->districtSectionId]));
+		$breadcrumbs->push($district->name, route('district.edit', [$district->id]));
+	});
+
+	// Home > Deelwijk > Nieuw
+	Breadcrumbs::register('district.create', function($breadcrumbs) 
+	{
+		$breadcrumbs->parent('district.index');
+		$breadcrumbs->push('Nieuwe deelwijk', route('district.create'));
 	});

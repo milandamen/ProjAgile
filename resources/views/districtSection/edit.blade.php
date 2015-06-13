@@ -11,7 +11,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			/breadcrumbs
+				{!! Breadcrumbs::render('district.edit', (object)['id' => $district->districtSectionId, 'name' => $district->name]) !!}
 		</div>
 		<div class="row">
 			<div class="col-md-8">
