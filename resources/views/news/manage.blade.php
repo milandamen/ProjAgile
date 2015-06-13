@@ -43,8 +43,8 @@
 					<tbody>
 						@foreach($news as $newsItem)
 							<tr>
-								{{--*/ $date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
-								$curDate = date('Y-m-d H:i:s', time()); /*--}}
+								{{--*/ $date = date('d-m-Y H:i:',time()-(7*86400)); // 7 days ago
+								 $curDate = date('d-m-Y H:i', time()); /*--}}
 								<td>
 									@if(($newsItem->hidden) && !($newsItem->publishEndDate < $date))
 										<i class="fa fa-eye-slash fa-lg"></i> 

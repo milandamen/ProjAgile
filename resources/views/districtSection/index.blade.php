@@ -42,7 +42,7 @@
 							<th> Nieuws #</th>
 						</tr>
 
-						{{--*/ $curDate = date('Y-m-d H:i:s', time());
+						{{--*/ $curDate = date('d-m-Y H:i', time());
 						 $count = 0; /*--}}
 						@foreach($districts as $district)
 							{{--*/	$count = 0; /*--}}
@@ -53,7 +53,7 @@
 								<td> </td>
 
 								@foreach($district->news as $news)
-									@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
+										@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
 										{{--*/	$count++; /*--}}
 									@endif
 								@endforeach

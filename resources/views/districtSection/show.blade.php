@@ -39,11 +39,11 @@
 							<th> Reacties </th>
 						</tr>
 						
-						{{--*/ $curDate = date('Y-m-d H:i:s', time());
+						{{--*/ $curDate = date('d-m-Y H:i:', time());
 						 $count = 0; /*--}}
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
+							@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
 								@if($news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </a></td>
@@ -58,7 +58,7 @@
 						@endforeach
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
+							@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
 								@if(!$news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </td>
@@ -66,6 +66,8 @@
 										<td colspan="2"> {!! $phrase !!} </td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
+
+									{{--*/ $count++; /*--}}
 								@endif
 							@endif
 						@endforeach
