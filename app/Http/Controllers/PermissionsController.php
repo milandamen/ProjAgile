@@ -28,6 +28,8 @@
 		const PERMISSION_SIDEBAR = 8;
 		const PERMISSION_NEWS = 9;
 
+		const RESIDENT_USERGROUP = 3;
+
 		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo, IUserGroupRepository $userGroupRepo, IAddressRepository $addressRepo)
 		{
 			$this->userRepo = $userRepo;
@@ -70,8 +72,9 @@
 			$pages = $this->pageRepo->getAll();
 			$districtSections = $this->districtSectionRepo->getAll();
 			$permissions = $this->permissionRepo->getAll();
+			$selectedDistrictSections = $this->getSelectedDistrictSections($userGroupId);
 
-			return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions'));
+			return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions', 'selectedDistrictSections'));
 		}
 
 		public function updateUserGroup($userGroupId, UpdateUserGroupRequest $request)
@@ -81,6 +84,17 @@
 			$this->userGroupRepo->update($userGroup);
 
 			$this->updateDatabasePermissions($request, $userGroup);
+
+			//get the removed district sections and reset usergroups.
+			$oldSelectedDistrictSections = json_decode($request->get('selectedDistrictSections'));
+
+			$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
+			$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
+
+			$difference = array_diff($oldSelectedDistrictSections, $districtSectionUserSelectionArray);
+
+			$this->resetUserGroups($difference);
+
 
 			return redirect::route('permissions.index');
 		}
@@ -148,7 +162,7 @@
 		}
 
 		/**
-		 * Assign users with the given districtSectionIds to give userGroup
+		 * Assign users with the given districtSectionIds to given userGroup
 		 *
 		 * @param array $districtSectionIds
 		 * @param int $userGroupId
@@ -166,6 +180,65 @@
 					$this->userRepo->update($districtSectionUser);
 				}
 			}
+		}
+
+		/**
+		 * Reset the user groups of users with the given districtSectionIds
+		 *
+		 * @param array $districtSectionIds
+		 * @return Response
+		 */
+		private function resetUserGroups($districtSectionIds)
+		{
+			foreach($districtSectionIds as $districtSectionId)
+			{
+				$districtSectionUsers = $this->userRepo->getAllByDistrictSection($districtSectionId);
+
+				foreach($districtSectionUsers as $districtSectionUser)
+				{
+					$districtSectionUser->userGroupId = self::RESIDENT_USERGROUP;
+					$this->userRepo->update($districtSectionUser);
+				}
+			}
+		}
+
+		/**
+		 * Loop through district sections to determine if all of the users under the district section are part of the given user group.
+		 * If so, the district section is considered selected for this user group.
+		 *
+		 * @param int $userGroupId
+		 * @return array $selectedDistrictSections
+		 */
+		private function getSelectedDistrictSections($userGroupId)
+		{
+			$selectedDistrictSections = [];
+			$districtSectionIds = $this->districtSectionRepo->getAll()->lists('districtSectionId');
+			$selected = true;
+
+			foreach($districtSectionIds as $districtSectionId)
+			{
+				$districtSectionUsers = $this->userRepo->getAllByDistrictSection($districtSectionId);
+
+				if (count($districtSectionUsers) !== 0)
+				{
+					foreach($districtSectionUsers as $districtSectionUser)
+					{
+						if ($districtSectionUser->userGroupId !== (int)$userGroupId)
+						{
+							$selected = false;
+						}
+					}
+
+					if ($selected)
+					{
+						$selectedDistrictSections[] = $districtSectionId;
+					}
+				}
+
+				$selected = true;
+			}
+
+			return $selectedDistrictSections;
 		}
 
 		private function updateDatabasePermissions($request, $model)

@@ -27,6 +27,7 @@
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
 		{!! Form::hidden('permissionSelection', null, ['id' => 'permissionSelection']) !!}
 		{!! Form::hidden('districtSectionUserSelection', null, ['id' => 'districtSectionUserSelection']) !!}
+		{!! Form::hidden('selectedDistrictSections', json_encode($selectedDistrictSections)) !!}
 
 		@include('errors.partials._list')
 
@@ -102,7 +103,11 @@
 					<div class="well district-sections">
 						<ul id="check-list-box-districtSectionUsers" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
-								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@if (!empty($selectedDistrictSections) && in_array($districtSection->districtSectionId, $selectedDistrictSections))
+									<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@else
+									<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+								@endif
 							@endforeach
 						</ul>
 					</div>
