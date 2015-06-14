@@ -29,6 +29,16 @@
 		}
 
 		/**
+		 * Returns all the Address models in the database filtered by district section.
+		 *
+		 * @return Collection -> Address
+		 */
+		public function getAllByDistrictSection($districtSectionId)
+		{
+			return Address::where('districtSectionId', $districtSectionId)->get();
+		}
+
+		/**
 		 * Returns all the Address models in the database.
 		 *
 		 * @return Collection -> Address

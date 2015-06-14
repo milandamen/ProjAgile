@@ -25,6 +25,7 @@
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
 		{!! Form::hidden('permissionSelection', null, ['id' => 'permissionSelection']) !!}
+		{!! Form::hidden('districtSectionUserSelection', null, ['id' => 'districtSectionUserSelection']) !!}
 
 		@include('errors.partials._list')
 		<div class="row">
@@ -91,7 +92,7 @@
 				<div class="row">
 					<h3 class="text-center">Gebruikers per deelwijk</h3>
 					<div class="well district-sections">
-						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
+						<ul id="check-list-box-districtSectionUsers" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
 								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 							@endforeach

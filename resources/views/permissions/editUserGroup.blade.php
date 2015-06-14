@@ -22,11 +22,22 @@
 		</div>
 
 		{!! Form::open(['url' => route('permissions.updateUserGroup', $userGroup->userGroupId), 'method' => 'POST', 'class' => 'userPermissionsForm']) !!}
+		{!! Form::hidden('userGroupId', $userGroup->userGroupId) !!}
 		{!! Form::hidden('pageSelection', null, ['id' => 'pageSelection']) !!}
 		{!! Form::hidden('districtSectionSelection', null, ['id' => 'districtSectionSelection']) !!}
 		{!! Form::hidden('permissionSelection', null, ['id' => 'permissionSelection']) !!}
+		{!! Form::hidden('districtSectionUserSelection', null, ['id' => 'districtSectionUserSelection']) !!}
 
 		@include('errors.partials._list')
+
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="form-group">
+					{!! Form::label('name', 'Groepsnaam') !!}
+					{!! Form::text('name', $userGroup->name, ['class' => 'form-control']) !!}
+				</div>
+			</div>
+		</div>
 
 		<div class="row">
 			<div class="col-xs-5">
@@ -76,6 +87,27 @@
 				</div>
 			</div>
 
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="page-header">Gebruikers Wijzigen</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-5">
+				<div class="row">
+					<h3 class="text-center">Gebruikers per deelwijk</h3>
+					<div class="well district-sections">
+						<ul id="check-list-box-districtSectionUsers" class="list-group checked-list-box">
+							@foreach($districtSections as $districtSection)
+								<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+							@endforeach
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		{!! link_to_route('permissions.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}

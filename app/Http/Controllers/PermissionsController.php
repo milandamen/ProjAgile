@@ -3,7 +3,9 @@
 
 	use App\Http\Requests;
 	use App\Http\Requests\Permissions\CreateUserGroupRequest;
+	use App\Http\Requests\Permissions\UpdateUserGroupRequest;
 	use App\Models\UserGroup;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
@@ -26,7 +28,7 @@
 		const PERMISSION_SIDEBAR = 8;
 		const PERMISSION_NEWS = 9;
 
-		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo, IUserGroupRepository $userGroupRepo)
+		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo, IUserGroupRepository $userGroupRepo, IAddressRepository $addressRepo)
 		{
 			$this->userRepo = $userRepo;
 			$this->pageRepo = $pageRepo;
@@ -34,6 +36,7 @@
 			$this->pageRepo = $pageRepo;
 			$this->permissionRepo = $permissionRepo;
 			$this->userGroupRepo = $userGroupRepo;
+			$this->addressRepo = $addressRepo;
 		}
 
 		public function index()
@@ -56,20 +59,7 @@
 			$data = $request->input();
 			$userGroup = $this->userGroupRepo->create($data);
 
-			//get posted permission strings and convert them into arrays.
-			$pageSelectionString = $request->get('pageSelection');
-			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
-
-			$districtSectionSelectionString = $request->get('districtSectionSelection');
-			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
-
-			$permissionSelectionString = $request->get('permissionSelection');
-			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
-
-			//update usergroup permissions in database.
-			$userGroup->pages()->sync($pageSelectionArray);
-			$userGroup->districtSections()->sync($districtSectionSelectionArray);
-			$userGroup->permissions()->sync($permissionSelectionArray);
+			$this->updateDatabasePermissions($request, $userGroup);
 
 			return redirect::route('permissions.index');
 		}
@@ -84,24 +74,13 @@
 			return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions'));
 		}
 
-		public function updateUserGroup($userGroupId, Request $request)
+		public function updateUserGroup($userGroupId, UpdateUserGroupRequest $request)
 		{
 			$userGroup = $this->userGroupRepo->get($userGroupId);
+			$userGroup->name = $request->get('name');
+			$this->userGroupRepo->update($userGroup);
 
-			//get posted permission strings and convert them into arrays.
-			$pageSelectionString = $request->get('pageSelection');
-			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
-
-			$districtSectionSelectionString = $request->get('districtSectionSelection');
-			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
-
-			$permissionSelectionString = $request->get('permissionSelection');
-			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
-
-			//update usergroup permissions in database.
-			$userGroup->pages()->sync($pageSelectionArray);
-			$userGroup->districtSections()->sync($districtSectionSelectionArray);
-			$userGroup->permissions()->sync($permissionSelectionArray);
+			$this->updateDatabasePermissions($request, $userGroup);
 
 			return redirect::route('permissions.index');
 		}
@@ -137,21 +116,9 @@
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_PERMISSIONS))
 			{
-				//get posted strings and convert them into arrays.
-				$pageSelectionString = $request->get('pageSelection');
-				$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
-
-				$districtSectionSelectionString = $request->get('districtSectionSelection');
-				$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
-
-				$permissionSelectionString = $request->get('permissionSelection');
-				$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
-
-				//update database
 				$user = $this->userRepo->get($userId);
-				$user->pages()->sync($pageSelectionArray);
-				$user->districtSections()->sync($districtSectionSelectionArray);
-				$user->permissions()->sync($permissionSelectionArray);
+
+				$this->updateDatabasePermissions($request, $user);
 
 				return redirect::route('user.index');
 			}
@@ -165,11 +132,11 @@
 		}
 
 		/**
-	 * Convert array of strings to array of ints
-	 *
-	 * @param $stringArray
-	 * @return array
-	 */
+	 	* Convert array of strings to array of ints
+	 	*
+	 	* @param $stringArray
+	 	* @return array
+	 	*/
 		private function stringToIntArray($stringArray)
 		{
 			$intArray = [];
@@ -178,6 +145,54 @@
 				$intArray[] = (int)$string;
 			}
 			return $intArray;
+		}
+
+		/**
+		 * Assign users with the given districtSectionIds to give userGroup
+		 *
+		 * @param array $districtSectionIds
+		 * @param int $userGroupId
+		 * @return Response
+		 */
+		private function setUserGroups($districtSectionIds, $userGroupId)
+		{
+			foreach($districtSectionIds as $districtSectionId)
+			{
+				$districtSectionUsers = $this->userRepo->getAllByDistrictSection($districtSectionId);
+
+				foreach($districtSectionUsers as $districtSectionUser)
+				{
+					$districtSectionUser->userGroupId = $userGroupId;
+					$this->userRepo->update($districtSectionUser);
+				}
+			}
+		}
+
+		private function updateDatabasePermissions($request, $model)
+		{
+			//get posted strings and convert them into arrays.
+			$pageSelectionString = $request->get('pageSelection');
+			$pageSelectionArray = $this->stringToIntArray(json_decode($pageSelectionString, true));
+
+			$districtSectionSelectionString = $request->get('districtSectionSelection');
+			$districtSectionSelectionArray = $this->stringToIntArray(json_decode($districtSectionSelectionString, true));
+
+			$permissionSelectionString = $request->get('permissionSelection');
+			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
+
+			//assign users to user group
+			if ($request->get('districtSectionUserSelection') !== null)
+			{
+				$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
+				$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
+
+				$this->setUserGroups($districtSectionUserSelectionArray, $model->userGroupId);
+			}
+
+			//update database
+			$model->pages()->sync($pageSelectionArray);
+			$model->districtSections()->sync($districtSectionSelectionArray);
+			$model->permissions()->sync($permissionSelectionArray);
 		}
 
 	}

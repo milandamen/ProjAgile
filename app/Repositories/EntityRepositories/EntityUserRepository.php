@@ -77,6 +77,16 @@
 		}
 
 		/**
+		 * Returns all the User models in the database filtered by district section.
+		 *
+		 * @return Collection -> User
+		 */
+		public function getAllByDistrictSection($districtSectionId)
+		{
+			return User::join('address', 'user.addressId', '=', 'address.addressId')->where('districtSectionId', '=', $districtSectionId)->get();
+		}
+
+		/**
 		 * Returns all the User models in the database filtered by user group and search criteria
 		 *
 		 * @return Collection -> User
