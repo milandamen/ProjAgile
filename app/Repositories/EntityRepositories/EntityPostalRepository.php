@@ -76,16 +76,4 @@
 		{
 			return Postal::where('code', '=', $code)->first();
 		}
-
-		/**
-		 * Returns a Postal record depending on the id provided.
-		 *
-		 * @param  int $postalId
-		 *
-		 * @return Postal
-		 */
-		public function getById($postalId)
-		{
-			return Postal::where('postalId', '=', $postalId)->first();
-		}
 	}

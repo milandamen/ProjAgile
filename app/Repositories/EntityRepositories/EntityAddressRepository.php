@@ -84,4 +84,31 @@
 			$model = Address::findOrFail($id);
 			$model->delete();
 		}
+
+		/**
+		 * Returns a Address model depending on the postal- and houseNumber- id's provided.
+		 * 
+		 * @param  int $postal
+		 * @param  int $houseNumber
+		 * 
+		 * @return Address
+		 */ 
+		public function getByPostalHouseNumber($postalId, $houseNumberId)
+		{
+			return Address::where('postalId', '=', $postalId)->where('houseNumberId', '=', $houseNumberId)->first();
+		}
+
+		/**
+		 * Returns an Address model depending on districtId, postalId and houseNumberId.
+		 *
+		 * @param  int $districtId
+		 * @param  int $postalId
+		 * @param  int $houseNumberId
+		 *
+		 * @return Collection -> Address
+		 */
+		public function getByDistrictPostalAndHouseNumber($districtId, $postalId, $houseNumberId)
+		{
+			return Address::where('districtSectionId', '=', $districtId)->where('postalId', '=', $postalId)->where('houseNumberId', '=', $houseNumberId)->first();
+		}
 	}

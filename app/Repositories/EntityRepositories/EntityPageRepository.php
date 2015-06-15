@@ -110,6 +110,4 @@
 			return Page::where('parentId', '=', $id)->get();
 		}
 
-		
-
 	}

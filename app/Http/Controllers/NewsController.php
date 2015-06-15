@@ -1,36 +1,74 @@
 <?php 
 	namespace App\Http\Controllers;
 
+	use App\Http\Requests\News\NewsRequest;
 	use App\Models\File;
 	use App\Models\News;
-	use App\Http\Requests\News\NewsRequest;
-	use App\Repositories\RepositoryInterfaces\IFileRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+	use App\Repositories\RepositoryInterfaces\IFileRepository;
 	use App\Repositories\RepositoryInterfaces\INewsCommentRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
-	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
-	use Flash;
+	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use Auth;
+	use Flash;
 	use Redirect;
 	use Request;
 	use View;
 
 	class NewsController extends Controller
 	{
-		private $fileRepo;
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
 		private $districtSectionRepo;
+
+		/**
+		 * The IFileRepository implementation.
+		 * 
+		 * @var IFileRepository
+		 */
+		private $fileRepo;
+
+		/**
+		 * The INewsCommentRepository implementation.
+		 * 
+		 * @var INewsCommentRepository
+		 */
 		private $newsCommentRepo;
+
+		/**
+		 * The INewsRepository implementation.
+		 * 
+		 * @var INewsRepository
+		 */
 		private $newsRepo;
+
+		/**
+		 * The IUserRepository implementation.
+		 * 
+		 * @var INewOnSiteRepository
+		 */
 		private $userRepo;
+
+		/**
+		 * The ISidebarRepository implementation.
+		 * 
+		 * @var ISidebarRepository
+		 */
+		private $sidebarRepo;
 
 		/**
 		 * Creates a new NewsController instance.
 		 *
-		 * @param IFileRepository        $fileRepo
-		 * @param INewsCommentRepository $newsCommentRepo
-		 * @param INewsRepository        $newsRepo
-		 * @param IUserRepository        $userRepo
+		 * @param IDistrictSectionRepository	$districtSectionRepo
+		 * @param IFileRepository				$fileRepo
+		 * @param INewsCommentRepository		$newsCommentRepo
+		 * @param INewsRepository				$newsRepo
+		 * @param IUserRepository				$userRepo
+		 * @param ISidebarRepository			$sidebarRepo	
 		 *
 		 * @return void
 		 */
@@ -93,6 +131,7 @@
 
 				return view('news.create', compact('newsItem', 'districtSections'));
 			}
+
 			return view('errors.403');
 		}
 
@@ -112,6 +151,7 @@
 
 				return Redirect::route('news.show', [$news->newsId]);
 			}
+
 			return view('errors.403');
 		}
 
@@ -134,6 +174,7 @@
 			else
 			{
 				Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
+
 				return Redirect::route('news.manage');
 			}
 
@@ -154,7 +195,6 @@
 			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
 				$newsItem = $this->newsRepo->get($id);
-				//$newsItem->districtSectionId = $request->districtSection[0];
 				$newsItem->title = $request->title;
 				$newsItem->content = $request->content;
 				$newsItem->hidden = $request->hidden;
@@ -178,7 +218,7 @@
 					$news->districtSections()->attach($district);
 				}
 
-				// Remove selected files
+				// Remove selected files.
 				if ($request->removefile)
 				{
 					foreach ($request->removefile as $key => $value)
@@ -187,18 +227,14 @@
 					}
 				}
 
-				// Save files that were sent with this request
+				// Save files that were sent with this request.
 				$this->saveFiles($request->file, $id);
 
 				return Redirect::route('news.show', [$id]);
 			}
-			else
-			{
-				Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
-				return Redirect::route('news.manage');
-			}
+			Flash::error('U bent niet geautoriseerd om dit nieuws items te wijzigen.');
 
-			return view('errors.403');
+			return Redirect::route('news.manage');
 		}
 
 		/**
@@ -210,7 +246,7 @@
 		public function manage()
 		{
 			$news = $this->newsRepo->getAllHidden();
-			$sidebar = $this->sidebarRepo->getByPage('2');
+			$sidebar = $this->sidebarRepo->getByPage(2);
 
 			return view('news.manage', compact('news', 'sidebar'));
 		}   
@@ -242,7 +278,7 @@
 		 *
 		 * @param  String $term
 		 *
-		 * @return Json
+		 * @return JSON
 		 */
 		public function getArticlesByTitle($term) 
 		{
@@ -251,13 +287,13 @@
 		}
 
 		/**
-		 * Hides an article depending on the id provided.
+		 * Toggle the hide status of an article depending on the id provided.
 		 *
 		 * @param int $id
 		 *
 		 * @return Response
 		 */
-		public function hide($id)
+		public function toggleHide($id)
 		{
 			$newsItem = $this->newsRepo->get($id);
 
@@ -267,7 +303,7 @@
 
 				if(count($news) > 0)
 				{
-					$news->hidden = true;
+					$news->hidden ? $news->hidden = false : $news->hidden = true;
 					$this->newsRepo->update($news);
 
 					return Redirect::route('news.manage');
@@ -275,47 +311,19 @@
 
 				return view('errors.404');
 			}
-			else
-			{
-				Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
-				return Redirect::route('news.manage');
-			}
+			Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
+
+			return Redirect::route('news.manage');
 		}
 
 		/**
-		 * Unhides an article depending on the id provided.
-		 *
-		 * @param int $id
-		 *
-		 * @return Response
+		 * Handles saving the files for the specified news item.
+		 * 
+		 * @param  Mixed	$requestFiles
+		 * @param  int		$newsId
+		 * 
+		 * @return void
 		 */
-		public function unhide($id)
-		{
-			$newsItem = $this->newsRepo->get($id);
-
-			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections))
-			{
-				$news = $this->newsRepo->get($id);
-
-				if(count($news) > 0)
-				{
-					$news->hidden = false;
-					$this->newsRepo->update($news);
-				}
-				else
-				{
-					return view('errors.404');
-				}
-
-				return Redirect::route('news.manage');
-			}
-			else
-			{
-				Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
-				return Redirect::route('news.manage');
-			}
-		}
-
 		private function saveFiles($requestFiles, $newsId) 
 		{
 			$target = public_path() . '/uploads/file/news/';
@@ -355,7 +363,10 @@
 					
 					if (!empty($filename) && in_array($ext, $allowed)) 
 					{
-						$file = $this->fileRepo->create(['newsId' => $newsId]);
+						$file = $this->fileRepo->create
+						([
+							'newsId' => $newsId
+						]);
 						$rfile->move($target, $file->fileId . '_' . $filename);
 						
 						$file->newsId = $newsId;

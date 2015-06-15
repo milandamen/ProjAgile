@@ -11,35 +11,73 @@
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPermissionRepository;
-	use Illuminate\Http\Request;
-
 	use Auth;
+	use Illuminate\Http\Request;
 	use Redirect;
 
-
-	class PermissionsController extends Controller {
-
-		const PERMISSION_MENU = 1;
-		const PERMISSION_FOOTER = 3;
-		const PERMISSION_CAROUSEL = 4;
-		const PERMISSION_HOMEPAGE = 5;
-		const PERMISSION_PERMISSIONS = 6;
-		const PERMISSION_USERS = 7;
-		const PERMISSION_SIDEBAR = 8;
-		const PERMISSION_NEWS = 9;
+	class PermissionsController extends Controller 
+	{
+		const PERMISSION_MENU			= 1;
+		const PERMISSION_FOOTER			= 3;
+		const PERMISSION_CAROUSEL		= 4;
+		const PERMISSION_HOMEPAGE		= 5;
+		const PERMISSION_PERMISSIONS	= 6;
+		const PERMISSION_USERS			= 7;
+		const PERMISSION_SIDEBAR		= 8;
+		const PERMISSION_NEWS			= 9;
 
 		const RESIDENT_USERGROUP = 3;
 
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
+		private $districtSectionRepo;
+
+		/**
+		 * The IPageRepository implementation.
+		 * 
+		 * @var IPageRepository
+		 */
+		private $pageRepo;
+		
+		/**
+		 * The IPermissionRepository implementation.
+		 * 
+		 * @var IPermissionRepository
+		 */
+		private $permissionRepo;
+
+		/**
+		 * The IUserRepository implementation.
+		 * 
+		 * @var IUserRepository
+		 */
+		private $userRepo;
+
+		/**
+		 * Creates a new PermissionController instance.
+		 *
+		 * @param  IUserRepository				$userRepo
+		 * @param  IPageRepository				$pageRepo
+		 * @param  IDistrictSectionRepository	$districtSectionRepo
+		 * @param  IPermissionRepository		$permissionRepo
+		 * @param  IUserGroupRepository			$userGroupRepo
+		 * @param  IAddresssRepository			$addressRepo
+		 *
+		 * @return void
+		 */
 		public function __construct(IUserRepository $userRepo, IPageRepository $pageRepo, IDistrictSectionRepository $districtSectionRepo, IPermissionRepository $permissionRepo, IUserGroupRepository $userGroupRepo, IAddressRepository $addressRepo)
 		{
 			$this->userRepo = $userRepo;
 			$this->pageRepo = $pageRepo;
 			$this->districtSectionRepo = $districtSectionRepo;
-			$this->pageRepo = $pageRepo;
 			$this->permissionRepo = $permissionRepo;
 			$this->userGroupRepo = $userGroupRepo;
 			$this->addressRepo = $addressRepo;
 		}
+		
 
 		public function index()
 		{
@@ -102,7 +140,8 @@
 		/**
 		 * Show the form for editing the specified resource.
 		 *
-		 * @param  int  $id
+		 * @param  int $id
+		 * 
 		 * @return Response
 		 */
 		public function editUserPermissions($userId)
@@ -123,7 +162,8 @@
 		/**
 		 * Update the specified resource in storage.
 		 *
-		 * @param  int  $id
+		 * @param  int $id
+		 * 
 		 * @return Response
 		 */
 		public function updateUserPermissions($userId, Request $request)
@@ -141,18 +181,21 @@
 		}
 
 		/**
-	 	* Convert array of strings to array of ints
-	 	*
-	 	* @param $stringArray
-	 	* @return array
-	 	*/
+		 * Convert array of strings to array of ints
+		 *
+		 * @param  array() $stringArray
+		 * 
+		 * @return array()
+		 */
 		private function stringToIntArray($stringArray)
 		{
 			$intArray = [];
+
 			foreach($stringArray as $string)
 			{
 				$intArray[] = (int)$string;
 			}
+
 			return $intArray;
 		}
 
@@ -262,5 +305,4 @@
 			$model->districtSections()->sync($districtSectionSelectionArray);
 			$model->permissions()->sync($permissionSelectionArray);
 		}
-
 	}

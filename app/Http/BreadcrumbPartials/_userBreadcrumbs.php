@@ -37,7 +37,7 @@
 	// Home > Beheer > Gebruikers > Wijzigen > [ Gebruikersnaam ]
 	Breadcrumbs::register('user.edit', function($breadcrumbs, $user)
 	{
-		$breadcrumbs->parent('user.index');
+		$breadcrumbs->parent('user.edit.prefix');
 		$breadcrumbs->push($user->username, route('user.edit', [$user->id]));
 	});
 
