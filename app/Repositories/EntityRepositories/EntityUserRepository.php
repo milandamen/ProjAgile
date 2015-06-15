@@ -86,16 +86,6 @@
 		}
 
 		/**
-		 * Returns all the User models in the database filtered by user group.
-		 *
-		 * @return Collection -> User
-		 */
-		public function getAllByUserGroup($userGroupId)
-		{
-			return User::where('userGroupId', $userGroupId)->get();
-		}
-
-		/**
 		 * Returns all the User models in the database filtered by district section.
 		 *
 		 * @return Collection -> User
@@ -104,20 +94,7 @@
 		{
 			return User::join('address', 'user.addressId', '=', 'address.addressId')->where('districtSectionId', '=', $districtSectionId)->get();
 		}
-
-		/**
-		 * Returns all the User models in the database filtered by user group and search criteria
-		 *
-		 * @return Collection -> User
-		 */
-		public function filterAllByUserGroup($userGroupId, $criteria)
-		{
-			$users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->get();
-
-			return $users->where('userGroupId', $userGroupId);
-		}
-
-
+		
 		/**
 		 * Creates a User record in the database.
 		 * 
