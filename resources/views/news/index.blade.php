@@ -25,8 +25,11 @@
 							<p class="newstitle"><a href="{{ route('news.show', [$newsItem->newsId]) }}">{!! $newsItem->title !!} </a></p>
 							<p class="newsdate">{!! $newsItem->normalDate() !!} 
 								| <i class="fa fa-user"></i> <b>{!! $newsItem->user->username !!} </b> 
-								| @if($newsItem->districtSection != null)
-										{!! $newsItem->districtSection->name !!}
+								|@if(count($newsItem->districtSections))
+										 {!! $newsItem->districtSections[0]->name !!}
+										@if(count($newsItem->districtSections) > 1)
+										,..
+										@endif
 									@else
 										Algemeen
 									@endif </p>
@@ -54,8 +57,11 @@
 					@foreach($oldnews as $newsItem)
 						<tr>
 							<td> 
-								@if($newsItem->districtSection != null)
-									{!! $newsItem->districtSection->name !!}
+								@if(count($newsItem->districtSections))
+										 {!! $newsItem->districtSections[0]->name !!}
+										@if(count($newsItem->districtSections) > 1)
+										,..
+										@endif
 								@else
 									Algemeen
 								@endif 

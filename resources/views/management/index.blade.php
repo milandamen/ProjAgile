@@ -26,7 +26,7 @@
 					@if(Auth::check() && Auth::user()->usergroup->name === 'Administrator')
 						@include('management.partials._manageGeneral')
 						@include('management.partials._manageHome')
-						@include('management.partials._manageNews')
+						@include('management.partials._management')
 						@include('management.partials._manageUsers')
 					@elseif(Auth::check() && Auth::user()->usergroup->name === 'Content Beheerder')
 						@include('management.partials._manageHome')
