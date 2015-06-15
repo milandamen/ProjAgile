@@ -41,7 +41,7 @@
 		'middleware'	=> 'admin'
 	]);
 
-		Route::post('deelwijk/{id}/verwijder',
+	Route::get('deelwijk/{id}/verwijder',
 	[
 		'as'			=> 'district.destroy',
 		'uses'			=> 'DistrictSectionController@destroy',

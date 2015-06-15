@@ -46,10 +46,15 @@
 							<th colspan="3">Acties</th>
 						</tr>
 
-						{{--*/  $curDate = date('d-m-Y H:i', time());
-						 $count = 0; /*--}}
+						{{--*/  
+							$curDate = date('d-m-Y H:i', time());
+							$count = 0; 
+							$current = strtotime($curDate);
+						/*--}}
 						@foreach($districts as $district)
-						{{--*/	$count = 0; /*--}}
+							{{--*/	
+								$count = 0; 
+							/*--}}
 							<tr>
 								<td><a href="{!! route('district.show', $district->name)!!}"> {!! $district->name !!} </a> </td>
 								 {{--*/ $phrase = trunc($district->generalInfo, 20); /*--}}
@@ -57,7 +62,11 @@
 								<td> </td>
 
 								@foreach($district->news as $news)
-									@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
+									{{--*/
+										$endDate = strtotime($news->publishEndDate);
+										$pubDate = strtotime($news->publishStartDate);
+									/*--}}
+									@if($pubDate <= $current && $endDate >= $current && !$news->hidden)
 										{{--*/	$count++; /*--}}
 									@endif
 								@endforeach

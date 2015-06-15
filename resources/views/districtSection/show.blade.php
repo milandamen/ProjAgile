@@ -44,11 +44,19 @@
 							<th> Reacties </th>
 						</tr>
 						
-						{{--*/ $curDate = date('d-m-Y H:i:', time());
-						 $count = 0; /*--}}
+						{{--*/  
+							$curDate = date('d-m-Y H:i', time());
+							$count = 0; 
+							$current = strtotime($curDate);
+						/*--}}
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
+							{{--*/
+								$endDate = strtotime($news->publishEndDate);
+								$pubDate = strtotime($news->publishStartDate);
+							/*--}}
+
+							@if($pubDate <= $current && $endDate >= $current && !$news->hidden)	
 								@if($news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </a></td>
@@ -57,13 +65,17 @@
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
 								@endif
-
-							{{--*/ $count++; /*--}}
+								{{--*/ $count++; /*--}}
 							@endif
 						@endforeach
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate <= $curDate && $news->publishEndDate >= $curDate && !$news->hidden)
+
+							{{--*/
+								$endDate = strtotime($news->publishEndDate);
+								$pubDate = strtotime($news->publishStartDate);
+							/*--}}
+							@if($pubDate <= $current && $endDate >= $current && !$news->hidden)
 								@if(!$news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </td>
@@ -71,7 +83,6 @@
 										<td colspan="2"> {!! $phrase !!} </td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
-
 									{{--*/ $count++; /*--}}
 								@endif
 							@endif
