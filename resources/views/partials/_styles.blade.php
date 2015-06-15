@@ -23,6 +23,7 @@
 {!! HTML::style('custom/css/page.css') !!}
 {!! HTML::style('custom/css/colpick.css') !!}
 {!! HTML::style('custom/css/permissions.css') !!}
+{!! HTML::style('custom/css/postal.css') !!}
 
 {{-- Fonts --}}
 {!! HTML::style('font-awesome/css/font-awesome.min.css') !!}
