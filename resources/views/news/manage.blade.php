@@ -43,23 +43,32 @@
 					<tbody>
 						@foreach($news as $newsItem)
 							<tr>
-								{{--*/ $date = date('Y-m-d H:i:s',time()-(7*86400)); // 7 days ago
-								$curDate = date('Y-m-d H:i:s', time()); /*--}}
+								{{--*/ $date = date('d-m-Y H:i:',time()-(7*86400)); // 7 days ago
+								 $curDate = date('d-m-Y H:i', time()); 
+								 $daysAgo = strtotime($date);
+								 $current = strtotime($curDate);
+								 $endDate = strtotime($newsItem->publishEndDate);
+								 $pubDate = strtotime($newsItem->publishStartDate);
+
+								 /*--}}
 								<td>
-									@if(($newsItem->hidden) && !($newsItem->publishEndDate < $date))
+									@if(($newsItem->hidden) && !($endDate < $daysAgo))
 										<i class="fa fa-eye-slash fa-lg"></i> 
-									@elseif(($newsItem->publishEndDate < $curDate) && !($newsItem->hidden))
+									@elseif(($endDate < $current) && !($newsItem->hidden))
 										<i class="fa fa-ban fa-lg"></i> 
-									@elseif(($newsItem->publishEndDate < $curDate) && ($newsItem->hidden))
+									@elseif(($endDate < $current) && ($newsItem->hidden))
 										<i class="fa fa-ban fa-lg"></i>  
 										<i class="fa fa-eye-slash fa-lg"></i> 
-									@elseif($newsItem->publishStartDate > $curDate)
+									@elseif($pubDate > $current)
 										<i class="fa fa-repeat fa-lg"></i>
 									@endif
 								</td>	
 								<td> 
-									@if(isset($newsItem->districtSection))
-										{!! $newsItem->districtSection->name !!}
+									@if(count($newsItem->districtSections))
+										 {!! $newsItem->districtSections[0]->name !!}
+										@if(count($newsItem->districtSections) > 1)
+										,..
+										@endif
 									@else
 										Algemeen
 									@endif 
