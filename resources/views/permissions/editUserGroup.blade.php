@@ -47,13 +47,14 @@
 					<ul id="check-list-box-page" class="list-group checked-list-box">
 						@foreach($pages as $page)
 							@if($userGroup->hasPagePermission($page->pageId))
-								<li class="list-group-item checked" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+								<li class="list-group-item checked page-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
 							@else
-								<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+								<li class="list-group-item page-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
 							@endif
 						@endforeach
 					</ul>
 				</div>
+				<button class="btn btn-warning all-pages">Alle pagina's</button>
 			</div>
 
 			<div class="col-xs-5 col-xs-offset-2">
@@ -63,13 +64,14 @@
 						<ul id="check-list-box-permission" class="list-group checked-list-box">
 							@foreach($permissions as $permission)
 								@if($userGroup->hasPermission($permission->permissionId))
-									<li class="list-group-item checked" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+									<li class="list-group-item checked permission-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
 								@else
-									<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+									<li class="list-group-item permission-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
 								@endif
 							@endforeach
 						</ul>
 					</div>
+					<button class="btn btn-warning all-permissions">Alle onderdelen</button>
 				</div>
 
 				<div class="row">
@@ -78,13 +80,14 @@
 						<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
 								@if($userGroup->hasDistrictSectionPermission($districtSection->districtSectionId))
-									<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+									<li class="list-group-item checked districtSection-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 								@else
-									<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+									<li class="list-group-item districtSection-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 								@endif
 							@endforeach
 						</ul>
 					</div>
+					<button class="btn btn-warning all-districtSections">Alle deelwijken</button>
 				</div>
 			</div>
 
@@ -104,20 +107,25 @@
 						<ul id="check-list-box-districtSectionUsers" class="list-group checked-list-box">
 							@foreach($districtSections as $districtSection)
 								@if (!empty($selectedDistrictSections) && in_array($districtSection->districtSectionId, $selectedDistrictSections))
-									<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+									<li class="list-group-item checked districtSectionUser-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 								@else
-									<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+									<li class="list-group-item districtSectionUser-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 								@endif
 							@endforeach
 						</ul>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-warning add-margin all-districtSectionUsers">Alle gebruikers</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		{!! link_to_route('permissions.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
-		{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
-		{!! Form::close() !!}
+		<div class="row">
+			{!! link_to_route('permissions.index', 'Terug naar Gebruikersgroepen', [], ['class' => 'btn btn-danger']) !!}
+			{!! Form::submit('Opslaan', ['class' => 'btn btn-success']) !!}
+			{!! Form::close() !!}
+		</div>
 
 	</div>
 @stop
