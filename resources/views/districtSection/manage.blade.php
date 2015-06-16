@@ -21,6 +21,10 @@
 			</div>
 		</div>
 
+		<div class="row">
+			@include('flash::message')
+		</div>
+
 		<div class="row addmargin">
 			<div class="col-md-8">
 				<p>
@@ -95,4 +99,6 @@
 	</div>
 @endsection
 
-
+@section('additional_scripts')
+	{!! HTML::script('custom/js/flash_message.js') !!}
+@stop

@@ -138,7 +138,33 @@
 		}
 
 
-		public function destroy(){
+		public function destroy($id){
+
+			$district = $this->districtRepo->get($id);
+			$news = $this->districtRepo->get($id)->news;
+
+			foreach($district->news as $new){
+				$home = false;
+				
+				foreach($new->districtSections as $newsdistrict){
+					if($newsdistrict->name === 'Home'){
+						$home = true;
+					}
+				}
+
+
+				if(!$home){
+					$homedist = $this->districtRepo->get(1)->news()->attach($new->newsId);
+				}
+			}
+
+			$district->news()->detach();
+			$this->districtRepo->destroy($district->districtSectionId);
+
+			Flash::success('Deelwijk succesvol verwijderd')->important();
+
+			return Redirect::route('district.manage');
+
 
 		}
 		
