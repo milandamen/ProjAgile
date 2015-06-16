@@ -1,9 +1,10 @@
 <?php
 	namespace App\Http\Controllers;
-	
+
+	use Auth;
 	use App\Models\Carousel;
 	use App\Repositories\RepositoryInterfaces\ICarouselRepository;
-	use Auth;
+	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use Illuminate\Support\Facades\Redirect;
 	
 	class CarouselController extends Controller
@@ -17,9 +18,10 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(ICarouselRepository $carouselRepo)
+		public function __construct(ICarouselRepository $carouselRepo, IPageRepository $pageRepo)
 		{
 			$this->carouselRepo = $carouselRepo;
+			$this->pageRepo= $pageRepo;
 		}
 		
 		/**
@@ -117,6 +119,39 @@
 								}
 							}
 							$lci++;
+						}
+						else if($_POST['sort'][$i] === 'page')
+						{
+							$pageId = $_POST['artikel'][$i];
+							$newsId = null;
+							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
+
+							if(!isset($description) || empty($description))
+							{
+								$description = 'Nog geen beschrijving';
+							}
+
+							$page = $this->pageRepo->get($pageId);
+
+							//title via page -> relatie
+							$title = $page->introduction->title;
+
+							$publishStartDate = $page->publishDate;
+							$publishEndDate = $page->publishEndDate;
+
+							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
+
+
+							$oldItem = null;
+
+							foreach ($oldItems as $oI)
+							{
+								if ($oI->pageId == $pageId)
+								{
+									$oldItem = $oI;
+									break;
+								}
+							}
 						}
 
 						if (isset($_POST['deletefile'][$i]) && $_POST['deletefile'][$i] === 'true')

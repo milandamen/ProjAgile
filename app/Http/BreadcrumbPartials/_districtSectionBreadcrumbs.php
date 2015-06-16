@@ -3,12 +3,19 @@
 	Breadcrumbs::register('district.index', function($breadcrumbs) 
 	{
 		$breadcrumbs->parent('home.index');
-		$breadcrumbs->push('Deelwijken', route('district.index'));
+		$breadcrumbs->push('Deelwijk', route('district.index'));
 	});
 
 	// Home > Deelwijk > [Name]
-	Breadcrumbs::register('district.show', function($breadcrumbs, $district) 
+	Breadcrumbs::register('district.edit', function($breadcrumbs, $district) 
 	{
 		$breadcrumbs->parent('district.index');
-		$breadcrumbs->push($district->name, route('district.show', [$district->name]));
+		$breadcrumbs->push($district->name, route('district.edit', [$district->id]));
+	});
+
+	// Home > Deelwijk > Deelwijk Aanmaken
+	Breadcrumbs::register('district.create', function($breadcrumbs) 
+	{
+		$breadcrumbs->parent('district.index');
+		$breadcrumbs->push('Deelwijk Aanmaken', route('district.create'));
 	});

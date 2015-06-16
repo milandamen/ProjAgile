@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('title')
+	De Bunders - Deelwijk {!! $district->name !!}
+@stop
+
+@section('description')
+	Dit is de pagina van de deelwijk {!! $district->name !!} van De Bunders.
+@stop
+
 @section('content')
 	 <div class="container">
 		<div class="row">
@@ -8,6 +16,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2 class="page-header">
+					@if(Auth::check() &&  (Auth::user()->usergroup->name === 'Administrator' || Auth::user()->usergroup->name === 'Content Beheerder'))
+							<a href="{{ route('district.edit', [$district->districtSectionId]) }}">
+								<i class="fa fa-pencil-square-o"></i>
+							</a>
+						@endif
 					Deelwijk {!! $district->name !!}
 				</h2>
 			</div>
@@ -15,7 +28,7 @@
 
 		<div class="row addmargin">
 			<div class="col-md-8">
-				<p> {!! $district->generalInfo !!} </p>
+				<p> {!! nl2br($district->generalInfo) !!} </p>
 			</div>
 		</div>
 
@@ -31,33 +44,46 @@
 							<th> Reacties </th>
 						</tr>
 						
-						{{--*/ $curDate = date('Y-m-d H:i:s', time());
-						 $count = 0; /*--}}
+						{{--*/  
+							$curDate = date('d-m-Y H:i', time());
+							$count = 0; 
+							$current = strtotime($curDate);
+						/*--}}
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
+							{{--*/
+								$endDate = strtotime($news->publishEndDate);
+								$pubDate = strtotime($news->publishStartDate);
+							/*--}}
+
+							@if($pubDate <= $current && $endDate >= $current && !$news->hidden)	
 								@if($news->top)
 									<tr>
-										<td> {!! $news->title !!} </td>
+										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </a></td>
 										 {{--*/ $phrase = trunc($news->content, 20); /*--}}
 										<td colspan="2"><i> {!! $phrase !!} </i></td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
 								@endif
-
-							{{--*/ $count++; /*--}}
+								{{--*/ $count++; /*--}}
 							@endif
 						@endforeach
 
 						@foreach($district->news as $news)
-							@if($news->publishStartDate < $curDate && $news->publishEndDate > $curDate && !$news->hidden)
+
+							{{--*/
+								$endDate = strtotime($news->publishEndDate);
+								$pubDate = strtotime($news->publishStartDate);
+							/*--}}
+							@if($pubDate <= $current && $endDate >= $current && !$news->hidden)
 								@if(!$news->top)
 									<tr>
-										<td> {!! $news->title !!} </td>
+										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </td>
 										 {{--*/ $phrase = trunc($news->content, 30); /*--}}
 										<td colspan="2"> {!! $phrase !!} </td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
+									{{--*/ $count++; /*--}}
 								@endif
 							@endif
 						@endforeach

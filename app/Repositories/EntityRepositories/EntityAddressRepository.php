@@ -19,6 +19,16 @@
 		}
 
 		/**
+		 * Returns all the Address models in the database filtered by district section.
+		 *
+		 * @return Collection -> Address
+		 */
+		public function getAllByDistrictSection($districtSectionId)
+		{
+			return Address::where('districtSectionId', $districtSectionId)->get();
+		}
+
+		/**
 		 * Returns all the Address models in the database.
 		 *
 		 * @return Collection -> Address
@@ -63,6 +73,18 @@
 		{
 			$model = Address::findOrFail($id);
 			$model->delete();
+		}
+
+		/**
+		 * Returns a Address model depending on the postal- and houseNumber- id's provided.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return Address
+		 */
+		public function getByDistrictSectionId($districtSectionId)
+		{
+			return Address::where('districtSectionId', '=', $districtSectionId)->get();
 		}
 
 		/**

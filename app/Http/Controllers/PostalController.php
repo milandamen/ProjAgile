@@ -7,6 +7,7 @@
 	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 	use App\Http\Requests\Postal\PostalRequest;
 	use Excel;
+	use PHPExcel_Style_Protection;
 	use Flash;
 
 	class PostalController extends Controller
@@ -53,6 +54,11 @@
 			return view('postal.index');
 		}
 
+		public function download()
+		{
+			$this->createExcel();
+		}
+
 		/**
 		 * Function for uploading the new postal information.
 		 *
@@ -69,9 +75,83 @@
 
 				return view('postal.index');
 			}
-			Flash::error('De postcodes zijn helaas niet aangepast wegens een fout in het excel bestand.')->important();
 
 			return view('postal.index')->withErrors($this->errors);
+		}
+
+		private function createExcel()
+		{
+			Excel::create('Bunders_postcodes', function($excelFile)
+			{
+				$excelFile->setTitle('Postcodes van wijkraad de Bunders');
+				$excelFile->setCreator('BundersWebsite');
+				$excelFile->setDescription('Een overzicht van alle postcodes per deelwijk');
+				foreach ($this->districtRepo->getAll() as $district)
+				{
+					if($district->name != 'Home')
+					{
+						$AdressArray = $this->createPostalArrayByDistrict($district->districtSectionId);
+
+						$excelFile->sheet($district->name, function ($sheet) use($AdressArray){
+
+
+							//Protects certain cells from editing
+							$sheet->getProtection()->setSheet(true);
+							$sheet->getStyle('B:B')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
+							$sheet->getStyle('C:C')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
+							$sheet->getStyle('D:D')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
+							$sheet->getStyle('B1:D1')->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_PROTECTED);
+
+							//Set header
+							$sheet->appendRow(array(
+								'Id',
+								'Postcode',
+								'HuisNr',
+								'Toevoeging'
+							));
+
+							//Fill rows with data from database
+							foreach($AdressArray as $address)
+							{
+								$sheet->appendRow(array(
+									$address['id'],
+									$address['postalCode'],
+									$address['houseNumber'],
+									$address['suffix']
+								));
+							}
+
+							//Set styling header
+							$sheet->cell('A1:D1', function($cells)
+							{
+								$cells->setFontColor('#ffffff');
+								$cells->setBackground('#000000');
+								$cells->setFontWeight('bold');
+							});
+
+
+						});
+					}
+				}
+			})->download('xlsx');
+		}
+
+		private function createPostalArrayByDistrict($districtSectionId)
+		{
+			$totalArray = [];
+			foreach($this->addressRepo->getByDistrictSectionId($districtSectionId) as $address)
+			{
+				$postal = $this->postalRepo->get($address->postalId);
+				$houseNumber = $this->houseNumberRepo->get($address->houseNumberId);
+
+				array_push($totalArray, [
+					'id' => $address->addressId,
+					'postalCode' => $postal->code,
+					'houseNumber' => $houseNumber->houseNumber,
+					'suffix' => $houseNumber->suffix
+				]);
+			}
+			return $totalArray;
 		}
 
 		private function validateFile($file)
