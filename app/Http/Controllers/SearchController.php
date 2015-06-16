@@ -9,6 +9,7 @@
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
+	use Auth;
 
 	class SearchController extends Controller 
 	{

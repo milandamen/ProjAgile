@@ -22,15 +22,19 @@
 					</div>
 					<div class="panel-body">
 						<table class="table">
-							@foreach($news as $newsItem)
+							@for($i = 0; $i < count($news); $i++)
 								<tr>
-									<a href="{{ route('news.show', [$newsItem->newsId]) }}">{{ $newsItem->title }}</a>
-								</tr>
-								<tr>
+									<a href="{{ route('news.show', [$news[$i]->newsId]) }}">{{ $news[$i]->title }}</a>
 									<br>
-									{!! trunc( $newsItem->content, 50) !!}
+									@if($i !== count($pages) -1)
+										<div class="addmargin">
+											{{ trunc(strip_tags($news[$i]->content), 50) }}
+										</div>
+									@else
+										{{ trunc(strip_tags($news[$i]->content), 50) }}
+									@endif
 								</tr>
-							@endforeach
+							@endfor
 						</table>
 					</div>
 				</div>
@@ -42,15 +46,19 @@
 					</div>
 					<div class="panel-body">
 						<table class="table">
-							@foreach($pages as $page)
+							@for($i = 0; $i < count($pages); $i++)
 								<tr>
-									<a href="{{ route('page.show', [$page->pageId]) }}">{{ $page->introduction->title }}</a>
-								</tr>
-								<tr>
+									<a href="{{ route('page.show', [$pages[$i]->pageId]) }}">{{ $pages[$i]->introduction->title }}</a>
 									<br>
-									{!! trunc($page->introduction->text, 50) !!}
+									@if($i !== count($pages) -1)
+										<div class="addmargin">
+											{{ trunc(strip_tags($pages[$i]->introduction->text), 50) }}
+										</div>
+									@else
+										{{ trunc(strip_tags($pages[$i]->introduction->text), 50) }}
+									@endif
 								</tr>
-							@endforeach
+							@endfor
 						</table>
 					</div>
 				</div>
