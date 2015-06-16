@@ -11,6 +11,7 @@
 @section('content')
 	<div class="container">
 		<div class="row">
+			{!! Breadcrumbs::render('permissions.editUserGroup', (object)['id' => $userGroup->userGroupId, 'name' => $userGroup->name]) !!}
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
