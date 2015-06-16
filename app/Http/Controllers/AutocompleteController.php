@@ -3,8 +3,10 @@
 
 	use App\Models\Menu;
 	use App\Models\Page;
+	use App\Models\DistrictSection;
 	use App\Models\User;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use Illuminate\Routing\Controller;
 	use Input;
 
@@ -24,9 +26,10 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IPageRepository $pageRepo)
+		public function __construct(IPageRepository $pageRepo, IDistrictSectionRepository $districtRepo)
 		{
 			$this->pageRepo = $pageRepo;
+			$this->districtRepo = $districtRepo;
 		}
 
 		/**
@@ -63,6 +66,16 @@
 				$a_json_row["value"] = '/pagina/' . $item->pageId;
 				array_push($a_json, $a_json_row);
 			}
+
+			$districts = $this->districtRepo->getAllLikeTerm($term);
+
+			foreach($districts as $item)
+			{
+				$a_json_row["label"] = $item->name;
+				$a_json_row["value"] = '/deelwijk/' . $item->name;
+				array_push($a_json, $a_json_row);
+			}
+
 
 			$json = json_encode($a_json);
 			print $json;
