@@ -24,8 +24,7 @@
 		<div class="col-lg-12">
 			@include('errors.partials._list')
 			{!! Form::model($user, ['route' => ['user.update', $user->userId], 'method' => 'PATCH']) !!}
-				{!! Form::hidden('userId', $user->userId) !!}
-				@include('user.partials._createEdit', ['editMode' => true])
+				@include('user.partials._createEdit', ['editMode' => true, 'managementMode' => true])
 			{!! Form::close() !!}
 		</div>
 	</div>

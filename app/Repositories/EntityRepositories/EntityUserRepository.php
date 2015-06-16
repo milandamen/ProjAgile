@@ -1,22 +1,39 @@
 <?php
 	namespace App\Repositories\EntityRepositories;
 
+	use Auth;
 	use App\Models\User;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
+	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
+	use Carbon\Carbon;
 	use Hash;
 
 	class EntityUserRepository implements IUserRepository
 	{
 		/**
-		 * The DistrictSectionRepository implementation.
+		 * The AddressRepository implementation.
 		 * 
+		 * @var IAddressRepository
+		 */
+		private $addressRepo;
+
+		/**
+		 * The DistrictSectionRepository implementation.
+		 *
 		 * @var IDistrictSectionRepository
 		 */
 		private $districtSectionRepo;
 
+		/**
+		 * The HouseNumberRepository implementation.
+		 * 
+		 * @var IHouseNumberRepository
+		 */
+		private $houseNumberRepo;
 
 		/**
 		 * The PostalRepository implementation.
@@ -37,8 +54,10 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IDistrictSectionRepository $districtSectionRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
+		public function __construct(IDistrictSectionRepository $districtSectionRepo, IAddressRepository $addressRepo, IHouseNumberRepository $houseNumberRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
 		{
+			$this->addressRepo = $addressRepo;
+			$this->houseNumberRepo = $houseNumberRepo;
 			$this->districtSectionRepo = $districtSectionRepo;
 			$this->postalRepo = $postalRepo;
 			$this->userGroupRepo = $userGroupRepo;
@@ -67,28 +86,15 @@
 		}
 
 		/**
-		 * Returns all the User models in the database filtered by user group.
+		 * Returns all the User models in the database filtered by district section.
 		 *
 		 * @return Collection -> User
 		 */
-		public function getAllByUserGroup($userGroupId)
+		public function getAllByDistrictSection($districtSectionId)
 		{
-			return User::where('userGroupId', $userGroupId)->get();
+			return User::join('address', 'user.addressId', '=', 'address.addressId')->where('districtSectionId', '=', $districtSectionId)->get();
 		}
-
-		/**
-		 * Returns all the User models in the database filtered by user group and search criteria
-		 *
-		 * @return Collection -> User
-		 */
-		public function filterAllByUserGroup($userGroupId, $criteria)
-		{
-			$users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->get();
-
-			return $users->where('userGroupId', $userGroupId);
-		}
-
-
+		
 		/**
 		 * Creates a User record in the database.
 		 * 
@@ -98,21 +104,28 @@
 		 */
 		public function create($attributes)
 		{
-			//userGroupId is not set when registering
-			if (!isset($attributes['userGroupId']))
+			// UserGroupId is not set when registering
+			if(!isset($attributes['userGroupId']))
 			{
 				$attributes['userGroupId'] = $this->userGroupRepo->getInhabitantUserGroup()->userGroupId;
 			}
 
-			//check if postal code is given. This attribute is only required for residents
-			if ($attributes['postal'] !== '')
+			// Check if postal and housenumber are provided. These attributes are only required for residents.
+			if(isset($attributes['postal']) && !empty($attributes['postal']) && 
+			   isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
-				$postal = $this->postalRepo->getByCode($attributes['postal']);
-				$attributes['districtSectionId'] = $postal->districtSectionId;
-				$attributes['postalId'] = $postal->postalId;
+				$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
+				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
+				$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
+
+				$attributes['addressId'] = $addressId;
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
-			$attributes['active'] = true;
+			$attributes['active'] = false;
+			$attributes['email'] = strtolower($attributes['email']);
+			$attributes['confirmation_Token'] = str_random(100);
+			$attributes['loginAttempts'] = 0;
+			$attributes['lastLoginAttempt'] = Carbon::now();
 
 			return User::create($attributes);
 		}
@@ -126,6 +139,7 @@
 		 */
 		public function update($model)
 		{
+			$model->email = isset($model->email) ? strtolower($model->email) : null;
 			$model->save();
 		}
 
@@ -141,6 +155,70 @@
 			$model = User::findOrFail($id);
 			$model['active'] = false;
 			$model->save();
+		}
+
+		/**
+		 * Returns all the User models in the database filtered by user group.
+		 * Note that this will exclude the currently logged in user from the query.
+		 *
+		 * @return Collection -> User
+		 */
+		public function getAllByUserGroup($userGroupId)
+		{
+			return User::where('userGroupId', $userGroupId)->where('userId', '!=', Auth::user()->userId)->get();
+		}
+
+		/**
+		 * Returns all the User models in the database filtered by user group and search criteria.
+		 * Note that this will exclude the currently logged in user from the query.
+		 *
+		 * @return Collection -> User
+		 */
+		public function filterAllByUserGroup($userGroupId, $criteria)
+		{
+			$users = User::where('username', 'LIKE', "%$criteria%")->orWhere('firstName', 'LIKE', "%$criteria%")->
+						   orWhere('surname', 'LIKE', "%$criteria%")->orWhere('email', 'LIKE', "%$criteria%")->
+						   where('username', '!=', Auth::user()->userId)->get();
+
+			return $users->where('userGroupId', $userGroupId);
+		}
+
+		/**
+		 * Return a User record in the database depending on the username provided.
+		 *
+		 * @param  string $username
+		 *
+		 * @return User
+		 */
+		public function getByUsername($username)
+		{
+			return User::where('username', '=', $username)->first();
+		}
+
+		/**
+		 * Returns a User record in the database depending on the address id provided.
+		 * Note that this will exclude the given user id from the query.
+		 * 
+		 * @param  int $addresId
+		 * @param  int $userId
+		 * 
+		 * @return User
+		 */
+		public function getByAddress($addressId, $userId)
+		{
+			return User::where('addressId', '=', $addressId)->where('userId', '!=', $userId)->first();
+		}
+
+		/**
+		 * Returns a User record in the database depending on the confirmation token provided.
+		 * 
+		 * @param  string $confirmation_Token
+		 * 
+		 * @return User
+		 */
+		public function getByConfirmationToken($confirmation_Token)
+		{
+			return User::where('confirmation_Token', '=', $confirmation_Token)->where('active', '=', false)->first();	
 		}
 
 		/**

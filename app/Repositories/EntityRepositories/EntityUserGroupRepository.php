@@ -66,6 +66,17 @@
 		}
 
 		/**
+		 * Returns all the UserGroup models from the database and
+		 * converts it to a list. This is for select box use only.
+		 *
+		 * @return List -> UserGroup
+		 */
+		public function getAllToList()
+		{
+			return UserGroup::all()->lists('name', 'userGroupId');
+		}
+
+		/**
 		 * Returns a UserGroup model that has 'Administrator' as the name.
 		 * 
 		 * @return UserGroup

@@ -11,7 +11,6 @@
 		| application. If disabled, a simple generic error page is shown.
 		|
 		*/
-
 		'debug' => env('APP_DEBUG'),
 
 		/*
@@ -24,7 +23,6 @@
 		| your application so that it is used when running Artisan tasks.
 		|
 		*/
-
 		'url' => 'http://localhost',
 
 		/*
@@ -37,7 +35,6 @@
 		| ahead and set this to a sensible default for you out of the box.
 		|
 		*/
-
 		'timezone' => 'UTC',
 
 		/*
@@ -50,7 +47,6 @@
 		| to any of the locales which will be supported by the application.
 		|
 		*/
-
 		'locale' => 'nl',
 
 		/*
@@ -63,7 +59,6 @@
 		| the language folders that are provided through your application.
 		|
 		*/
-
 		'fallback_locale' => 'en',
 
 		/*
@@ -76,9 +71,7 @@
 		| will not be safe. Please do this before deploying an application!
 		|
 		*/
-
 		'key' => env('APP_KEY', 'SomeRandomString'),
-
 		'cipher' => MCRYPT_RIJNDAEL_128,
 
 		/*
@@ -93,7 +86,6 @@
 		| Available Settings: "single", "daily", "syslog", "errorlog"
 		|
 		*/
-
 		'log' => 'daily',
 
 		/*
@@ -106,9 +98,8 @@
 		| this array to grant expanded functionality to your applications.
 		|
 		*/
-
 		'providers' =>
-	    [
+		[
 			/*
 			 * Laravel Framework Service Providers...
 			 */
@@ -145,18 +136,20 @@
 			'App\Providers\RouteServiceProvider',
 
 			/*
-	         * Custom Service Providers...
-	         */ 
+			 * Custom Service Providers...
+			 */ 
 			'App\Providers\ViewComposerServiceProvider',
 			'App\Providers\RepositoryServiceProvider',
+			'App\Providers\ValidationServiceProvider',
 
-	        /*
-	         * External Service Providers...
-	         */
-	        'Illuminate\Html\HtmlServiceProvider',
-	        'Laracasts\Flash\FlashServiceProvider',
-	        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-            'Maatwebsite\Excel\ExcelServiceProvider',
+			/*
+			 * External Service Providers...
+			 */
+			'Illuminate\Html\HtmlServiceProvider',
+			'Laracasts\Flash\FlashServiceProvider',
+			'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+			'Greggilbert\Recaptcha\RecaptchaServiceProvider',
+			'Maatwebsite\Excel\ExcelServiceProvider',
 		],
 
 		/*
@@ -169,52 +162,52 @@
 		| the aliases are "lazy" loaded so they don't hinder performance.
 		|
 		*/
-
 		'aliases' =>
-	    [
-	        /*
-	         * Laravel Framework aliases...
-	         */
-			'App'       	=> 'Illuminate\Support\Facades\App',
-			'Artisan'   	=> 'Illuminate\Support\Facades\Artisan',
-			'Auth'      	=> 'Illuminate\Support\Facades\Auth',
-			'Blade'     	=> 'Illuminate\Support\Facades\Blade',
-			'Bus'       	=> 'Illuminate\Support\Facades\Bus',
-			'Cache'     	=> 'Illuminate\Support\Facades\Cache',
-			'Config'    	=> 'Illuminate\Support\Facades\Config',
-			'Cookie'    	=> 'Illuminate\Support\Facades\Cookie',
-			'Crypt'     	=> 'Illuminate\Support\Facades\Crypt',
-			'DB'        	=> 'Illuminate\Support\Facades\DB',
-			'Eloquent'  	=> 'Illuminate\Database\Eloquent\Model',
-			'Event'     	=> 'Illuminate\Support\Facades\Event',
-			'File'      	=> 'Illuminate\Support\Facades\File',
-			'Hash'      	=> 'Illuminate\Support\Facades\Hash',
-			'Input'     	=> 'Illuminate\Support\Facades\Input',
-			'Inspiring' 	=> 'Illuminate\Foundation\Inspiring',
-			'Lang'      	=> 'Illuminate\Support\Facades\Lang',
-			'Log'       	=> 'Illuminate\Support\Facades\Log',
-			'Mail'      	=> 'Illuminate\Support\Facades\Mail',
-			'Password'  	=> 'Illuminate\Support\Facades\Password',
-			'Queue'     	=> 'Illuminate\Support\Facades\Queue',
-			'Redirect'  	=> 'Illuminate\Support\Facades\Redirect',
-			'Redis'     	=> 'Illuminate\Support\Facades\Redis',
-			'Request'   	=> 'Illuminate\Support\Facades\Request',
-			'Response'  	=> 'Illuminate\Support\Facades\Response',
-			'Route'     	=> 'Illuminate\Support\Facades\Route',
-			'Schema'    	=> 'Illuminate\Support\Facades\Schema',
-			'Session'   	=> 'Illuminate\Support\Facades\Session',
-			'Storage'   	=> 'Illuminate\Support\Facades\Storage',
-			'URL'       	=> 'Illuminate\Support\Facades\URL',
-			'Validator' 	=> 'Illuminate\Support\Facades\Validator',
-			'View'      	=> 'Illuminate\Support\Facades\View',
+		[
+			/*
+			 * Laravel Framework aliases...
+			 */
+			'App'			=> 'Illuminate\Support\Facades\App',
+			'Artisan'		=> 'Illuminate\Support\Facades\Artisan',
+			'Auth'			=> 'Illuminate\Support\Facades\Auth',
+			'Blade'			=> 'Illuminate\Support\Facades\Blade',
+			'Bus'			=> 'Illuminate\Support\Facades\Bus',
+			'Cache'			=> 'Illuminate\Support\Facades\Cache',
+			'Config'		=> 'Illuminate\Support\Facades\Config',
+			'Cookie'		=> 'Illuminate\Support\Facades\Cookie',
+			'Crypt'			=> 'Illuminate\Support\Facades\Crypt',
+			'DB'			=> 'Illuminate\Support\Facades\DB',
+			'Eloquent'		=> 'Illuminate\Database\Eloquent\Model',
+			'Event'			=> 'Illuminate\Support\Facades\Event',
+			'File'			=> 'Illuminate\Support\Facades\File',
+			'Hash'			=> 'Illuminate\Support\Facades\Hash',
+			'Input'			=> 'Illuminate\Support\Facades\Input',
+			'Inspiring'		=> 'Illuminate\Foundation\Inspiring',
+			'Lang'			=> 'Illuminate\Support\Facades\Lang',
+			'Log'			=> 'Illuminate\Support\Facades\Log',
+			'Mail'			=> 'Illuminate\Support\Facades\Mail',
+			'Password'		=> 'Illuminate\Support\Facades\Password',
+			'Queue'			=> 'Illuminate\Support\Facades\Queue',
+			'Redirect'		=> 'Illuminate\Support\Facades\Redirect',
+			'Redis'			=> 'Illuminate\Support\Facades\Redis',
+			'Request'		=> 'Illuminate\Support\Facades\Request',
+			'Response'		=> 'Illuminate\Support\Facades\Response',
+			'Route'			=> 'Illuminate\Support\Facades\Route',
+			'Schema'		=> 'Illuminate\Support\Facades\Schema',
+			'Session'		=> 'Illuminate\Support\Facades\Session',
+			'Storage'		=> 'Illuminate\Support\Facades\Storage',
+			'URL'			=> 'Illuminate\Support\Facades\URL',
+			'Validator'		=> 'Illuminate\Support\Facades\Validator',
+			'View'			=> 'Illuminate\Support\Facades\View',
 
-	        /*
-	         * External aliases...
-	         */
-	        'HTML'      	=> 'Illuminate\Html\HtmlFacade',
-	        'Form'      	=> 'Illuminate\Html\FormFacade',
-	        'Flash'       	=> 'Laracasts\Flash\Flash',
-	        'Breadcrumbs' 	=> 'DaveJamesMiller\Breadcrumbs\Facade',
-            'Excel'         => 'Maatwebsite\Excel\Facades\Excel',
+			/*
+			 * External aliases...
+			 */
+			'HTML'			=> 'Illuminate\Html\HtmlFacade',
+			'Form'			=> 'Illuminate\Html\FormFacade',
+			'Flash'			=> 'Laracasts\Flash\Flash',
+			'Breadcrumbs'	=> 'DaveJamesMiller\Breadcrumbs\Facade',
+			'Recaptcha'		=> 'Greggilbert\Recaptcha\Facades\Recaptcha',
+			'Excel'			=> 'Maatwebsite\Excel\Facades\Excel',
 		],
 	];

@@ -48,62 +48,34 @@
 		];
 
 		/**
-		 * Get all Activity models that reference this DistrictSection model.
+		 * Get all Address models that reference this DistrictSection model.
 		 * 
-		 * @return Collection -> Activity
+		 * @return Collection -> Address
 		 */
-		public function activities() 
+		public function address() 
 		{
-			return $this->hasMany('App\Models\Activity', 'districtSectionId');
+			return $this->hasMany('App\Models\Address', 'districtSectionId');
 		}
 
 		/**
-		 * Get all Contact models that reference this DistrictSection model.
-		 * 
-		 * @return Collection -> Contact
-		 */
-		public function contacts() 
-		{
-			return $this->hasMany('App\Models\Contact', 'districtSectionId');
-		}
-
-		/**
-		 * Get all Postal models that reference this DistrictSection model.
-		 * 
-		 * @return Collection -> Postal
-		 */
-		public function postals() 
-		{
-			return $this->hasMany('App\Models\Postal', 'districtSectionId');
-		}
-
-		/**
-		 * Get all Project models that reference this DistrictSection model.
-		 * 
-		 * @return Collection -> Project
-		 */
-		public function projects() 
-		{
-			return $this->hasMany('App\Models\Project', 'districtSectionId');
-		}
-
-		/**
-		 * Get all User models that reference this DistrictSection model.
-		 * 
-		 * @return Collection -> User
-		 */
-		public function users() 
-		{
-			return $this->hasMany('App\Models\User', 'districtSectionId');
-		}
-
-		/**
-		//		 * Get all News models that reference this DistrictSection model.
-		//		 *
-		//		 * @return Collection -> News
-		//		 */
+		* Get all News models that reference this DistrictSection model.
+		*
+		* @return Collection -> News
+		*/
 		public function news()
 		{
-			return $this->belongsToMany('News', 'newsdistrictsection', 'districtSectionId', 'newsId');
+			return $this->belongsToMany('App\Models\News', 'newsdistrictsection', 'districtSectionId', 'newsId');
+		}
+
+	
+
+		/**
+		* Get all User models that reference this DistrictSection model.
+		*
+		* @return Collection -> User
+		*/
+		public function districtSectionPermissions()
+		{
+			return $this->belongsToMany('App\Models\Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
 	}

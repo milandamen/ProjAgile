@@ -13,7 +13,6 @@
 		| Supported: "local", "s3", "rackspace"
 		|
 		*/
-
 		'default' => 'local',
 
 		/*
@@ -26,7 +25,6 @@
 		| will be bound as the Cloud disk implementation in the container.
 		|
 		*/
-
 		'cloud' => 's3',
 
 		/*
@@ -39,31 +37,30 @@
 		| been setup for each driver as an example of the required options.
 		|
 		*/
-
 		'disks' => 
 		[
 			'local' => 
 			[
-				'driver' => 'local',
-				'root'   => storage_path().'/app',
+				'driver'	=> 'local',
+				'root'		=> storage_path().'/app',
 			],
 			's3' => 
 			[
-				'driver' => 's3',
-				'key'    => 'your-key',
-				'secret' => 'your-secret',
-				'region' => 'your-region',
-				'bucket' => 'your-bucket',
+				'driver'	=> 's3',
+				'key'		=> 'your-key',
+				'secret'	=> 'your-secret',
+				'region'	=> 'your-region',
+				'bucket'	=> 'your-bucket',
 			],
 			'rackspace' => 
 			[
-				'driver'    => 'rackspace',
-				'username'  => 'your-username',
-				'key'       => 'your-key',
-				'container' => 'your-container',
-				'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-				'region'    => 'IAD',
-				'url_type'  => 'publicURL'
+				'driver'	=> 'rackspace',
+				'username'	=> 'your-username',
+				'key'		=> 'your-key',
+				'container'	=> 'your-container',
+				'endpoint'	=> 'https://identity.api.rackspacecloud.com/v2.0/',
+				'region'	=> 'IAD',
+				'url_type'	=> 'publicURL'
 			],
 		],
 	];

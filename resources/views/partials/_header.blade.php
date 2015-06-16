@@ -12,13 +12,13 @@
 		<div id="navbar" class="navbar-collapse collapse navHeaderCollapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="#">
+					<a href="{!! route('page.about') !!}">
 						<i class="fa fa-info"></i> 
 						Over Ons
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="{!! route('page.contact') !!}">
 						<i class="fa fa-paper-plane"></i> 
 						Contact
 					</a>

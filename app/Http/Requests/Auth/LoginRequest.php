@@ -24,8 +24,9 @@
 		{	
 			return 
 			[
-				'username' => 'required',
-				'password' => 'required',
+				'username'				=> 'required',
+				'password'				=> 'required',
+				'g-recaptcha-response'	=> 'sometimes|required|recaptcha',
 			];
 		}
 
@@ -43,7 +44,7 @@
 
 			if (isset($input['remember']))
 			{
-				$input['remember'] = filter_var($input['remember'], FILTER_SANITIZE_STRING);
+				$input['remember'] = filter_var(parseCheckboxOrRadioButton($input['remember']), FILTER_SANITIZE_STRING);
 			}
 
 			$this->replace($input);

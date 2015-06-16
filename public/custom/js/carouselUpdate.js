@@ -45,6 +45,114 @@ function searchArticle()
 	});
 }
 
+/**
+ Move the page from the third table to the 1st table.
+ */
+function addPage(button)
+{
+	var row = button.parentNode.parentNode;
+	var id = row.children[0].textContent;
+	var title = row.children[1].textContent;
+	var startDate = row.children[2].textContent;
+	var endDate = row.children[3].textContent;
+
+	var articlelist = document.getElementById('articlelist');
+
+	var resulthtml = articlelist.innerHTML;
+	resulthtml +=
+		'<tr>' +
+		'<td> 0 </td>' +
+		'<td><input type="hidden" name="sort[0]" value="page" />' +
+		'Pagina</td>' +
+		'<td>' +
+		'<input type="text" name="artikel[]" value="' + id + '" class="hiddenInput" />' +
+		'<span>' + id + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + title + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + startDate + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<span>' + endDate + '</span>' +
+		'</td>' +
+		'<td>' +
+		'<textarea name="beschrijving[]"></textarea>' +
+		'</td>' +
+		'<td>' +
+		'<input type="file" name="file[0]" />' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-primary btn-xs" onclick="moveArticleUp(this)">' +
+		'<i class="fa fa-arrow-up"></i>' +
+		'</a>' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-primary btn-xs" onclick="moveArticleDown(this)">' +
+		'<i class="fa fa-arrow-down"></i>' +
+		'</a>' +
+		'</td>' +
+		'<td>' +
+		'<a class="btn btn-danger btn-xs" onclick="removeArticle(this)">' +
+		'<i class="fa fa-times"></i>' +
+		'</a>' +
+		'</td>' +
+		'</tr>';
+
+	articlelist.innerHTML = resulthtml;
+
+	calculateIndexes();
+}
+
+/**
+ Grab list of pages using the input field as search term, then display articles in third table.
+ */
+function searchPage()
+{
+	var searchterm = document.getElementById('pageTitle').value;
+	var searchresultsbody = document.getElementById('page-searchresults');
+
+	$.getJSON(getPagesByTitleURL + '/' + searchterm).done(function(dataresult)
+	{
+		var resulthtml = '';
+		[].forEach.call(dataresult, function (item)
+		{
+			console.log(dataresult);
+			resulthtml +=
+				'<tr>' +
+				'<td>' +
+				item.page.pageId +
+				'</td>' +
+				'<td>' +
+				item.introduction.title +
+				'</td>' +
+				'<td>' +
+				item.page.publishDate +
+				'</td>' +
+				'<td>' +
+				item.page.publishEndDate +
+				'</td>' +
+				'<td>' +
+				'<a class="btn btn-success btn-xs" onclick="addPage(this)">' +
+				'<i class="fa fa-plus"></i>' +
+				'</a>' +
+				'</td>' +
+				'</tr>';
+		});
+
+		searchresultsbody.innerHTML = resulthtml;
+	})
+		.fail(function(jqxhr, textStatus, error)
+		{
+			//Fails if no articles can be found with the given term or if the syntax is wrong.
+			var err = textStatus + ', ' + error;
+			console.log('Request failed: ' + err);
+
+			searchresultsbody.innerHTML = ''
+		});
+}
+
 $('.add-carousel-button').click(function() {
 
 	$('#articlelist').append(
@@ -57,13 +165,23 @@ $('.add-carousel-button').click(function() {
 			'<span> - </span>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselTitle[]"/>' +
+			'<input type="text" name="carouselTitle[]" class="carouselTitle"/>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselStartDate[]"/>' +
+			'<div class="input-group date icon-width">' +
+				'<input type="hidden" name="carouselStartDate[]" class="carousel-start-date"/>' +
+				'<span class="input-group-addon">' +
+					'<span class="glyphicon glyphicon-calendar"></span>' +
+				'</span>' +
+			'</div>' +
 		'</td>' +
 		'<td>' +
-			'<input type="text" name="carouselEndDate[]"/>' +
+			'<div class="input-group date icon-width">' +
+				'<input type="hidden" name="carouselEndDate[]" class="carousel-end-date"/>' +
+				'<span class="input-group-addon">' +
+					'<span class="glyphicon glyphicon-calendar"></span>' +
+				'</span>' +
+			'</div>' +
 		'</td>' +
 		'<td>' +
 			'<textarea name="beschrijving[]"></textarea>' +
@@ -88,6 +206,7 @@ $('.add-carousel-button').click(function() {
 		'</td>' +
 	'</tr>');
 
+	$('.date').datetimepicker();
 	calculateIndexes();
 });
 
@@ -108,6 +227,7 @@ function addArticle(button)
 	resulthtml +=
 		'<tr>' +
 			'<td> 0 </td>' +
+			'<input type="hidden" name="sort[0]" value="news" />' +
 			'<td>Nieuws</td>' +
 			'<td>' +
 				'<input type="text" name="artikel[0]" value="' + id + '" class="hiddenInput" />' +
@@ -265,3 +385,45 @@ $("#cancel").click(function()
 {
 	document.getElementById("upload").value = "";
 });
+
+function validateCarousel()
+{
+	var publishStartDate = moment(document.querySelector('.carousel-start-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+	var publishEndDate = moment(document.querySelector('.carousel-end-date').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+
+	$('.carouselTitle').each(function()
+	{
+		if($(this).val() == '' || $(this).val() == null)
+		{
+			alert('Vul alstublieft alle carousel titels in.');
+			event.preventDefault();
+			return false;
+		}
+	});
+
+	if (!publishStartDate.isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+
+		return false;
+	}
+
+	if (!publishEndDate.isValid())
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+	if (publishStartDate.isAfter(publishEndDate) ||
+		publishStartDate.isSame(publishEndDate))
+	{
+		event.preventDefault();
+		alert('Selecteer alstublieft een startdatum en een tijdstip voor de Einde Publicatiedatum.');
+
+		return false;
+	}
+
+}
