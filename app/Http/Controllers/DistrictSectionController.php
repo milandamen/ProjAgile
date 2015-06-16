@@ -145,7 +145,6 @@
 				return Redirect::route('district.manage');
 			}
 
-			dd();
 			$district = $this->districtRepo->get($id);
 			$news = $this->districtRepo->get($id)->news;
 
