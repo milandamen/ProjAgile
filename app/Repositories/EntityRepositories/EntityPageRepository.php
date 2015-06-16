@@ -4,7 +4,6 @@
 	use App\Models\Page;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
-	use Auth;
 	use Illuminate\Database\Eloquent\Collection;
 
 	class EntityPageRepository implements IPageRepository
@@ -146,14 +145,14 @@
 		 * 
 		 * @return Collection -> Page
 		 */
-		public function search($query)
+		public function search($query, $user)
 		{
 			$curDate = date('Y-m-d H:i:s', time());
 			$pages = new Collection;
 
-			if(Auth::check())
+			if(isset($user) && !empty($user))
 			{
-				if(Auth::user()->usergroup->name === "Administrator")
+				if($user->usergroup->name === "Administrator")
 				{
 					$pages = Page::orWhereHas('introduction', function($q) use($query)
 								   {
@@ -168,7 +167,7 @@
 				}
 				else
 				{
-					$userDistrictSection = Auth::user()->address->districtSection->name;
+					$userDistrictSection = $user->address->districtSection->name;
 
 					$pages = Page::orWhereHas('introduction', function($q) use($query)
 							       {

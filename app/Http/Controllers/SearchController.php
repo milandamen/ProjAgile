@@ -68,8 +68,10 @@
 		{
 			$query = $request->get('q');
 
-			$news = $this->newsRepo->search($query);
-			$pages = $this->pageRepo->search($query);
+			$user = Auth::user();
+
+			$news = $this->newsRepo->search($query, $user);
+			$pages = $this->pageRepo->search($query, $user);
 			
 			return view('search.index', compact('query', 'news', 'pages'));
 		}

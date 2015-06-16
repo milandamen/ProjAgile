@@ -163,15 +163,15 @@
 		 * 
 		 * @return Collection -> News
 		 */
-		public function search($query)
+		public function search($query, $user)
 		{
 			$curDate = date('Y-m-d H:i:s', time());
 			$news = new Collection;
 			$homeDistrictSection = $this->districtSectionRepo->getByName('Home')->name;
 
-			if(Auth::check())
+			if(isset($user) && !empty($user))
 			{
-				if(Auth::user()->usergroup->name === "Administrator")
+				if($user->usergroup->name === "Administrator")
 				{
 					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
 							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
@@ -179,7 +179,7 @@
 				}
 				else
 				{
-					$userDistrictSection = Auth::user()->address->districtSection->name;
+					$userDistrictSection = $user->address->districtSection->name;
 
 					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
 							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
