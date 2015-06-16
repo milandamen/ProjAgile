@@ -28,9 +28,11 @@
 		<div class="row addmargin">
 			<div class="col-md-8">
 				<p>
-					Het overzicht met alle beschikbare deelwijken. 
-					//(Per deelwijk kan het nieuws bekeken worden 
-					en welke pagina's er aan vast zitten.)
+					Hieronder is een overzicht met alle bestaande deelwijken. Op het moment worden 
+					alle berichten en pagina's getoond die binnen de publicatie datum vallen. Ook is 
+					er de mogelijkheid de informatie van een deelwijk te wijzigen of de gehele deelwijk 
+					te verwijderen.
+					
 				</p>
 			</div>
 				{!! link_to_route('district.create', 'Nieuwe deelwijk', [], ['class' => 'btn btn-success white ']) !!}
@@ -81,19 +83,30 @@
 									</a>
 								</td>
 								<td>
-									<a class="right" href="{{ route('district.edit', [$district->districtSectionId]) }}">
-										<i class="fa fa-pencil-square-o fa-lg"></i>
-									</a>
+									@if($district->districtSectionId != 1)
+										<a class="right" href="{{ route('district.edit', [$district->districtSectionId]) }}">
+											<i class="fa fa-pencil-square-o fa-lg"></i>
+										</a>
+									@endif
 								</td>
 								<td>
-									<a href="{{ route('district.destroy', [$district->districtSectionId]) }}" onclick="confirmDelete()">
-											<i class="fa fa-times fa-lg text-danger"></i>
-									</a>
+									@if($district->districtSectionId != 1)
+										<a href="{{ route('district.destroy', [$district->districtSectionId]) }}" onclick="confirmDelete()">
+												<i class="fa fa-times fa-lg text-danger"></i>
+										</a>
+									@endif
 								</td>
 							</tr>
 						@endforeach
 					</table>
 				</div>
+			</div>
+
+
+			<div class="col-md-3 floatRight">
+				<p> Het Home-district is een algemeen district, een bericht in deze sectie is zichtbaar voor iedereen. </p>
+				<b class="text-danger">Let op!</b>
+				<p> Als u een element verwijdert worden alle berichten automatisch aan het Home-district gekoppeld. </p>
 			</div>
 		</div>
 	</div>

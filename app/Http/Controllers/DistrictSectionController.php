@@ -140,6 +140,12 @@
 
 		public function destroy($id){
 
+			if($id === '1'){
+				Flash::error('Deze deelwijk mag niet verwijderd worden')->important();
+				return Redirect::route('district.manage');
+			}
+
+			dd();
 			$district = $this->districtRepo->get($id);
 			$news = $this->districtRepo->get($id)->news;
 
@@ -151,7 +157,6 @@
 						$home = true;
 					}
 				}
-
 
 				if(!$home){
 					$homedist = $this->districtRepo->get(1)->news()->attach($new->newsId);
