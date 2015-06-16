@@ -5,6 +5,7 @@
 	use App\Models\User;
 	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Repositories\RepositoryInterfaces\IHouseNumberRepository;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPostalRepository;
 	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Repositories\RepositoryInterfaces\IUserGroupRepository;
@@ -19,6 +20,13 @@
 		 * @var IAddressRepository
 		 */
 		private $addressRepo;
+
+		/**
+		 * The DistrictSectionRepository implementation.
+		 *
+		 * @var IDistrictSectionRepository
+		 */
+		private $districtSectionRepo;
 
 		/**
 		 * The HouseNumberRepository implementation.
@@ -46,10 +54,11 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IAddressRepository $addressRepo, IHouseNumberRepository $houseNumberRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
+		public function __construct(IDistrictSectionRepository $districtSectionRepo, IAddressRepository $addressRepo, IHouseNumberRepository $houseNumberRepo, IPostalRepository $postalRepo, IUserGroupRepository $userGroupRepo)
 		{
 			$this->addressRepo = $addressRepo;
 			$this->houseNumberRepo = $houseNumberRepo;
+			$this->districtSectionRepo = $districtSectionRepo;
 			$this->postalRepo = $postalRepo;
 			$this->userGroupRepo = $userGroupRepo;
 		}
@@ -76,6 +85,16 @@
 			return User::all();
 		}
 
+		/**
+		 * Returns all the User models in the database filtered by district section.
+		 *
+		 * @return Collection -> User
+		 */
+		public function getAllByDistrictSection($districtSectionId)
+		{
+			return User::join('address', 'user.addressId', '=', 'address.addressId')->where('districtSectionId', '=', $districtSectionId)->get();
+		}
+		
 		/**
 		 * Creates a User record in the database.
 		 * 

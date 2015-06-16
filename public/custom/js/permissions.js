@@ -96,6 +96,12 @@ $(function () {
 			counter++;
 		});
 
+		var checkedDistrictSectionUserItems = {}, counter = 0;
+		$("#check-list-box-districtSectionUsers li.active").each(function(idx, li) {
+			checkedDistrictSectionUserItems[counter] = $(li).attr('id');
+			counter++;
+		});
+
 		//convert JSON objects to strings and pass to view.
 		var pageSelectionString = JSON.stringify(checkedPageItems, null, '\t');
 		$('#pageSelection').val(pageSelectionString);
@@ -105,6 +111,9 @@ $(function () {
 
 		var permissionSelectionString = JSON.stringify(checkedPermissionItems, null, '\t');
 		$('#permissionSelection').val(permissionSelectionString);
+
+		var districtSectionUserSelectionString = JSON.stringify(checkedDistrictSectionUserItems, null, '\t');
+		$('#districtSectionUserSelection').val(districtSectionUserSelectionString);
 	};
 
 	//get data when submitting form
