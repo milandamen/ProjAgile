@@ -101,4 +101,10 @@
 		{
 			return DistrictSection::all()->lists('name', 'districtSectionId');
 		}
+
+
+		public function getAllLikeTerm($term)
+		{
+			return DistrictSection::where('name' ,'LIKE' , '%' . $term . '%')->get();
+		}
 	}
