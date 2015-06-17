@@ -137,7 +137,7 @@
 		 *
 		 * @return array()
 		 */
-		private function addAddressRules($userId)
+		private function addAddressRules($userId = null)
 		{
 			$rules =
 			[
@@ -167,7 +167,7 @@
 
 					$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 
-					if($address !== null)
+					if(isset($address))
 					{
 						$rules['postal'] .= '|is_address_not_in_use:' . $userId;
 					}
