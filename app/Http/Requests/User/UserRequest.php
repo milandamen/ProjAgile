@@ -101,10 +101,10 @@
 			$input['email'] 				= strtolower(filter_var($input['email'], FILTER_SANITIZE_EMAIL));
 			$input['email_confirmation'] 	= strtolower(filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL));
 
-			$input['userGroupid']			= parseSelectorField(filter_var(isset($input['userGroupid']) ? $input['userGroupid'] : '', FILTER_SANITIZE_STRING));
+			$input['userGroupId']			= parseSelectorField(filter_var(isset($input['userGroupId']) ? $input['userGroupId'] : '', FILTER_SANITIZE_STRING));
 
 			$input['postal'] 				= $this->fixPostal($input['postal']);
-
+			
 			$this->replace($input);
 
 			return $input;
