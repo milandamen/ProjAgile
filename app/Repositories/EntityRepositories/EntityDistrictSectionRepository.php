@@ -3,6 +3,7 @@
 
 	use App\Models\DistrictSection;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
+
 	class EntityDistrictSectionRepository implements IDistrictSectionRepository
 	{
 		/**
@@ -18,18 +19,6 @@
 		}
 
 		/**
-		 * Returns a DistrictSection model depending on the name provided.
-		 *
-		 * @param  string $name
-		 *
-		 * @return DistrictSection
-		 */
-		public function getByName($name)
-		{
-			return DistrictSection::where('name', '=', $name)->first();
-		}
-
-		/**
 		 * Returns all the DistrictSection models in the database.
 		 *
 		 * @return Collection -> DistrictSection
@@ -38,23 +27,7 @@
 		{
 			return DistrictSection::all();
 		}
-
-
-		/**
-		 * Returns all the DistrictSection model id's in the database.
-		 *
-		 * @return Collection -> Integer
-		 */
-		public function getAllIds()
-		{
-			$districtSections =  DistrictSection::all();
-			$districtSection_ids = array();
-			foreach($districtSections as $districtSection)
-			{
-				$districtSection_ids[] = $districtSection->districtSectionId;
-			}
-			return $districtSection_ids;
-		}
+		
 		/**
 		 * Creates a DistrictSection record in the database.
 		 *
@@ -66,6 +39,7 @@
 		{
 			return DistrictSection::Create($attributes);
 		}
+
 		/**
 		 * Updates a DistrictSection record in the database depending on
 		 * the DistrictSection model provided.
@@ -78,6 +52,7 @@
 		{
 			$model->save();
 		}
+
 		/**
 		 * Deletes a DistrictSection record depending on the id provided.
 		 *
@@ -89,6 +64,36 @@
 		{
 			$model = DistrictSection::findOrFail($id);
 			$model->delete();
+		}
+
+		/**
+		 * Returns a DistrictSection model depending on the name provided.
+		 *
+		 * @param  string $name
+		 *
+		 * @return DistrictSection
+		 */
+		public function getByName($name)
+		{
+			return DistrictSection::where('name', '=', $name)->first();
+		}
+
+		/**
+		 * Returns all the DistrictSection model id's in the database.
+		 *
+		 * @return array()
+		 */
+		public function getAllIds()
+		{
+			$districtSections = DistrictSection::all();
+			$districtSection_ids = [];
+
+			foreach($districtSections as $districtSection)
+			{
+				$districtSection_ids[] = $districtSection->districtSectionId;
+			}
+
+			return $districtSection_ids;
 		}
 		
 		/**

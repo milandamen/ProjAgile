@@ -8,7 +8,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -80,7 +80,7 @@
 			$input['email'] 				= strtolower(filter_var($input['email'], FILTER_SANITIZE_EMAIL));
 			$input['email_confirmation'] 	= strtolower(filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL));
 
-			$input['postal'] = $this->fixPostal($input['postal']);
+			$input['postal'] 				= $this->fixPostal($input['postal']);
 
 			$this->replace($input);
 
