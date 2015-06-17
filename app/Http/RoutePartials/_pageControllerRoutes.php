@@ -28,10 +28,17 @@
 
 	Route::post('pagina/contact/wijzig',
 	[
-		'as' => 'page.contactedit',
-		'uses' => 'PageController@editContactSave',
+		'as' 			=> 'page.contactedit',
+		'uses' 			=> 'PageController@editContactSave',
 		'middleware'	=> 'admin'
 	]);
+	
+	Route::get('overons',
+	[
+		'as'			=> 'page.about',
+		'uses'			=> 'PageController@showAbout',
+	]);
+
 
 
 	Route::get('pagina/aanmaken',
@@ -78,8 +85,14 @@
 
 	Route::get('pagina/{id}/zichtbaarheid', 
 	[
-		'as'			=> 'page.visible',
-		'uses'			=> 'PageController@switchPublish',
-		'middleware'	=> 'admin'
+		'as' => 'page.visible',
+		'uses' => 'PageController@switchPublish',
+		'middleware' => 'admin'
+	]);
+
+	Route::get('pagina/getArticlesByTitle/{term}',
+	[
+		'as' => 'page.getPagesByTitle',
+		'uses' => 'PageController@getPagesByTitle'
 	]);
 

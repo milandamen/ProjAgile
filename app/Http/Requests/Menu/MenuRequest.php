@@ -8,7 +8,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -18,30 +18,31 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{
 			return 
 			[
-				'name' => 'required|max:45|min:1',
-				'link' => 'required|max:255|min:1',
-				'publish' => 'required',
+				'name'		=> 'required|max:45|min:1',
+				'link'		=> 'required|max:255|min:1',
+				'publish'	=> 'required',
 			];
 		}
 
 		/**
 		 * Sanitizes the provided input that will be used by the validator and controller.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function sanitize()
 		{
 			$input = $this->all();
 
-			$input['name'] = filter_var($input['name'], FILTER_SANITIZE_STRING);
-			$input['link'] = filter_var($input['link'], FILTER_SANITIZE_STRING);
-			$input['publish'] = parseCheckboxOrRadioButton($input['publish']);
+			$input['name']		= filter_var($input['name'], FILTER_SANITIZE_STRING);
+			$input['link']		= filter_var($input['link'], FILTER_SANITIZE_STRING);
+			
+			$input['publish']	= parseCheckboxOrRadioButton($input['publish']);
 
 			$this->replace($input);
 

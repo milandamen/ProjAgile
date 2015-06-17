@@ -136,6 +136,7 @@
 				if($newOnSite === true)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('home.index');
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepository->create($attributes);
 				}

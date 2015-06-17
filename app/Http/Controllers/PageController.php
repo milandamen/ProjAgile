@@ -19,7 +19,6 @@
 	use Flash;
 	use Redirect;
 	use Mail;
-
 	use Request;
 	use View;
 
@@ -184,6 +183,7 @@
 			if($newOnSite)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+				$attributes['link'] = route('page.show', $page->pageId);
 				$attributes['created_at'] = new \DateTime('now');
 				$this->newOnSiteRepo->create($attributes);
 			}
@@ -204,6 +204,7 @@
 			{
 				return Redirect::route('home.index');
 			} 
+
 			$page = $this->pageRepo->show($id);
 			$children = $this->pageRepo->getAllChildren($id);
 
@@ -246,6 +247,11 @@
 
 					return Redirect::route('home.index');
 				}
+
+				if($id === '2'){
+					return $this->editContact();
+				}
+
 				$page = $this->pageRepo->get($id);
 				$pages = $this->pageRepo->getAllToList();
 
@@ -326,10 +332,14 @@
 				if($newOnSite)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.show', $page->pageId);
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepo->create($attributes);
 				}
 
+				if($page->pageId === 3) {
+					return Redirect::route('page.about');
+				}
 				return Redirect::route('page.show', [$page->pageId]);
 			}
 			Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
@@ -348,11 +358,11 @@
 		{
 			if (Auth::user()->hasPagePermission($id))
 			{
-				if($this->redirectHome($id))
+				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
-					Flash::error('U kunt de homepagina niet verwijderen');
+					Flash::error('U kunt deze pagina niet verwijderen');
 
-					return Redirect::route('home.index');
+					return Redirect::route('page.index');
 				}
 				$page = $this->pageRepo->get($id);
 
@@ -402,6 +412,12 @@
 					$this->sidebarRepo->deleteAllFromPage($pageId);
 				}
 			}
+		}
+
+
+		public function showAbout(){
+		
+			return $this->show(3);
 		}
 
 		/**
@@ -499,6 +515,7 @@
 				if($newOnSite === true)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.contact');
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepository->create($attributes);
 				}
@@ -543,5 +560,29 @@
 			$page = $this->pageRepo->get($id);
 			$page->visible ? $page->visible = false : $page->visible = true;
 			$this->pageRepo->update($page);
+		}
+
+		/**
+		 * Get all the pages by title name.
+		 *
+		 * @param  String $term
+		 *
+		 * @return Json
+		 */
+		public function getPagesByTitle($term)
+		{
+			$json = array();
+			$json_row = array();
+
+			$data = $this->pageRepo->getAllLikeTerm($term);
+
+			foreach($data as $page)
+			{
+				$json_row['page'] = $page;
+				$json_row['introduction'] = $page->introduction;
+				array_push($json, $json_row);
+			}
+
+			echo json_encode($json);
 		}
 	}

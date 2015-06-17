@@ -34,13 +34,14 @@
 						<ul id="check-list-box-page" class="list-group checked-list-box">
 							@foreach($pages as $page)
 								@if($user->hasPagePermission($page->pageId))
-									<li class="list-group-item checked" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+									<li class="list-group-item checked page-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
 								@else
-									<li class="list-group-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
+									<li class="list-group-item page-item" id={{$page->pageId}}> {!! $page->pageId !!} - {!! $page->introduction->title !!}</li>
 								@endif
 							@endforeach
 						</ul>
 					</div>
+					<button class="btn btn-warning all-pages">Alle pagina's</button>
 				</div>
 
 				<div class="col-xs-5 col-xs-offset-2">
@@ -50,14 +51,16 @@
 							<ul id="check-list-box-permission" class="list-group checked-list-box">
 								@foreach($permissions as $permission)
 									@if($user->hasPermission($permission->permissionId))
-										<li class="list-group-item checked" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+										<li class="list-group-item checked permission-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
 									@else
-										<li class="list-group-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
+										<li class="list-group-item permission-item" id={{$permission->permissionId}}> {!! $permission->permissionName !!}</li>
 									@endif
 								@endforeach
 							</ul>
 						</div>
+						<button class="btn btn-warning all-permissions">Alle onderdelen</button>
 					</div>
+
 
 					<div class="row">
 						<h3 class="text-center">Nieuws per deelwijk</h3>
@@ -65,13 +68,14 @@
 							<ul id="check-list-box-districtSection" class="list-group checked-list-box">
 								@foreach($districtSections as $districtSection)
 									@if($user->hasDistrictSectionPermission($districtSection->districtSectionId))
-										<li class="list-group-item checked" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+										<li class="list-group-item checked districtSection-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 									@else
-										<li class="list-group-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
+										<li class="list-group-item districtSection-item" id={{$districtSection->districtSectionId}}> {!! $districtSection->districtSectionId !!} - {!! $districtSection->name !!}</li>
 									@endif
 								@endforeach
 							</ul>
 						</div>
+						<button class="btn btn-warning all-districtSections">Alle deelwijken</button>
 					</div>
 				</div>
 

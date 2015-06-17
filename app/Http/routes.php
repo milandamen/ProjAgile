@@ -86,6 +86,11 @@
 	include ('RoutePartials/_permissionsControllerRoutes.php');
 
 	/**
+	 * SearchController routes
+	 */
+	include('RoutePartials/_searchControllerRoutes.php');
+
+	/**
 	 * SidebarController routes
 	 */
 	include('RoutePartials/_sidebarControllerRoutes.php');
@@ -94,3 +99,8 @@
 	 * UserController routes
 	 */
 	include ('RoutePartials/_userControllerRoutes.php');
+
+	/**
+	 * DistrictSectionController routes
+	 */
+	include ('RoutePartials/_districtSectionRoutes.php');
