@@ -37,6 +37,7 @@
 		'middleware' => 'admin'
 	]);
 
+
 	Route::get('gebruikersgroepen/{userGroupid}/wijzigen',
 	[
 		'as' => 'permissions.editUserGroup',
@@ -48,5 +49,12 @@
 	[
 		'as' => 'permissions.updateUserGroup',
 		'uses' => 'PermissionsController@updateUserGroup',
+		'middleware' => 'admin'
+	]);
+
+	Route::get('gebruikersgroepen/{userGroupid}/verwijderen',
+	[
+		'as' => 'permissions.deleteUserGroup',
+		'uses' => 'PermissionsController@deleteUserGroup',
 		'middleware' => 'admin'
 	]);

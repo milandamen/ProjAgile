@@ -94,6 +94,22 @@
 			return view('permissions.createUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions'));
 		}
 
+		public function deleteUserGroup($userGroupId)
+		{
+			if($userGroupId != 1 && $userGroupId != 2)
+			{
+				$users = $this->userRepo->getAllByUserGroup($userGroupId);
+				foreach($users as $user)
+				{
+					$user->userGroupId = 2;
+					$user->save();
+				}
+				$this->userGroupRepo->get($userGroupId)->detach();
+			}
+
+			return redirect::route('permissions.index');
+		}
+
 		public function storeUserGroup(CreateUserGroupRequest $request)
 		{
 			$data = $request->input();
@@ -117,21 +133,24 @@
 
 		public function updateUserGroup($userGroupId, UpdateUserGroupRequest $request)
 		{
-			$userGroup = $this->userGroupRepo->get($userGroupId);
-			$userGroup->name = $request->get('name');
-			$this->userGroupRepo->update($userGroup);
+			if($userGroupId != 1)
+			{
+				$userGroup = $this->userGroupRepo->get($userGroupId);
+				$userGroup->name = $request->get('name');
+				$this->userGroupRepo->update($userGroup);
 
-			$this->updateDatabasePermissions($request, $userGroup);
+				$this->updateDatabasePermissions($request, $userGroup);
 
-			//get the removed district sections and reset usergroups.
-			$oldSelectedDistrictSections = json_decode($request->get('selectedDistrictSections'));
+				//get the removed district sections and reset usergroups.
+				$oldSelectedDistrictSections = json_decode($request->get('selectedDistrictSections'));
 
-			$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
-			$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
+				$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
+				$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
 
-			$difference = array_diff($oldSelectedDistrictSections, $districtSectionUserSelectionArray);
+				$difference = array_diff($oldSelectedDistrictSections, $districtSectionUserSelectionArray);
 
-			$this->resetUserGroups($difference);
+				$this->resetUserGroups($difference);
+			}
 
 
 			return redirect::route('permissions.index');
