@@ -3,6 +3,7 @@
 
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Http\Requests\DistrictSection\DistrictSectionRequest;
 	use Auth;
 	use Illuminate\Support\Facades\Redirect;
@@ -36,10 +37,11 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IDistrictSectionRepository $districtRepo, INewOnSiteRepository $newOnSiteRepository)
+		public function __construct(IDistrictSectionRepository $districtRepo, INewOnSiteRepository $newOnSiteRepository, IAddressRepository $addressRepo)
 		{
 			$this->districtRepo = $districtRepo;
 			$this->newOnSiteRepo = $newOnSiteRepository;
+			$this->addressRepo = $addressRepo;
 		}
 
 		public function index(){
@@ -165,6 +167,15 @@
 			}
 
 			$district->news()->detach();
+
+			$addresses = $this->addressRepo->getAll();
+			foreach($addresses as $address){
+				if($address->districtSectionId === $district->districtSectionId){
+					$address->districtSectionId = '1';
+					$this->addressRepo->update($address);
+				}
+			}
+
 			$this->districtRepo->destroy($district->districtSectionId);
 
 			Flash::success('Deelwijk succesvol verwijderd')->important();
