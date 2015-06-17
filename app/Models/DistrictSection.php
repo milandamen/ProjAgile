@@ -78,4 +78,20 @@
 		{
 			return $this->belongsToMany('App\Models\Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
+
+
+		/**
+		 * Get all User models that reference this DistrictSection model (permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function users()
+		{
+			return $this->belongsToMany('App\Models\User', 'districtsectionpermissions', 'districtSectionId', 'userId');
+		}
+
+		public function groups()
+		{
+			return $this->belongsToMany('App\Models\UserGroup', 'usergroupdistrictsectionpermissions', 'districtSectionId', 'userGroupId');
+		}
 	}
