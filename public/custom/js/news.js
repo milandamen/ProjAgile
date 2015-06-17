@@ -3,8 +3,6 @@ $(function()
 	$('#newDistrictSection').click(function()
 	{
 		$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
-
-		addRemoveDistrictListener();
 	});
 	
 	$('#newFile').click(function()
@@ -18,10 +16,9 @@ $(function()
 	});
 });
 
-function addRemoveDistrictListener()
-{
-	$('.deleteDistrictSection').click(function()
-	{
+$( '#districts' ).on(
+	'click', '.deleteDistrictSection',
+	function( eventObject ) {
 		if($('.districtSelect').length > 1)
 		{
 			$(this).parent().remove();
@@ -30,10 +27,12 @@ function addRemoveDistrictListener()
 		{
 			alert('U moet minstens één deelwijk selecteren!');
 		}
-	});
+	}
+);
 
-	$('.deleteDistrictSectionSpan').click(function()
-	{
+$( '#districts' ).on(
+	'click', '.deleteDistrictSectionSpan',
+	function( eventObject ) {
 		if($('.districtSelect').length > 1)
 		{
 			$(this).parent().parent().remove();
@@ -42,10 +41,8 @@ function addRemoveDistrictListener()
 		{
 			alert('U moet minstens één deelwijk selecteren!');
 		}
-	});
-}
-
-addRemoveDistrictListener();
+	}
+);
 
 function addFile()
 {
