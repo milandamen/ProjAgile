@@ -2,6 +2,7 @@
 	namespace App\Repositories\EntityRepositories;
 
 	use App\Models\Page;
+	use Carbon\Carbon;
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use Illuminate\Database\Eloquent\Collection;
@@ -39,12 +40,11 @@
 			return Page::find($id);
 		}
 
-		public function show($id)
-		{
-			$curDate = date('Y-m-d H:i:s', time());
+		public function show($id){
+			$curDate = Carbon::now('Europe/Amsterdam');
 
 			return Page::where('pageId', '=', $id)->where('publishDate', '<=', $curDate)->
-						 where('publishEndDate', '>=', $curDate)->get();
+							where('publishEndDate', '>=', $curDate)->get();
 		}
 
 		/**
