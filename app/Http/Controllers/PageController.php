@@ -18,6 +18,7 @@
 	use Flash;
 	use Redirect;
 	use Mail;
+	use Input;
 	use Request;
 	use View;
 	use Carbon\Carbon;
@@ -110,7 +111,6 @@
 		public function create()
 		{
 			$pages = $this->pageRepo->getAllToList();
-
 			return view('page.create', compact('pages'));
 		}
 
@@ -177,6 +177,9 @@
 				$attributes['created_at'] = new \DateTime('now');
 				$this->newOnSiteRepo->create($attributes);
 			}
+			
+			$page->users()->attach(Auth::user()->userId);
+			$page->groups()->attach(Auth::user()->usergroup->userGroupId);
 
 			return Redirect::route('page.show', [$page->pageId]);
 		}
