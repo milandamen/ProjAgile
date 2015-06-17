@@ -202,19 +202,19 @@
 			{
 				$page = $page[0];
 		
-					if($page->visible)
+				if($page->visible)
+				{
+					if($page->sidebar)
 					{
-						if($page->sidebar)
-						{
-							$sidebar = $this->sidebarRepo->getByPage($page->pageId);
+						$sidebar = $this->sidebarRepo->getByPage($page->pageId);
 
-							return view('page.show', compact('page', 'sidebar', 'children'));
-						} 
-						
-						return view('page.show', compact('page', 'children'));
-					}
+						return view('page.show', compact('page', 'sidebar', 'children'));
+					} 
+					
+					return view('page.show', compact('page', 'children'));
+				}
 
-					return view('errors.pubdate');
+				return view('errors.pubdate');
 			} 
 			
 			return view('errors.404');
