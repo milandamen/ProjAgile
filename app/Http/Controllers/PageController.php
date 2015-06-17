@@ -4,12 +4,14 @@
 	use App\Models\Page;
 	use App\Models\PagePanel;
 	use App\Models\Panel;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
 	use App\Repositories\RepositoryInterfaces\IPagePanelRepository;
 	use App\Repositories\RepositoryInterfaces\IPanelRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use App\Http\Requests;
 	use App\Http\Requests\Page\PageRequest;
 	use App\Http\Requests\Page\ContactRequest;
@@ -65,6 +67,13 @@
 		 * @var ISidebarRepository
 		 */
 		private $sidebarRepo;
+		
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
+		private $districtSectionRepo;
 
 		/**
 		 * Creates a new PageController instance.
@@ -80,7 +89,8 @@
 		 */
 		public function __construct(IIntroductionRepository $introRepo, INewOnSiteRepository $newOnSiteRepo,
 									IPageRepository $pageRepo, IPagePanelRepository $pagePanelRepo, 
-									IPanelRepository $panelRepo, ISidebarRepository $sidebarRepo)
+									IPanelRepository $panelRepo, ISidebarRepository $sidebarRepo,
+									IDistrictSectionRepository $districtSectionRepo, IUserRepository $userRepo)
 		{
 			$this->introRepo = $introRepo;
 			$this->pageRepo = $pageRepo;
@@ -88,6 +98,8 @@
 			$this->pagePanelRepo = $pagePanelRepo;
 			$this->sidebarRepo = $sidebarRepo;
 			$this->newOnSiteRepo = $newOnSiteRepo;
+			$this->districtSectionRepo = $districtSectionRepo;
+			$this->userRepo = $userRepo;
 		}
 
 		/**
@@ -110,8 +122,9 @@
 		public function create()
 		{
 			$pages = $this->pageRepo->getAllToList();
+			$districtSections = $this->districtSectionRepo->getAllToList();
 
-			return view('page.create', compact('pages'));
+			return view('page.create', compact('pages', 'districtSections'));
 		}
 
 		/**
@@ -195,14 +208,13 @@
 				return Redirect::route('home.index');
 			} 
 
-			$page = $this->pageRepo->show($id);
+			$page = $this->pageRepo->get($id);
 			$children = $this->pageRepo->getAllChildren($id);
+			$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
 			
 			if(isset($page) && count($page))
 			{
-				$page = $page[0];
-		
-				if($page->visible)
+				if($isAdmin || ($page->visible && count($this->pageRepo->show($id))))
 				{
 					if($page->sidebar)
 					{
@@ -229,7 +241,7 @@
 		 */
 		public function edit($id)
 		{
-			if (Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
 			{
 				if($this->redirectHome($id))
 				{
@@ -244,10 +256,11 @@
 
 				$page = $this->pageRepo->get($id);
 				$pages = $this->pageRepo->getAllToList();
+				$districtSections = $this->districtSectionRepo->getAllToList();
 
 				if(isset($page))
 				{
-					return view('page.edit', compact('page', 'pages'));
+					return view('page.edit', compact('page', 'pages', 'districtSections'));
 				}
 
 				return view('errors.404');
@@ -266,7 +279,7 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if (Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
 			{
 				if($this->redirectHome($id))
 				{
@@ -289,9 +302,22 @@
 				$page->publishDate = $request->publishStartDate;
 				$page->publishEndDate = $request->publishEndDate;
 				$page->visible = $request->visible;
-
 				$page->parentId = $request->parent;
-				$this->pageRepo->update($page);
+				$page = $this->pageRepo->update($page);
+				
+				$districtSections = $request->districtSection;
+
+				$oldDistrictSections = $page->districtSections;
+
+				foreach($oldDistrictSections as $oldDistrict)
+				{
+					$page->districtSections()->detach($oldDistrict);
+				}
+
+				foreach($districtSections as $district)
+				{
+					$page->districtSections()->attach($district);
+				}
 
 				// Delete all old panels.
 				$this->pagePanelRepo->deleteAllFromPage($id);
@@ -346,7 +372,7 @@
 		 */
 		public function destroy($id)
 		{
-			if (Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
 			{
 				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
@@ -469,7 +495,7 @@
 
 		public function editContact(){
 
-			if (Auth::user()->hasPagePermission('2'))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
 			{
 				$introduction = $this->pageRepo->get(2)->introduction;
 				$page = $this->pageRepo->get(2);
@@ -489,7 +515,7 @@
 
 		public function editContactSave(IntroductionRequest $request){
 
-			if (Auth::user()->hasPagePermission('2'))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
 			{
 				
 				// update introduction
@@ -547,9 +573,12 @@
 
 		public function switchPublish($id)
 		{
-			$page = $this->pageRepo->get($id);
-			$page->visible ? $page->visible = false : $page->visible = true;
-			$this->pageRepo->update($page);
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+			{
+				$page = $this->pageRepo->get($id);
+				$page->visible ? $page->visible = false : $page->visible = true;
+				$this->pageRepo->update($page);
+			}
 		}
 
 		/**

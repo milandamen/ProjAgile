@@ -52,7 +52,7 @@
 					</li>
 				@endif
 				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown">
+					<a class="dropdown-toggle cursorHand" data-toggle="dropdown">
 						<i class="fa fa-search"></i>
 					</a>
 					<ul class="dropdown-menu" style="padding:12px;">

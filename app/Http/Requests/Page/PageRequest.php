@@ -22,7 +22,7 @@
 		 */
 		public function rules()
 		{
-			return 
+			$rules = 
 			[
 				'title'			=> 'required',
 				'content'			=> 'required',
@@ -31,6 +31,16 @@
 				'publishEndDate'	=> 'required|date',
 				'visible'			=> 'required',
 			];
+			
+			if ($this->request->has('districtSection'))
+			{
+				foreach ($this->request->get('districtSection') as $key => $value)
+				{
+					$rules['districtSection.' . $key ] = 'exists:districtsection,districtSectionId';
+				}
+			}
+			
+			return $rules;
 		}
 
 		/**
