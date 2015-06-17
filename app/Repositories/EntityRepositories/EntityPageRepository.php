@@ -106,6 +106,8 @@
 		public function update($model)
 		{
 			$model->save();
+			
+			return $model;
 		}
 
 		/**

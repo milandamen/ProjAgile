@@ -44,26 +44,28 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{--*/ $date = date('d-m-Y H:i',time()-(7*86400)); // 7 days ago
-								$curDate = date('d-m-Y H:i', time()); /*--}}
+						{{--*/ 
+							$date = date('d-m-Y H:i',time()-(7*86400)); // 7 days ago
+							$curDate = date('d-m-Y H:i', time());
+						/*--}}
 						@foreach($pages as $page)
-						{{--*/ $hasChildren = false; 
-							$parentItem = false; /*--}}
+							{{--*/ 
+								$hasChildren = false; 
+								$parentItem = false;
+							/*--}}
 							@if($page->parentId == 0)
 
 								<tr>
 									<td>
-										@if($page->publishEndDate < $date)
+										@if(strtotime($page->publishEndDate) < strtotime($curDate))
 											<i class="fa fa-archive fa-lg"></i>
-										@elseif($page->publishEndDate < $curDate) 
-											<i class="fa fa-ban fa-lg" alt=""></i>
-										@elseif($page->publishDate > $curDate)
+										@elseif(strtotime($page->publishDate) > strtotime($curDate))
 											<i class="fa fa-clock-o fa-lg" alt="scheduled" title="scheduled"></i>
 										@endif
 									</td>	
 									
 									<td colspan="2">{!!  $page->introduction->title !!}</td>
-									<td>{!! $page->introduction->subtitle !!} </td>
+									<td>{!! $page->introduction->subtitle !!}</td>
 									@if($page->sidebar)
 										<td>
 											<a href="{{ route('sidebar.edit', [$page->pageId]) }}">Wijzig Sidebar</a>
@@ -108,11 +110,9 @@
 									@if($subpage->parentId == $page->pageId)
 										<tr>
 											<td>
-												@if($subpage->publishEndDate < $date)
+												@if(strtotime($subpage->publishEndDate) < strtotime($curDate))
 													<i class="fa fa-archive fa-lg"></i>
-												@elseif($subpage->publishEndDate < $curDate) 
-													<i class="fa fa-ban fa-lg"></i>
-												@elseif($subpage->publishDate > $curDate)
+												@elseif(strtotime($subpage->publishDate) > strtotime($curDate))
 													<i class="fa fa-clock-o fa-lg"></i>
 												@endif
 											</td>
