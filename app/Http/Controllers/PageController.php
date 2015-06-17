@@ -20,6 +20,7 @@
 	use Mail;
 	use Request;
 	use View;
+	use Carbon\Carbon;
 
 	class PageController extends Controller
 	{
@@ -194,22 +195,30 @@
 			} 
 
 			$page = $this->pageRepo->show($id);
+			//$page = $this->pageRepo->get($id);
+
 			$children = $this->pageRepo->getAllChildren($id);
+			
 
 			if(isset($page) && count($page))
 			{
 				$page = $page[0];
-
-				if($page->visible)
-				{
-					if($page->sidebar)
+				$curDate = strtotime(Carbon::now('Europe/Amsterdam'));
+		
+				if(strtotime($page->publishDate) <= $curDate && strtotime($page->publishEndDate) >= $curDate){
+					if($page->visible)
 					{
-						$sidebar = $this->sidebarRepo->getByPage($page->pageId);
+						if($page->sidebar)
+						{
+							$sidebar = $this->sidebarRepo->getByPage($page->pageId);
 
-						return view('page.show', compact('page', 'sidebar', 'children'));
-					} 
-					
-					return view('page.show', compact('page', 'children'));
+							return view('page.show', compact('page', 'sidebar', 'children'));
+						} 
+						
+						return view('page.show', compact('page', 'children'));
+					}
+
+					return view('errors.pubdate');
 				}
 
 				return view('errors.pubdate');
@@ -237,7 +246,7 @@
 				}
 
 				if($id === '2'){
-					return $this->editContact();
+					return Redirect::route('page.contactedit');
 				}
 
 				$page = $this->pageRepo->get($id);
@@ -490,12 +499,12 @@
 			{
 				
 				// update introduction
-				$introduction = $this->introrepo->get('2');
+				$introduction = $this->introRepo->get('2');
 				$introduction->title = $request->title;
 				$introduction->subtitle = $request->subtitle;
 				$introduction->text = $request->content;
 
-				$this->introrepo->update($introduction);
+				$this->introRepo->update($introduction);
 				
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
