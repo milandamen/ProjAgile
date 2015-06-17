@@ -203,9 +203,7 @@
 			if(isset($page) && count($page))
 			{
 				$page = $page[0];
-				$curDate = strtotime(Carbon::now('Europe/Amsterdam'));
 		
-				if(strtotime($page->publishDate) <= $curDate && strtotime($page->publishEndDate) >= $curDate){
 					if($page->visible)
 					{
 						if($page->sidebar)
@@ -219,9 +217,6 @@
 					}
 
 					return view('errors.pubdate');
-				}
-
-				return view('errors.pubdate');
 			} 
 			
 			return view('errors.404');
