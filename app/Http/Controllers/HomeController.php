@@ -117,8 +117,9 @@
 				$introduction = $this->pageRepo->get(1)->introduction;
 				$layoutModules = $this->homeLayoutRepo->getAll();
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
-
-				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+				$sidebar = $this->sidebarRepo->getByPage(1);
+				
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite', 'sidebar'));
 			}
 			
 			return view('errors.403');

@@ -25,30 +25,28 @@
                 <div class="panel-body">
                     <p>
                         <span class="descriptionSpan">Indeling</span><br/>
-                        In het hieronder te downloade Excelbestand, vind u alle gegevens over de postcodes van de deelwijken.
+                        In het Excelbestand dat hieronder te downloaden is, vind u alle gegevens over de postcodes van de deelwijken.
                         Er is per deelwijk een werkblad aangemaakt met daarin de ID's, postcodes, huisnummers en toevoegingen, die bij de desbetreffende deelwijk horen.
                         Het ID is niet invulbaar en is alleen nodig om de koppeling met de database te kunnen leggen.
 
                         <br/><br/>
 
                         <span class="descriptionSpan">Postcodes toevoegen</span><br/>
-                        Voor een nieuwe postcode toe te kunnen voegen, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
-                        Vervolgens scrollt u naar onderen naar een nieuwe regel (een witregel).
-                        Hier kunt u nieuwe regels toevoegen.
+                        Om een nieuwe postcode toe te kunnen voegen, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
+                        Vervolgens scrollt u naar onderen naar een nieuwe regel (een witregel). Hier kunt u nieuwe regels toevoegen.
                         Dit doet u door op zijn minst een postcode en huisnr in te vullen (toevoeging is optioneel).
 
                         <br/><br/>
 
                         <span class="descriptionSpan">Postcodes bewerken</span><br/>
-                        Voor een nieuwe postcode toe te kunnen bewerken, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
-                        Vervolgens zoekt u de postcode die u wilt bewerken (ctrl + f).
-                        U kunt hier de postcode bewerken door de velden aan te passen.
+                        Om een postcode te kunnen bewerken, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
+                        Vervolgens zoekt u de postcode die u wilt bewerken (ctrl + f). U kunt hier de postcode bewerken door de velden aan te passen.
                         De aan te passen velden zijn: postcode, huisnummer en toevoeging.
 
                         <br/><br/>
 
                         <span class="descriptionSpan">Postcodes verwijderen</span><br/>
-                        Voor een nieuwe postcode toe te kunnen verwijderen, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
+                        Om een postcode te kunnen verwijderen, moet u naar het werkblad gaan met als naam de deelwijk waartoe de postcode behoort.
                         Vervolgens zoekt u de postcode die u wilt verwijderen (ctrl + f).
                         U kunt hier de postcode verwijderen door op zijn minst de velden postcode en huisnr leeg te maken.
                         Spaties, enters en overige whitespaces worden als leeg beschouwd.

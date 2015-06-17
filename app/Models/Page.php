@@ -116,6 +116,28 @@
 		{
 			return $this->hasOne('App\Models\Introduction', 'introductionId', 'introduction_introductionId');
 		}
+
+				/**
+		 * Check if the usergroup has permission to edit the given page
+		 *
+		 * @param $pageId
+		 * @return Boolean
+		 */
+		public function groups()
+		{
+			return $this->belongsToMany('App\Models\UserGroup', 'usergrouppagepermissions', 'pageId', 'userGroupId');
+		}
+
+		/**
+		 * Get all User models that reference this Page model (permissions).
+		 *
+		 * @return Collection -> Page
+		 */
+		public function users()
+		{
+			return $this->belongsToMany('App\Models\User', 'pagepermissions', 'pageId', 'userId');
+		}
+
 		
 		/**
 		 * Get all DistrictSection models that reference this Page model.

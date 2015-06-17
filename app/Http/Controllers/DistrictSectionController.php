@@ -3,7 +3,9 @@
 
 	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\INewOnSiteRepository;
+	use App\Repositories\RepositoryInterfaces\IAddressRepository;
 	use App\Http\Requests\DistrictSection\DistrictSectionRequest;
+	use App\Repositories\RepositoryInterfaces\IUserRepository;
 	use Auth;
 	use Illuminate\Support\Facades\Redirect;
 	use Input;
@@ -36,10 +38,13 @@
 		 *
 		 * @return void
 		 */
-		public function __construct(IDistrictSectionRepository $districtRepo, INewOnSiteRepository $newOnSiteRepository)
+		public function __construct(IDistrictSectionRepository $districtRepo, INewOnSiteRepository $newOnSiteRepository, 
+									IAddressRepository $addressRepo, IUserRepository $userRepo)
 		{
 			$this->districtRepo = $districtRepo;
 			$this->newOnSiteRepo = $newOnSiteRepository;
+			$this->addressRepo = $addressRepo;
+			$this->userRepo = $userRepo;
 		}
 
 		public function index(){
@@ -54,10 +59,14 @@
 				Flash::error('Home is geen deelwijk maar een algemene benaming');
 				return Redirect::route('home.index');
 			}
-			
+
 			$district = $this->districtRepo->getByName($name);
 			if(isset($district) && count($district)){
+				//if( (Auth::user()->hasDistrictSectionPermission($district->districtSectionId)) 
+				//	|| ($this->userRepo->isUserAdministrator(Auth::user())) ) {
+					
 					return view('districtSection.show', compact('district'));
+				//}
 			}
 
 			return view('errors.404');
@@ -65,37 +74,49 @@
 
 		public function manage(){
 
-			$districts = $this->districtRepo->getAll();
-			return view('districtSection.manage', compact('districts'));
+			if( $this->userRepo->isUserAdministrator(Auth::user()) ) {
+				$districts = $this->districtRepo->getAll();
+				return view('districtSection.manage', compact('districts'));
+			}
+			return view('errors.403');
 		}
 
 		public function create(){
 			
-			$district = new DistrictSection();
-
-			return view('districtSection.create', compact('district'));
+			if( $this->userRepo->isUserAdministrator(Auth::user()) ) {
+				$district = new DistrictSection();
+				return view('districtSection.create', compact('district'));
+			}
+	
+			return view('errors.403');
 		}
 
 
 		public function store(DistrictSectionRequest $request){
 
-			$district = $this->districtRepo->create([
-				'name' 			=> $request->name,
-				'generalInfo' 	=> $request->text 
-			]);
+			if( $this->userRepo->isUserAdministrator(Auth::user()) ) {
+				$district = $this->districtRepo->create([
+					'name' 			=> $request->name,
+					'generalInfo' 	=> $request->text 
+				]);
 
-			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-			if($newOnSite)
-			{
-				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-				$attributes['link'] = route('district.show', $district->name);
-				$attributes['created_at'] = new \DateTime('now');
-				$this->newOnSiteRepo->create($attributes);
-			}
+				if($newOnSite)
+				{
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('district.show', $district->name);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepo->create($attributes);
+				}
 
-			return Redirect::route('district.show', $district->name);
+				$district->users()->attach(Auth::user()->userId);
+				$district->groups()->attach(Auth::user()->usergroup->userGroupId);
 
+				return Redirect::route('district.show', $district->name);
+			} 
+
+			return view('errors.403');
 		}
 		/**
 		 * Show the DistrictSection edit page.
@@ -104,13 +125,19 @@
 		 */
 		public function edit($id)
 		{
-			$district = $this->districtRepo->get($id);
+			if( (Auth::user()->hasDistrictSectionPermission($id)) 
+				|| ($this->userRepo->isUserAdministrator(Auth::user())) ) {
+						
+				$district = $this->districtRepo->get($id);
 
-			if($district->name === 'Home'){
-				Flash::error('Home is geen deelwijk maar een algemene benaming');
-				return Redirect::route('home.index');
+				if($district->name === 'Home'){
+					Flash::error('Home is geen deelwijk maar een algemene benaming');
+					return Redirect::route('home.index');
+				}
+				return view('districtSection.edit', compact('district'));	
 			}
-			return view('districtSection.edit', compact('district'));	
+
+			return view('errors.403');
 		}
 
 		/**
@@ -120,58 +147,87 @@
 		 */
 		public function update(DistrictSectionRequest $request)
 		{
+			if( (Auth::user()->hasDistrictSectionPermission($request->districtId)) 
+				|| ($this->userRepo->isUserAdministrator(Auth::user())) ) {
 
-			$district = $this->districtRepo->get($request->districtId);
-			$district->name = $request->name;
-			$district->generalInfo = $request->text;
-			$this->districtRepo->update($district);
+				$district = $this->districtRepo->get($request->districtId);
+				$district->name = $request->name;
+				$district->generalInfo = $request->text;
+				$this->districtRepo->update($district);
 
-			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-			if($newOnSite)
-			{
-				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-				$attributes['link'] = route('district.show', $district->name);
-				$attributes['created_at'] = new \DateTime('now');
-				$this->newOnSiteRepo->create($attributes);
+				if($newOnSite)
+				{
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('district.show', $district->name);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepo->create($attributes);
+				}
+
+				return Redirect::route('district.show', $district->name);
 			}
 
-			return Redirect::route('district.show', $district->name);
+			return view('errors.403');
 		}
 
 
 		public function destroy($id){
 
-			if($id === '1'){
-				Flash::error('Deze deelwijk mag niet verwijderd worden')->important();
-				return Redirect::route('district.manage');
-			}
+			if( (Auth::user()->hasDistrictSectionPermission($id)) 
+				|| ($this->userRepo->isUserAdministrator(Auth::user())) ) {
 
-			$district = $this->districtRepo->get($id);
-			$news = $this->districtRepo->get($id)->news;
+				if($id === '1'){
+					Flash::error('Deze deelwijk mag niet verwijderd worden')->important();
+					return Redirect::route('district.manage');
+				}
 
-			foreach($district->news as $new){
-				$home = false;
-				
-				foreach($new->districtSections as $newsdistrict){
-					if($newsdistrict->name === 'Home'){
-						$home = true;
+				$district = $this->districtRepo->get($id);
+
+				// Reassign all news to Home
+				$news = $this->districtRepo->get($id)->news;
+
+				foreach($district->news as $new){
+					$home = false;
+					
+					foreach($new->districtSections as $newsdistrict){
+						if($newsdistrict->name === 'Home'){
+							$home = true;
+						}
+					}
+
+					if(!$home){
+						$homedist = $this->districtRepo->get(1)->news()->attach($new->newsId);
+					}
+				}
+				// remove all news
+				$district->news()->detach();
+
+				// remove all permissions
+				$district->users()->detach();
+				$district->groups()->detach();
+
+				// reassign all adresses to Home
+				$addresses = $this->addressRepo->getAll();
+				foreach($addresses as $address){
+					if($address->districtSectionId === $district->districtSectionId){
+						$address->districtSectionId = '1';
+						$this->addressRepo->update($address);
 					}
 				}
 
-				if(!$home){
-					$homedist = $this->districtRepo->get(1)->news()->attach($new->newsId);
-				}
+				// remove all pages
+
+
+				// Delete district
+				$this->districtRepo->destroy($district->districtSectionId);
+
+				Flash::success('Deelwijk succesvol verwijderd')->important();
+
+				return Redirect::route('district.manage');
 			}
 
-			$district->news()->detach();
-			$this->districtRepo->destroy($district->districtSectionId);
-
-			Flash::success('Deelwijk succesvol verwijderd')->important();
-
-			return Redirect::route('district.manage');
-
-
+			return view('errors.403');
 		}
 		
 	}
