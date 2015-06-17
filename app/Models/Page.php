@@ -39,7 +39,8 @@
 			'publishDate',
 			'publishEndDate',
 			'visible',
-			'parentId'
+			'parentId',
+			'districtsection_districtSectionId'
 		];
 
 		/**

@@ -118,39 +118,24 @@
 						</div>
 					</div>
 					
-					<!--
-					<div class="row col-md-6 districtBox">
-						<div class="col-md-6 no-padding">
-							{!! Form::select('districtSection[]', $districtSections, null, ['class' => 'form-control districtSelect']) !!}
+					<div class="row col-md-12 form-group">
+						<div class="col-md-3">
+							{!! Form::label('districtSection', 'Deelwijk(en)') !!}
+							<button id="newDistrictSection" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
+								<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
 						</div>
-						<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
-							<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
-						</button>
+						<div id="districts" class="row clear addmargin">
+							<div class="col-md-6 districtBox addmargin">
+								<div class="col-md-6">
+									{!! Form::select('districtSection[]', $districtSections, null, ['class' => 'form-control districtSelect']) !!}
+								</div>
+								<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
+									<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
+								</button>
+							</div>
+						</div>
 					</div>
-					-->
-					
-					
-<div class="row col-md-12 form-group">
-	<div class="col-md-3">
-		{!! Form::label('districtSection', 'Deelwijk(en)') !!}
-		<button id="newDistrictSection" type="button" class="btn btn-success btn-xs floatRight" aria-label="Left Align">
-			<span class="glyphicon glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
-	</div>
-	<div id="districts" class="row clear addmargin">
-		<div class="col-md-6 districtBox addmargin">
-			<div class="col-md-6">
-				{!! Form::select('districtSection[]', $districtSections, null, ['class' => 'form-control districtSelect']) !!}
-			</div>
-			<button name="deleteDistrictSection" style="margin: 5px 0px 0px 5px" type="button" class="btn btn-danger btn-xs deleteDistrictSection" aria-label="Left Align">
-				<span class="glyphicon glyphicon glyphicon-remove deleteDistrictSectionSpan" aria-hidden="true"></span>
-			</button>
-		</div>
-	</div>
-</div>
-
-
-
 
 					<div class="row col-md-12">
 						<div class="form-group col-md-12">
