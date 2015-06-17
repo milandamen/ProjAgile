@@ -173,6 +173,7 @@
 			if($newOnSite)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+				$attributes['link'] = route('page.show', $page->pageId);
 				$attributes['created_at'] = new \DateTime('now');
 				$this->newOnSiteRepo->create($attributes);
 			}
@@ -321,6 +322,7 @@
 				if($newOnSite)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.show', $page->pageId);
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepo->create($attributes);
 				}
@@ -503,6 +505,7 @@
 				if($newOnSite === true)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.contact');
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepository->create($attributes);
 				}

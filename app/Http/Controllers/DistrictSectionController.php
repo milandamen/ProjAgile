@@ -89,6 +89,7 @@
 			if($newOnSite)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+				$attributes['link'] = route('district.show', $district->name);
 				$attributes['created_at'] = new \DateTime('now');
 				$this->newOnSiteRepo->create($attributes);
 			}
@@ -130,6 +131,7 @@
 			if($newOnSite)
 			{
 				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+				$attributes['link'] = route('district.show', $district->name);
 				$attributes['created_at'] = new \DateTime('now');
 				$this->newOnSiteRepo->create($attributes);
 			}

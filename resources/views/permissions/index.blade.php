@@ -12,6 +12,7 @@
 	<meta name="csrf-token" content="{{ Session::token() }}">
 	<div class="container">
 		<div class="row">
+			{!! Breadcrumbs::render('permissions.index') !!}
 		</div>
 		<div class="row">
 			<div class="col-md-12">

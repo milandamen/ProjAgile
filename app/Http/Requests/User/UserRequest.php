@@ -11,7 +11,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -21,7 +21,7 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{
@@ -67,13 +67,13 @@
 				{
 					$userId = Route::input('id');
 
-					$rules['username'] = 'required|max:30|unique:user,username,' . $userId . ',userId';
-					$rules['email'] .= '|unique:user,email,' . $userId . ',userId';
+					$rules['username']	= 'required|max:30|unique:user,username,' . $userId . ',userId';
+					$rules['email']		.= '|unique:user,email,' . $userId . ',userId';
 					$rules += $this->addAddressRules($userId);
 				}
 				else
 				{
-					$rules['email'] .= '|unique:user,email,' . Auth::user()->userId . ',userId';
+					$rules['email']		.= '|unique:user,email,' . Auth::user()->userId . ',userId';
 				}
 			}
 

@@ -32,6 +32,11 @@
 	include('BreadcrumbPartials/_carouselBreadcrumbs.php');
 
 	/**
+	 * DistrictController breadcrumbs.
+	 */
+	include('BreadcrumbPartials/_districtSectionBreadcrumbs.php');
+
+	/**
 	 * ErrorHandler breadcrumbs.
 	 */
 	include('BreadcrumbPartials/_errorBreadcrumbs.php');
@@ -82,11 +87,9 @@
 	include('BreadcrumbPartials/_postalBreadcrumbs.php');
 
 	/**
-	 * DistrictController breadcrumbs.
+	 * SearchController breadcrumbs.
 	 */
-	include('BreadcrumbPartials/_districtSectionBreadcrumbs.php');
-
-
+	include('BreadcrumbPartials/_searchBreadcrumbs.php');
 
 	/**
 	 * SidebarController breadcrumbs.

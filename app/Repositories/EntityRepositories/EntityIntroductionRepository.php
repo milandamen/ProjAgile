@@ -40,7 +40,6 @@
 			return Introduction::create($attributes);
 		}
 
-
 		/**
 		 * Updates a Introduction record in the database depending on 
 		 * the Introduction model provided.
@@ -66,7 +65,4 @@
 			$model = Introduction::findOrFail($id);
 			$model->delete();
 		}
-
-
-		
 	}

@@ -78,8 +78,8 @@
 			return PagePanel::where('page_id', '=', $pageId);
 		}
 
-		public function deleteAllFromPage($pageId){
+		public function deleteAllFromPage($pageId)
+		{
 			PagePanel::where('page_id', '=', $pageId)->delete();
-		
 		}
 	}
