@@ -251,50 +251,50 @@ function getPreview(){
 }
 
 
-	// Event listeners for live preview!
-	//for standard input objects
-	$( "input" ).on(
-		"keypress keyup keydown",
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+// Event listeners for live preview!
+//for standard input objects
+$( "input" ).on(
+	"keypress keyup keydown",
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+	}
+);
 
 
-	$('#summernote').summernote({
-		onChange: function() {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
-	}});
-
-
-	// for existing and new panel elements
-	// the selector needs to be set on a existing element that contains the new element.
-
-	$( "#newPanels" ).on(
-		'keypress keyup keydown', '.summer',
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+$('#summernote').summernote({
+	onChange: function() {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+}});
 
-	$( "#newPanels" ).on(
-		"keypress keyup keydown", '.titlevalue',
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+
+// for existing and new panel elements
+// the selector needs to be set on a existing element that contains the new element.
+
+$( '#newPanels' ).on(
+	'keypress keyup keydown', '.summer',
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+	}
+);
+
+$( '#newPanels' ).on(
+	"keypress keyup keydown", '.titlevalue',
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
+		}
+	}
+);
 
 
 
@@ -339,5 +339,38 @@ function switchPanels(old, current)
 	current.getElementsByClassName("summer")[0].value = oldContent;
 }
 
+$(function()
+{
+	$('#newDistrictSection').click(function()
+	{
+		$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
+	});
+});
 
+$( '#districts' ).on(
+	'click', '.deleteDistrictSection',
+	function( eventObject ) {
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	}
+);
 
+$( '#districts' ).on(
+	'click', '.deleteDistrictSectionSpan',
+	function( eventObject ) {
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	}
+);

@@ -4,6 +4,7 @@
 	use App\Models\Page;
 	use App\Models\PagePanel;
 	use App\Models\Panel;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\IIntroductionRepository;
 	use App\Repositories\RepositoryInterfaces\ISidebarRepository;
 	use App\Repositories\RepositoryInterfaces\IPageRepository;
@@ -65,6 +66,13 @@
 		 * @var ISidebarRepository
 		 */
 		private $sidebarRepo;
+		
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
+		private $districtSectionRepo;
 
 		/**
 		 * Creates a new PageController instance.
@@ -80,7 +88,8 @@
 		 */
 		public function __construct(IIntroductionRepository $introRepo, INewOnSiteRepository $newOnSiteRepo,
 									IPageRepository $pageRepo, IPagePanelRepository $pagePanelRepo, 
-									IPanelRepository $panelRepo, ISidebarRepository $sidebarRepo)
+									IPanelRepository $panelRepo, ISidebarRepository $sidebarRepo,
+									IDistrictSectionRepository $districtSectionRepo)
 		{
 			$this->introRepo = $introRepo;
 			$this->pageRepo = $pageRepo;
@@ -88,6 +97,7 @@
 			$this->pagePanelRepo = $pagePanelRepo;
 			$this->sidebarRepo = $sidebarRepo;
 			$this->newOnSiteRepo = $newOnSiteRepo;
+			$this->districtSectionRepo = $districtSectionRepo;
 		}
 
 		/**
@@ -110,8 +120,9 @@
 		public function create()
 		{
 			$pages = $this->pageRepo->getAllToList();
+			$districtSections = $this->districtSectionRepo->getAllToList();
 
-			return view('page.create', compact('pages'));
+			return view('page.create', compact('pages', 'districtSections'));
 		}
 
 		/**

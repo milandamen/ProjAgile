@@ -44,11 +44,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{--*/ $date = date('d-m-Y H:i',time()-(7*86400)); // 7 days ago
-								$curDate = date('d-m-Y H:i', time()); /*--}}
+						{{--*/ 
+							$date = date('d-m-Y H:i',time()-(7*86400)); // 7 days ago
+							$curDate = date('d-m-Y H:i', time());
+						/*--}}
 						@foreach($pages as $page)
-						{{--*/ $hasChildren = false; 
-							$parentItem = false; /*--}}
+							{{--*/ 
+								$hasChildren = false; 
+								$parentItem = false;
+							/*--}}
 							@if($page->parentId == 0)
 
 								<tr>
@@ -61,7 +65,7 @@
 									</td>	
 									
 									<td colspan="2">{!!  $page->introduction->title !!}</td>
-									<td>{!! $page->introduction->subtitle !!} </td>
+									<td>{!! $page->introduction->subtitle !!}</td>
 									@if($page->sidebar)
 										<td>
 											<a href="{{ route('sidebar.edit', [$page->pageId]) }}">Wijzig Sidebar</a>
