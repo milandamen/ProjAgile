@@ -195,11 +195,8 @@
 			} 
 
 			$page = $this->pageRepo->show($id);
-			//$page = $this->pageRepo->get($id);
-
 			$children = $this->pageRepo->getAllChildren($id);
 			
-
 			if(isset($page) && count($page))
 			{
 				$page = $page[0];
