@@ -105,6 +105,19 @@ $(function () {
 			counter++;
 		});
 
+		//view permissions
+		var checkedPageViewItems = {}, counter = 0;
+		$("#check-list-box-pageView li.active").each(function(idx, li) {
+			checkedPageViewItems[counter] = $(li).attr('id');
+			counter++;
+		});
+
+		var checkedDistrictSectionViewItems = {}, counter = 0;
+		$("#check-list-box-districtSectionView li.active").each(function(idx, li) {
+			checkedDistrictSectionViewItems[counter] = $(li).attr('id');
+			counter++;
+		});
+
 		//convert JSON objects to strings and pass to view.
 		var pageSelectionString = JSON.stringify(checkedPageItems, null, '\t');
 		$('#pageSelection').val(pageSelectionString);
@@ -117,6 +130,13 @@ $(function () {
 
 		var districtSectionUserSelectionString = JSON.stringify(checkedDistrictSectionUserItems, null, '\t');
 		$('#districtSectionUserSelection').val(districtSectionUserSelectionString);
+
+		//view permissions
+		var pageViewSelectionString = JSON.stringify(checkedPageViewItems, null, '\t');
+		$('#pageViewSelection').val(pageViewSelectionString);
+
+		var districtSectionViewSelectionString = JSON.stringify(checkedDistrictSectionViewItems, null, '\t');
+		$('#districtSectionViewSelection').val(districtSectionViewSelectionString);
 	};
 
 	//get data when submitting form
@@ -177,6 +197,34 @@ $(function () {
 			$checkbox.triggerHandler('change');
 		})
 		districtSectionUsersChecked = !districtSectionUsersChecked;
+	});
+
+	//check all buttons - view
+	var pagesViewChecked = false;
+	var districtSectionsViewChecked = false;
+
+	//(de)select all pages' view permissions
+	$('.all-pages-view').on('click', function(event){
+		event.preventDefault();
+		$('.pageView-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !pagesViewChecked);
+			$checkbox.triggerHandler('change');
+		})
+		pagesViewChecked = !pagesViewChecked;
+	});
+
+	//(de)select all district sections' view permissions
+	$('.all-districtSections-view').on('click', function(event){
+		event.preventDefault();
+		$('.districtSectionView-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !districtSectionsChecked);
+			$checkbox.triggerHandler('change');
+		})
+		districtSectionsChecked = !districtSectionsChecked;
 	});
 
 });

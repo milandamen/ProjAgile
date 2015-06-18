@@ -291,6 +291,13 @@
 			$permissionSelectionString = $request->get('permissionSelection');
 			$permissionSelectionArray = $this->stringToIntArray(json_decode($permissionSelectionString, true));
 
+			//view permissions
+			$pageViewSelectionString = $request->get('pageViewSelection');
+			$pageViewSelectionArray = $this->stringToIntArray(json_decode($pageViewSelectionString, true));
+
+			$districtSectionViewSelectionString = $request->get('districtSectionViewSelection');
+			$districtSectionViewSelectionArray = $this->stringToIntArray(json_decode($districtSectionViewSelectionString, true));
+
 			//assign users to user group
 			if ($request->get('districtSectionUserSelection') !== null)
 			{
@@ -304,5 +311,9 @@
 			$model->pages()->sync($pageSelectionArray);
 			$model->districtSections()->sync($districtSectionSelectionArray);
 			$model->permissions()->sync($permissionSelectionArray);
+
+			//view permissions
+			$model->pageViews()->sync($pageViewSelectionArray);
+			$model->districtSectionViews()->sync($districtSectionViewSelectionArray);
 		}
 	}
