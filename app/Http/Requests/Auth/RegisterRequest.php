@@ -50,12 +50,12 @@
 
 				$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 
-				if($address !== null)
+				if(isset($address) && !empty($address))
 				{
 					$rules['postal'] = $rules['postal'] . '|is_address_not_in_use';
 				}
 			}
-
+			dd($rules);
 			return $rules;
 		}
 

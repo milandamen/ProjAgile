@@ -116,9 +116,12 @@
 			{
 				$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
 				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
-				$addressId = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId)->addressId;
+				$address = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId);
 
-				$attributes['addressId'] = $addressId;
+				if(isset($address) && !empty($address))
+				{
+					$attributes['addressId'] = $addressId->addressId;
+				}
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
 			$attributes['active'] = false;

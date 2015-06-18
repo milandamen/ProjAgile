@@ -43,7 +43,7 @@
 			$postal = $this->postalRepo->getByCode($value);
 			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
 			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
-
+			dd($address);
 			return isset($address);
 		}
 

@@ -44,7 +44,7 @@
 					'email_confirmation'	=> 'required',
 					'userGroupId'			=> 'required|exists:usergroup,userGroupId',
 				];
-				$rules += $this->addAddressRules();
+				$rules += $this->addAddressRules(null);
 			}
 			else
 			{
