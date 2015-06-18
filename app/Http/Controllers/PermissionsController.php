@@ -96,12 +96,12 @@
 
 		public function deleteUserGroup($userGroupId)
 		{
-			if($userGroupId != 1 && $userGroupId != 2)
+			if($userGroupId != 1 && $userGroupId != 3)
 			{
 				$users = $this->userRepo->getAllByUserGroup($userGroupId);
 				foreach($users as $user)
 				{
-					$user->userGroupId = 2;
+					$user->userGroupId = 3;
 					$user->save();
 				}
 				$userGroup = $this->userGroupRepo->get($userGroupId);
@@ -126,7 +126,7 @@
 
 		public function editUserGroup($userGroupId)
 		{
-			if($userGroupId != 1 && $userGroupId != 2)
+			if($userGroupId != 1 && $userGroupId != 3)
 			{
 				$userGroup = $this->userGroupRepo->get($userGroupId);
 				$pages = $this->pageRepo->getAll();
