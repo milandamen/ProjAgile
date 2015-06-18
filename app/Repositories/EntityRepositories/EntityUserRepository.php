@@ -115,7 +115,7 @@
 			   isset($attributes['houseNumber']) && !empty($attributes['houseNumber']))
 			{
 				$postalId = $this->postalRepo->getByCode($attributes['postal'])->postalId;
-				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'] ? : null)->houseNumberId;
+				$houseNumberId = $this->houseNumberRepo->getByHouseNumberSuffix($attributes['houseNumber'], $attributes['suffix'])->houseNumberId;
 				$address = $this->addressRepo->getByPostalHouseNumber($postalId, $houseNumberId);
 
 				if(isset($address) && !empty($address))

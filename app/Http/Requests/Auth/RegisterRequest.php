@@ -30,9 +30,9 @@
 				'firstName' 			=> 'required|max:50',
 				'insertion' 			=> 'max:30',
 				'surname' 				=> 'required|max:80',
-				'houseNumber' 			=> 'required|integer|digits_between:1,8|exists:housenumber,houseNumber',
-				'suffix' 				=> 'max:1|exists:housenumber,suffix',
-				'postal' 				=> 'required|min:6|max:7|exists:postal,code',
+				'houseNumber' 			=> 'required|integer|digits_between:1,4',
+				'suffix' 				=> 'max:4',
+				'postal' 				=> 'required|min:6|max:7|exists:postal,code|houseNumber_exists',
 				'email' 				=> 'required|confirmed|max:60|email|unique:user,email',
 				'email_confirmation' 	=> 'required',
 				'g-recaptcha-response' 	=> 'required|recaptcha',
@@ -42,9 +42,10 @@
 			$addressRepo = \App::make('App\Repositories\RepositoryInterfaces\IAddressRepository');
 
 			$postal = $postalRepo->getByCode($this->only('postal'));
-			$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->only('houseNumber'), $this->only('suffix') ? $this->only('suffix') : null);
+			$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this['houseNumber'], $this['suffix']);
 
-			if($postal !== null && $houseNumber !== null)
+			if(isset($postal) && !empty($postal) &&
+			   isset($houseNumber) && !empty($houseNumber))
 			{
 				$rules['postal'] = $rules['postal'] . '|address_exists';
 
@@ -55,7 +56,7 @@
 					$rules['postal'] = $rules['postal'] . '|is_address_not_in_use';
 				}
 			}
-			dd($rules);
+
 			return $rules;
 		}
 

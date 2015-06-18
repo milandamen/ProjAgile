@@ -30,7 +30,7 @@
 				'firstName'	=> 'required|max:50',
 				'insertion'	=> 'max:30',
 				'surname'	=> 'required|max:80',
-				'suffix'	=> 'max:1|exists:housenumber,suffix',
+				'suffix'	=> 'max:4',
 			];
 
 			if(strtoupper(Request::method()) !== 'PATCH')
@@ -44,7 +44,7 @@
 					'email_confirmation'	=> 'required',
 					'userGroupId'			=> 'required|exists:usergroup,userGroupId',
 				];
-				$rules += $this->addAddressRules(null);
+				$rules += $this->addAddressRules();
 			}
 			else
 			{
@@ -141,15 +141,15 @@
 		{
 			$rules =
 			[
-				'houseNumber'	=> 'integer|digits_between:1,8|exists:housenumber,houseNumber',
-				'postal'		=> 'min:6|max:7|exists:postal,code|exists:postal,code',
+				'houseNumber'	=> 'integer|digits_between:1,4',
+				'postal'		=> 'min:6|max:7|exists:postal,code|exists:postal,code|houseNumber_exists',
 			];
 
 			// Postal and houseNumber attributes are only required for residents.
 			if((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
 			{
-				$rules['houseNumber'] .= '|required';
-				$rules['postal'] .= '|required';
+				$rules['houseNumber']	.= '|required';
+				$rules['postal'] 		.= '|required';
 			}
 			
 			if($this->get('postal') && $this->get('houseNumber'))
@@ -159,9 +159,9 @@
 				$addressRepo = \App::make('App\Repositories\RepositoryInterfaces\IAddressRepository');
 
 				$postal = $postalRepo->getByCode($this->get('postal'));
-				$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->get('houseNumber'), $this->get('suffix') ? $this->get('suffix') : null);
+				$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->get('houseNumber'), $this->get('suffix'));
 
-				if($postal !== null && $houseNumber !== null)
+				if(isset($postal) && isset($houseNumber))
 				{
 					$rules['postal'] .= '|address_exists';
 

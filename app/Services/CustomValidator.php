@@ -30,6 +30,22 @@
 		}
 
 		/**
+		 * Validates if the provided housenumber and suffix combination exists.
+		 * 
+		 * @param  array()	$attribute
+		 * @param  array()	$value
+		 * @param  array()	$parameters
+		 * 
+		 * @return boolean
+		 */
+		protected function validateHouseNumberExists($attribute, $value, $parameters)
+		{
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix']);
+
+			return isset($houseNumber);
+		}
+
+		/**
 		 * Validates if the provided postal, housenumber and suffix combination exists.
 		 * 
 		 * @param  array()	$attribute
@@ -41,9 +57,9 @@
 		protected function validateAddressExists($attribute, $value, $parameters)
 		{
 			$postal = $this->postalRepo->getByCode($value);
-			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix']);
 			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
-			dd($address);
+
 			return isset($address);
 		}
 
@@ -59,7 +75,7 @@
 		protected function validateIsAddressNotInUse($attribute, $value, $parameters)
 		{
 			$postal = $this->postalRepo->getByCode($value);
-			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix'] ? : null);
+			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix']);
 			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 			$user = $this->userRepo->getByAddress($address->addressId, $parameters[0]);
 			
