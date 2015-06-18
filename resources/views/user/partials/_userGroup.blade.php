@@ -39,17 +39,17 @@
 									</a>
 								</td>
 								<td>
-                                    @if($userType->userId != 1)
-                                        @if($userType->active)
-                                            <a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="text-success activate">
-                                                <i class="fa fa-unlock-alt fa-lg"></i>
-                                            </a>
-                                        @else
-                                            <a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="black deactivate">
-                                                <i class="fa fa-lock fa-lg"></i>
-                                            </a>
-                                        @endif
-                                    @endif
+									@if($userType->userId != 1)
+										@if($userType->active)
+											<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="text-success activate">
+												<i class="fa fa-unlock-alt fa-lg"></i>
+											</a>
+										@else
+											<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="black deactivate">
+												<i class="fa fa-lock fa-lg"></i>
+											</a>
+										@endif
+									@endif
 								</td>
 								@if(Auth::user()->canChangePermissions() && $userType->userId != 1)
 									<td>
@@ -79,23 +79,23 @@
 			</div>
 			<div class="modal-body">
 				<div>
-					<i class="glyphicon glyphicon-new-window text-primary"></i> 
+					<i class="glyphicon glyphicon-new-window text-primary"></i>
 					- Gebruiker Details
 				</div>
 				<div>
-					<i class="fa fa-pencil-square-o"></i> 
+					<i class="fa fa-pencil-square-o"></i>
 					- Gebruiker bewerken
 				</div>
 				<div>
-					<i class="fa fa-lock fa-lg"></i> 
+					<i class="fa fa-lock fa-lg"></i>
 					- Gebruiker is inactief
 				</div>
 				<div>
-					<i class="fa fa-unlock-alt fa-lg text-success activate"></i> 
+					<i class="fa fa-unlock-alt fa-lg text-success activate"></i>
 					- Gebruiker Is Actief
 				</div>
 				<div>
-					<i class="fa fa-key"></i> 
+					<i class="fa fa-key"></i>
 					- Gebruiker Autorisatie Bewerken
 				</div>
 			</div>
