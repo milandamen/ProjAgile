@@ -223,8 +223,8 @@
 				foreach($district->pages as $page){
 					$home = false;
 					
-					foreach($page->districtSections as $newsdistrict){
-						if($newsdistrict->name === 'Home'){
+					foreach($page->districtSections as $pagedistrict){
+						if($pagedistrict->name === 'Home'){
 							$home = true;
 						}
 					}
