@@ -60,7 +60,7 @@
 								@if($news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </a></td>
-										 {{--*/ $phrase = trunc($news->content, 20); /*--}}
+										{{--*/ $phrase = trunc($news->content, 20); /*--}}
 										<td colspan="2"><i> {!! $phrase !!} </i></td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
@@ -79,7 +79,7 @@
 								@if(!$news->top)
 									<tr>
 										<td> <a href="{!! route('news.show', $news->newsId) !!}">{!! $news->title !!} </td>
-										 {{--*/ $phrase = trunc($news->content, 30); /*--}}
+										{{--*/ $phrase = trunc($news->content, 30); /*--}}
 										<td colspan="2"> {!! $phrase !!} </td>
 										<td> {!! count($news->comments) !!}</td>
 									</tr>
@@ -111,17 +111,19 @@
 							<th> </th>
 							<th>  </th>
 						</tr>
-<!--
-						@\foreach($district->pages as $page)
+
+						@foreach($district->pages as $page)
 							<tr>
-								<td> {--!! $page->title !!--} </td>
-								 {{-- //$phrase = trunc($page->introduction->text, 30); --}}
-								<td> {--!! //$phrase !!--} </td>
+								<td> {{ $page->introduction->title }} </td>
+								 {{--*/
+									$phrase = trunc($page->introduction->text, 30);
+								/*--}}
+								<td> {{$phrase}} </td>
 								<td> </td>
 								<td> </td>
 							</tr>
-						@\endforeach
-					-->
+						@endforeach
+						
 					</table>
 				</div>
 			</div>

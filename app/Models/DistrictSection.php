@@ -74,7 +74,7 @@
 		*/
 		public function pages()
 		{
-			return $this->belongsToMany('Page', 'districtsection_has_page', 'districtsection_districtSectionId', 'page_pageId');
+			return $this->belongsToMany('App\Models\Page', 'districtsection_has_page', 'districtsection_districtSectionId', 'page_pageId');
 		}
 
 	

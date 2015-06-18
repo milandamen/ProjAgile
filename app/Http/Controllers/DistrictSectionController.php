@@ -11,6 +11,7 @@
 	use Input;
 	use App\Models\DistrictSection;
 	use App\Models\News;
+	use App\Models\Page;
 	use Flash;
 
 	class DistrictSectionController extends Controller
@@ -215,9 +216,25 @@
 						$this->addressRepo->update($address);
 					}
 				}
+				
+				// Reassign all pages to Home
+				$pages = $this->districtRepo->get($id)->pages;
 
+				foreach($district->pages as $page){
+					$home = false;
+					
+					foreach($page->districtSections as $newsdistrict){
+						if($newsdistrict->name === 'Home'){
+							$home = true;
+						}
+					}
+
+					if(!$home){
+						$homedist = $this->districtRepo->get(1)->pages()->attach($page->pageId);
+					}
+				}
 				// remove all pages
-
+				$district->pages()->detach();
 
 				// Delete district
 				$this->districtRepo->destroy($district->districtSectionId);
