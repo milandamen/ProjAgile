@@ -391,6 +391,7 @@
 					$this->sidebarRepo->deleteAllFromPage($id);
 				}
 				$this->pagePanelRepo->deleteAllFromPage($id);
+				$page->districtSections()->detach();
 				$this->pageRepo->destroy($id);
 				$this->introRepo->destroy($page->introduction->introductionId);
 
