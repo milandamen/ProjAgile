@@ -47,12 +47,26 @@
 							$current = strtotime($curDate);
 						/*--}}
 						@foreach($districts as $district)
-							{{--*/	$count = 0; /*--}}
+							{{--*/	
+								$count = 0; 
+								$pagecount = 0;
+							/*--}}
 							<tr>
 								<td><a href="{!! route('district.show', $district->name)!!}"> {!! $district->name !!} </a> </td>
 								 {{--*/ $phrase = trunc($district->generalInfo, 20); /*--}}
 								<td><i> {!! $phrase !!} </i></td>
-								<td> </td>
+								
+								@foreach($district->pages as $page)
+									{{--*/
+										$endDate = strtotime($page->publishEndDate);
+										$pubDate = strtotime($page->publishDate);
+									/*--}}
+
+									@if($pubDate <= $current && $endDate >= $current && $page->visible)
+										{{--*/	$pagecount++; /*--}}
+									@endif
+								@endforeach
+								<td> {!! $pagecount !!} </td>
 
 								@foreach($district->news as $news)
 									{{--*/
@@ -64,7 +78,7 @@
 										{{--*/	$count++; /*--}}
 									@endif
 								@endforeach
-								<td> {!! $count !!}</td>
+								<td> {!! $count !!} </td>
 							</tr>
 						@endforeach
 					</table>
