@@ -94,6 +94,26 @@
 			return view('permissions.createUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions'));
 		}
 
+		public function deleteUserGroup($userGroupId)
+		{
+			if($userGroupId != 1 && $userGroupId != 2 && $userGroupId != 3)
+			{
+				$users = $this->userRepo->getAllByUserGroup($userGroupId);
+				foreach($users as $user)
+				{
+					$user->userGroupId = 3;
+					$user->save();
+				}
+				$userGroup = $this->userGroupRepo->get($userGroupId);
+				$userGroup->districtSections()->detach();
+				$userGroup->pages()->detach();
+				$userGroup->permissions()->detach();
+				$userGroup->delete();
+			}
+
+			return redirect::route('permissions.index');
+		}
+
 		public function storeUserGroup(CreateUserGroupRequest $request)
 		{
 			$data = $request->input();
@@ -106,32 +126,40 @@
 
 		public function editUserGroup($userGroupId)
 		{
-			$userGroup = $this->userGroupRepo->get($userGroupId);
-			$pages = $this->pageRepo->getAll();
-			$districtSections = $this->districtSectionRepo->getAll();
-			$permissions = $this->permissionRepo->getAll();
-			$selectedDistrictSections = $this->getSelectedDistrictSections($userGroupId);
+			if($userGroupId != 1 && $userGroupId != 3)
+			{
+				$userGroup = $this->userGroupRepo->get($userGroupId);
+				$pages = $this->pageRepo->getAll();
+				$districtSections = $this->districtSectionRepo->getAll();
+				$permissions = $this->permissionRepo->getAll();
+				$selectedDistrictSections = $this->getSelectedDistrictSections($userGroupId);
 
-			return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions', 'selectedDistrictSections'));
+				return view('permissions.editUserGroup', compact('userGroup', 'pages', 'districtSections', 'permissions', 'selectedDistrictSections'));
+			}
+
+			return redirect::route('permissions.index');
 		}
 
 		public function updateUserGroup($userGroupId, UpdateUserGroupRequest $request)
 		{
-			$userGroup = $this->userGroupRepo->get($userGroupId);
-			$userGroup->name = $request->get('name');
-			$this->userGroupRepo->update($userGroup);
+			if($userGroupId != 1)
+			{
+				$userGroup = $this->userGroupRepo->get($userGroupId);
+				$userGroup->name = $request->get('name');
+				$this->userGroupRepo->update($userGroup);
 
-			$this->updateDatabasePermissions($request, $userGroup);
+				$this->updateDatabasePermissions($request, $userGroup);
 
-			//get the removed district sections and reset usergroups.
-			$oldSelectedDistrictSections = json_decode($request->get('selectedDistrictSections'));
+				//get the removed district sections and reset usergroups.
+				$oldSelectedDistrictSections = json_decode($request->get('selectedDistrictSections'));
 
-			$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
-			$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
+				$districtSectionUserSelectionString = $request->get('districtSectionUserSelection');
+				$districtSectionUserSelectionArray = $this->stringToIntArray(json_decode($districtSectionUserSelectionString, true));
 
-			$difference = array_diff($oldSelectedDistrictSections, $districtSectionUserSelectionArray);
+				$difference = array_diff($oldSelectedDistrictSections, $districtSectionUserSelectionArray);
 
-			$this->resetUserGroups($difference);
+				$this->resetUserGroups($difference);
+			}
 
 
 			return redirect::route('permissions.index');
@@ -148,12 +176,16 @@
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_PERMISSIONS))
 			{
-				$user = $this->userRepo->get($userId);
-				$pages = $this->pageRepo->getAll();
-				$districtSections = $this->districtSectionRepo->getAll();
-				$permissions = $this->permissionRepo->getAll();
+				if($userId != 1)
+				{
+					$user = $this->userRepo->get($userId);
+					$pages = $this->pageRepo->getAll();
+					$districtSections = $this->districtSectionRepo->getAll();
+					$permissions = $this->permissionRepo->getAll();
 
-				return view('permissions.editUserPermissions', compact('user', 'pages', 'districtSections', 'permissions'));
+					return view('permissions.editUserPermissions', compact('user', 'pages', 'districtSections', 'permissions'));
+				}
+				return redirect::route('user.index');
 			}
 
 			return view('errors.403');
@@ -170,9 +202,12 @@
 		{
 			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_PERMISSIONS))
 			{
-				$user = $this->userRepo->get($userId);
+				if($userId != 1)
+				{
+					$user = $this->userRepo->get($userId);
 
-				$this->updateDatabasePermissions($request, $user);
+					$this->updateDatabasePermissions($request, $user);
+				}
 
 				return redirect::route('user.index');
 			}
