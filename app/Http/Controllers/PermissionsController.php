@@ -96,7 +96,7 @@
 
 		public function deleteUserGroup($userGroupId)
 		{
-			if($userGroupId != 1 && $userGroupId != 3)
+			if($userGroupId != 1 && $userGroupId != 2 && $userGroupId != 3)
 			{
 				$users = $this->userRepo->getAllByUserGroup($userGroupId);
 				foreach($users as $user)
