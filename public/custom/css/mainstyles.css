@@ -99,3 +99,9 @@
 {
 	font-size: 1.1em;
 }
+
+.extra-search
+{
+    width: 500px !important;
+    margin-left: 250px !important;
+}
