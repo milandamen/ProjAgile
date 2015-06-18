@@ -15,6 +15,16 @@
 		</div>
 		<div class="row">
 			<h2 class="page-header">Zoekresultaten</h2>
+			{!! Form::open(['route' => 'search.index', 'method' => 'GET', 'class' => 'navbar-form', 'role' => 'search']) !!}
+			<div class="input-group">
+				<div class="col-md-12" style="padding:0">
+					{!! Form::text('q', isset($query) ? $query : old('q'), ['placeholder' => 'Zoeken...', 'class' => 'form-control extra-search']) !!}
+				</div>
+				<div class="input-group-btn">
+					{!! Form::button('<i class="glyphicon glyphicon-search"></i>', ['type' => 'submit', 'class' => 'btn btn-default']) !!}
+				</div>
+			</div>
+			{!! Form::close() !!}
 			@if(count($news))
 				<div class="col-md-12">
 					<h4>Nieuws Resultaten</h4>
