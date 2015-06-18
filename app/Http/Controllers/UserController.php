@@ -352,9 +352,12 @@
 		{
 			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
-				$user = $this->userRepo->get($id);
-				$user->active ? $user->active = fale : $user->active = true;
-				$this->userRepo->update($user);
+				if($id != 1)
+				{
+					$user = $this->userRepo->get($id);
+					$user->active ? $user->active = fale : $user->active = true;
+					$this->userRepo->update($user);
+				}
 
 				return Redirect::route('user.index');
 			}

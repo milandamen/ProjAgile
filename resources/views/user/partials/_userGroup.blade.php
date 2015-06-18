@@ -39,17 +39,19 @@
 									</a>
 								</td>
 								<td>
-									@if($userType->active)
-										<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="text-success activate">
-											<i class="fa fa-unlock-alt fa-lg"></i>
-										</a>
-									@else
-										<a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="black deactivate">
-											<i class="fa fa-lock fa-lg"></i>
-										</a>
-									@endif
+                                    @if($userType->userId != 1)
+                                        @if($userType->active)
+                                            <a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="text-success activate">
+                                                <i class="fa fa-unlock-alt fa-lg"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('user.toggleActivation', [$userType->userId]) }}" class="black deactivate">
+                                                <i class="fa fa-lock fa-lg"></i>
+                                            </a>
+                                        @endif
+                                    @endif
 								</td>
-								@if(Auth::user()->canChangePermissions())
+								@if(Auth::user()->canChangePermissions() && $userType->userId != 1)
 									<td>
 										<a href="{{ route('permissions.edit', [$userType->userId]) }}" class="left black">
 											<i class="fa fa-key"></i>
