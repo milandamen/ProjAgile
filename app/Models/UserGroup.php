@@ -140,6 +140,25 @@
 		}
 
 		/**
+		 * Check if the usergroup has permission to edit news from the given districtSections.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return boolean
+		 */
+		public function hasDistrictSectionPermissions($districtSections)
+		{
+			foreach ($districtSections as $districtSection)
+			{
+				if ($this->districtSections->contains($districtSection->districtSectionId))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
 		 * Check if the usergroup has permission to view news from the given districtSection.
 		 *
 		 * @param $districtSectionId
@@ -148,6 +167,25 @@
 		public function hasDistrictSectionViewPermission($districtSectionId)
 		{
 			return $this->districtSectionViews->contains($districtSectionId);
+		}
+
+		/**
+		 * Check if the usergroup has permission to view news from the given districtSections.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return boolean
+		 */
+		public function hasDistrictSectionViewPermissions($districtSections)
+		{
+			foreach ($districtSections as $districtSection)
+			{
+				if ($this->districtSectionViews->contains($districtSection->districtSectionId))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		/**
