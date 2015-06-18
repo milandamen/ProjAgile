@@ -167,11 +167,7 @@
 
 					$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 
-<<<<<<< HEAD
-					if($address !== null && isset($userId))
-=======
 					if(isset($address))
->>>>>>> origin/develop
 					{
 						$rules['postal'] .= '|is_address_not_in_use:' . $userId;
 					}
