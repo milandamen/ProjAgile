@@ -221,10 +221,10 @@ $(function () {
 		$('.districtSectionView-item').each(function(){
 			var $widget = $(this);
 			$checkbox = $widget.data('checkbox');
-			$checkbox.prop('checked', !districtSectionsChecked);
+			$checkbox.prop('checked', !districtSectionsViewChecked);
 			$checkbox.triggerHandler('change');
 		})
-		districtSectionsChecked = !districtSectionsChecked;
+		districtSectionsViewChecked = !districtSectionsViewChecked;
 	});
 
 });
