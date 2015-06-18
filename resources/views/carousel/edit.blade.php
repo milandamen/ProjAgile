@@ -111,32 +111,34 @@
 										@endif
 									</td>
 									<td class="date-box">
+										<div class="input-group date icon-width">
 										@if($article->news != null)
-											{{$article->news->normalDate()}}
+											<input type="hidden" name="articleStartDate[]" value="{{$article->startDate()}}" class="carousel-start-date"/>
 										@elseif($article->page != null)
-											{{$article->page->publishDate}}
+											{{--{{$article->page->publishDate}}--}}
+											<input type="hidden" name="articleStartDate[]" value="{{$article->startDate()}}" class="carousel-start-date"/>
 										@else
-											<div class="input-group date icon-width">
-												<input type="hidden" name="carouselStartDate[]" value="{{$article->startDate()}}" class="carousel-start-date"/>
-												<span class="input-group-addon">
-													<span class="glyphicon glyphicon-calendar"></span>
-												</span>
-											</div>
+											<input type="hidden" name="carouselStartDate[]" value="{{$article->startDate()}}" class="carousel-start-date"/>
 										@endif
+											<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
 									</td>
 									<td class="date-box">
+										<div class="input-group date icon-width">
 										@if($article->news != null)
-											{{$article->news->endDate()}}
+											<input type="hidden" name="articleEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
 										@elseif($article->page != null)
-											{{$article->page->publishEndDate}}
+											{{--{{$article->page->publishEndDate}}--}}
+											<input type="hidden" name="articleEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
 										@else
-											<div class="input-group date icon-width">
-												<input type="hidden" name="carouselEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
-												<span class="input-group-addon">
-													<span class="glyphicon glyphicon-calendar"></span>
-												</span>
-											</div>
+											<input type="hidden" name="carouselEndDate[]" value="{{$article->endDate()}}" class="carousel-end-date"/>
 										@endif
+											<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
 									</td>
 									<td>
 										<textarea name="beschrijving[]" class="fullwidth">{{ $article->description }}</textarea>

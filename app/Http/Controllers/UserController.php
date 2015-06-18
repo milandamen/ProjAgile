@@ -352,12 +352,18 @@
 		{
 			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
 			{
+<<<<<<< HEAD
 				if($id != 1)
 				{
 					$user = $this->userRepo->get($id);
 					$user->active ? $user->active = fale : $user->active = true;
 					$this->userRepo->update($user);
 				}
+=======
+				$user = $this->userRepo->get($id);
+				$user->active ? $user->active = false : $user->active = true;
+				$this->userRepo->update($user);
+>>>>>>> origin/develop
 
 				return Redirect::route('user.index');
 			}

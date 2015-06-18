@@ -89,14 +89,7 @@
 		*/
 		'custom' => 
 		[
-			'g-recaptcha-response' =>
-			[
-				'recaptcha' => '',
-			],
-			'postal' =>
-			[
-				'is_postal_not_in_use' => 'The entered postal is already in use in our system. Please contact us.',
-			],
+			
 		],
 
 		/*

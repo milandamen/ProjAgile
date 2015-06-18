@@ -106,6 +106,8 @@
 		public function update($model)
 		{
 			$model->save();
+			
+			return $model;
 		}
 
 		/**
@@ -152,22 +154,17 @@
 
 			if(isset($user) && !empty($user))
 			{
-				if($user->usergroup->name === "Administrator")
+				$address = $user->address;
+				$districtSection;
+
+				if(isset($address) && !empty($address))
 				{
-					$pages = Page::orWhereHas('introduction', function($q) use($query)
-								   {
-								   		$q->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
-								   })->with('introduction')->
-								   orWhereHas('panels', function($q) use($query)
-								   {
-								   		$q->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
-								   })->with('panels')->
-							 	   where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
-							 	   where('visible', '=', true)->get();
+					$districtSection = $address->districtSection;
 				}
-				else
+
+				if(isset($districtSection) && !empty($districtSection))
 				{
-					$userDistrictSection = $user->address->districtSection->name;
+					$userDistrictSection = $districtSection->name;
 
 					$pages = Page::orWhereHas('introduction', function($q) use($query)
 							       {
@@ -179,6 +176,20 @@
 							       })->with('panels')->
 						 	       where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
 						 	       where('visible', '=', true)->get();
+				}
+				else
+				{
+
+					$pages = Page::orWhereHas('introduction', function($q) use($query)
+								   {
+								   		$q->whereRaw('MATCH(title, subtitle, text) AGAINST(?)', [$query]);
+								   })->with('introduction')->
+								   orWhereHas('panels', function($q) use($query)
+								   {
+								   		$q->whereRaw('MATCH(title, text) AGAINST(?)', [$query]);
+								   })->with('panels')->
+							 	   where('publishDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+							 	   where('visible', '=', true)->get();
 				}
 			}
 			else

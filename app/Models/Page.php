@@ -39,7 +39,8 @@
 			'publishDate',
 			'publishEndDate',
 			'visible',
-			'parentId'
+			'parentId',
+			'districtsection_districtSectionId'
 		];
 
 		/**
@@ -106,8 +107,46 @@
 			return $this->hasMany('App\Models\PagePanel', 'page_id');
 		}	
 
+		/**
+		 * Get the Introduction model that is referened in this Page model.
+		 *
+		 * @return Introduction
+		 */
 		public function introduction()
 		{
 			return $this->hasOne('App\Models\Introduction', 'introductionId', 'introduction_introductionId');
 		}
+
+				/**
+		 * Check if the usergroup has permission to edit the given page
+		 *
+		 * @param $pageId
+		 * @return Boolean
+		 */
+		public function groups()
+		{
+			return $this->belongsToMany('App\Models\UserGroup', 'usergrouppagepermissions', 'pageId', 'userGroupId');
+		}
+
+		/**
+		 * Get all User models that reference this Page model (permissions).
+		 *
+		 * @return Collection -> Page
+		 */
+		public function users()
+		{
+			return $this->belongsToMany('App\Models\User', 'pagepermissions', 'pageId', 'userId');
+		}
+
+		
+		/**
+		 * Get all DistrictSection models that reference this Page model.
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSections()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsection_has_page', 'page_pageId', 'districtsection_districtSectionId');
+		}
+		
 	}

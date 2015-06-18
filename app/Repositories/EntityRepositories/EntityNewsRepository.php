@@ -171,15 +171,17 @@
 
 			if(isset($user) && !empty($user))
 			{
-				if($user->usergroup->name === "Administrator")
+				$address = $user->address;
+				$districtSection;
+
+				if(isset($address) && !empty($address))
 				{
-					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
-							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
-							 	  where('hidden', '=', false)->get();
+					$districtSection = $address->districtSection;
 				}
-				else
+
+				if(isset($districtSection) && !empty($districtSection))
 				{
-					$userDistrictSection = $user->address->districtSection->name;
+					$userDistrictSection = $districtSection->name;
 
 					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
 							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
@@ -188,6 +190,13 @@
 							 	  		$query->where('name', '=', $homeDistrictSection)->
 							 	  			orWhere('name', '=', $userDistrictSection);
 							 	  })->get();
+				}
+				else
+				{
+
+  					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
+							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+							 	  where('hidden', '=', false)->get();
 				}
 			}
 			else
