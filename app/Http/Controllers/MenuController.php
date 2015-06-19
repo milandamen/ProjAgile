@@ -46,7 +46,7 @@
 		 */
 		public function index()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$allMenuItemsEdit = $this->menuRepo->getAllMenuItems();
 				$menuColor = $this->styleRepo->get('defaultMenuColor');
@@ -64,7 +64,7 @@
 		 */
 		public function create()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$menuItem = new Menu();
 
@@ -81,7 +81,7 @@
 		 */
 		public function store(MenuRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$this->menuRepo->create($request->all());
 
@@ -100,7 +100,7 @@
 		 */
 		public function edit($id)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$menuItem = $this->menuRepo->get($id);
 
@@ -119,7 +119,7 @@
 		 */
 		public function update(MenuRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$item = $this->menuRepo->get($request->id);
 				$item->name = $request->name;
@@ -142,7 +142,7 @@
 		 */
 		public function updateMenuOrder(Request $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
 			{
 				$parentId = null;
 				$array = [];
@@ -207,8 +207,11 @@
 		 */
 		public function switchPublish($id)
 		{
-			$menuItem = $this->menuRepo->get($id);
-			$menuItem->publish ? $menuItem->publish = false : $menuItem->publish = true;
-			$this->menuRepo->update($menuItem);
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_MENU) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_MENU)))
+			{
+				$menuItem = $this->menuRepo->get($id);
+				$menuItem->publish ? $menuItem->publish = false : $menuItem->publish = true;
+				$this->menuRepo->update($menuItem);
+			}
 		}
 	}
