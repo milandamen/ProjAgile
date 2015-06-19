@@ -198,4 +198,24 @@
 		{
 			return $this->permissions->contains($permissionId);
 		}
+
+		/**
+		 * Check if the usergroup has permission to edit any pages.
+		 *
+		 * @return boolean
+		 */
+		public function canEditPages()
+		{
+			return $this->pages()->count() != 0;
+		}
+
+		/**
+		 * Check if the usergroup has permission to edit any news items.
+		 *
+		 * @return boolean
+		 */
+		public function canEditNews()
+		{
+			return $this->districtSections()->count() != 0;
+		}
 	}

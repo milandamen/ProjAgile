@@ -109,10 +109,14 @@
 		 * @return Response
 		 */
 		public function index()
-		{	
-			$pages = $this->pageRepo->getAll();
+		{
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->canEditPages() || Auth::user()->userGroup->canEditPages()))
+			{
+				$pages = $this->pageRepo->getAll();
 
-			return view('page.index', compact('pages'));
+				return view('page.index', compact('pages'));
+			}
+			return view('errors.403');
 		}
 
 		/**

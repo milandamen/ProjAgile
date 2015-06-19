@@ -250,10 +250,14 @@
 		 */
 		public function manage()
 		{
-			$news = $this->newsRepo->getAllHidden();
-			$sidebar = $this->sidebarRepo->getByPage(2);
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->canEditNews() || Auth::user()->userGroup->canEditNews()))
+			{
+				$news = $this->newsRepo->getAllHidden();
+				$sidebar = $this->sidebarRepo->getByPage(2);
 
-			return view('news.manage', compact('news', 'sidebar'));
+				return view('news.manage', compact('news', 'sidebar'));
+			}
+			return view('errors.403');
 		}   
 
 		/**

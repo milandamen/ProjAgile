@@ -273,4 +273,24 @@
 		{
 			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
 		}
+
+		/**
+		 * Check if the user has permission to edit any pages.
+		 *
+		 * @return boolean
+		 */
+		public function canEditPages()
+		{
+			return $this->pages()->count() != 0;
+		}
+
+		/**
+		 * Check if the user has permission to edit any news items.
+		 *
+		 * @return boolean
+		 */
+		public function canEditNews()
+		{
+			return $this->districtSections()->count() != 0;
+		}
 	}
