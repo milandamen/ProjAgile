@@ -128,6 +128,11 @@
 			return $this->belongsToMany('App\Models\UserGroup', 'usergrouppagepermissions', 'pageId', 'userGroupId');
 		}
 
+		public function groupsView()
+		{
+			return $this->belongsToMany('App\Models\UserGroup', 'usergrouppageviewpermissions', 'pageId', 'userGroupId');
+		}
+
 		/**
 		 * Get all User models that reference this Page model (permissions).
 		 *
@@ -138,7 +143,12 @@
 			return $this->belongsToMany('App\Models\User', 'pagepermissions', 'pageId', 'userId');
 		}
 
-		
+		public function usersView()
+		{
+			return $this->belongsToMany('App\Models\User', 'pageviewpermissions', 'pageId', 'userId');
+		}
+
+
 		/**
 		 * Get all DistrictSection models that reference this Page model.
 		 *
