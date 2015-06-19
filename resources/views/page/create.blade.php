@@ -23,7 +23,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				@include('errors.partials._list')
-				{!! Form:: open() !!}
+				{!! Form:: open(['onSubmit' => 'return validatePage()']) !!}
 					<input type="text" name="panelIndex" id="panelIndex" class="hiddenInput" />
 					<input id="newOnSiteCheck" type="hidden" name="toNewOnSite" value="FALSE">
 					<input id="newOnSiteMessage" type="hidden" name="newOnSiteMessage" value="">
@@ -169,7 +169,7 @@
 						<div class="form-group">
 							{!! HTML::linkRoute('page.index', 'Annuleer', [] ,['class' => 'btn btn-danger']) !!}
 								<a onclick="getPreview()" class="btn btn-warning">Preview</a>
-							{!! Form:: submit('Opslaan', ['class' => 'btn btn-success', 'onclick' => 'validatePage()'])!!}
+							{!! Form:: submit('Opslaan', ['class' => 'btn btn-success'])!!}
 						</div>
 					</div>
 

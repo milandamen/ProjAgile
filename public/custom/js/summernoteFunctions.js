@@ -28,7 +28,6 @@ function validateSummer()
 
 	if(code === '' || code === '<p><br></p>') 
 	{
-		event.preventDefault();
 		alert("Het veld 'inhoud' is niet ingevuld, vul deze alstublieft in.");
 		
 		return false;
@@ -44,7 +43,6 @@ function validateSummer()
 
 		if(panel === '' || panel === '<p><br></p>') 
 		{
-			event.preventDefault();
 			alert("Het panelveld 'inhoud' is bij een van de panels niet ingevuld, vul deze alstublieft in.");
 			return false;
 		}

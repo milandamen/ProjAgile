@@ -119,7 +119,6 @@ function validateNews()
 {
 	if (document.querySelector('input[name="title"]').value === "")
 	{
-		event.preventDefault();
 		alert('Vul alstublieft een titel in.');
 
 		return false;
@@ -127,8 +126,6 @@ function validateNews()
 
 	if (!validateSummer())
 	{
-		event.preventDefault();
-
 		return false;
 	}
 
@@ -145,7 +142,7 @@ function validateNews()
 		{
 			if(district.value == districtSections[j].value)
 			{
-				event.preventDefault();
+				
 				alert('U heeft meerdere malen dezelfde deelwijk geselecteerd. U kunt maar één keer dezelfde deelwijk kiezen.');
 				return false;
 			}
@@ -156,7 +153,7 @@ function validateNews()
 	{
 		if (districtSection.value === "")
 		{
-			event.preventDefault();
+			
 			alert('Selecteer alstublieft een deelwijk.');
 			return false;
 		}
@@ -164,10 +161,17 @@ function validateNews()
 
 	var publishStartDate = moment(document.querySelector('#publishStartDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
 	var publishEndDate = moment(document.querySelector('#publishEndDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+	
+	console.log('henk');
+	console.log(publishEndDate);
+	
+	
+	
+	return false;
 
 	if (!publishStartDate.isValid())
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
 
 		return false;
@@ -175,7 +179,7 @@ function validateNews()
 
 	if (!publishEndDate.isValid())
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
 
 		return false;
@@ -184,7 +188,7 @@ function validateNews()
 	if (publishStartDate.isAfter(publishEndDate) || 
 		publishStartDate.isSame(publishEndDate))
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
 
 		return false;
@@ -244,7 +248,7 @@ function validateNews()
 			{
 				if (allowedMimeTypes.indexOf(file.type) < 0)
 				{
-					event.preventDefault();
+					
 
 					var feedback = "Eén van de bestanden is niet van het juiste bestandstype. " + 
 								   "\nU mag alleen bestanden uploaden van het bestandstype ";
@@ -265,7 +269,7 @@ function validateNews()
 
 	if ($('input[name="hidden"]:checked').val() === "")
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een optie om te verbergen of niet.');
 
 		return false;
@@ -273,7 +277,7 @@ function validateNews()
 
 	if ($('input[name="commentable"]:checked').val() === "")
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een optie om commentaar toe te staan of niet.');
 		
 		return false;
@@ -281,7 +285,7 @@ function validateNews()
 
 	if ($('input[name="top"]:checked').val() === "")
 	{
-		event.preventDefault();
+		
 		alert('Selecteer alstublieft een optie om dit artikel bovenaan de pagina te vertonen of niet.');
 
 		return false;
