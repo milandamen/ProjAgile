@@ -407,6 +407,10 @@
 				}
 				$this->pagePanelRepo->deleteAllFromPage($id);
 				$page->districtSections()->detach();
+				$page->users()->detach();
+				$page->groups()->detach();
+				$page->usersView()->detach();
+				$page->groupsView()->detach();
 				$this->pageRepo->destroy($id);
 				$this->introRepo->destroy($page->introduction->introductionId);
 

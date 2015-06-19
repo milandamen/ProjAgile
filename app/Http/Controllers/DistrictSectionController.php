@@ -200,8 +200,6 @@
 				$district = $this->districtRepo->get($id);
 
 				// Reassign all news to Home
-				$news = $this->districtRepo->get($id)->news;
-
 				foreach($district->news as $new){
 					$home = false;
 					
@@ -212,7 +210,7 @@
 					}
 
 					if(!$home){
-						$homedist = $this->districtRepo->get(1)->news()->attach($new->newsId);
+						$this->districtRepo->get(1)->news()->attach($new->newsId);
 					}
 				}
 				// remove all news
@@ -221,6 +219,8 @@
 				// remove all permissions
 				$district->users()->detach();
 				$district->groups()->detach();
+				$district->usersView()->detach();
+				$district->groupsView()->detach();
 
 				// reassign all adresses to Home
 				$addresses = $this->addressRepo->getAll();
@@ -232,8 +232,6 @@
 				}
 				
 				// Reassign all pages to Home
-				$pages = $this->districtRepo->get($id)->pages;
-
 				foreach($district->pages as $page){
 					$home = false;
 					
@@ -244,7 +242,7 @@
 					}
 
 					if(!$home){
-						$homedist = $this->districtRepo->get(1)->pages()->attach($page->pageId);
+						$this->districtRepo->get(1)->pages()->attach($page->pageId);
 					}
 				}
 				// remove all pages
