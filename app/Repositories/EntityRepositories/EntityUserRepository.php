@@ -120,7 +120,7 @@
 
 				if(isset($address) && !empty($address))
 				{
-					$attributes['addressId'] = $addressId->addressId;
+					$attributes['addressId'] = $address->addressId;
 				}
 			}
 			$attributes['password'] = Hash::make($attributes['password']);
