@@ -54,10 +54,11 @@ function validatePage()
 	
 	if (publishEndDateVal == "")
 	{
-		publishEndDateVal = "01-01-2500";
+		publishEndDateVal = "01-01-2038 00:00";
+		document.querySelector('#publishEndDate').value = publishEndDateVal;
 	}
 
-	publishEndDate = moment(document.querySelector('#publishEndDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+	publishEndDate = moment(publishEndDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
 	
 	if (!publishEndDate.isValid())
 	{
@@ -68,7 +69,7 @@ function validatePage()
 	
 	if (publishStartDateVal != "")
 	{
-		publishStartDate = moment(document.querySelector('#publishStartDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
+		publishStartDate = moment(publishStartDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
 		
 		if (publishStartDate.isValid())
 		{
