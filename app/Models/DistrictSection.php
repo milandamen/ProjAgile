@@ -99,7 +99,7 @@
 
 		public function usersView()
 		{
-			return $this->belongsToMany('App\Models\User', 'districtsectionviewpermissions', 'districtSectionId', 'userGroupId');
+			return $this->belongsToMany('App\Models\User', 'districtsectionviewpermissions', 'districtSectionId', 'userId');
 		}
 
 		public function groups()

@@ -199,12 +199,14 @@
 			if(Auth::user()->userId != 1)
 			{
 				$page->users()->attach(1);
+				$page->usersView()->attach(1);
 			}
 
 			//admin group id = 1
 			if(Auth::user()->usergroup->userGroupId != 1)
 			{
 				$page->groups()->attach(1);
+				$page->groupsView()->attach(1);
 			}
 
 			return Redirect::route('page.show', [$page->pageId]);

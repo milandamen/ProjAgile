@@ -118,12 +118,14 @@
 				if(Auth::user()->userId != 1)
 				{
 					$district->users()->attach(1);
+					$district->usersView()->attach(1);
 				}
 
 				//admin group id = 1
 				if(Auth::user()->usergroup->userGroupId != 1)
 				{
 					$district->groups()->attach(1);
+					$district->groupsView()->attach(1);
 				}
 
 				return Redirect::route('district.show', $district->name);
