@@ -77,8 +77,6 @@
 			return $this->belongsToMany('App\Models\Page', 'districtsection_has_page', 'districtsection_districtSectionId', 'page_pageId');
 		}
 
-	
-
 		/**
 		* Get all User models that reference this DistrictSection model.
 		*
@@ -88,7 +86,6 @@
 		{
 			return $this->belongsToMany('App\Models\Address', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
-
 
 		/**
 		 * Get all User models that reference this DistrictSection model (permissions).
@@ -100,8 +97,19 @@
 			return $this->belongsToMany('App\Models\User', 'districtsectionpermissions', 'districtSectionId', 'userId');
 		}
 
+		public function usersView()
+		{
+			return $this->belongsToMany('App\Models\User', 'districtsectionviewpermissions', 'districtSectionId', 'userGroupId');
+		}
+
 		public function groups()
 		{
 			return $this->belongsToMany('App\Models\UserGroup', 'usergroupdistrictsectionpermissions', 'districtSectionId', 'userGroupId');
 		}
+
+		public function groupsView()
+		{
+			return $this->belongsToMany('App\Models\UserGroup', 'usergroupdistrictsectionpermissions', 'districtSectionId', 'userGroupId');
+		}
+
 	}
