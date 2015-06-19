@@ -116,7 +116,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>{!! Form::file('file[0]', ['id' => 'file']) !!}</td>
+						<td>{!! Form::file('file[]', ['id' => 'file']) !!}</td>
 						<td>
 							<a name="deleteFile" type="button" class="btn btn-danger btn-xs floatRight" aria-label="Left Align">
 								<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
