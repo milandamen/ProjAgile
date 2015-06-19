@@ -61,7 +61,7 @@
 		 */
 		public function edit()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER))
+			if (Auth::check()&& (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_FOOTER)))
 			{
 				$footer = $this->footerRepository->getAll();
 
@@ -78,7 +78,7 @@
 		 */
 		public function update()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER))
+			if (Auth::check()&& (Auth::user()->hasPermission(PermissionsController::PERMISSION_FOOTER) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_FOOTER)))
 			{
 				if(isset($_POST['column']))
 				{

@@ -111,7 +111,7 @@
 		 */
 		public function editLayout()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$news = $this->getNews();
 				$introduction = $this->pageRepo->get(1)->introduction;
@@ -132,7 +132,7 @@
 		 */
 		public function updateLayout()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
 					$modules = $this->homeLayoutRepo->getAll();
@@ -158,7 +158,7 @@
 		 */
 		public function editIntroduction()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$introduction = $this->pageRepo->get(1)->introduction;
 
@@ -175,7 +175,7 @@
 		 */
 		public function updateIntroduction(IntroductionRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$intro = $this->pageRepo->get($request->pageId)->introduction;
 				$intro->title = $request->title;

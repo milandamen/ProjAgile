@@ -97,6 +97,16 @@
 		}
 
 		/**
+		 * Get all DistrictSection models that reference this User model (view permissions).
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function districtSectionViews()
+		{
+			return $this->belongsToMany('App\Models\DistrictSection', 'districtsectionviewpermissions', 'userId', 'districtSectionId');
+		}
+
+		/**
 		 * Get all News models that reference this User model.
 		 * 
 		 * @return Collection -> News
@@ -124,6 +134,16 @@
 		public function pages()
 		{
 			return $this->belongsToMany('App\Models\Page', 'pagepermissions', 'userId', 'pageId');
+		}
+
+		/**
+		 * Get all Page models that reference this User model (view permissions).
+		 *
+		 * @return Collection -> Page
+		 */
+		public function pageViews()
+		{
+			return $this->belongsToMany('App\Models\Page', 'pageviewpermissions', 'userId', 'pageId');
 		}
 
 		/**
@@ -159,6 +179,18 @@
 		}
 
 		/**
+		 * Check if the user has permission to view the given page
+		 *
+		 * @param  int $pageId
+		 *
+		 * @return boolean
+		 */
+		public function hasPageViewPermission($pageId)
+		{
+			return $this->pageViews->contains($pageId);
+		}
+
+		/**
 		 * Check if the user has permission to edit news from the given districtSection.
 		 *
 		 * @param  int $districtSectionId
@@ -168,6 +200,18 @@
 		public function hasDistrictSectionPermission($districtSectionId)
 		{
 			return $this->districtSections->contains($districtSectionId);
+		}
+
+		/**
+		 * Check if the user has permission to view news from the given districtSection.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return boolean
+		 */
+		public function hasDistrictSectionViewPermission($districtSectionId)
+		{
+			return $this->districtSectionViews->contains($districtSectionId);
 		}
 
 		/**
@@ -182,6 +226,25 @@
 			foreach ($districtSections as $districtSection)
 			{
 				if ($this->districtSections->contains($districtSection->districtSectionId))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Check if the user has permission to view news from the given districtSection.
+		 *
+		 * @param  int $districtSectionId
+		 *
+		 * @return boolean
+		 */
+		public function hasDistrictSectionViewPermissions($districtSections)
+		{
+			foreach ($districtSections as $districtSection)
+			{
+				if ($this->districtSectionViews->contains($districtSection->districtSectionId))
 				{
 					return true;
 				}
@@ -209,5 +272,25 @@
 		public function canChangePermissions()
 		{
 			return $this->hasPermission(PermissionsController::PERMISSION_PERMISSIONS);
+		}
+
+		/**
+		 * Check if the user has permission to edit any pages.
+		 *
+		 * @return boolean
+		 */
+		public function canEditPages()
+		{
+			return $this->pages()->count() != 0;
+		}
+
+		/**
+		 * Check if the user has permission to edit any news items.
+		 *
+		 * @return boolean
+		 */
+		public function canEditNews()
+		{
+			return $this->districtSections()->count() != 0;
 		}
 	}

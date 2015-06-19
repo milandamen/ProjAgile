@@ -109,10 +109,14 @@
 		 * @return Response
 		 */
 		public function index()
-		{	
-			$pages = $this->pageRepo->getAll();
+		{
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->canEditPages() || Auth::user()->userGroup->canEditPages()))
+			{
+				$pages = $this->pageRepo->getAll();
 
-			return view('page.index', compact('pages'));
+				return view('page.index', compact('pages'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -122,10 +126,14 @@
 		 */
 		public function create()
 		{
-			$pages = $this->pageRepo->getAllToList();
-			$districtSections = $this->districtSectionRepo->getAllToList();
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE)))
+			{
+				$pages = $this->pageRepo->getAllToList();
+				$districtSections = $this->districtSectionRepo->getAllToList();
 
-			return view('page.create', compact('pages', 'districtSections'));
+				return view('page.create', compact('pages', 'districtSections'));
+			}
+			return view('errors.403');
 		}
 
 		/**
@@ -135,66 +143,79 @@
 		 */
 		public function store(PageRequest $request)
 		{
-			$introduction = $this->introRepo->create
-			([
-				'title'		=> $request->title, 
-				'subtitle'	=> $request->subtitle,
-				'text'		=> $request->content,
-			]);
-			$introId = $introduction->introductionId;
-
-			$page = $this->pageRepo->create
-			([
-				'introduction_introductionId'	=> $introId,
-				'sidebar'						=> $request->sidebar,
-				'publishDate'					=> $request->publishStartDate,
-				'publishEndDate'				=> $request->publishEndDate,
-				'visible'						=> $request->visible,
-				'parentId'						=> $request->parent,
-			]);
-
-			if(count($request->panel) > 0)
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE)))
 			{
-				foreach($request->panel as $pagepanel)
-				{
-					$panel = $this->panelRepo->getBySize($pagepanel['size']);
+				$introduction = $this->introRepo->create
+				([
+					'title' => $request->title,
+					'subtitle' => $request->subtitle,
+					'text' => $request->content,
+				]);
+				$introId = $introduction->introductionId;
 
-					$this->pagePanelRepo->create
+				$page = $this->pageRepo->create
+				([
+					'introduction_introductionId' => $introId,
+					'sidebar' => $request->sidebar,
+					'publishDate' => $request->publishStartDate,
+					'publishEndDate' => $request->publishEndDate,
+					'visible' => $request->visible,
+					'parentId' => $request->parent,
+				]);
+
+				if (count($request->panel) > 0) {
+					foreach ($request->panel as $pagepanel) {
+						$panel = $this->panelRepo->getBySize($pagepanel['size']);
+
+						$this->pagePanelRepo->create
+						([
+							'page_id' => $page->pageId,
+							'title' => $pagepanel['title'],
+							'text' => $pagepanel['content'],
+							'panel_id' => $panel->panelId,
+						]);
+					}
+				}
+				$pageid = $page->pageId;
+
+				if ($request->sidebar) {
+					$sidebar = $this->sidebarRepo->create
 					([
-						'page_id'	=> $page->pageId,
-						'title'		=> $pagepanel['title'],
-						'text'		=> $pagepanel['content'],
-						'panel_id'	=> $panel->panelId,
+						'page_pageId' => $pageid,
+						'rowNr' => 0,
+						'title' => $request->title,
+						'text' => 'Home',
+						'extern' => 'false',
+						'link' => '/'
 					]);
 				}
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if ($newOnSite) {
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.show', $page->pageId);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepo->create($attributes);
+				}
+
+				$page->users()->attach(Auth::user()->userId);
+				$page->groups()->attach(Auth::user()->usergroup->userGroupId);
+
+				//super user id = 1
+				if (Auth::user()->userId != 1) {
+					$page->users()->attach(1);
+					$page->usersView()->attach(1);
+				}
+
+				//admin group id = 1
+				if (Auth::user()->usergroup->userGroupId != 1) {
+					$page->groups()->attach(1);
+					$page->groupsView()->attach(1);
+				}
+
+				return Redirect::route('page.show', [$page->pageId]);
 			}
-		    $pageid = $page->pageId;
-
-		    if($request->sidebar)
-		    {
-		    	$sidebar = $this->sidebarRepo->create
-		    	([
-		    		'page_pageId'	=> $pageid,
-		    		'rowNr'			=> 0,
-		    		'title'			=> $request->title,
-		    		'text'			=> 'Home',
-		    		'extern'		=> 'false',
-		    		'link'			=> '/'
-		    	]);
-		    }
-			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
-
-			if($newOnSite)
-			{
-				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-				$attributes['link'] = route('page.show', $page->pageId);
-				$attributes['created_at'] = new \DateTime('now');
-				$this->newOnSiteRepo->create($attributes);
-			}
-			$page->users()->attach(Auth::user()->userId);
-			$page->groups()->attach(Auth::user()->usergroup->userGroupId);
-
-			return Redirect::route('page.show', [$page->pageId]);
+			return view('errors.403');
 		}
 
 		/**
@@ -210,26 +231,28 @@
 			{
 				return Redirect::route('home.index');
 			} 
+
 			$page = $this->pageRepo->get($id);
-			$children = $this->pageRepo->getAllChildren($id);
-			$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
-			
-			if(isset($page) && count($page))
+
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id)) || $page->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
 			{
-				if($isAdmin || ($page->visible && count($this->pageRepo->show($id))))
-				{
-					if($page->sidebar)
-					{
-						$sidebar = $this->sidebarRepo->getByPage($page->pageId);
+				$children = $this->pageRepo->getAllChildren($id);
+				$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
 
-						return view('page.show', compact('page', 'sidebar', 'children'));
-					} 
-					
-					return view('page.show', compact('page', 'children'));
+				if (isset($page) && count($page)) {
+					if ($isAdmin || ($page->visible && count($this->pageRepo->show($id)))) {
+						if ($page->sidebar) {
+							$sidebar = $this->sidebarRepo->getByPage($page->pageId);
+
+							return view('page.show', compact('page', 'sidebar', 'children'));
+						}
+
+						return view('page.show', compact('page', 'children'));
+					}
+
+					return view('errors.pubdate');
 				}
-
-				return view('errors.pubdate');
-			} 
+			}
 			
 			return view('errors.404');
 		}
@@ -243,7 +266,7 @@
 		 */
 		public function edit($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id))
 				{
@@ -281,7 +304,7 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id))
 				{
@@ -355,8 +378,7 @@
 					$this->newOnSiteRepo->create($attributes);
 				}
 
-				if($page->pageId === 3) 
-				{
+				if($page->pageId === 3) {
 					return Redirect::route('page.about');
 				}
 
@@ -376,7 +398,7 @@
 		 */
 		public function destroy($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
@@ -471,6 +493,7 @@
 			$text = $request->message;
 			$subject = $request->subject;
 
+			// verification email for sender
 			Mail::send('emails.contact.verify', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email)
 			{
 				$message->to
@@ -481,6 +504,7 @@
 
 			});
 
+			// email to bunders
 			Mail::send('emails.contact.contactform', compact('name', 'email', 'text', 'subject'), function($message) use($name, $email, $subject)
 			{
 				$message->from($email);
@@ -500,9 +524,10 @@
 		 *
 		 * @return boolean
 		 */
-		public function editContact()
-		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+
+		public function editContact(){
+
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2')))
 			{
 				$introduction = $this->pageRepo->get(2)->introduction;
 				$page = $this->pageRepo->get(2);
@@ -519,9 +544,10 @@
 		 *
 		 * @return redirect to view
 		 */
-		public function editContactSave(IntroductionRequest $request)
-		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+
+		public function editContactSave(IntroductionRequest $request){
+
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2')))
 			{
 				// Update introduction.
 				$introduction = $this->introRepo->get('2');
@@ -577,7 +603,7 @@
 		 */
 		public function switchPublish($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				$page = $this->pageRepo->get($id);
 				$page->visible ? $page->visible = false : $page->visible = true;
