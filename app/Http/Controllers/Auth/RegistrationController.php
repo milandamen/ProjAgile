@@ -80,8 +80,8 @@
 			{
 				$message->to
 				(	
-					'ben@vandoormalen.net', 
-					'Ben van Doormalen'
+					env('MAIL_MANAGEMENT_ADDRESS'), 
+					env('MAIL_MANAGEMENT_NAME')
 				)->subject('Een nieuwe gebruiker heeft zich geregistreerd');
 			});
 			Flash::success('Er is een e-mail verstuurd naar het opgegeven e-mailadres. Met deze e-mail kunt u uw account activeren.')->important();

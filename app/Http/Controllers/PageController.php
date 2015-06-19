@@ -17,13 +17,13 @@
 	use App\Http\Requests\Page\ContactRequest;
 	use App\Http\Requests\Home\IntroductionRequest;
 	use Auth;
+	use Carbon\Carbon;
 	use Flash;
-	use Redirect;
-	use Mail;
 	use Input;
+	use Mail;
+	use Redirect;
 	use Request;
 	use View;
-	use Carbon\Carbon;
 
 	class PageController extends Controller
 	{
@@ -230,7 +230,7 @@
 			if($this->redirectHome($id))
 			{
 				return Redirect::route('home.index');
-			}
+			} 
 
 			$page = $this->pageRepo->get($id);
 
@@ -275,10 +275,10 @@
 					return Redirect::route('home.index');
 				}
 
-				if($id === '2'){
+				if($id === '2')
+				{
 					return Redirect::route('page.contactedit');
 				}
-
 				$page = $this->pageRepo->get($id);
 				$pages = $this->pageRepo->getAllToList();
 				$districtSections = $this->districtSectionRepo->getAllToList();
@@ -381,6 +381,7 @@
 				if($page->pageId === 3) {
 					return Redirect::route('page.about');
 				}
+
 				return Redirect::route('page.show', [$page->pageId]);
 			}
 			Flash::error('U bent niet geautoriseerd om deze pagina te wijzigen.');
@@ -456,29 +457,37 @@
 			}
 		}
 
-
-		public function showAbout(){
-		
+		/**
+		 * Show the about page.
+		 *
+		 * @return Response
+		 */
+		public function showAbout()
+		{
 			return $this->show(3);
 		}
 
 		/**
-		 * Method to show the contact page. It is a different page, with different features.
+		 * Method to show the contact page.
 		 *
-		 * @param void 
-		 *
-		 * @return view
+		 * @return Response
 		 */
-
-		public function contact(){
-
+		public function contact()
+		{
 			$page = $this->pageRepo->get(2);
 
 			return view('page.contact', compact('page'));
 		}
 
-		public function sendContact(ContactRequest $request){
-
+		/**
+		 * Handles the contactform input and sends an email to both the contact and the management.
+		 *
+		 * @param  ContactRequest $request
+		 * 
+		 * @return Response
+		 */
+		public function sendContact(ContactRequest $request)
+		{
 			$name = $request->name;
 			$email = $request->email;
 			$text = $request->message;
@@ -501,20 +510,17 @@
 				$message->from($email);
 				$message->to
 				(	
-					'bunders@secrecy.nl', 
-					'Contact'
+					env('MAIL_CONTACT_ADDRESS'),
+					env('MAIL_CONTACT_NAME')
 				)->subject($subject);
 			});
-			Flash::success('Uw mail is succesvol verzonden.')->important();
-
+			Flash::success('Uw e-mail is succesvol verzonden.')->important();
 
 			return Redirect::route('page.contact');
 		}
 
 		/**
 		 * The method to edit the contact page
-		 *
-		 * @param void 
 		 *
 		 * @return boolean
 		 */
@@ -543,8 +549,7 @@
 
 			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2')))
 			{
-				
-				// update introduction
+				// Update introduction.
 				$introduction = $this->introRepo->get('2');
 				$introduction->title = $request->title;
 				$introduction->subtitle = $request->subtitle;
@@ -554,7 +559,7 @@
 				
 				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
 
-				if($newOnSite === true)
+				if($newOnSite)
 				{
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
 					$attributes['link'] = route('page.contact');
@@ -573,7 +578,7 @@
 		 * RedirectHome will redirect the user if the page is the homepage.
 		 * The homepage has different edit functions and a different pageview.
 		 *
-		 * @param int id 
+		 * @param  int id 
 		 *
 		 * @return boolean
 		 */
@@ -596,7 +601,6 @@
 		 * 
 		 * @return void
 		 */
-
 		public function switchPublish($id)
 		{
 			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
@@ -612,12 +616,12 @@
 		 *
 		 * @param  String $term
 		 *
-		 * @return Json
+		 * @return JSON
 		 */
 		public function getPagesByTitle($term)
 		{
-			$json = array();
-			$json_row = array();
+			$json = [];
+			$json_row = [];
 
 			$data = $this->pageRepo->getAllLikeTerm($term);
 
@@ -627,7 +631,6 @@
 				$json_row['introduction'] = $page->introduction;
 				array_push($json, $json_row);
 			}
-
 			echo json_encode($json);
 		}
 	}
