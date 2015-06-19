@@ -66,5 +66,7 @@ function newOnSiteValidate()
 		
 		return false;
 	}
+	
+	return true;
 }
 

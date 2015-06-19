@@ -23,7 +23,7 @@
 		</div>
 		<div class="col-lg-12">
 			@include('errors.partials._list')
-			{!! Form::model($newsItem, ['method' => 'PATCH', 'files' => true, 'onsubmit' => 'validateNews()']) !!}
+			{!! Form::model($newsItem, ['method' => 'PATCH', 'files' => true, 'onsubmit' => 'return validateNews()']) !!}
 				@include('news.partials._createEdit')
 			{!! Form::close() !!}
 		</div>
