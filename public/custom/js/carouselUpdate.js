@@ -388,20 +388,13 @@ function calculateIndexes()
 			}
 			else if(input.name.indexOf('articleStartDate') !== -1)
 			{
-				input.name = 'articleStartDate[]';
+				input.name = 'articleStartDate[' + i + ']';
 			}
 			else if(input.name.indexOf('articleEndDate') !== -1)
 			{
-				input.name = 'articleEndDate[]';
+				input.name = 'articleEndDate[' + i + ']';
 			}
-			//else if(input.name.indexOf('pageStartDate') !== -1)
-			//{
-			//	input.name = 'pageStartDate[]';
-			//}
-			//else if(input.name.indexOf('pageEndDate') !== -1)
-			//{
-			//	input.name = 'pageEndDate[]';
-			//}
+
 			else
 			{
 				input.name = 'deletefile[' + i + ']';
