@@ -97,6 +97,7 @@
 			],
 			'postal' 						=>
 			[
+				'house_number_exists'		=> 'De ingevulde adresgegevens bestaan niet binnen ons systeem.',
 				'address_exists'			=> 'De ingevulde adresgegevens bestaan niet binnen ons systeem.',
 				'is_address_not_in_use' 	=> 'De ingevulde adresgegevens zijn al door een andere gebruiker geregistreerd in ons systeem. Neem alstublieft contact met ons op.',
 			],
