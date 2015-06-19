@@ -106,17 +106,20 @@
 		public function show($newsId)
 		{
 			$news = $this->newsRepo->get($newsId);
-
-			if (Auth::check() && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
+			if ($news != null)
 			{
-				if ($news != null) {
-					htmlspecialchars($news->content);
+				if (Auth::check() && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
+				{
+					if ($news != null) {
+						htmlspecialchars($news->content);
 
-					return view('news.show', compact('news'));
+						return view('news.show', compact('news'));
+					}
 				}
-			}
 
-			return view('errors.403');
+				return view('errors.403');
+			}
+			return view('errors.404');
 		}
 
 		/**
