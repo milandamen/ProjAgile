@@ -165,4 +165,14 @@
 		{
 			return $this->belongsToMany('App\Models\DistrictSection', 'newsdistrictsection', 'newsId', 'districtSectionId');
 		}
+
+		/**
+		 * Checks if the news item is part of the "Home" district, if so it's publically visible
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function hasDistrictSection($districtSectionId)
+		{
+			return $this->districtSections->contains($districtSectionId);
+		}
 	}

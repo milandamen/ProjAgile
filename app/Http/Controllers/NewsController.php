@@ -105,14 +105,14 @@
 		 */
 		public function show($newsId)
 		{
-			$newsItem = $this->newsRepo->get($newsId);
+			$news = $this->newsRepo->get($newsId);
 
-			if (Auth::user()->hasDistrictSectionViewPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($newsItem->districtSections))
+			if (Auth::user() != null && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(1))
 			{
-				if ($newsItem != null) {
-					htmlspecialchars($newsItem->content);
+				if ($news != null) {
+					htmlspecialchars($news->content);
 
-					return view('news.show', compact('newsItem'));
+					return view('news.show', compact('news'));
 				}
 			}
 

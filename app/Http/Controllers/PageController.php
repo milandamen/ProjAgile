@@ -122,10 +122,14 @@
 		 */
 		public function create()
 		{
-			$pages = $this->pageRepo->getAllToList();
-			$districtSections = $this->districtSectionRepo->getAllToList();
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE))
+			{
+				$pages = $this->pageRepo->getAllToList();
+				$districtSections = $this->districtSectionRepo->getAllToList();
 
-			return view('page.create', compact('pages', 'districtSections'));
+				return view('page.create', compact('pages', 'districtSections'));
+			}
+			return view('errors.404');
 		}
 
 		/**
@@ -135,67 +139,67 @@
 		 */
 		public function store(PageRequest $request)
 		{
-			$introduction = $this->introRepo->create
-			([
-				'title'		=> $request->title, 
-				'subtitle'	=> $request->subtitle,
-				'text'		=> $request->content,
-			]);
-			$introId = $introduction->introductionId;
-
-			$page = $this->pageRepo->create
-			([
-				'introduction_introductionId'	=> $introId,
-				'sidebar'						=> $request->sidebar,
-				'publishDate'					=> $request->publishStartDate,
-				'publishEndDate'				=> $request->publishEndDate,
-				'visible'						=> $request->visible,
-				'parentId'						=> $request->parent,
-			]);
-
-			if(count($request->panel) > 0)
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE))
 			{
-				foreach($request->panel as $pagepanel)
-				{
-					$panel = $this->panelRepo->getBySize($pagepanel['size']);
+				$introduction = $this->introRepo->create
+				([
+					'title' => $request->title,
+					'subtitle' => $request->subtitle,
+					'text' => $request->content,
+				]);
+				$introId = $introduction->introductionId;
 
-					$this->pagePanelRepo->create
+				$page = $this->pageRepo->create
+				([
+					'introduction_introductionId' => $introId,
+					'sidebar' => $request->sidebar,
+					'publishDate' => $request->publishStartDate,
+					'publishEndDate' => $request->publishEndDate,
+					'visible' => $request->visible,
+					'parentId' => $request->parent,
+				]);
+
+				if (count($request->panel) > 0) {
+					foreach ($request->panel as $pagepanel) {
+						$panel = $this->panelRepo->getBySize($pagepanel['size']);
+
+						$this->pagePanelRepo->create
+						([
+							'page_id' => $page->pageId,
+							'title' => $pagepanel['title'],
+							'text' => $pagepanel['content'],
+							'panel_id' => $panel->panelId,
+						]);
+					}
+				}
+				$pageid = $page->pageId;
+
+				if ($request->sidebar) {
+					$sidebar = $this->sidebarRepo->create
 					([
-						'page_id'	=> $page->pageId,
-						'title'		=> $pagepanel['title'],
-						'text'		=> $pagepanel['content'],
-						'panel_id'	=> $panel->panelId,
+						'page_pageId' => $pageid,
+						'rowNr' => 0,
+						'title' => $request->title,
+						'text' => 'Home',
+						'extern' => 'false',
+						'link' => '/'
 					]);
 				}
+				$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
+
+				if ($newOnSite) {
+					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('page.show', $page->pageId);
+					$attributes['created_at'] = new \DateTime('now');
+					$this->newOnSiteRepo->create($attributes);
+				}
+
+				$page->users()->attach(Auth::user()->userId);
+				$page->groups()->attach(Auth::user()->usergroup->userGroupId);
+
+				return Redirect::route('page.show', [$page->pageId]);
 			}
-		    $pageid = $page->pageId;
-
-		    if($request->sidebar)
-		    {
-		    	$sidebar = $this->sidebarRepo->create
-		    	([
-		    		'page_pageId'	=> $pageid,
-		    		'rowNr'			=> 0,
-		    		'title'			=> $request->title,
-		    		'text'			=> 'Home',
-		    		'extern'		=> 'false',
-		    		'link'			=> '/'
-		    	]);
-		    }
-			$newOnSite = filter_var($_POST['newOnSite'], FILTER_VALIDATE_BOOLEAN);
-
-			if($newOnSite)
-			{
-				$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
-				$attributes['link'] = route('page.show', $page->pageId);
-				$attributes['created_at'] = new \DateTime('now');
-				$this->newOnSiteRepo->create($attributes);
-			}
-			
-			$page->users()->attach(Auth::user()->userId);
-			$page->groups()->attach(Auth::user()->usergroup->userGroupId);
-
-			return Redirect::route('page.show', [$page->pageId]);
+			return view('errors.404');
 		}
 
 		/**
@@ -212,7 +216,7 @@
 				return Redirect::route('home.index');
 			}
 
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id))
+			if (Auth::user() != null && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id)))
 			{
 
 				$page = $this->pageRepo->get($id);

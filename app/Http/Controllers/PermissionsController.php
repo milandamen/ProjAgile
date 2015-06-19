@@ -25,6 +25,7 @@
 		const PERMISSION_USERS			= 7;
 		const PERMISSION_SIDEBAR		= 8;
 		const PERMISSION_NEWS			= 9;
+		const PERMISSION_PAGE			= 10;
 
 		const RESIDENT_USERGROUP = 3;
 
