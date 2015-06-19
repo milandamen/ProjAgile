@@ -355,7 +355,7 @@
 				if($id != 1)
 				{
 					$user = $this->userRepo->get($id);
-					$user->active ? $user->active = fale : $user->active = true;
+					$user->active ? $user->active = false : $user->active = true;
 					$this->userRepo->update($user);
 				}
 
