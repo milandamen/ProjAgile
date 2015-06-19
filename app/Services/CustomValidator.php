@@ -74,10 +74,17 @@
 		 */
 		protected function validateIsAddressNotInUse($attribute, $value, $parameters)
 		{
-			$postal = $this->postalRepo->getByCode($value);
-			$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix']);
-			$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
-			$user = $this->userRepo->getByAddress($address->addressId, $parameters[0]);
+			if(isset($parameters[0]))
+			{
+				$postal = $this->postalRepo->getByCode($value);
+				$houseNumber = $this->houseNumberRepo->getByHouseNumberSuffix($this->data['houseNumber'], $this->data['suffix']);
+				$address = $this->addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
+				$user = $this->userRepo->getByAddress($address->addressId, $parameters[0]);
+			}
+			else
+			{
+				$user = null;
+			}
 			
 			return !isset($user);
 		}
