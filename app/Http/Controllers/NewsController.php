@@ -107,7 +107,7 @@
 		{
 			$news = $this->newsRepo->get($newsId);
 
-			if (Auth::user() != null && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(1))
+			if (Auth::user() != null && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
 			{
 				if ($news != null) {
 					htmlspecialchars($news->content);
@@ -116,7 +116,7 @@
 				}
 			}
 
-			return view('errors.404');
+			return view('errors.403');
 		}
 
 		/**
@@ -194,7 +194,7 @@
 		{
 			$newsItem = $this->newsRepo->get($id);
 
-			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections)  || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections))
+			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections))
 			{
 				$newsItem = $this->newsRepo->get($id);
 				$newsItem->title = $request->title;

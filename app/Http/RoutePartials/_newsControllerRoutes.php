@@ -9,14 +9,12 @@
 	[
 		'as'			=> 'news.create',
 		'uses'			=> 'NewsController@create',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::put('nieuws/aanmaken', 
 	[
 		'as'			=> 'news.store',
 		'uses'			=> 'NewsController@store',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::get('nieuws/beheer', 
@@ -48,19 +46,16 @@
 	[
 		'as'			=> 'news.edit',
 		'uses'			=> 'NewsController@edit',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::patch('nieuws/{id}/wijzigen',
 	[
 		'as'			=> 'news.update',
 		'uses'			=> 'NewsController@update',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::get('nieuws/{id}/toggleZichtbaarheid',
 	[
 		'as'			=> 'news.toggleHide',
 		'uses'			=> 'NewsController@toggleHide',
-		'middleware'	=> 'admin'
 	]);

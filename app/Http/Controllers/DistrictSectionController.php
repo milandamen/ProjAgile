@@ -16,6 +16,7 @@
 
 	class DistrictSectionController extends Controller
 	{
+		const HOME_DISTRICT			= 1;
 
 		/**
 		 * The DistrictSectionRepository implementation.
