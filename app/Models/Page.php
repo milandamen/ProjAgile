@@ -158,5 +158,15 @@
 		{
 			return $this->belongsToMany('App\Models\DistrictSection', 'districtsection_has_page', 'page_pageId', 'districtsection_districtSectionId');
 		}
+
+		/**
+		 * Checks if the page is part of the "Home" district, if so it's publically visible
+		 *
+		 * @return Collection -> DistrictSection
+		 */
+		public function hasDistrictSection($districtSectionId)
+		{
+			return $this->districtSections->contains($districtSectionId);
+		}
 		
 	}

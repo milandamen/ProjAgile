@@ -23,14 +23,12 @@
 	[
 		'as' => 'page.contactedit',
 		'uses' => 'PageController@editContact',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::post('pagina/contact/wijzig',
 	[
 		'as' 			=> 'page.contactedit',
 		'uses' 			=> 'PageController@editContactSave',
-		'middleware'	=> 'admin'
 	]);
 	
 	Route::get('overons',
@@ -39,20 +37,16 @@
 		'uses'			=> 'PageController@showAbout',
 	]);
 
-
-
 	Route::get('pagina/aanmaken',
 	[
 		'as'			=> 'page.create',
 		'uses'			=> 'PageController@create',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::post('pagina/aanmaken',
 	[
 		'as'			=> 'page.store',
 		'uses'			=> 'PageController@store',
-		'middleware'	=> 'admin'
 	]);
 
 
@@ -66,28 +60,24 @@
 	[
 		'as'			=> 'page.edit',
 		'uses'			=> 'PageController@edit',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::post('pagina/{id}/wijzigen',
 	[
 		'as'			=> 'page.update',
 		'uses'			=> 'PageController@update',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::get('pagina/{id}/verwijderen', 
 	[
 		'as'			=> 'page.destroy',
 		'uses'			=> 'PageController@destroy',
-		'middleware'	=> 'admin'
 	]);
 
 	Route::get('pagina/{id}/zichtbaarheid', 
 	[
 		'as' => 'page.visible',
 		'uses' => 'PageController@switchPublish',
-		'middleware' => 'admin'
 	]);
 
 	Route::get('pagina/getArticlesByTitle/{term}',

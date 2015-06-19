@@ -122,14 +122,14 @@
 		 */
 		public function create()
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE)))
 			{
 				$pages = $this->pageRepo->getAllToList();
 				$districtSections = $this->districtSectionRepo->getAllToList();
 
 				return view('page.create', compact('pages', 'districtSections'));
 			}
-			return view('errors.404');
+			return view('errors.403');
 		}
 
 		/**
@@ -139,7 +139,7 @@
 		 */
 		public function store(PageRequest $request)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPermission(PermissionsController::PERMISSION_PAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_PAGE)))
 			{
 				$introduction = $this->introRepo->create
 				([
@@ -197,9 +197,21 @@
 				$page->users()->attach(Auth::user()->userId);
 				$page->groups()->attach(Auth::user()->usergroup->userGroupId);
 
+				//super user id = 1
+				if (Auth::user()->userId != 1) {
+					$page->users()->attach(1);
+					$page->usersView()->attach(1);
+				}
+
+				//admin group id = 1
+				if (Auth::user()->usergroup->userGroupId != 1) {
+					$page->groups()->attach(1);
+					$page->groupsView()->attach(1);
+				}
+
 				return Redirect::route('page.show', [$page->pageId]);
 			}
-			return view('errors.404');
+			return view('errors.403');
 		}
 
 		/**
@@ -216,10 +228,10 @@
 				return Redirect::route('home.index');
 			}
 
-			if (Auth::user() != null && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id)))
-			{
+			$page = $this->pageRepo->get($id);
 
-				$page = $this->pageRepo->get($id);
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id)) || $page->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
+			{
 				$children = $this->pageRepo->getAllChildren($id);
 				$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
 
@@ -250,7 +262,7 @@
 		 */
 		public function edit($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id))
 				{
@@ -288,7 +300,7 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id))
 				{
@@ -381,7 +393,7 @@
 		 */
 		public function destroy($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
@@ -505,7 +517,7 @@
 
 		public function editContact(){
 
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2')))
 			{
 				$introduction = $this->pageRepo->get(2)->introduction;
 				$page = $this->pageRepo->get(2);
@@ -525,7 +537,7 @@
 
 		public function editContactSave(IntroductionRequest $request){
 
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2')))
 			{
 				
 				// update introduction
@@ -583,7 +595,7 @@
 
 		public function switchPublish($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
+			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id)))
 			{
 				$page = $this->pageRepo->get($id);
 				$page->visible ? $page->visible = false : $page->visible = true;

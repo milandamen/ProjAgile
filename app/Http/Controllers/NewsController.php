@@ -107,7 +107,7 @@
 		{
 			$news = $this->newsRepo->get($newsId);
 
-			if (Auth::user() != null && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
+			if (Auth::check() && (Auth::user()->hasDistrictSectionViewPermissions($news->districtSections) || Auth::user()->userGroup->hasDistrictSectionViewPermissions($news->districtSections)) || $news->hasDistrictSection(DistrictSectionController::HOME_DISTRICT))
 			{
 				if ($news != null) {
 					htmlspecialchars($news->content);
@@ -126,7 +126,7 @@
 		 */
 		public function create()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_NEWS))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_NEWS)))
 			{
 				$newsItem = new News();
 				$districtSections = $this->districtSectionRepo->getAllToList();
@@ -146,7 +146,7 @@
 		 */
 		public function store(NewsRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_NEWS))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_NEWS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_NEWS)))
 			{
 				$news = $this->newsRepo->create($request->all());
 				$this->saveFiles($request->file, $news->newsId);
@@ -166,7 +166,7 @@
 		{
 			$newsItem = $this->newsRepo->get($id);
 
-			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections))
+			if (Auth::check() && (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections)))
 			{
 				$files = $this->fileRepo->getAllByNewsId($id);
 				$districtSections = $this->districtSectionRepo->getAllToList();
@@ -194,7 +194,7 @@
 		{
 			$newsItem = $this->newsRepo->get($id);
 
-			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections))
+			if (Auth::check() && (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections) || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections)))
 			{
 				$newsItem = $this->newsRepo->get($id);
 				$newsItem->title = $request->title;
@@ -299,7 +299,7 @@
 		{
 			$newsItem = $this->newsRepo->get($id);
 
-			if (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections)  || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections))
+			if (Auth::user() != null && (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections)  || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections)))
 			{
 				$news = $this->newsRepo->get($id);
 
