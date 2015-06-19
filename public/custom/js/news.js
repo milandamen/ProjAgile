@@ -171,7 +171,7 @@ function validateNews()
 	
 	if (publishEndDateVal == "")
 	{
-		publishEndDateVal = "01-01-2038 00:00";
+		publishEndDateVal = "01-01-2038 00:00";		// End of Unix time
 		document.querySelector('#publishEndDate').value = publishEndDateVal;
 	}
 
