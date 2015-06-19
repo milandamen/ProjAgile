@@ -195,6 +195,20 @@
 			$page->users()->attach(Auth::user()->userId);
 			$page->groups()->attach(Auth::user()->usergroup->userGroupId);
 
+			//super user id = 1
+			if(Auth::user()->userId != 1)
+			{
+				$page->users()->attach(1);
+				$page->usersView()->attach(1);
+			}
+
+			//admin group id = 1
+			if(Auth::user()->usergroup->userGroupId != 1)
+			{
+				$page->groups()->attach(1);
+				$page->groupsView()->attach(1);
+			}
+
 			return Redirect::route('page.show', [$page->pageId]);
 		}
 
@@ -210,28 +224,29 @@
 			if($this->redirectHome($id))
 			{
 				return Redirect::route('home.index');
-			} 
+			}
 
-			$page = $this->pageRepo->get($id);
-			$children = $this->pageRepo->getAllChildren($id);
-			$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
-			
-			if(isset($page) && count($page))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPageViewPermission($id) || Auth::user()->userGroup->hasPageViewPermission($id))
 			{
-				if($isAdmin || ($page->visible && count($this->pageRepo->show($id))))
-				{
-					if($page->sidebar)
-					{
-						$sidebar = $this->sidebarRepo->getByPage($page->pageId);
 
-						return view('page.show', compact('page', 'sidebar', 'children'));
-					} 
-					
-					return view('page.show', compact('page', 'children'));
+				$page = $this->pageRepo->get($id);
+				$children = $this->pageRepo->getAllChildren($id);
+				$isAdmin = Auth::check() && $this->userRepo->isUserAdministrator(Auth::user());
+
+				if (isset($page) && count($page)) {
+					if ($isAdmin || ($page->visible && count($this->pageRepo->show($id)))) {
+						if ($page->sidebar) {
+							$sidebar = $this->sidebarRepo->getByPage($page->pageId);
+
+							return view('page.show', compact('page', 'sidebar', 'children'));
+						}
+
+						return view('page.show', compact('page', 'children'));
+					}
+
+					return view('errors.pubdate');
 				}
-
-				return view('errors.pubdate');
-			} 
+			}
 			
 			return view('errors.404');
 		}
@@ -245,7 +260,7 @@
 		 */
 		public function edit($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
 			{
 				if($this->redirectHome($id))
 				{
@@ -283,7 +298,7 @@
 		 */
 		public function update($id, PageRequest $request)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
 			{
 				if($this->redirectHome($id))
 				{
@@ -376,7 +391,7 @@
 		 */
 		public function destroy($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
 			{
 				if($this->redirectHome($id) || $id === '2' || $id == '3')
 				{
@@ -392,6 +407,10 @@
 				}
 				$this->pagePanelRepo->deleteAllFromPage($id);
 				$page->districtSections()->detach();
+				$page->users()->detach();
+				$page->groups()->detach();
+				$page->usersView()->detach();
+				$page->groupsView()->detach();
 				$this->pageRepo->destroy($id);
 				$this->introRepo->destroy($page->introduction->introductionId);
 
@@ -578,7 +597,7 @@
 
 		public function switchPublish($id)
 		{
-			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission('2'))
+			if ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->hasPagePermission($id) || Auth::user()->userGroup->hasPagePermission($id))
 			{
 				$page = $this->pageRepo->get($id);
 				$page->visible ? $page->visible = false : $page->visible = true;
