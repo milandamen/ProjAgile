@@ -31,7 +31,7 @@
 		 */
 		public function edit()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_CAROUSEL)))
 			{
 				$carousel = $this->carouselRepo->getAll();
 
@@ -48,7 +48,7 @@
 		 */
 		public function update()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_CAROUSEL)))
 			{
 				$oldItems = $this->carouselRepo->getAll();
 
