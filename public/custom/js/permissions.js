@@ -17,6 +17,7 @@ $(function () {
 
 		$widget.css('cursor', 'pointer')
 		$widget.append($checkbox);
+		$widget.data('checkbox', $checkbox);
 
 		// Event Handlers
 		$widget.on('click', function () {
@@ -34,6 +35,7 @@ $(function () {
 			{
 				$checkbox.prop('checked', !$checkbox.is(':checked'));
 			}
+			$widget.removeClass('checked');
 			updateDisplay();
 		}
 
@@ -76,6 +78,7 @@ $(function () {
 		init();
 	});
 
+
 	var checkData = function(event) {
 		//check selected items and store them in JSON objects.
 		var checkedPageItems = {}, counter = 0;
@@ -102,6 +105,19 @@ $(function () {
 			counter++;
 		});
 
+		//view permissions
+		var checkedPageViewItems = {}, counter = 0;
+		$("#check-list-box-pageView li.active").each(function(idx, li) {
+			checkedPageViewItems[counter] = $(li).attr('id');
+			counter++;
+		});
+
+		var checkedDistrictSectionViewItems = {}, counter = 0;
+		$("#check-list-box-districtSectionView li.active").each(function(idx, li) {
+			checkedDistrictSectionViewItems[counter] = $(li).attr('id');
+			counter++;
+		});
+
 		//convert JSON objects to strings and pass to view.
 		var pageSelectionString = JSON.stringify(checkedPageItems, null, '\t');
 		$('#pageSelection').val(pageSelectionString);
@@ -114,11 +130,101 @@ $(function () {
 
 		var districtSectionUserSelectionString = JSON.stringify(checkedDistrictSectionUserItems, null, '\t');
 		$('#districtSectionUserSelection').val(districtSectionUserSelectionString);
+
+		//view permissions
+		var pageViewSelectionString = JSON.stringify(checkedPageViewItems, null, '\t');
+		$('#pageViewSelection').val(pageViewSelectionString);
+
+		var districtSectionViewSelectionString = JSON.stringify(checkedDistrictSectionViewItems, null, '\t');
+		$('#districtSectionViewSelection').val(districtSectionViewSelectionString);
 	};
 
 	//get data when submitting form
 	$('.userPermissionsForm').on('submit', function (event) {
 		checkData();
+	});
+
+
+	//check all buttons
+	var pagesChecked = false;
+	var permissionsChecked = false;
+	var districtSectionsChecked = false;
+	var districtSectionUsersChecked = false;
+
+	//(de)select all pages
+	$('.all-pages').on('click', function(event){
+		event.preventDefault();
+		$('.page-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !pagesChecked);
+			$checkbox.triggerHandler('change');
+		})
+		pagesChecked = !pagesChecked;
+	});
+
+	//(de)select all permissions
+	$('.all-permissions').on('click', function(event){
+		event.preventDefault();
+		$('.permission-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !permissionsChecked);
+			$checkbox.triggerHandler('change');
+		})
+		permissionsChecked = !permissionsChecked;
+	});
+
+	//(de)select all district sections
+	$('.all-districtSections').on('click', function(event){
+		event.preventDefault();
+		$('.districtSection-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !districtSectionsChecked);
+			$checkbox.triggerHandler('change');
+		})
+		districtSectionsChecked = !districtSectionsChecked;
+	});
+
+	//(de)select all users per district section
+	$('.all-districtSectionUsers').on('click', function(event){
+		event.preventDefault();
+		$('.districtSectionUser-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !districtSectionUsersChecked);
+			$checkbox.triggerHandler('change');
+		})
+		districtSectionUsersChecked = !districtSectionUsersChecked;
+	});
+
+	//check all buttons - view
+	var pagesViewChecked = false;
+	var districtSectionsViewChecked = false;
+
+	//(de)select all pages' view permissions
+	$('.all-pages-view').on('click', function(event){
+		event.preventDefault();
+		$('.pageView-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !pagesViewChecked);
+			$checkbox.triggerHandler('change');
+		})
+		pagesViewChecked = !pagesViewChecked;
+	});
+
+	//(de)select all district sections' view permissions
+	$('.all-districtSections-view').on('click', function(event){
+		event.preventDefault();
+		$('.districtSectionView-item').each(function(){
+			var $widget = $(this);
+			$checkbox = $widget.data('checkbox');
+			$checkbox.prop('checked', !districtSectionsViewChecked);
+			$checkbox.triggerHandler('change');
+		})
+		districtSectionsViewChecked = !districtSectionsViewChecked;
 	});
 
 });

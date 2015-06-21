@@ -2,12 +2,33 @@
 	namespace App\Repositories\EntityRepositories;
 	
 	use App\Models\News;
+	use App\Repositories\RepositoryInterfaces\IDistrictSectionRepository;
 	use App\Repositories\RepositoryInterfaces\INewsRepository;
 	use Auth;
 	use Carbon\Carbon;
+	use Illuminate\Database\Eloquent\Collection;
 
 	class EntityNewsRepository implements INewsRepository
 	{
+		/**
+		 * The IDistrictSectionRepository implementation.
+		 * 
+		 * @var IDistrictSectionRepository
+		 */
+		private $districtSectionRepo;
+
+		/**
+		 * Creates a new EntityNewsRepository instance.
+		 * 
+		 * @param  IDistrictSectionRepository $districtSectionRepo
+		 *
+		 * @return void
+		 */
+		public function __construct(IDistrictSectionRepository $districtSectionRepo)
+		{
+			$this->districtSectionRepo = $districtSectionRepo;
+		}
+
 		/**
 		 * Returns a News model depending on the id provided.
 		 * 
@@ -27,9 +48,10 @@
 		 */
 		public function getAll() 
 		{
-			$curDate = date('Y-m-d H:i:s',time());
+			$curDate = date('Y-m-d H:i:s', time());
 
-			return News::where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
+			return News::where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+						 where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
 		}
 		
 		/**
@@ -91,6 +113,7 @@
 		public function getByTitle($term) 
 		{
 			$term = '%' . $term . '%';
+
 			return News::where('title', 'LIKE', $term)->where('hidden', '=', 0)->get();
 		}
 
@@ -101,10 +124,12 @@
 		 */
 		public function getLastWeek()
 		{
-			$date = date('Y-m-d H:i:s', time() - (7 * 86400)); // 7 days ago
+			// 7 days ago
+			$date = date('Y-m-d H:i:s', time() - (7 * 86400));
 			$curDate = date('Y-m-d H:i:s', time());
 
-			return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
+			return News::where('publishStartDate', '>=', $date)->where('publishEndDate', '>=', $curDate)->
+						 where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
 		}
 
 		/**
@@ -117,7 +142,8 @@
 			$date = date('Y-m-d H:i:s', time() - (7 * 86400)); // 7 days ago
 			$curDate = date('Y-m-d H:i:s', time());
 
-			return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
+			return News::where('publishEndDate', '>=', $curDate)->where('publishStartDate', '<=', $date)->
+						 where('hidden', '=', 0)->orderBy('publishStartDate', 'desc')->get();
 		}
 
 		/**
@@ -128,5 +154,62 @@
 		public function getAllHidden()
 		{
 			return News::orderBy('publishStartDate', 'desc')->get();
+		}
+
+		/**
+		 * Returns a News Collection which contain the specified parameters.
+		 *
+		 * @param  string $query
+		 * 
+		 * @return Collection -> News
+		 */
+		public function search($query, $user)
+		{
+			$curDate = date('Y-m-d H:i:s', time());
+			$news = new Collection;
+			$homeDistrictSection = $this->districtSectionRepo->getByName('Home')->name;
+
+			if(isset($user) && !empty($user))
+			{
+				$address = $user->address;
+				$districtSection;
+
+				if(isset($address) && !empty($address))
+				{
+					$districtSection = $address->districtSection;
+				}
+
+				if(isset($districtSection) && !empty($districtSection))
+				{
+					$userDistrictSection = $districtSection->name;
+
+					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
+							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+							 	  where('hidden', '=', false)->whereHas('districtSections', function($query) use ($homeDistrictSection, $userDistrictSection)
+							 	  {
+							 	  		$query->where('name', '=', $homeDistrictSection)->
+							 	  			orWhere('name', '=', $userDistrictSection);
+							 	  })->get();
+				}
+				else
+				{
+
+  					$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
+							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+							 	  where('hidden', '=', false)->get();
+				}
+			}
+			else
+			{
+				$news = News::whereRaw('MATCH(title, content) AGAINST(?)', [$query])->
+							 	  where('publishStartDate', '<=', $curDate)->where('publishEndDate', '>=', $curDate)->
+							 	  where('hidden', '=', false)->
+							 	  whereHas('districtSections', function($query) use ($homeDistrictSection)
+							 	  {
+							 	  		$query->where('name', '=', $homeDistrictSection);
+							 	  })->get();
+			}
+
+			return $news;
 		}
 	}

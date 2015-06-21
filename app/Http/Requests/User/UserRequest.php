@@ -11,7 +11,7 @@
 		/**
 		 * Determine if the user is authorized to make this request.
 		 *
-		 * @return bool
+		 * @return boolean
 		 */
 		public function authorize()
 		{
@@ -21,7 +21,7 @@
 		/**
 		 * Get the validation rules that apply to the request.
 		 *
-		 * @return array
+		 * @return array()
 		 */
 		public function rules()
 		{
@@ -30,7 +30,7 @@
 				'firstName'	=> 'required|max:50',
 				'insertion'	=> 'max:30',
 				'surname'	=> 'required|max:80',
-				'suffix'	=> 'max:1|exists:housenumber,suffix',
+				'suffix'	=> 'max:4',
 			];
 
 			if(strtoupper(Request::method()) !== 'PATCH')
@@ -67,13 +67,13 @@
 				{
 					$userId = Route::input('id');
 
-					$rules['username'] = 'required|max:30|unique:user,username,' . $userId . ',userId';
-					$rules['email'] .= '|unique:user,email,' . $userId . ',userId';
+					$rules['username']	= 'required|max:30|unique:user,username,' . $userId . ',userId';
+					$rules['email']		.= '|unique:user,email,' . $userId . ',userId';
 					$rules += $this->addAddressRules($userId);
 				}
 				else
 				{
-					$rules['email'] .= '|unique:user,email,' . Auth::user()->userId . ',userId';
+					$rules['email']		.= '|unique:user,email,' . Auth::user()->userId . ',userId';
 				}
 			}
 
@@ -101,10 +101,10 @@
 			$input['email'] 				= strtolower(filter_var($input['email'], FILTER_SANITIZE_EMAIL));
 			$input['email_confirmation'] 	= strtolower(filter_var($input['email_confirmation'], FILTER_SANITIZE_EMAIL));
 
-			$input['userGroupid']			= parseSelectorField(filter_var(isset($input['userGroupid']) ? $input['userGroupid'] : '', FILTER_SANITIZE_STRING));
+			$input['userGroupId']			= parseSelectorField(filter_var(isset($input['userGroupId']) ? $input['userGroupId'] : '', FILTER_SANITIZE_STRING));
 
 			$input['postal'] 				= $this->fixPostal($input['postal']);
-
+			
 			$this->replace($input);
 
 			return $input;
@@ -137,19 +137,19 @@
 		 *
 		 * @return array()
 		 */
-		private function addAddressRules($userId)
+		private function addAddressRules($userId = null)
 		{
 			$rules =
 			[
-				'houseNumber'	=> 'integer|digits_between:1,8|exists:housenumber,houseNumber',
-				'postal'		=> 'min:6|max:7|exists:postal,code|exists:postal,code',
+				'houseNumber'	=> 'integer|digits_between:1,4',
+				'postal'		=> 'min:6|max:7|exists:postal,code|exists:postal,code|houseNumber_exists',
 			];
 
 			// Postal and houseNumber attributes are only required for residents.
 			if((int)$this->get('userGroupId') === UserController::RESIDENT_GROUP_ID)
 			{
-				$rules['houseNumber'] .= '|required';
-				$rules['postal'] .= '|required';
+				$rules['houseNumber']	.= '|required';
+				$rules['postal'] 		.= '|required';
 			}
 			
 			if($this->get('postal') && $this->get('houseNumber'))
@@ -159,15 +159,15 @@
 				$addressRepo = \App::make('App\Repositories\RepositoryInterfaces\IAddressRepository');
 
 				$postal = $postalRepo->getByCode($this->get('postal'));
-				$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->get('houseNumber'), $this->get('suffix') ? $this->get('suffix') : null);
+				$houseNumber = $houseNumberRepo->getByHouseNumberSuffix($this->get('houseNumber'), $this->get('suffix'));
 
-				if($postal !== null && $houseNumber !== null)
+				if(isset($postal) && isset($houseNumber))
 				{
 					$rules['postal'] .= '|address_exists';
 
 					$address = $addressRepo->getByPostalHouseNumber($postal->postalId, $houseNumber->houseNumberId);
 
-					if($address !== null)
+					if(isset($address))
 					{
 						$rules['postal'] .= '|is_address_not_in_use:' . $userId;
 					}

@@ -63,8 +63,10 @@ function newOnSiteValidate()
 {
 	if($('#message').val() == ''){
 		alert('Nieuw op de site bericht mag niet leeg gelaten worden!');
-		event.preventDefault();
+		
 		return false;
 	}
+	
+	return true;
 }
 

@@ -114,7 +114,7 @@
 		 */
 		public function index()
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
 			{
 				$admins = $this->userRepo->getAllByUserGroup(self::ADMIN_GROUP_ID);
 				$contentmanagers = $this->userRepo->getAllByUserGroup(self::CONTENT_GROUP_ID);
@@ -133,7 +133,7 @@
 		 */
 		public function create()
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
 			{
 				$user = new User();
 				$userGroups = $this->userGroupRepo->getAllToList();
@@ -153,7 +153,7 @@
 		 */
 		public function store(UserRequest $request)
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
 			{
 				$data = $request->all();
 				$user = $this->userRepo->create($data);
@@ -177,7 +177,7 @@
 		 */
 		public function show($id)
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
 			{
 				$user = $this->userRepo->get($id);
 
@@ -207,7 +207,7 @@
 		 */
 		public function edit($id)
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) && (int)$id !== Auth::user()->userId)
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)) && (int)$id !== Auth::user()->userId)
 			{
 				$user = $this->userRepo->get($id);
 				$userGroups = $this->userGroupRepo->getAllToList();
@@ -235,7 +235,7 @@
 		 */
 		public function update(UserRequest $request, $id = null)
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
 			{
 				$user = ($id === null ? Auth::user() : $this->userRepo->get($id));
 				
@@ -350,11 +350,14 @@
 		 */
 		public function toggleActivation($id)
 		{
-			if(Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS))
+			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)) && (int)$id !== Auth::user()->userId)
 			{
-				$user = $this->userRepo->get($id);
-				$user->active ? $user->active = fale : $user->active = true;
-				$this->userRepo->update($user);
+				if($id != 1)
+				{
+					$user = $this->userRepo->get($id);
+					$user->active ? $user->active = false : $user->active = true;
+					$this->userRepo->update($user);
+				}
 
 				return Redirect::route('user.index');
 			}

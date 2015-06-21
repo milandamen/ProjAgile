@@ -29,8 +29,8 @@ function deactivate()
 
 		$.ajax(
 		{
-			url: $(this).attr('href')
-			,success: function(response) 
+			url: $(this).attr('href'),
+			success: function(response) 
 			{
 				//unbind this deactivate function
 				clickedElement.unbind('click');
@@ -46,14 +46,8 @@ function deactivate()
 
 				//bind to the activate function
 				clickedElement.bind('click', activate());
-
-				var href = clickedElement.attr('href');
-
-				var newHref = href.substr(0, (href.indexOf('s/') + 4)) + 'deactiveer';
-
-				clickedElement.attr('href', newHref);
 			}
-		})
+		});
 
 		return false; //block the href
 	});
@@ -70,8 +64,8 @@ function activate()
 
 		$.ajax(
 		{
-			url: $(this).attr('href')
-			,success: function(response) 
+			url: $(this).attr('href'),
+			success: function(response) 
 			{
 				//unbind this activate function
 				clickedElement.unbind('click');
@@ -87,14 +81,8 @@ function activate()
 
 				//bind to the deactivate function
 				clickedElement.bind('click', deactivate());
-
-				var href = clickedElement.attr('href');
-
-				var newHref = href.substr(0, (href.indexOf('s/') + 4)) + 'activeer';
-
-				clickedElement.attr('href', newHref);
 			}
-		})
+		});
 
 		return false; //block the href
 	});

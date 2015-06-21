@@ -30,11 +30,8 @@ function validatePage()
 
 	if (document.getElementById("title").value == "") 
 	{
-		event.preventDefault();
 		alert("Vul a.u.b. een titel in.");
 		success = false;
-
-		return false;
 	}
 
 	var children = pagePanelsDiv.children;
@@ -42,39 +39,57 @@ function validatePage()
 	{
 		if(children[i].getElementsByClassName("summer")[0].value == "")
 		{
-			event.preventDefault();
 			alert("Niet alle inhoudsvelden zijn ingevuld.");
 			success = false;
 
-			return false;
+			break;
 		}
 	}
-	var publishStartDate = moment(document.querySelector('#publishStartDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
-	var publishEndDate = moment(document.querySelector('#publishEndDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
-
-	if (!publishStartDate.isValid())
+	
+	/** Date validation **/
+	var publishStartDateVal = document.querySelector('#publishStartDate').value;
+	var publishEndDateVal = document.querySelector('#publishEndDate').value;
+	var publishStartDate = null;
+	var publishEndDate = null;
+	
+	if (publishEndDateVal == "")
 	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
-
-		return false;
+		publishEndDateVal = "01-01-2038 00:00";		// End of Unix time
+		document.querySelector('#publishEndDate').value = publishEndDateVal;
 	}
 
+	publishEndDate = moment(publishEndDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
+	
 	if (!publishEndDate.isValid())
 	{
-		event.preventDefault();
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
 
-		return false;
+		success = false;
 	}
-
-	if (publishStartDate.isAfter(publishEndDate) || 
-		publishStartDate.isSame(publishEndDate))
+	
+	if (publishStartDateVal != "")
 	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+		publishStartDate = moment(publishStartDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
+		
+		if (publishStartDate.isValid())
+		{
+			if (success && (publishStartDate.isAfter(publishEndDate) || publishStartDate.isSame(publishEndDate)))
+			{
+				alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
 
-		return false;
+				success = false;
+			}
+		}
+		else
+		{
+			alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+
+			success = false;
+		}
+	}
+	else
+	{
+		success = false;
 	}
 
 	if(!validateSummer())
@@ -84,9 +99,12 @@ function validatePage()
 
 	if(success)
 	{
-		newOnSiteValidate();
-		
+		if (!newOnSiteValidate())
+		{
+			success = false;
+		}
 	}
+	return success;
 }
 
 function up(panel)
@@ -251,50 +269,50 @@ function getPreview(){
 }
 
 
-	// Event listeners for live preview!
-	//for standard input objects
-	$( "input" ).on(
-		"keypress keyup keydown",
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+// Event listeners for live preview!
+//for standard input objects
+$( "input" ).on(
+	"keypress keyup keydown",
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+	}
+);
 
 
-	$('#summernote').summernote({
-		onChange: function() {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
-	}});
-
-
-	// for existing and new panel elements
-	// the selector needs to be set on a existing element that contains the new element.
-
-	$( "#newPanels" ).on(
-		'keypress keyup keydown', '.summer',
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+$('#summernote').summernote({
+	onChange: function() {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+}});
 
-	$( "#newPanels" ).on(
-		"keypress keyup keydown", '.titlevalue',
-		function( eventObject ) {
-			var previewDiv = $('.preview');
-			if(previewDiv.css("display") === "block"){
-				getPreview();
-			}
+
+// for existing and new panel elements
+// the selector needs to be set on a existing element that contains the new element.
+
+$( '#newPanels' ).on(
+	'keypress keyup keydown', '.summer',
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
 		}
-	);
+	}
+);
+
+$( '#newPanels' ).on(
+	"keypress keyup keydown", '.titlevalue',
+	function( eventObject ) {
+		var previewDiv = $('.preview');
+		if(previewDiv.css("display") === "block"){
+			getPreview();
+		}
+	}
+);
 
 
 
@@ -339,5 +357,38 @@ function switchPanels(old, current)
 	current.getElementsByClassName("summer")[0].value = oldContent;
 }
 
+$(function()
+{
+	$('#newDistrictSection').click(function()
+	{
+		$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
+	});
+});
 
+$( '#districts' ).on(
+	'click', '.deleteDistrictSection',
+	function( eventObject ) {
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	}
+);
 
+$( '#districts' ).on(
+	'click', '.deleteDistrictSectionSpan',
+	function( eventObject ) {
+		if($('.districtSelect').length > 1)
+		{
+			$(this).parent().parent().remove();
+		}
+		else
+		{
+			alert('U moet minstens één deelwijk selecteren!');
+		}
+	}
+);

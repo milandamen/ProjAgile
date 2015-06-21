@@ -12,6 +12,7 @@
 	<meta name="csrf-token" content="{{ Session::token() }}">
 	<div class="container">
 		<div class="row">
+			{!! Breadcrumbs::render('permissions.index') !!}
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -41,12 +42,16 @@
 							<tr>
 								<td>{{ $userGroup->name }}</td>
 								<td>
-									<a href="{{ route('permissions.editUserGroup', ['userGroupId' => $userGroup->userGroupId]) }}" class="left">
-										<i class="fa fa-pencil-square-o"></i>
-									</a>
-									<a href="{{ route('permissions.index', [$userGroup->userGroupId]) }}">
-										<i class="fa fa-times fa-lg text-danger"></i>
-									</a>
+									@if($userGroup->userGroupId != 1 && $userGroup->userGroupId != 3)
+										<a href="{{ route('permissions.editUserGroup', ['userGroupId' => $userGroup->userGroupId]) }}" class="left">
+											<i class="fa fa-pencil-square-o"></i>
+										</a>
+										@if($userGroup->userGroupId != 2)
+											<a href="{{ route('permissions.deleteUserGroup', ['userGroupId' => $userGroup->userGroupId]) }}">
+												<i class="fa fa-times fa-lg text-danger"></i>
+											</a>
+										@endif
+									@endif
 								</td>
 							</tr>
 						@endforeach

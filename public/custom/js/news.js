@@ -3,8 +3,6 @@ $(function()
 	$('#newDistrictSection').click(function()
 	{
 		$('.districtBox').last().clone().addClass('col-md-6').appendTo('#districts');
-
-		addRemoveDistrictListener();
 	});
 	
 	$('#newFile').click(function()
@@ -18,10 +16,9 @@ $(function()
 	});
 });
 
-function addRemoveDistrictListener()
-{
-	$('.deleteDistrictSection').click(function()
-	{
+$( '#districts' ).on(
+	'click', '.deleteDistrictSection',
+	function( eventObject ) {
 		if($('.districtSelect').length > 1)
 		{
 			$(this).parent().remove();
@@ -30,10 +27,12 @@ function addRemoveDistrictListener()
 		{
 			alert('U moet minstens één deelwijk selecteren!');
 		}
-	});
+	}
+);
 
-	$('.deleteDistrictSectionSpan').click(function()
-	{
+$( '#districts' ).on(
+	'click', '.deleteDistrictSectionSpan',
+	function( eventObject ) {
 		if($('.districtSelect').length > 1)
 		{
 			$(this).parent().parent().remove();
@@ -42,10 +41,8 @@ function addRemoveDistrictListener()
 		{
 			alert('U moet minstens één deelwijk selecteren!');
 		}
-	});
-}
-
-addRemoveDistrictListener();
+	}
+);
 
 function addFile()
 {
@@ -120,19 +117,18 @@ function calculateFileIndexes()
 
 function validateNews()
 {
+	var success = true;
+	
 	if (document.querySelector('input[name="title"]').value === "")
 	{
-		event.preventDefault();
 		alert('Vul alstublieft een titel in.');
 
-		return false;
+		success = false;
 	}
 
 	if (!validateSummer())
 	{
-		event.preventDefault();
-
-		return false;
+		success = false;
 	}
 
 	var districtSections = document.querySelectorAll('.districtSelect');
@@ -148,9 +144,10 @@ function validateNews()
 		{
 			if(district.value == districtSections[j].value)
 			{
-				event.preventDefault();
+				
 				alert('U heeft meerdere malen dezelfde deelwijk geselecteerd. U kunt maar één keer dezelfde deelwijk kiezen.');
-				return false;
+				success = false;
+				break;
 			}
 		}
 	}
@@ -159,38 +156,57 @@ function validateNews()
 	{
 		if (districtSection.value === "")
 		{
-			event.preventDefault();
+			
 			alert('Selecteer alstublieft een deelwijk.');
-			return false;
+			success = false;
+			return;
 		}
 	});
 
-	var publishStartDate = moment(document.querySelector('#publishStartDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
-	var publishEndDate = moment(document.querySelector('#publishEndDate').value, 'DD-MM-YYYY HH:mm', 'nl', true);
-
-	if (!publishStartDate.isValid())
+	/** Date validation **/
+	var publishStartDateVal = document.querySelector('#publishStartDate').value;
+	var publishEndDateVal = document.querySelector('#publishEndDate').value;
+	var publishStartDate = null;
+	var publishEndDate = null;
+	
+	if (publishEndDateVal == "")
 	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
-
-		return false;
+		publishEndDateVal = "01-01-2038 00:00";		// End of Unix time
+		document.querySelector('#publishEndDate').value = publishEndDateVal;
 	}
 
+	publishEndDate = moment(publishEndDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
+	
 	if (!publishEndDate.isValid())
 	{
-		event.preventDefault();
 		alert('Selecteer alstublieft een datum en een tijdstip voor de Einde Publicatiedatum.');
 
-		return false;
+		success = false;
 	}
-
-	if (publishStartDate.isAfter(publishEndDate) || 
-		publishStartDate.isSame(publishEndDate))
+	
+	if (publishStartDateVal != "")
 	{
-		event.preventDefault();
-		alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
+		publishStartDate = moment(publishStartDateVal, 'DD-MM-YYYY HH:mm', 'nl', true);
+		
+		if (publishStartDate.isValid())
+		{
+			if (success && (publishStartDate.isAfter(publishEndDate) || publishStartDate.isSame(publishEndDate)))
+			{
+				alert('Selecteer alstublieft een startdatum en een tijdstip vóór de Einde Publicatiedatum.');
 
-		return false;
+				success = false;
+			}
+		}
+		else
+		{
+			alert('Selecteer alstublieft een datum en een tijdstip voor de Publicatiedatum.');
+
+			success = false;
+		}
+	}
+	else
+	{
+		success = false;
 	}
 
 	var fileFields = document.querySelectorAll('#file');
@@ -247,7 +263,7 @@ function validateNews()
 			{
 				if (allowedMimeTypes.indexOf(file.type) < 0)
 				{
-					event.preventDefault();
+					
 
 					var feedback = "Eén van de bestanden is niet van het juiste bestandstype. " + 
 								   "\nU mag alleen bestanden uploaden van het bestandstype ";
@@ -260,7 +276,8 @@ function validateNews()
 
 					alert(feedback);
 
-					return false;
+					success = false;
+					return;
 				}
 			});
 		}
@@ -268,25 +285,24 @@ function validateNews()
 
 	if ($('input[name="hidden"]:checked').val() === "")
 	{
-		event.preventDefault();
 		alert('Selecteer alstublieft een optie om te verbergen of niet.');
 
-		return false;
+		success = false;
 	}
 
 	if ($('input[name="commentable"]:checked').val() === "")
 	{
-		event.preventDefault();
 		alert('Selecteer alstublieft een optie om commentaar toe te staan of niet.');
 		
-		return false;
+		success = false;
 	}
 
 	if ($('input[name="top"]:checked').val() === "")
 	{
-		event.preventDefault();
 		alert('Selecteer alstublieft een optie om dit artikel bovenaan de pagina te vertonen of niet.');
 
-		return false;
+		success = false;
 	}
+	
+	return success;
 }

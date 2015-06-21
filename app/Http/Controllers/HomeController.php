@@ -111,14 +111,15 @@
 		 */
 		public function editLayout()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$news = $this->getNews();
 				$introduction = $this->pageRepo->get(1)->introduction;
 				$layoutModules = $this->homeLayoutRepo->getAll();
 				$newOnSite = $this->newOnSiteRepository->getAllOrdered();
-
-				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite'));
+				$sidebar = $this->sidebarRepo->getByPage(1);
+				
+				return view('home.editLayout', compact('news', 'introduction', 'layoutModules', 'newOnSite', 'sidebar'));
 			}
 			
 			return view('errors.403');
@@ -131,7 +132,7 @@
 		 */
 		public function updateLayout()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				if (isset($_POST['module-introduction']) && isset($_POST['module-news']) && isset($_POST['module-sidebar'])) {
 					$modules = $this->homeLayoutRepo->getAll();
@@ -157,7 +158,7 @@
 		 */
 		public function editIntroduction()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$introduction = $this->pageRepo->get(1)->introduction;
 
@@ -174,7 +175,7 @@
 		 */
 		public function updateIntroduction(IntroductionRequest $request)
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_HOMEPAGE) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_HOMEPAGE)))
 			{
 				$intro = $this->pageRepo->get($request->pageId)->introduction;
 				$intro->title = $request->title;
@@ -187,6 +188,7 @@
 
 				if ($newOnSite === true) {
 					$attributes['message'] = filter_var($_POST['newOnSiteMessage'], FILTER_SANITIZE_STRING);
+					$attributes['link'] = route('home.index');
 					$attributes['created_at'] = new \DateTime('now');
 					$this->newOnSiteRepository->create($attributes);
 				}

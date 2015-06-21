@@ -31,7 +31,7 @@
 		 */
 		public function edit()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_CAROUSEL)))
 			{
 				$carousel = $this->carouselRepo->getAll();
 
@@ -48,7 +48,7 @@
 		 */
 		public function update()
 		{
-			if (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL))
+			if (Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_CAROUSEL) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_CAROUSEL)))
 			{
 				$oldItems = $this->carouselRepo->getAll();
 
@@ -63,7 +63,16 @@
 						{
 							$newsId = $_POST['artikel'][$i];
 							$description = 'Nog geen beschrijving';
-							$item = $this->carouselRepo->create(compact('newsId', 'description'));
+
+							$start = filter_var($_POST['articleStartDate'][$i], FILTER_SANITIZE_STRING);
+							$end = filter_var($_POST['articleEndDate'][$i], FILTER_SANITIZE_STRING);
+
+							$publishStartDate = new \DateTime($start);
+							$publishStartDate->format('Y-m-d');
+							$publishEndDate = new \DateTime($end);
+							$publishEndDate->format('Y-m-d');
+
+							$item = $this->carouselRepo->create(compact('newsId', 'publishStartDate', 'publishEndDate', 'description'));
 
 							$description = filter_var($_POST['beschrijving'][$i], FILTER_SANITIZE_STRING);
 
@@ -136,8 +145,13 @@
 							//title via page -> relatie
 							$title = $page->introduction->title;
 
-							$publishStartDate = $page->publishDate;
-							$publishEndDate = $page->publishEndDate;
+							$start = filter_var($_POST['articleStartDate'][$i], FILTER_SANITIZE_STRING);
+							$end = filter_var($_POST['articleEndDate'][$i], FILTER_SANITIZE_STRING);
+
+							$publishStartDate = new \DateTime($start);
+							$publishStartDate->format('Y-m-d');
+							$publishEndDate = new \DateTime($end);
+							$publishEndDate->format('Y-m-d');
 
 							$item = $this->carouselRepo->create(compact('newsId', 'pageId', 'title', 'publishStartDate', 'publishEndDate', 'description' ));
 

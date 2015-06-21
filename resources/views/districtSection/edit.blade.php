@@ -15,7 +15,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8">
-				<h1>Deelwijk toevoegen</h1>
+				<h1>Deelwijk wijzigen</h1>
 				<p> 
 					Hieronder kunt u alle benodige informatie aan een deelwijk toevoegen. De naam en de algemene informatie over de deelwijk.	</p>
 			</div>

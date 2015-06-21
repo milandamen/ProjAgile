@@ -72,10 +72,19 @@ function addPage(button)
 		'<span>' + title + '</span>' +
 		'</td>' +
 		'<td>' +
-		'<span>' + startDate + '</span>' +
+		'<div class="input-group date icon-width">' +
+			'<input type="hidden" name="articleStartDate[]" class="carousel-start-date"/>' +
+			'<span class="input-group-addon">' +
+				'<span class="glyphicon glyphicon-calendar"></span>' +
+			'</span>' +
 		'</td>' +
 		'<td>' +
-		'<span>' + endDate + '</span>' +
+		'<div class="input-group date icon-width">' +
+			'<input type="hidden" name="articleEndDate[]" class="carousel-end-date"/>' +
+			'<span class="input-group-addon">' +
+				'<span class="glyphicon glyphicon-calendar"></span>' +
+			'</span>' +
+		'</div>' +
 		'</td>' +
 		'<td>' +
 		'<textarea name="beschrijving[]"></textarea>' +
@@ -102,6 +111,7 @@ function addPage(button)
 
 	articlelist.innerHTML = resulthtml;
 
+	$('.date').datetimepicker();
 	calculateIndexes();
 }
 
@@ -237,10 +247,20 @@ function addArticle(button)
 				'<span>' + title + '</span>' +
 			'</td>' +
 			'<td>' +
-				'<span>' + startDate + '</span>' +
+				'<div class="input-group date icon-width">' +
+					'<input type="hidden" name="articleStartDate[]" class="article-start-date"/>' +
+					'<span class="input-group-addon">' +
+						'<span class="glyphicon glyphicon-calendar"></span>' +
+					'</span>' +
+				'</div>' +
 			'</td>' +
 			'<td>' +
-				'<span>' + endDate + '</span>' +
+				'<div class="input-group date icon-width">' +
+					'<input type="hidden" name="articleEndDate[]" class="article-end-date"/>' +
+					'<span class="input-group-addon">' +
+						'<span class="glyphicon glyphicon-calendar"></span>' +
+					'</span>' +
+				'</div>' +
 			'</td>' +
 			'<td>' +
 				'<textarea name="beschrijving[]"></textarea>' +
@@ -266,7 +286,8 @@ function addArticle(button)
 		'</tr>';
 	
 	articlelist.innerHTML = resulthtml;
-	
+
+	$('.date').datetimepicker();
 	calculateIndexes();
 }
 
@@ -365,6 +386,15 @@ function calculateIndexes()
 			{
 				input.name = 'artikel[' + i + ']';
 			}
+			else if(input.name.indexOf('articleStartDate') !== -1)
+			{
+				input.name = 'articleStartDate[' + i + ']';
+			}
+			else if(input.name.indexOf('articleEndDate') !== -1)
+			{
+				input.name = 'articleEndDate[' + i + ']';
+			}
+
 			else
 			{
 				input.name = 'deletefile[' + i + ']';
