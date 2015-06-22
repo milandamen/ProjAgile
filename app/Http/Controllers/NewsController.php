@@ -253,7 +253,7 @@
 			if (Auth::check() && ($this->userRepo->isUserAdministrator(Auth::user()) || Auth::user()->canEditNews() || Auth::user()->userGroup->canEditNews()))
 			{
 				$news = $this->newsRepo->getAllHidden();
-				$sidebar = $this->sidebarRepo->getByPage(2);
+				$sidebar = $this->sidebarRepo->getByPage(1);
 
 				return view('news.manage', compact('news', 'sidebar'));
 			}
@@ -323,6 +323,37 @@
 			Flash::error('U bent niet geautoriseerd om de zichtbaarheid van dit nieuws items aan te passen.');
 
 			return Redirect::route('news.manage');
+		}
+
+
+		public function delete($id){
+			$newsItem = $this->newsRepo->get($id);
+
+			if (Auth::user() != null && (Auth::user()->hasDistrictSectionPermissions($newsItem->districtSections)  || Auth::user()->userGroup->hasDistrictSectionPermissions($newsItem->districtSections)))
+			{
+				$newsItem->districtSections()->detach();
+				$files = $newsItem->files;
+
+				foreach($files as $file){
+					$file->delete();
+				}
+				$comments = $newsItem->newsComments;
+
+				foreach($comments as $newscomment){
+					$newscomment->delete();
+				}
+
+				$carousel = $newsItem->carousels;
+				foreach($carousel as $newscarousel){
+					$newscarousel->delete();
+				}
+				$this->newsRepo->destroy($newsItem->newsId);
+
+
+				return Redirect::route('news.manage');
+			} 
+
+				return view('errors.403');
 		}
 
 		/**
