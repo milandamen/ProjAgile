@@ -180,13 +180,6 @@
 				
 				$districtSections = $request->districtSection;
 
-				$oldDistrictSections = $page->districtSections;
-
-				foreach($oldDistrictSections as $oldDistrict)
-				{
-					$page->districtSections()->detach($oldDistrict);
-				}
-
 				foreach($districtSections as $district)
 				{
 					$page->districtSections()->attach($district);
