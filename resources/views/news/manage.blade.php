@@ -20,6 +20,7 @@
 					al het nieuws. Inclusief de verborgen nieuwsberichten en de 
 					berichten waarvan de publicatiedatum is verlopen.
 				</p>
+
 				{!! link_to_route('news.create', 'Nieuw Bericht', [], array('class' => 'btn btn-success white')) !!}
 				{!! link_to_route('management.index', 'Terug naar Beheer', [], ['class' => 'btn btn-danger white']) !!}
 			</div>
@@ -37,7 +38,7 @@
 							<th>
 								<i class="fa fa-comment-o fa-lg"></i> 
 							</th>
-							<th colspan="3">Acties</th>
+							<th colspan="4">Acties</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -87,6 +88,7 @@
 										<i class="fa fa-pencil-square-o fa-lg"></i>
 									</a>
 								</td>
+								
 								<td> 
 									@if(!$newsItem->hidden)
 										<a href="{{ route('news.toggleHide', [$newsItem->newsId]) }}" class="black">
@@ -97,6 +99,10 @@
 											<i class="fa fa-eye fa-lg"></i>
 										</a>
 									@endif
+								</td>
+								<td><a href="{{ route('news.delete', [$newsItem->newsId]) }}" onclick="confirmDelete()">
+											<i class="fa fa-times fa-lg text-danger"></i>
+										</a>
 								</td>
 							</tr>
 						@endforeach

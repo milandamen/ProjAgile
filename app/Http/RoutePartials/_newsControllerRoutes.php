@@ -42,6 +42,12 @@
 		'uses'			=> 'NewsController@show'
 	]);
 
+	Route::get('nieuws/{id}/verwijder',
+	[
+		'as'			=> 'news.delete',
+		'uses'			=> 'NewsController@delete'
+	]);
+
 	Route::get('nieuws/{id}/wijzigen',
 	[
 		'as'			=> 'news.edit',
