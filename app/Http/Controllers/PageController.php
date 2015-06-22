@@ -177,6 +177,13 @@
 					}
 				}
 				$pageid = $page->pageId;
+				
+				$districtSections = $request->districtSection;
+
+				foreach($districtSections as $district)
+				{
+					$page->districtSections()->attach($district);
+				}
 
 				if ($request->sidebar) {
 					$sidebar = $this->sidebarRepo->create
