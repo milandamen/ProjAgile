@@ -88,8 +88,8 @@
 				$excelFile->setDescription('Een overzicht van alle postcodes per deelwijk');
 				foreach ($this->districtRepo->getAll() as $district)
 				{
-					if($district->name != 'Home')
-					{
+				//	if($district->name != 'Home')
+				//	{
 						$AdressArray = $this->createPostalArrayByDistrict($district->districtSectionId);
 
 						$excelFile->sheet($district->name, function ($sheet) use($AdressArray){
@@ -131,7 +131,7 @@
 
 
 						});
-					}
+					//}
 				}
 			})->download('xlsx');
 		}
