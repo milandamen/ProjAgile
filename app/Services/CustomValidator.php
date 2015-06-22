@@ -108,7 +108,7 @@
 			$allowedLowerCaseLetters	= '[a-z]';
 
 			$numSpecialCaseLetters		= 1;
-			$allowedSpecialCaseLetters	= '[!@#$%^&*]';
+			$allowedSpecialCaseLetters	= '[[:punct:]]';
 
 			$numUpperCaseLetters 		= 1;
 			$allowedUpperCaseLetters	= '[A-Z]';
