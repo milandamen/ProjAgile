@@ -235,7 +235,7 @@
 		 */
 		public function update(UserRequest $request, $id = null)
 		{
-			if(Auth::check() && (Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)))
+			if(Auth::check() && ((Auth::user()->hasPermission(PermissionsController::PERMISSION_USERS) || Auth::user()->userGroup->hasPermission(PermissionsController::PERMISSION_USERS)) || $id === null))
 			{
 				$user = ($id === null ? Auth::user() : $this->userRepo->get($id));
 				
